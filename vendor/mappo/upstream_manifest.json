@@ -1,0 +1,111 @@
+{
+  "repository": "marlbenchmark/on-policy",
+  "commit": "de66d7a4b23fac2513f56f96f73b3f5cb96695ac",
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha": "7ea42f3d5d0a353e1fc80f1f685643afda72a86c",
+      "sha256": "0335be1babd64ea33302d4d365cdecc5985aaf5c4481236e0c5da07eb37a4580"
+    },
+    {
+      "path": "onpolicy/__init__.py",
+      "sha": "bc24b89148178a7b4b0bc9c30e2b0b983909ec1d",
+      "sha256": "100e75af68f06d9fce81253321c25083ff08e6c0eb46bc43f9bc2e960dfb42be"
+    },
+    {
+      "path": "onpolicy/algorithms/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "onpolicy/algorithms/r_mappo/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "onpolicy/algorithms/r_mappo/algorithm/rMAPPOPolicy.py",
+      "sha": "62bf50c2b3bc1a5cd157aa32d877e9d13167d332",
+      "sha256": "33bb77fea3034c9bc79af6add5a7a5989cbb65056332786756e6ac502aa9d5ca"
+    },
+    {
+      "path": "onpolicy/algorithms/r_mappo/algorithm/r_actor_critic.py",
+      "sha": "fb1b05242fe37f3334e7639f370d8b61776a16a9",
+      "sha256": "db6ff5de5b56e8a28a91181acf831bddd1c8b12d124a26025d9f63bcd3f98ee5"
+    },
+    {
+      "path": "onpolicy/algorithms/r_mappo/r_mappo.py",
+      "sha": "346e667114186cbc316c8ecba8e1992a8e342d76",
+      "sha256": "8a889d010cb5e327eeffa9d8ab1d910cab384e295d0690dd05e268dc56e047be"
+    },
+    {
+      "path": "onpolicy/algorithms/utils/act.py",
+      "sha": "ebea30e3615b532e1ca574ac50d0b651935d7b7c",
+      "sha256": "e1ca14c07401baa2f2342853c09dd9faf0ce89eac6facd02bbe078d2439b7f22"
+    },
+    {
+      "path": "onpolicy/algorithms/utils/cnn.py",
+      "sha": "9d7427f7349d4348df9e590f688289cd22012ec1",
+      "sha256": "410e28dc1977daefc9571207173f6b54caacefae2f9e9a59dc32a6bd7f213b36"
+    },
+    {
+      "path": "onpolicy/algorithms/utils/distributions.py",
+      "sha": "15e125eae38efa1568dd946116a9d9707ee922e1",
+      "sha256": "157092a52d685881c0c10d2e5487eaebb7a7d66b3d608a7e5f5ca6ea42b9af7a"
+    },
+    {
+      "path": "onpolicy/algorithms/utils/mlp.py",
+      "sha": "d1933ddefd4ff0cb126e10d3b1fc06aa6c143591",
+      "sha256": "790c0c6ec9f38569919e7e5c065d765c2b808da962619beb85eb6f7ba3a30087"
+    },
+    {
+      "path": "onpolicy/algorithms/utils/popart.py",
+      "sha": "bebe38e9478db5df1fc300e907082c5736a1b131",
+      "sha256": "9205b0ce68ec6b9dc11673adfe788ba26e9f301f31c6a2f7f5d242e412d760fe"
+    },
+    {
+      "path": "onpolicy/algorithms/utils/popart_hatrpo.py",
+      "sha": "f09353be91863a0990834363296e6a7dff2b71ec",
+      "sha256": "3dcfec2fd3c56d86d97c0e488bae8e431ce2553d842bf1f705a3b120ec4b132c"
+    },
+    {
+      "path": "onpolicy/algorithms/utils/rnn.py",
+      "sha": "47547a90066e368ed8e91c33ba11d0230615dd99",
+      "sha256": "8a5f7bc2a9263d4ebd3234e877ee305c5caae24987d39e1155fc3fe35e089eaf"
+    },
+    {
+      "path": "onpolicy/algorithms/utils/transformer_act.py",
+      "sha": "9364b696a0a42f3750259c5fc5dfa86c751c22e7",
+      "sha256": "bc99b5f350751287cbc9932267674c37b8d5d6d358be0f1913d0be5b4aa3ee26"
+    },
+    {
+      "path": "onpolicy/algorithms/utils/util.py",
+      "sha": "de231cf29c22f1d6a30183f4ae2ab54054eab303",
+      "sha256": "390fc541abc72231b864e6017b2a8e75b58a1bc593e87fc3bc27b80b9effa2c6"
+    },
+    {
+      "path": "onpolicy/config.py",
+      "sha": "760c306782add02d29ab29000c6660a3ce481aab",
+      "sha256": "61261a04812fba57e81941ae14309100b8bf809dcfe4d038dd0a4a7ae5afaab4"
+    },
+    {
+      "path": "onpolicy/utils/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "onpolicy/utils/shared_buffer.py",
+      "sha": "4204feef2a5c95266fc3116f2c5619012ea2b998",
+      "sha256": "78a19d8a0e7a49cde1f3efde45cac193c04d9c3e861bc979e57824ec9e000d0e"
+    },
+    {
+      "path": "onpolicy/utils/util.py",
+      "sha": "ecb29d19784cef65c8456cbef7b0e5ccc742002a",
+      "sha256": "397ec9d68851663ad012bafa60a65b6510405b64f476913b0700bb6fcca22e0c"
+    },
+    {
+      "path": "onpolicy/utils/valuenorm.py",
+      "sha": "6d9ce36a346b2573be5e947ba3385538876d6b8e",
+      "sha256": "df19f747f5845c337d1933ee1a092fa3c758f9ada38bfa3e32aa7d277ac845a2"
+    }
+  ]
+}
