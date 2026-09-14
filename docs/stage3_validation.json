@@ -1,0 +1,91 @@
+{
+  "learned": {
+    "algorithm": "mappo",
+    "episodes": 61,
+    "checkpoint_episode": 2,
+    "data_source": "csv",
+    "data_sha256": "ec820ea1142296eedfbca0860d47badfe374e395402f2aec7bd926a8c91f3bdb",
+    "mean_cost": 1132.0590260919855,
+    "std_cost": 417.4195495429813,
+    "total_violations": 0,
+    "total_ac_violations": 0,
+    "ac_failed_steps": 0,
+    "mean_objective": 1132.0590260919855,
+    "steps": 1464,
+    "minimum_ac_voltage": 0.9631485235089965,
+    "maximum_linear_ac_voltage_error": 0.00046294094605281444
+  },
+  "milp_oracle": {
+    "controller": "milp_oracle",
+    "episodes": 61,
+    "mean_cost": 1074.3864138844451,
+    "mean_objective": 1074.3864138844451,
+    "total_violations": 0,
+    "total_ac_violations": 0,
+    "ac_failed_steps": 0,
+    "steps": 1464,
+    "minimum_ac_voltage": 0.9534000043680526,
+    "maximum_linear_ac_voltage_error": 0.0008600968049723434,
+    "all_solves_optimal": true,
+    "max_solver_gap": 3.588226658391642e-16
+  },
+  "mpc": {
+    "controller": "mpc",
+    "episodes": 61,
+    "mean_cost": 1081.217195468728,
+    "mean_objective": 1081.217195468728,
+    "total_violations": 0,
+    "total_ac_violations": 0,
+    "ac_failed_steps": 0,
+    "steps": 1464,
+    "minimum_ac_voltage": 0.9643341346128448,
+    "maximum_linear_ac_voltage_error": 0.0005127064611084586,
+    "all_solves_optimal": true,
+    "max_solver_gap": 1.922634117830681e-16
+  },
+  "training_note": "MAPPO 仅训练 2 回合；此记录用于端到端与全测试集可行性验证，不用于算法性能结论",
+  "data_manifest": {
+    "source": "https://data.open-power-system-data.org/time_series/2020-10-06/",
+    "raw_file_sha256": "6a7f2bc571314cbf9c321cc03437691cd4be95c3a6f075e60ff99e8035c704c8",
+    "original_columns": {
+      "load_kw": "DE_load_actual_entsoe_transparency",
+      "pv_kw": "DE_solar_generation_actual",
+      "wind_kw": "DE_wind_generation_actual",
+      "price": "DE_LU_price_day_ahead"
+    },
+    "timezone": "UTC",
+    "horizon": 24,
+    "dt_hours": 1.0,
+    "power_mapping": "国家级实测曲线按训练峰值缩放，非原生馈线实测",
+    "currency": "EUR",
+    "scales": {
+      "load_kw": 0.023587687227267368,
+      "pv_kw": 0.023311575862528307,
+      "wind_kw": 0.006654097815237884
+    },
+    "fitted_on": "train only",
+    "boundaries": [
+      "2019-01-01 00:00:00+00:00",
+      "2019-09-01 00:00:00+00:00",
+      "2019-11-01 00:00:00+00:00",
+      "2020-01-01 00:00:00+00:00"
+    ],
+    "dropped_days": [
+      "2019-03-31"
+    ],
+    "splits": {
+      "train": {
+        "days": 242,
+        "sha256": "8262055e8b9d14edce1add30c672fc0c861850d6236f02977b2cbf3e3c9d2855"
+      },
+      "validation": {
+        "days": 61,
+        "sha256": "8d6350e635bbe4b8b6c5bc3cb1bf6291d635dfdeda76d368c1b7695f9dd9526a"
+      },
+      "test": {
+        "days": 61,
+        "sha256": "ec820ea1142296eedfbca0860d47badfe374e395402f2aec7bd926a8c91f3bdb"
+      }
+    }
+  }
+}

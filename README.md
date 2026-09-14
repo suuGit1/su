@@ -1,13 +1,15 @@
-# VPP 官方 MAPPO 研究框架
+# VPP 官方 MAPPO 与 IEEE33 调度研究框架
 
-第二阶段已提供三资源智能体训练、模型保存、独立评估和 CSV 数据接口。策略网络、PPO 更新、GAE 缓存与 ValueNorm 来自 [官方 MAPPO 固定版本](https://github.com/marlbenchmark/on-policy/tree/de66d7a4b23fac2513f56f96f73b3f5cb96695ac)，保留上游 MIT 许可证。
+**第三阶段已接入 IEEE33、统一 MILP/MPC、真实 OPSD 下载与清洗、配对比较和交流潮流审计。完整命令与模型假设见 [第三阶段运行指南](docs/stage3.md)。**
+
+以下保留第二阶段聚合模型的快速入口。第二阶段已提供三资源智能体训练、模型保存、独立评估和 CSV 数据接口。策略网络、PPO 更新、GAE 缓存与 ValueNorm 来自 [官方 MAPPO 固定版本](https://github.com/marlbenchmark/on-policy/tree/de66d7a4b23fac2513f56f96f73b3f5cb96695ac)，保留上游 MIT 许可证。
 
 已在 Python 3.12、PyTorch 2.5.1 CPU 上真实运行。默认使用合成场景，无需下载数据。这是可运行研究基线，尚未完成论文性能验证。
 
 ## 安装与直接运行
 
 ```bash
-git clone --branch research/stage2-official-mappo https://github.com/suuGit1/su.git
+git clone --branch research/stage3-ieee33-mpc https://github.com/suuGit1/su.git
 cd su
 python -m venv .venv
 ```

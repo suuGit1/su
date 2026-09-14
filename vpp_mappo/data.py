@@ -2,6 +2,7 @@
 import csv
 from pathlib import Path
 import hashlib
+import json
 import numpy as np
 
 FIELDS = ('load_kw', 'pv_kw', 'wind_kw', 'price')
@@ -11,6 +12,16 @@ class CSVProfiles:
     def __init__(self, path, horizon):
         self.path = Path(path)
         self.sha256 = hashlib.sha256(self.path.read_bytes()).hexdigest()
+        self.provenance = None
+        manifest_path = self.path.parent / 'manifest.json'
+        if manifest_path.exists():
+            manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+            if 'splits' in manifest and 'dt_hours' in manifest:
+                if self.sha256 not in [v['sha256'] for v in manifest['splits'].values()]:
+                    raise ValueError('CSV 与预处理 manifest 的哈希不匹配')
+                if manifest['horizon'] != horizon:
+                    raise ValueError('CSV 预处理时域与配置不匹配')
+                self.provenance = manifest
         groups = {}
         with self.path.open(encoding='utf-8-sig', newline='') as f:
             reader = csv.DictReader(f)
@@ -22,6 +33,8 @@ class CSVProfiles:
         if not groups:
             raise ValueError('CSV 不得为空')
         self.profiles = []
+        self.scenario_names = []
+        self.fingerprints = []
         for name in sorted(groups):
             rows = sorted(groups[name], key=lambda x: int(x['step']))
             if [int(r['step']) for r in rows] != list(range(horizon)):
@@ -32,6 +45,8 @@ class CSVProfiles:
             if any((profile[k] < 0).any() for k in FIELDS[:3]):
                 raise ValueError('负荷与可再生出力不得为负数')
             self.profiles.append(profile)
+            self.scenario_names.append(name)
+            self.fingerprints.append(hashlib.sha256(b''.join(profile[k].astype('<f8').tobytes() for k in FIELDS)).hexdigest())
 
     def get(self, index):
         return {k: v.copy() for k, v in self.profiles[index % len(self.profiles)].items()}
