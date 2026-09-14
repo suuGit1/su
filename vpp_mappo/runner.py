@@ -54,6 +54,11 @@ def train(config, output, env_factory=VPPAdapter):
                     data_sha256=env.data.sha256 if env.data else None,
                     data_source='csv' if env.data else 'synthetic',
                     resolved_official_args=vars(agent.args))
+    metadata['dispatch_spec'] = env.spec.record() if hasattr(env, 'spec') else None
+    metadata['data_provenance'] = env.data.provenance if env.data else None
+    if config.network_model == 'ieee33':
+        from importlib.metadata import version
+        metadata['grid_dependencies'] = {k: version(k) for k in ('pandapower', 'scipy', 'pandas')}
     (out / 'metadata.json').write_text(json.dumps(metadata, indent=2), encoding='utf-8')
     history = []
     for ep in range(config.episodes):
@@ -96,6 +101,10 @@ def train(config, output, env_factory=VPPAdapter):
         write_csv(out / 'training.csv', history)
         checkpoint = dict(format_version=1, upstream_commit=UPSTREAM_COMMIT, config=asdict(config),
                           episode=ep + 1, data_sha256=env.data.sha256 if env.data else None, **agent.state())
+        checkpoint['dispatch_spec'] = metadata['dispatch_spec']
+        checkpoint['data_provenance'] = metadata['data_provenance']
+        checkpoint['train_scenarios'] = env.data.scenario_names if env.data else []
+        checkpoint['train_fingerprints'] = env.data.fingerprints if env.data else []
         torch.save(checkpoint, out / 'latest.tmp')
         (out / 'latest.tmp').replace(out / 'latest.pt')
         print(f"episode={ep+1}/{config.episodes} cost={total_cost:.3f} reward={total_reward:.3f} violations={violations}", flush=True)
@@ -109,6 +118,7 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
     if state.get('format_version') != 1 or state.get('upstream_commit') != UPSTREAM_COMMIT:
         raise ValueError('检查点格式或官方版本不匹配')
     config = Config(**state['config'])
+    config._dispatch_record = state.get('dispatch_spec')
     train_csv = config.train_csv
     config.train_csv = None
     config.device = device
@@ -123,6 +133,9 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
     env = env_factory(config, csv_path)
     if env.data and env.data.sha256 == state.get("data_sha256"):
         raise ValueError("评估数据与训练数据内容相同，请提供独立测试集")
+    if env.data and (set(env.data.scenario_names)&set(state.get('train_scenarios', [])) or
+                     set(env.data.fingerprints)&set(state.get('train_fingerprints', []))):
+        raise ValueError('评估场景日期或曲线与训练集部分重叠')
     if env.data and episodes > len(env.data.profiles):
         raise ValueError("评估回合数超过 CSV 独立场景数，拒绝循环重复计数")
     agent = OfficialPPO(config, env)
@@ -145,6 +158,12 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
             reward += info['reward']
             violations += info['constraint_violations']
         rows.append(dict(episode=ep+1, scenario_seed=seed+ep, cost=cost, reward=reward, violations=violations))
+        if config.network_model == 'ieee33':
+            episode_steps = trajectories[-config.horizon:]
+            rows[-1].update(objective=cost+sum(r['terminal_penalty'] for r in episode_steps),
+                ac_violations=sum(r['ac_violations'] for r in episode_steps),
+                ac_failed_steps=sum(not r['ac_converged'] for r in episode_steps),
+                ac_cost=sum(r['ac_cost'] for r in episode_steps) if all(r['ac_converged'] for r in episode_steps) else None)
     out = Path(output)
     out.mkdir(parents=True, exist_ok=True)
     if any(out.iterdir()):
@@ -156,6 +175,10 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
                    mean_cost=float(np.mean([r['cost'] for r in rows])),
                    std_cost=float(np.std([r['cost'] for r in rows], ddof=1)) if episodes > 1 else None,
                    total_violations=sum(r['violations'] for r in rows))
+    if config.network_model == 'ieee33':
+        summary.update(total_ac_violations=sum(r['ac_violations'] for r in rows),
+            ac_failed_steps=sum(r['ac_failed_steps'] for r in rows),
+            mean_objective=float(np.mean([r['objective'] for r in rows])))
     (out / 'summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return rows

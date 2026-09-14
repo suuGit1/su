@@ -19,6 +19,12 @@ class MultiAgentEnvironment(Protocol):
 
 
 class VPPAdapter:
+    def __new__(cls, config, csv_path=None):
+        if config.network_model == 'ieee33':
+            from .grid_environment import GridVPPAdapter
+            return GridVPPAdapter(config, csv_path)
+        return super().__new__(cls)
+
     num_agents = 3
     observation_space = Box(-np.inf, np.inf, (10,), dtype=np.float32)
     share_observation_space = Box(-np.inf, np.inf, (30,), dtype=np.float32)

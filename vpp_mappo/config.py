@@ -30,8 +30,15 @@ class Config:
     train_csv: str | None = None
     device: str = 'cpu'
     threads: int = 1
+    network_model: str = 'aggregate'
+    dispatch_spec: str | None = None
+    solver_time_limit: float = 30.0
 
     def validate(self):
+        if self.network_model not in ('aggregate', 'ieee33'):
+            raise ValueError('network_model 必须为 aggregate 或 ieee33')
+        if not math.isfinite(self.solver_time_limit) or self.solver_time_limit <= 0:
+            raise ValueError('求解时间必须为有限正数')
         if self.algorithm not in ('mappo', 'ippo'):
             raise ValueError('算法仅支持官方 MAPPO 或局部价值函数 IPPO')
         if type(self.seed) is not int or self.seed < 0:

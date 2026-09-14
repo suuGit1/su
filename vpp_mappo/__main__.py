@@ -13,6 +13,7 @@ def main():
     t.add_argument('--algorithm', choices=['mappo', 'ippo'])
     t.add_argument('--episodes', type=int)
     t.add_argument('--seed', type=int)
+    t.add_argument('--csv', help='训练场景 CSV，覆盖配置中的 train_csv')
     e = sub.add_parser('evaluate')
     e.add_argument('--checkpoint', required=True)
     e.add_argument('--output', required=True)
@@ -32,6 +33,8 @@ def main():
     elif args.command == 'train':
         from .runner import train
         cfg = Config.load(args.config)
+        if args.csv:
+            cfg.train_csv = args.csv
         for key in ('device', 'algorithm', 'episodes', 'seed'):
             if getattr(args, key) is not None:
                 setattr(cfg, key, getattr(args, key))

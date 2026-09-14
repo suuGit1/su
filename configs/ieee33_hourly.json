@@ -1,0 +1,9 @@
+{
+  "network_model": "ieee33",
+  "episodes": 100,
+  "horizon": 24,
+  "dt_hours": 1.0,
+  "seed": 1,
+  "gamma": 1.0,
+  "dispatch_spec": "configs/dispatch_ieee33.json"
+}
