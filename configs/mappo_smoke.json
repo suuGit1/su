@@ -1,0 +1,1 @@
+{"episodes": 3, "horizon": 8, "hidden_size": 32, "ppo_epoch": 2, "seed": 1, "threads": 1}

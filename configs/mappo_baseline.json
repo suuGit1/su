@@ -1,0 +1,1 @@
+{"episodes": 100, "horizon": 96, "hidden_size": 64, "ppo_epoch": 5, "num_mini_batch": 1, "seed": 1, "safety": true, "digital_twin": false, "device": "cpu", "threads": 1}

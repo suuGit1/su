@@ -1,32 +1,47 @@
-# DT-C3 VPP 研究实现
+# VPP 官方 MAPPO 研究框架
 
-基于用户上传的 `virtual-power-plant-dt-c3-gpu-cu113.zip`，逐步修复仿真有效性并接入可复现基线。原项目来源为 https://github.com/vinerya/virtual-power-plant ，保留上传包中的 MIT 许可证与作者元数据。上传包没有原始提交号，不能将其等同于上游某个已核验版本。
+第二阶段已提供三资源智能体训练、模型保存、独立评估和 CSV 数据接口。策略网络、PPO 更新、GAE 缓存与 ValueNorm 来自 [官方 MAPPO 固定版本](https://github.com/marlbenchmark/on-policy/tree/de66d7a4b23fac2513f56f96f73b3f5cb96695ac)，保留上游 MIT 许可证。
 
-## 当前状态
+已在 Python 3.12、PyTorch 2.5.1 CPU 上真实运行。默认使用合成场景，无需下载数据。这是可运行研究基线，尚未完成论文性能验证。
 
-第一阶段：SOC 效率与时间步统一、执行后约束检查、真实主网结算、观测缓存与增量通信计费、回合重置、消融分组和配对测试场景修复。
-
-本项目尚未完成官方 MAPPO 接入、标准 IEEE 33-bus 验证或论文实验。原有 RL 类、优化模型和示例只作为待修复代码保留，不能用于宣称性能优势。历史输出、权重和聊天材料未导入。
-
-## 快速验证
-
-在仓库根目录运行，Python 3.10 或以上：
+## 安装与直接运行
 
 ```bash
-python -m pip install numpy==1.26.4
-python validation/test_stage1.py
+git clone --branch research/stage2-official-mappo https://github.com/suuGit1/su.git
+cd su
+python -m venv .venv
 ```
 
-该入口直接加载真实仿真模块，隔离旧包入口对 PyTorch 和其他服务依赖的强制导入。它只验证第一阶段核心，不代表完整包测试或训练已通过。
+激活环境：Windows PowerShell 使用 `.venv\Scripts\Activate.ps1`；Linux/macOS 使用 `source .venv/bin/activate`。建议 Python 3.10–3.12，本次实测 3.12。Linux/Windows CPU 安装及运行：
 
-现有应用依赖见 `pyproject.toml`；GPU 文件为上传包原始配置，尚未重新验证，不建议在当前基础检查阶段安装。
+```bash
+python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements-mappo.txt
+python -m vpp_mappo doctor
+python validation/verify_vendor.py
+python validation/test_stage1.py
+python validation/test_stage2.py
+python -m vpp_mappo train --config configs/mappo_smoke.json --output output/smoke
+python -m vpp_mappo evaluate --checkpoint output/smoke/latest.pt --output output/smoke_eval
+```
 
-## 开发顺序
+macOS 跳过第一条 CPU 索引命令，直接安装 requirements。命令均在仓库根目录执行。本入口无需安装旧 Web 服务、求解器或旧 CUDA 11.3 依赖。输出目录非空会报错，请使用新目录。
 
-1. 环境与指标修复，回归测试。
-2. 官方 MAPPO 适配和真实独立学习基线；移除同名算法覆盖。
-3. 统一 MILP/MPC 物理约束、预测输入和求解状态。
-4. 标准电网、真实数据、DT 与资源调度闭环。
-5. 安全、多种子、泛化与 Pareto 实验。
+训练输出：config.json、metadata.json、training.csv、latest.pt。评估输出：episodes.csv、trajectory.csv、summary.json。记录官方版本、依赖版本、完整参数和数据哈希。检查点支持独立评估；暂未实现断点续训。
 
-详细变更与局限见 [第一阶段说明](docs/stage1.md)。本阶段不需要下载数据集。
+## 日调度与对照
+
+```bash
+python -m vpp_mappo train --config configs/mappo_baseline.json --output output/mappo_s1 --seed 1
+python -m vpp_mappo train --config configs/mappo_baseline.json --algorithm ippo --output output/ippo_s1 --seed 1
+python -m vpp_mappo evaluate --checkpoint output/mappo_s1/latest.pt --output output/mappo_test --episodes 30 --seed 100000
+python -m vpp_mappo evaluate --checkpoint output/ippo_s1/latest.pt --output output/ippo_test --episodes 30 --seed 100000
+```
+
+默认基线为 96 步 × 15 分钟、100 回合，是起始预算，不代表收敛。对照应使用相同测试场景，并另外执行多个训练种子。MAPPO 为局部 actor、集中 critic；IPPO 为局部 actor、局部 critic。两者都共享资源间网络参数并使用身份编码，不能把这里的 IPPO 描述成三套独立网络。
+
+兼容 CUDA 的 PyTorch 可使用 `--device cuda`，不可用时明确报错；本次仅验证 CPU。旧实验目录属于历史代码，新统一入口不调用其同名算法。
+
+真实数据接入、扩展接口与研究边界见 [框架说明](docs/stage2.md)，实测记录见 [验证记录](docs/stage2_validation.md)。
+
+本项目基于用户上传的 virtual-power-plant-dt-c3-gpu-cu113.zip；原项目来源为 [vinerya/virtual-power-plant](https://github.com/vinerya/virtual-power-plant)，保留上传包许可证和作者元数据。上传包没有可核验原始提交号。[第一阶段说明](docs/stage1.md) 记录了环境与指标修复。

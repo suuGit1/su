@@ -1,0 +1,37 @@
+"""CSV 数据接口：每个 scenario 对应一个完整有限时域回合。"""
+import csv
+from pathlib import Path
+import hashlib
+import numpy as np
+
+FIELDS = ('load_kw', 'pv_kw', 'wind_kw', 'price')
+
+
+class CSVProfiles:
+    def __init__(self, path, horizon):
+        self.path = Path(path)
+        self.sha256 = hashlib.sha256(self.path.read_bytes()).hexdigest()
+        groups = {}
+        with self.path.open(encoding='utf-8-sig', newline='') as f:
+            reader = csv.DictReader(f)
+            required = {'scenario', 'step', *FIELDS}
+            if not required.issubset(reader.fieldnames or []):
+                raise ValueError('CSV 必须包含：' + ', '.join(sorted(required)))
+            for row in reader:
+                groups.setdefault(row['scenario'], []).append(row)
+        if not groups:
+            raise ValueError('CSV 不得为空')
+        self.profiles = []
+        for name in sorted(groups):
+            rows = sorted(groups[name], key=lambda x: int(x['step']))
+            if [int(r['step']) for r in rows] != list(range(horizon)):
+                raise ValueError(f'{name} 的 step 必须恰好为 0 到 {horizon-1}')
+            profile = {k: np.asarray([float(r[k]) for r in rows], dtype=float) for k in FIELDS}
+            if any(not np.isfinite(v).all() for v in profile.values()):
+                raise ValueError('CSV 存在缺失值或非有限数值')
+            if any((profile[k] < 0).any() for k in FIELDS[:3]):
+                raise ValueError('负荷与可再生出力不得为负数')
+            self.profiles.append(profile)
+
+    def get(self, index):
+        return {k: v.copy() for k, v in self.profiles[index % len(self.profiles)].items()}
