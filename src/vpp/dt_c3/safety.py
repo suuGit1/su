@@ -11,6 +11,8 @@ class SafetyLimits:
     """Operational limits used by the DT-C3 safety shield."""
 
     dt_hours: float = 0.25
+    charge_efficiency: float = 0.95
+    discharge_efficiency: float = 0.95
     ess_capacity_kwh: float = 500.0
     ess_soc_min: float = 0.1
     ess_soc_max: float = 0.9
@@ -125,12 +127,14 @@ class SafetyShield:
         violations: list[ConstraintViolation] = []
         ess_soc = float(state.get("ess_soc", 0.5))
         ev_soc = float(state.get("ev_soc", 0.5))
-        if ess_soc < self.limits.ess_soc_min:
+        if ess_soc < self.limits.ess_soc_min - 1e-9:
             violations.append(ConstraintViolation("ess_soc_min", self.limits.ess_soc_min - ess_soc, "ESS SOC below lower bound"))
-        if ess_soc > self.limits.ess_soc_max:
+        if ess_soc > self.limits.ess_soc_max + 1e-9:
             violations.append(ConstraintViolation("ess_soc_max", ess_soc - self.limits.ess_soc_max, "ESS SOC above upper bound"))
-        if ev_soc < self.limits.ev_soc_min:
+        if ev_soc < self.limits.ev_soc_min - 1e-9:
             violations.append(ConstraintViolation("ev_soc_min", self.limits.ev_soc_min - ev_soc, "EV SOC below lower bound"))
+        if ev_soc > 1.0 + 1e-9:
+            violations.append(ConstraintViolation("ev_soc_max", ev_soc - 1.0, "EV SOC 超过上限"))
         return violations
 
     def _clip_storage_power(
@@ -147,12 +151,12 @@ class SafetyShield:
         power = self._clip(power_kw, -pmax, pmax, f"{prefix}_power_kw", violations)
         hours = self.limits.dt_hours
         if power > 0:  # discharge
-            available_kw = max(0.0, (soc - soc_min) * capacity_kwh / hours)
+            available_kw = max(0.0, (soc - soc_min) * capacity_kwh * self.limits.discharge_efficiency / hours)
             if power > available_kw:
                 violations.append(ConstraintViolation(f"{prefix}_soc_min", power - available_kw, f"{prefix.upper()} discharge would violate SOC min"))
                 power = available_kw
         elif power < 0:  # charge
-            headroom_kw = max(0.0, (soc_max - soc) * capacity_kwh / hours)
+            headroom_kw = max(0.0, (soc_max - soc) * capacity_kwh / (hours * self.limits.charge_efficiency))
             if abs(power) > headroom_kw:
                 violations.append(ConstraintViolation(f"{prefix}_soc_max", abs(power) - headroom_kw, f"{prefix.upper()} charge would violate SOC max"))
                 power = -headroom_kw

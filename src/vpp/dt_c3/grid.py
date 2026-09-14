@@ -84,8 +84,12 @@ class IEEE33BusInterface:
         """Map aggregate VPP state/action to bus-level injections."""
         bus_map = bus_map or {"pv": 18, "wind": 22, "ess": 25, "ev": 30, "load": 7}
         injections = {i: 0.0 for i in range(1, self.config.bus_count + 1)}
-        injections[bus_map["pv"]] += float(state.get("pv_kw", 0.0))
-        injections[bus_map["wind"]] += float(state.get("wind_kw", 0.0))
+        pv = float(state.get("pv_kw", 0.0))
+        wind = float(state.get("wind_kw", 0.0))
+        renewable = pv + wind
+        used_fraction = 1.0 - min(renewable, max(0.0, float(action.get("curtailment_kw", 0.0)))) / renewable if renewable > 0 else 1.0
+        injections[bus_map["pv"]] += pv * used_fraction
+        injections[bus_map["wind"]] += wind * used_fraction
         injections[bus_map["ess"]] += float(action.get("ess_power_kw", 0.0))
         injections[bus_map["ev"]] += float(action.get("ev_power_kw", 0.0))
         # Load is negative injection. DR reduces the local load.
