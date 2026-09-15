@@ -33,14 +33,35 @@ class Config:
     network_model: str = 'aggregate'
     dispatch_spec: str | None = None
     solver_time_limit: float = 30.0
+    metrics_enabled: bool = False
+    objective_scales: tuple = (100.0, 100.0, 100.0)
+    objective_weights: tuple = (1.0, 0.0, 0.0)
+    reserve_hours: float = 0.25
+    synthetic_carbon_g_per_kwh: float | None = None
 
     def validate(self):
         if self.network_model not in ('aggregate', 'ieee33'):
             raise ValueError('network_model 必须为 aggregate 或 ieee33')
         if not math.isfinite(self.solver_time_limit) or self.solver_time_limit <= 0:
             raise ValueError('求解时间必须为有限正数')
-        if self.algorithm not in ('mappo', 'ippo'):
-            raise ValueError('算法仅支持官方 MAPPO 或局部价值函数 IPPO')
+        if self.algorithm not in ('mappo', 'ippo', 'weighted_mappo'):
+            raise ValueError('支持 mappo、ippo、weighted_mappo；Pareto 条件策略尚未接入，不能用别名替代')
+        if type(self.metrics_enabled) is not bool:
+            raise ValueError('metrics_enabled 必须为布尔值')
+        if self.metrics_enabled and self.network_model != 'ieee33':
+            raise ValueError('三目标评价要求 IEEE33 统一模型')
+        if self.algorithm == 'weighted_mappo' and not self.metrics_enabled:
+            raise ValueError('固定权重多目标方法必须启用三目标评价')
+        for name in ('objective_scales', 'objective_weights'):
+            value = getattr(self, name)
+            if len(value) != 3 or not all(math.isfinite(x) for x in value):
+                raise ValueError(name + ' 必须为三个有限数')
+        if min(self.objective_scales) <= 0 or min(self.objective_weights) < 0 or not math.isclose(sum(self.objective_weights), 1.0, abs_tol=1e-8):
+            raise ValueError('目标尺度必须为正，偏好权重非负且和为 1')
+        if not math.isfinite(self.reserve_hours) or self.reserve_hours <= 0:
+            raise ValueError('备用持续时间必须为有限正数')
+        if self.synthetic_carbon_g_per_kwh is not None and (not math.isfinite(self.synthetic_carbon_g_per_kwh) or self.synthetic_carbon_g_per_kwh < 0):
+            raise ValueError('示例碳因子必须为有限非负数')
         if type(self.seed) is not int or self.seed < 0:
             raise ValueError('seed 必须为非负整数')
         for key in ('safety', 'digital_twin'):

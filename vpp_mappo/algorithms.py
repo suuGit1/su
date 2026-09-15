@@ -8,7 +8,7 @@ from onpolicy.algorithms.r_mappo.r_mappo import R_MAPPO
 from onpolicy.utils.shared_buffer import SharedReplayBuffer
 
 UPSTREAM_COMMIT = 'de66d7a4b23fac2513f56f96f73b3f5cb96695ac'
-REGISTRY = {'mappo': True, 'ippo': False}
+REGISTRY = {'mappo': True, 'ippo': False, 'weighted_mappo': True}
 
 
 class OfficialPPO:

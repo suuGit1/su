@@ -9,7 +9,11 @@ class DispatchInfeasible(RuntimeError):
     pass
 
 
-def solve_dispatch(spec, network, rows, soc, dt, terminal_weight, time_limit=30, proposal=None):
+def solve_dispatch(spec, network, rows, soc, dt, terminal_weight, time_limit=30, proposal=None, objective='economic'):
+    if objective not in ('economic', 'min_grid', 'max_grid'):
+        raise ValueError('未知优化目标')
+    if objective != 'economic' and (len(rows) != 1 or proposal is not None):
+        raise ValueError('备用包络仅允许单个恒定工况且不能混用安全投影')
     # 每步 12 个变量：充电2、放电2、DR、购电、售电、储能模式2、购电模式、SOC2。
     h = len(rows); size = 12*h+2+(3 if proposal is not None else 0)
     c = np.zeros(size); lb = np.zeros(size); ub = np.full(size, np.inf); integer = np.zeros(size)
@@ -63,6 +67,10 @@ def solve_dispatch(spec, network, rows, soc, dt, terminal_weight, time_limit=30,
             constraint(eq, high=proposal[k])
             eq = {i:-v for i,v in action_coeff(0,k).items()}; eq[j] = -1
             constraint(eq, high=-proposal[k])
+    if objective != 'economic':
+        c[:] = 0
+        direction = 1 if objective == 'min_grid' else -1
+        c[5], c[6] = direction, -direction
     matrix = coo_matrix((values,(indices,columns)), shape=(len(lows),size)).tocsc()
     start = time.perf_counter()
     result = milp(c, integrality=integer, bounds=Bounds(lb,ub), constraints=LinearConstraint(matrix,lows,highs),

@@ -28,6 +28,7 @@ class CSVProfiles:
             required = {'scenario', 'step', *FIELDS}
             if not required.issubset(reader.fieldnames or []):
                 raise ValueError('CSV 必须包含：' + ', '.join(sorted(required)))
+            optional = [k for k in ('carbon_g_per_kwh',) if k in reader.fieldnames]
             for row in reader:
                 groups.setdefault(row['scenario'], []).append(row)
         if not groups:
@@ -40,6 +41,10 @@ class CSVProfiles:
             if [int(r['step']) for r in rows] != list(range(horizon)):
                 raise ValueError(f'{name} 的 step 必须恰好为 0 到 {horizon-1}')
             profile = {k: np.asarray([float(r[k]) for r in rows], dtype=float) for k in FIELDS}
+            for k in optional:
+                profile[k] = np.asarray([float(r[k]) for r in rows], dtype=float)
+                if (profile[k] < 0).any():
+                    raise ValueError(k + ' 不得为负数')
             if any(not np.isfinite(v).all() for v in profile.values()):
                 raise ValueError('CSV 存在缺失值或非有限数值')
             if any((profile[k] < 0).any() for k in FIELDS[:3]):

@@ -1,0 +1,7 @@
+{
+  "algorithm":"mappo", "network_model":"ieee33", "episodes":2,
+  "horizon":4, "dt_hours":0.25, "hidden_size":32, "ppo_epoch":2,
+  "gamma":1.0, "seed":1, "metrics_enabled":true,
+  "objective_scales":[100.0,100.0,100.0], "objective_weights":[1.0,0.0,0.0],
+  "reserve_hours":0.25, "synthetic_carbon_g_per_kwh":300.0
+}

@@ -1,0 +1,14 @@
+{
+ "baseline_invariant":"普通 mappo 永久保留独立训练、评估、配置和结果；Pareto 算法只能新增",
+ "stages":[
+  {"name":"官方 MAPPO、IEEE33、MILP/MPC 与真实日曲线","status":"implemented_and_smoke_tested","acceptance":"共享物理执行器、独立评估、交流潮流审计"},
+  {"name":"三目标口径与多权重对照","status":"implemented_and_smoke_tested","acceptance":"普通 MAPPO 奖励不受偏好改变；验证筛选与测试隔离；向量和单位检查"},
+  {"name":"EV 到离站、需求、弃电和 DR 能量约束","status":"pending","acceptance":"接入真实会话或明确代理需求；在线不泄漏未来实际离开；MILP/MPC 同步约束"},
+  {"name":"真实碳数据与细粒度曲线","status":"pending","acceptance":"地区、UTC 时间和来源匹配；区分在线预测与事后核算"},
+  {"name":"通信/计算联合事件模型","status":"pending","acceptance":"上传与 CPU 决策实际改变 AoI、队列和截止时间；端到端计时"},
+  {"name":"Physics-informed Hybrid DT","status":"pending","acceptance":"物理先验与残差学习；与简单估计器比较；真值不泄漏给策略"},
+  {"name":"偏好条件 Pareto-MAPPO","status":"pending","acceptance":"向量学习、偏好输入、未见偏好评价；普通 MAPPO 与固定权重模型继续存在"},
+  {"name":"增强安全层","status":"pending","acceptance":"陈旧观测的误差界、AC 修正、不可行和超时回退"},
+  {"name":"论文完整实验","status":"pending","acceptance":"多训练种子、预算匹配、消融、压力测试、真实设备计时及扩展系统"}
+ ]
+}
