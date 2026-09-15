@@ -55,6 +55,8 @@ def train(config, output, env_factory=VPPAdapter):
                     data_source='csv' if env.data else 'synthetic',
                     resolved_official_args=vars(agent.args))
     metadata['dispatch_spec'] = env.spec.record() if hasattr(env, 'spec') else None
+    from .coordinator import CONTRACT_VERSION as COORDINATOR_VERSION
+    metadata['coordinator_contract']=COORDINATOR_VERSION if config.coordinator_mode!='off' else None
     metadata['cyber_spec'] = asdict(env.cyber_spec) if hasattr(env,'cyber_spec') else None
     if config.cyber_mode!='off':
         from .cyber import CONTRACT_VERSION as CYBER_VERSION
@@ -125,7 +127,7 @@ def train(config, output, env_factory=VPPAdapter):
         write_csv(out / 'training.csv', history)
         checkpoint = dict(format_version=1, upstream_commit=UPSTREAM_COMMIT, config=asdict(config),
                           episode=ep + 1, data_sha256=env.data.sha256 if env.data else None, **agent.state())
-        for key in ('resource_contract','flex_spec','ev_bundle','cyber_spec','cyber_contract'):
+        for key in ('resource_contract','flex_spec','ev_bundle','cyber_spec','cyber_contract','coordinator_contract'):
             checkpoint[key]=metadata[key]
         checkpoint['dispatch_spec'] = metadata['dispatch_spec']
         checkpoint['objective_contract'] = metadata['objective_contract']
@@ -149,6 +151,9 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
     if config.resource_model=='sessions_v1': CONTRACT_VERSION += '+sessions-dr-curtail-v1'
     if config.metrics_enabled and state.get('objective_contract') != CONTRACT_VERSION:
         raise ValueError('多目标检查点的指标定义版本不匹配')
+    if config.coordinator_mode!='off':
+        from .coordinator import CONTRACT_VERSION as COORDINATOR_VERSION
+        if state.get('coordinator_contract')!=COORDINATOR_VERSION:raise ValueError('协调器检查点版本不匹配')
     config._dispatch_record = state.get('dispatch_spec')
     config._cyber_record = state.get('cyber_spec')
     if config.cyber_mode!='off':

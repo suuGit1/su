@@ -14,6 +14,8 @@ class CyberVPPAdapter:
         self.config=config;self.core=FlexVPPAdapter(config,csv_path)
         self.spec=self.core.spec;self.flex=self.core.flex;self.bundle=self.core.bundle;self.data=self.core.data
         self.cyber_spec=CyberSpec.load(getattr(config,'_cyber_record',None) or config.cyber_spec)
+        from .coordinator import TaskRiskCoordinator
+        self.coordinator=TaskRiskCoordinator(config,self.spec,self.flex)
         self.agent_names=list(CHANNELS)
         if config.cyber_mode=='joint':self.agent_names += ['comm_'+k for k in CHANNELS]+['cpu_'+k for k in CHANNELS]
         self.num_agents=len(self.agent_names)
@@ -70,6 +72,19 @@ class CyberVPPAdapter:
         if self.config.cyber_mode=='joint':
             bw=np.maximum(0,x[6:12]);cpu=np.maximum(0,x[12:18])
         else:bw=cpu=np.ones(6)
+        return self.step_candidate(energy,bw,cpu)
+
+    def step_candidate(self,energy,bw,cpu):
+        if self.t>=self.config.horizon:raise RuntimeError('回合已结束')
+        energy=np.asarray(energy,dtype=float)
+        if energy.shape!=(6,) or not np.isfinite(energy).all():raise ValueError('候选动作必须为六个有限数')
+        # 在推进物理状态前校验分配，避免非法输入导致半步状态提交。
+        self.pipeline.allocations(bw,self.cyber_spec.bandwidth_bps)
+        self.pipeline.allocations(cpu,self.cyber_spec.cpu_cycles_per_second)
+        record=None
+        if self.config.coordinator_mode!='off':
+            bw,cpu,record=self.coordinator.allocate(self.encode()[0][0],bw,cpu)
+        else:bw,cpu=np.asarray(bw),np.asarray(cpu)
         events=self.pipeline.enqueue(self.sensor_payloads(),bw>0)
         # 只把候选命令给 DT；安全层实际动作与分车结果没有零时延旁路。
         self.dt.command(energy)
@@ -93,6 +108,8 @@ class CyberVPPAdapter:
             bandwidth_allocated_bps_json=json.dumps(cyber['bandwidth_allocated_bps']),
             cpu_allocated_cycles_per_second_json=json.dumps(cyber['cpu_allocated_cycles_per_second']),
             tx_queue_packets=sum(map(len,self.pipeline.tx)),cpu_queue_jobs=sum(map(len,self.pipeline.cpu)),
+            coordinator_json=json.dumps(record,sort_keys=True),
+            coordinator_risk_channels=record['risk_channels'] if record else 0,
             safety_information='local_current_sensors')
         # 真值仅用于离线诊断，既不进入观察/价值函数，也不作为额外奖励。
         if not done:
@@ -113,6 +130,7 @@ def cyber_totals(rows):
     total['mean_dt_state_rmse_normalized']=float(np.mean(errors)) if errors else None
     total['safety_intervention_steps']=sum(r['shield_l1_kw']>1e-5 for r in rows)
     total['safety_correction_sum_kw']=sum(r['shield_l1_kw'] for r in rows)
+    total['coordinator_risk_channel_steps']=sum(r.get('coordinator_risk_channels',0) for r in rows)
     total['terminal_overdue_jobs']=rows[-1]['pending_overdue_jobs']
     total['terminal_tx_queue_packets']=rows[-1]['tx_queue_packets'];total['terminal_cpu_queue_jobs']=rows[-1]['cpu_queue_jobs']
     return total

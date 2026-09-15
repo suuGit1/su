@@ -46,7 +46,21 @@ class Config:
     cyber_dt_mode: str = 'physics'
     cyber_spec: str | None = None
 
+    coordinator_mode: str = 'off'
+    coordinator_aoi_limit_steps: float = 2.0
+    coordinator_deadline_margin_steps: float = 1.0
+    coordinator_soc_margin: float = 0.05
+    coordinator_reserved_fraction: float = 0.5
+
     def validate(self):
+        if self.coordinator_mode not in ('off','monitor','schedule'):
+            raise ValueError('协调器模式必须为 off、monitor 或 schedule')
+        if self.coordinator_mode!='off' and self.cyber_mode=='off':
+            raise ValueError('协调器要求启用 C3 环境')
+        for key in ('coordinator_aoi_limit_steps','coordinator_deadline_margin_steps','coordinator_soc_margin','coordinator_reserved_fraction'):
+            if not math.isfinite(getattr(self,key)) or getattr(self,key)<0: raise ValueError(key+' 必须有限非负')
+        if self.coordinator_aoi_limit_steps<=0 or self.coordinator_reserved_fraction>1:
+            raise ValueError('AoI 阈值必须为正，保留资源比例不得超过 1')
         if self.cyber_mode not in ('off','fixed','joint') or self.cyber_dt_mode not in ('physics','hold'):
             raise ValueError('C3 模式或基础 DT 模式不合法')
         if self.cyber_mode!='off':
