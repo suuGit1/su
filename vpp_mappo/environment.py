@@ -20,6 +20,9 @@ class MultiAgentEnvironment(Protocol):
 
 class VPPAdapter:
     def __new__(cls, config, csv_path=None):
+        if config.cyber_mode != 'off':
+            from .cyber_environment import CyberVPPAdapter
+            return CyberVPPAdapter(config,csv_path)
         if config.resource_model == 'sessions_v1':
             from .flex_environment import FlexVPPAdapter
             return FlexVPPAdapter(config, csv_path)

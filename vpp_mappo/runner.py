@@ -55,6 +55,13 @@ def train(config, output, env_factory=VPPAdapter):
                     data_source='csv' if env.data else 'synthetic',
                     resolved_official_args=vars(agent.args))
     metadata['dispatch_spec'] = env.spec.record() if hasattr(env, 'spec') else None
+    metadata['cyber_spec'] = asdict(env.cyber_spec) if hasattr(env,'cyber_spec') else None
+    if config.cyber_mode!='off':
+        from .cyber import CONTRACT_VERSION as CYBER_VERSION
+        metadata['cyber_contract']=CYBER_VERSION
+        metadata['policy_information']='completed_telemetry_and_candidate_command_DT_only'
+        metadata['safety_information']='local_current_sensors'
+    else: metadata['cyber_contract']=None
     metadata['resource_contract'] = config.resource_model
     metadata['flex_spec'] = asdict(env.flex) if hasattr(env,'flex') else None
     metadata['ev_bundle'] = env.bundle if hasattr(env,'bundle') else None
@@ -112,10 +119,13 @@ def train(config, output, env_factory=VPPAdapter):
         if config.resource_model=='sessions_v1':
             from .flex_environment import resource_totals
             row.update(resource_totals(objective_steps))
+        if config.cyber_mode!='off':
+            from .cyber_environment import cyber_totals
+            row.update(cyber_totals(objective_steps))
         write_csv(out / 'training.csv', history)
         checkpoint = dict(format_version=1, upstream_commit=UPSTREAM_COMMIT, config=asdict(config),
                           episode=ep + 1, data_sha256=env.data.sha256 if env.data else None, **agent.state())
-        for key in ('resource_contract','flex_spec','ev_bundle'):
+        for key in ('resource_contract','flex_spec','ev_bundle','cyber_spec','cyber_contract'):
             checkpoint[key]=metadata[key]
         checkpoint['dispatch_spec'] = metadata['dispatch_spec']
         checkpoint['objective_contract'] = metadata['objective_contract']
@@ -140,6 +150,10 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
     if config.metrics_enabled and state.get('objective_contract') != CONTRACT_VERSION:
         raise ValueError('多目标检查点的指标定义版本不匹配')
     config._dispatch_record = state.get('dispatch_spec')
+    config._cyber_record = state.get('cyber_spec')
+    if config.cyber_mode!='off':
+        from .cyber import CONTRACT_VERSION as CYBER_VERSION
+        if state.get('cyber_contract')!=CYBER_VERSION: raise ValueError('C3 检查点版本不匹配')
     config._flex_record = state.get('flex_spec')
     config._ev_bundle = state.get('ev_bundle')
     if ev_sessions_path:
@@ -195,6 +209,9 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
             if config.resource_model=='sessions_v1':
                 from .flex_environment import resource_totals
                 rows[-1].update(resource_totals(episode_steps))
+            if config.cyber_mode!='off':
+                from .cyber_environment import cyber_totals
+                rows[-1].update(cyber_totals(episode_steps))
             if config.metrics_enabled:
                 rows[-1].update(aggregate_metrics(episode_steps))
     out = Path(output)
@@ -212,6 +229,10 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
         summary.update(total_ac_violations=sum(r['ac_violations'] for r in rows),
             ac_failed_steps=sum(r['ac_failed_steps'] for r in rows),
             mean_objective=float(np.mean([r['objective'] for r in rows])))
+    if config.cyber_mode!='off':
+        summary.update(cyber_contract=state['cyber_contract'],cyber_spec=state['cyber_spec'],
+            mean_aoi_seconds=float(np.mean([r['mean_aoi_seconds'] for r in rows])),
+            total_dt_updates=sum(r['dt_updates'] for r in rows),safety_information='local_current_sensors')
     (out / 'summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
     if config.metrics_enabled:
         from .objectives import OBJECTIVE_NAMES

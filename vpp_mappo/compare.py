@@ -17,6 +17,7 @@ def compare(checkpoint, output, csv_path=None, episodes=3, seed=100000, lookahea
     if ev_sessions_path:
         from .flex_resources import read_bundle
         cfg._ev_bundle=read_bundle(ev_sessions_path)
+    if cfg.cyber_mode!='off': raise ValueError('现有配对比较仅限能源环境；C3 公平优化对照尚未接入')
     if cfg.network_model!='ieee33' or not cfg.safety:
         raise ValueError('统一可行域比较要求 IEEE33 且 safety=true；不安全消融请单独评估')
     # 学习策略先执行数据隔离检查；失败时不继续跑对照。
