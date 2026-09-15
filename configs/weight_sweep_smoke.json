@@ -1,0 +1,6 @@
+{
+ "config":"configs/objectives_smoke.json",
+ "weights":[[1.0,0.0,0.0],[0.0,1.0,0.0],[0.0,0.0,1.0],[0.3333333333333333,0.3333333333333333,0.3333333333333333]],
+ "evaluation_episodes":2,"validation_seed":200000,"test_seed":300000,
+ "hv_reference":[-100.0,-100.0,0.0]
+}

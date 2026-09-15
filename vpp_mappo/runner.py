@@ -56,6 +56,8 @@ def train(config, output, env_factory=VPPAdapter):
                     resolved_official_args=vars(agent.args))
     metadata['dispatch_spec'] = env.spec.record() if hasattr(env, 'spec') else None
     metadata['data_provenance'] = env.data.provenance if env.data else None
+    from .objectives import CONTRACT_VERSION, aggregate_metrics
+    metadata['objective_contract'] = CONTRACT_VERSION if config.metrics_enabled else None
     if config.network_model == 'ieee33':
         from importlib.metadata import version
         metadata['grid_dependencies'] = {k: version(k) for k in ('pandapower', 'scipy', 'pandas')}
@@ -68,6 +70,7 @@ def train(config, output, env_factory=VPPAdapter):
         buffer.share_obs[0, 0] = agent.critic_obs(obs, share)
         total_cost = total_reward = 0.0
         violations = 0
+        objective_steps = []
         start = time.perf_counter()
         for step in range(config.horizon):
             agent.trainer.prep_rollout()
@@ -84,6 +87,8 @@ def train(config, output, env_factory=VPPAdapter):
             total_cost += info['cost']
             total_reward += info['reward']
             violations += info['constraint_violations']
+            if config.metrics_enabled:
+                objective_steps.append(info)
         # 每个 rollout 完整包含一个任务，终端掩码阻断跨回合 bootstrap。
         buffer.compute_returns(np.zeros((1, env.num_agents, 1), np.float32), agent.trainer.value_normalizer)
         agent.trainer.prep_training()
@@ -98,10 +103,13 @@ def train(config, output, env_factory=VPPAdapter):
                    actor_parameter_delta=float(torch.linalg.vector_norm(after-before)),
                    seconds=time.perf_counter()-start, **metrics)
         history.append(row)
+        if config.metrics_enabled:
+            row.update(aggregate_metrics(objective_steps))
         write_csv(out / 'training.csv', history)
         checkpoint = dict(format_version=1, upstream_commit=UPSTREAM_COMMIT, config=asdict(config),
                           episode=ep + 1, data_sha256=env.data.sha256 if env.data else None, **agent.state())
         checkpoint['dispatch_spec'] = metadata['dispatch_spec']
+        checkpoint['objective_contract'] = metadata['objective_contract']
         checkpoint['data_provenance'] = metadata['data_provenance']
         checkpoint['train_scenarios'] = env.data.scenario_names if env.data else []
         checkpoint['train_fingerprints'] = env.data.fingerprints if env.data else []
@@ -118,6 +126,9 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
     if state.get('format_version') != 1 or state.get('upstream_commit') != UPSTREAM_COMMIT:
         raise ValueError('检查点格式或官方版本不匹配')
     config = Config(**state['config'])
+    from .objectives import CONTRACT_VERSION, aggregate_metrics
+    if config.metrics_enabled and state.get('objective_contract') != CONTRACT_VERSION:
+        raise ValueError('多目标检查点的指标定义版本不匹配')
     config._dispatch_record = state.get('dispatch_spec')
     train_csv = config.train_csv
     config.train_csv = None
@@ -164,6 +175,8 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
                 ac_violations=sum(r['ac_violations'] for r in episode_steps),
                 ac_failed_steps=sum(not r['ac_converged'] for r in episode_steps),
                 ac_cost=sum(r['ac_cost'] for r in episode_steps) if all(r['ac_converged'] for r in episode_steps) else None)
+            if config.metrics_enabled:
+                rows[-1].update(aggregate_metrics(episode_steps))
     out = Path(output)
     out.mkdir(parents=True, exist_ok=True)
     if any(out.iterdir()):
@@ -180,5 +193,11 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
             ac_failed_steps=sum(r['ac_failed_steps'] for r in rows),
             mean_objective=float(np.mean([r['objective'] for r in rows])))
     (out / 'summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
+    if config.metrics_enabled:
+        from .objectives import OBJECTIVE_NAMES
+        summary['objective_contract'] = CONTRACT_VERSION
+        summary['mean_objective_vector'] = [float(np.mean([r[k] for r in rows])) for k in OBJECTIVE_NAMES]
+        summary['carbon_source'] = 'csv_column' if csv_path else 'explicit_synthetic_assumption'
+        (out / 'summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return rows

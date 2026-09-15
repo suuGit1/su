@@ -22,6 +22,7 @@ def run(config, output, controller='mpc', episodes=3, seed=100000, csv_path=None
     metadata=dict(config=asdict(config),dispatch_spec=env.spec.record(),controller=controller,lookahead=lookahead,
         data_sha256=env.data.sha256 if env.data else None,data_source='csv' if env.data else 'synthetic',
         forecast='完整实际曲线：仅作线性模型完美预知参考' if controller=='milp_oracle' else '当前测量值持久性预测：不读取未来实际值')
+    metadata['optimization_objective'] = 'economic; extra objectives are evaluation only'
     (out/'metadata.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2),encoding='utf-8')
     trajectories=[]; totals=[]
     for ep in range(episodes):
@@ -46,6 +47,9 @@ def run(config, output, controller='mpc', episodes=3, seed=100000, csv_path=None
             ac_cost=sum(r['ac_cost'] for r in rows) if all(r['ac_converged'] for r in rows) else None,
             nonoptimal_solves=sum(not r['solver_optimal'] for r in rows) if controller=='mpc' else int(not meta['solver_optimal']))
         totals.append(total)
+        if config.metrics_enabled:
+            from .objectives import aggregate_metrics
+            total.update(aggregate_metrics(rows))
         print(f"{controller} episode={ep+1} cost={total['cost']:.3f} AC违规={total['ac_violations']}",flush=True)
     write_csv(out/'trajectory.csv',trajectories); write_csv(out/'episodes.csv',totals)
     summary=dict(controller=controller,episodes=episodes,mean_cost=float(np.mean([r['cost'] for r in totals])),
@@ -53,6 +57,11 @@ def run(config, output, controller='mpc', episodes=3, seed=100000, csv_path=None
         total_violations=sum(r['violations'] for r in totals),total_ac_violations=sum(r['ac_violations'] for r in totals),
         ac_failed_steps=sum(r['ac_failed_steps'] for r in totals))
     (out/'summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
+    if config.metrics_enabled:
+        from .objectives import OBJECTIVE_NAMES, CONTRACT_VERSION
+        summary['objective_contract'] = CONTRACT_VERSION
+        summary['mean_objective_vector'] = [float(np.mean([r[k] for r in totals])) for k in OBJECTIVE_NAMES]
+        (out/'summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
     return totals
 
 

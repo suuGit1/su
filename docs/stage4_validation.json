@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-15",
+  "regression_tests": 27,
+  "new_tests": 7,
+  "parallel_api_test": "passed",
+  "policies": [
+    "mappo",
+    "weighted_00",
+    "weighted_01",
+    "weighted_02",
+    "weighted_03"
+  ],
+  "training_episodes_per_policy": 2,
+  "horizon": 4,
+  "validation_episodes_per_policy": 2,
+  "test_episodes_per_policy": 2,
+  "all_actor_updates_nonzero": {
+    "mappo": true,
+    "weighted_00": true,
+    "weighted_01": true,
+    "weighted_02": true,
+    "weighted_03": true
+  },
+  "economic_only_weight_actor_equals_ordinary": true,
+  "selection_split": "validation only",
+  "ordinary_mappo_test_present": true,
+  "test_reselection": false,
+  "budget": {
+    "per_policy_env_steps": 8,
+    "total_env_steps": 40,
+    "total_policies": 5
+  },
+  "data_source": "synthetic",
+  "note": "仅验证可运行性和对照保留，不证明收敛或完整 Pareto 前沿"
+}

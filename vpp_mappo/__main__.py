@@ -10,7 +10,7 @@ def main():
     t.add_argument('--config', default='configs/mappo_smoke.json')
     t.add_argument('--output', required=True)
     t.add_argument('--device')
-    t.add_argument('--algorithm', choices=['mappo', 'ippo'])
+    t.add_argument('--algorithm', choices=['mappo', 'ippo', 'weighted_mappo'])
     t.add_argument('--episodes', type=int)
     t.add_argument('--seed', type=int)
     t.add_argument('--csv', help='训练场景 CSV，覆盖配置中的 train_csv')
