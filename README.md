@@ -1,5 +1,7 @@
 # Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants
 
+第七阶段已加入观察等价聚合 MPC、影子决策审计及规则式任务/风险协调器。见 [第七阶段说明与 Pareto 路线](docs/stage7.md)。
+
 路线 A 第一批已接入通信/计算队列、基础物理 DT 和普通 MAPPO 联合决策。见 [第六阶段说明](docs/stage6.md)。项目标题是最终研究目标；Hybrid DT、Pareto 条件策略与鲁棒安全仍待实现。
 
 **第四阶段已保留普通 MAPPO，新增三目标记录、固定权重多策略对照和向量奖励接口。见 [第四阶段说明](docs/stage4.md)。偏好条件 Pareto-MAPPO 尚未完成，进度按验收清单如实记录。**
@@ -13,7 +15,7 @@
 ## 安装与直接运行
 
 ```bash
-git clone --branch research/stage6-causal-c3 https://github.com/suuGit1/su.git
+git clone --branch research/stage7-observed-mpc https://github.com/suuGit1/su.git
 cd su
 python -m venv .venv
 ```

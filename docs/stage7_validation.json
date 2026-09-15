@@ -1,0 +1,50 @@
+{
+  "unit_tests": 62,
+  "result": "passed",
+  "training_episodes": 2,
+  "evaluation": {
+    "checkpoint": "/tmp/stage7_train/latest.pt",
+    "episodes": 2,
+    "seed": 100000,
+    "lookahead": 2,
+    "observation": "same_54_features_no_private_EV_records",
+    "resource_rule": "same_fixed_allocations_and_coordinator",
+    "statewise_check": "shadow_MPC_on_exact_MAPPO_observation_recorded_in_learned_trajectory",
+    "caveat": "闭环动作不同导致后续状态/缓存不同；同等信息权限不表示同一后续轨迹。MPC 为最近期限聚合近似，不是逐车完整信息 MPC。",
+    "safety": "same_local_current_sensor_shield",
+    "mpc_failures": 0,
+    "paired": [
+      {
+        "episode": 1,
+        "scenario_seed": 100000,
+        "learned_objective": 348.8229777447412,
+        "mpc_objective": 312.59265988511953,
+        "learned_minus_mpc": 36.230317859621664,
+        "learned_violations": 0,
+        "mpc_violations": 0,
+        "learned_ac_violations": 0,
+        "mpc_ac_violations": 0,
+        "mpc_failures": 0,
+        "learned_safety_interventions": 8,
+        "mpc_safety_interventions": 5
+      },
+      {
+        "episode": 2,
+        "scenario_seed": 100001,
+        "learned_objective": 352.49338388271696,
+        "mpc_objective": 319.7102898994499,
+        "learned_minus_mpc": 32.783093983267065,
+        "learned_violations": 0,
+        "mpc_violations": 0,
+        "learned_ac_violations": 0,
+        "mpc_ac_violations": 0,
+        "mpc_failures": 0,
+        "learned_safety_interventions": 8,
+        "mpc_safety_interventions": 5
+      }
+    ]
+  },
+  "shadow_mpc_failures": 0,
+  "limitation": "合成冒烟，无收敛或鲁棒安全结论；MPC 采用与公开观察一致的 EV 聚合近似",
+  "serialized_observation_shadow_replay_steps": 8
+}

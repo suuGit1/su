@@ -12,7 +12,7 @@ from .runner import write_csv
 
 def run(config, output, controller='mpc', episodes=3, seed=100000, csv_path=None, lookahead=6):
     config.validate()
-    if config.cyber_mode!='off': raise ValueError('能源 MILP/MPC 入口不模拟 C3 队列；请在 cyber_mode=off 运行，不能标记为信息公平的 C3 对照')
+    if config.cyber_mode!='off': raise ValueError('此入口为能源 MILP/MPC；C3 固定规则公平对照请使用 vpp_mappo.cyber_compare')
     if config.network_model!='ieee33': raise ValueError('统一优化对照要求 ieee33 环境')
     if episodes<1 or seed<0 or lookahead<1 or controller not in ('mpc','milp_oracle'): raise ValueError('对照参数不合法')
     out=Path(output)

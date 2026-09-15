@@ -27,6 +27,11 @@
       "acceptance": "上传与 CPU 决策实际改变 AoI、队列和截止时间；端到端计时"
     },
     {
+      "name": "同等观察 MPC 与任务/风险协调器",
+      "status": "implemented_and_smoke_tested",
+      "acceptance": "只读取公开观察；固定资源规则的闭环比较与逐状态影子审计；风险为阈值启发式"
+    },
+    {
       "name": "Physics-informed Hybrid DT",
       "status": "basic_physics_DT_and_hold_implemented; learned_residual_and_uncertainty_pending",
       "acceptance": "物理先验与残差学习；与简单估计器比较；真值不泄漏给策略"
@@ -48,5 +53,10 @@
     }
   ],
   "project_title": "Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants",
-  "selected_route": "A: causal closed loop first"
+  "selected_route": "A: causal closed loop first",
+  "next_batches": [
+    "DT 残差与校准不确定性；冻结 C3 三目标及观察版本",
+    "偏好条件 Pareto-MAPPO 主体及未见偏好测试",
+    "鲁棒安全、真实数据、多种子及扩展系统实验"
+  ]
 }
