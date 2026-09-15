@@ -55,7 +55,7 @@ class Network33:
         return p+self.pa@action, q+self.qa@action
 
     def affine(self, row):
-        p, q = self.injections(row, np.zeros(3))
+        p, q = self.injections(row, np.zeros(self.pa.shape[1]))
         bp, bq = self.downstream@p, self.downstream@q
         v = 1-2*self.paths@(self.r*bp+self.x*bq)/self.kv**2
         # 内接正方形是保守的视在功率约束：|P|,|Q| ≤ Smax/sqrt(2)。

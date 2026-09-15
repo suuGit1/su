@@ -1,0 +1,39 @@
+{
+  "unit_tests": 42,
+  "unit_result": "passed",
+  "ordinary_mappo_training_episodes": 2,
+  "weighted_mappo_training_episodes": 1,
+  "scenario": "synthetic seed 100000; horizon 8; dt_hours 0.25",
+  "comparison": {
+    "algorithm": "mappo",
+    "episodes": 1,
+    "checkpoint_episode": 2,
+    "data_source": "synthetic",
+    "data_sha256": null,
+    "mean_cost": 338.42250741388636,
+    "std_cost": null,
+    "total_violations": 0,
+    "total_ac_violations": 0,
+    "ac_failed_steps": 0,
+    "mean_objective": 351.9919832027055
+  },
+  "milp": {
+    "controller": "milp_oracle",
+    "episodes": 1,
+    "mean_cost": 310.84265606947383,
+    "mean_objective": 310.84265606947383,
+    "total_violations": 0,
+    "total_ac_violations": 0,
+    "ac_failed_steps": 0
+  },
+  "mpc": {
+    "controller": "mpc",
+    "episodes": 1,
+    "mean_cost": 312.59265606947383,
+    "mean_objective": 312.59265606947383,
+    "total_violations": 0,
+    "total_ac_violations": 0,
+    "ac_failed_steps": 0
+  },
+  "scope": "CPU 冒烟与约束回归；非收敛结果，未使用真实 EV 数据"
+}

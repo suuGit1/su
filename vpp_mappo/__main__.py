@@ -21,6 +21,7 @@ def main():
     e.add_argument('--seed', type=int, default=100000)
     e.add_argument('--device', default='cpu')
     e.add_argument('--csv')
+    e.add_argument('--ev-sessions',help='独立评估 EV 会话 JSON')
     sub.add_parser('doctor')
     args = parser.parse_args()
     if args.command == 'doctor':
@@ -41,7 +42,7 @@ def main():
         train(cfg, args.output)
     else:
         from .runner import evaluate
-        evaluate(args.checkpoint, args.output, args.episodes, args.seed, args.device, args.csv)
+        evaluate(args.checkpoint, args.output, args.episodes, args.seed, args.device, args.csv, ev_sessions_path=args.ev_sessions)
 
 
 if __name__ == '__main__':
