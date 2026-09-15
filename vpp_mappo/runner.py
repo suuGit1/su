@@ -55,8 +55,12 @@ def train(config, output, env_factory=VPPAdapter):
                     data_source='csv' if env.data else 'synthetic',
                     resolved_official_args=vars(agent.args))
     metadata['dispatch_spec'] = env.spec.record() if hasattr(env, 'spec') else None
+    metadata['resource_contract'] = config.resource_model
+    metadata['flex_spec'] = asdict(env.flex) if hasattr(env,'flex') else None
+    metadata['ev_bundle'] = env.bundle if hasattr(env,'bundle') else None
     metadata['data_provenance'] = env.data.provenance if env.data else None
     from .objectives import CONTRACT_VERSION, aggregate_metrics
+    if config.resource_model=='sessions_v1': CONTRACT_VERSION += '+sessions-dr-curtail-v1'
     metadata['objective_contract'] = CONTRACT_VERSION if config.metrics_enabled else None
     if config.network_model == 'ieee33':
         from importlib.metadata import version
@@ -87,7 +91,7 @@ def train(config, output, env_factory=VPPAdapter):
             total_cost += info['cost']
             total_reward += info['reward']
             violations += info['constraint_violations']
-            if config.metrics_enabled:
+            if config.metrics_enabled or config.resource_model=='sessions_v1':
                 objective_steps.append(info)
         # 每个 rollout 完整包含一个任务，终端掩码阻断跨回合 bootstrap。
         buffer.compute_returns(np.zeros((1, env.num_agents, 1), np.float32), agent.trainer.value_normalizer)
@@ -105,9 +109,14 @@ def train(config, output, env_factory=VPPAdapter):
         history.append(row)
         if config.metrics_enabled:
             row.update(aggregate_metrics(objective_steps))
+        if config.resource_model=='sessions_v1':
+            from .flex_environment import resource_totals
+            row.update(resource_totals(objective_steps))
         write_csv(out / 'training.csv', history)
         checkpoint = dict(format_version=1, upstream_commit=UPSTREAM_COMMIT, config=asdict(config),
                           episode=ep + 1, data_sha256=env.data.sha256 if env.data else None, **agent.state())
+        for key in ('resource_contract','flex_spec','ev_bundle'):
+            checkpoint[key]=metadata[key]
         checkpoint['dispatch_spec'] = metadata['dispatch_spec']
         checkpoint['objective_contract'] = metadata['objective_contract']
         checkpoint['data_provenance'] = metadata['data_provenance']
@@ -119,7 +128,7 @@ def train(config, output, env_factory=VPPAdapter):
     return history
 
 
-def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path=None, env_factory=VPPAdapter):
+def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path=None, env_factory=VPPAdapter, ev_sessions_path=None):
     if episodes < 1 or seed < 0:
         raise ValueError('评估回合数必须为正数，种子不得为负数')
     state = torch.load(checkpoint, map_location='cpu', weights_only=True)
@@ -127,9 +136,17 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
         raise ValueError('检查点格式或官方版本不匹配')
     config = Config(**state['config'])
     from .objectives import CONTRACT_VERSION, aggregate_metrics
+    if config.resource_model=='sessions_v1': CONTRACT_VERSION += '+sessions-dr-curtail-v1'
     if config.metrics_enabled and state.get('objective_contract') != CONTRACT_VERSION:
         raise ValueError('多目标检查点的指标定义版本不匹配')
     config._dispatch_record = state.get('dispatch_spec')
+    config._flex_record = state.get('flex_spec')
+    config._ev_bundle = state.get('ev_bundle')
+    if ev_sessions_path:
+        from .flex_resources import read_bundle
+        config._ev_bundle=read_bundle(ev_sessions_path)
+    if config.resource_model=='sessions_v1' and state.get('resource_contract')!='sessions_v1':
+        raise ValueError('资源模型检查点版本不匹配')
     train_csv = config.train_csv
     config.train_csv = None
     config.device = device
@@ -175,6 +192,9 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
                 ac_violations=sum(r['ac_violations'] for r in episode_steps),
                 ac_failed_steps=sum(not r['ac_converged'] for r in episode_steps),
                 ac_cost=sum(r['ac_cost'] for r in episode_steps) if all(r['ac_converged'] for r in episode_steps) else None)
+            if config.resource_model=='sessions_v1':
+                from .flex_environment import resource_totals
+                rows[-1].update(resource_totals(episode_steps))
             if config.metrics_enabled:
                 rows[-1].update(aggregate_metrics(episode_steps))
     out = Path(output)

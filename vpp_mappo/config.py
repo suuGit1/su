@@ -38,8 +38,17 @@ class Config:
     objective_weights: tuple = (1.0, 0.0, 0.0)
     reserve_hours: float = 0.25
     synthetic_carbon_g_per_kwh: float | None = None
+    resource_model: str = 'legacy'
+    flex_spec: str | None = None
+    ev_sessions_path: str | None = None
 
     def validate(self):
+        if self.resource_model not in ('legacy', 'sessions_v1'):
+            raise ValueError('resource_model 必须为 legacy 或 sessions_v1')
+        if self.resource_model == 'sessions_v1' and self.network_model != 'ieee33':
+            raise ValueError('会话资源模型要求 IEEE33')
+        if self.resource_model == 'sessions_v1' and self.metrics_enabled and not math.isclose(self.reserve_hours,self.dt_hours):
+            raise ValueError('会话模型当前备用持续时间必须等于一个调度步长')
         if self.network_model not in ('aggregate', 'ieee33'):
             raise ValueError('network_model 必须为 aggregate 或 ieee33')
         if not math.isfinite(self.solver_time_limit) or self.solver_time_limit <= 0:

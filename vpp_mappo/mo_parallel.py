@@ -2,7 +2,7 @@
 import numpy as np
 from gymnasium.spaces import Box
 from pettingzoo import ParallelEnv
-from .grid_environment import GridVPPAdapter
+from .environment import VPPAdapter
 from .objectives import OBJECTIVE_NAMES
 
 
@@ -12,8 +12,8 @@ class VPPMOParallelEnv(ParallelEnv):
 
     def __init__(self, config, csv_path=None):
         if not config.metrics_enabled: raise ValueError('向量接口必须启用三目标记录')
-        self.core = GridVPPAdapter(config,csv_path)
-        self.possible_agents = ['ess','ev','dr']
+        self.core = VPPAdapter(config,csv_path)
+        self.possible_agents = getattr(self.core,'agent_names',['ess','ev','dr'])
         self.agents = []
         self.observation_spaces = {a:self.core.observation_space for a in self.possible_agents}
         self.action_spaces = {a:self.core.action_space for a in self.possible_agents}

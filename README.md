@@ -49,3 +49,7 @@ python -m vpp_mappo evaluate --checkpoint output/ippo_s1/latest.pt --output outp
 真实数据接入、扩展接口与研究边界见 [框架说明](docs/stage2.md)，实测记录见 [验证记录](docs/stage2_validation.md)。
 
 本项目基于用户上传的 virtual-power-plant-dt-c3-gpu-cu113.zip；原项目来源为 [vinerya/virtual-power-plant](https://github.com/vinerya/virtual-power-plant)，保留上传包许可证和作者元数据。上传包没有可核验原始提交号。[第一阶段说明](docs/stage1.md) 记录了环境与指标修复。
+
+## 会话 EV、DR 与弃电
+
+第五阶段运行入口及真实会话格式见 [阶段五说明](docs/stage5.md)。普通 MAPPO 保留，新增六资源模型通过 `configs/sessions_smoke.json` 启用。
