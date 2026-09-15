@@ -42,7 +42,18 @@ class Config:
     flex_spec: str | None = None
     ev_sessions_path: str | None = None
 
+    cyber_mode: str = 'off'
+    cyber_dt_mode: str = 'physics'
+    cyber_spec: str | None = None
+
     def validate(self):
+        if self.cyber_mode not in ('off','fixed','joint') or self.cyber_dt_mode not in ('physics','hold'):
+            raise ValueError('C3 模式或基础 DT 模式不合法')
+        if self.cyber_mode!='off':
+            if self.resource_model!='sessions_v1' or self.metrics_enabled:
+                raise ValueError('基础 C3 闭环要求 sessions_v1，当前阶段仅支持普通 MAPPO/IPPO 单目标')
+            if self.digital_twin or self.delay_steps or self.packet_loss:
+                raise ValueError('C3 参数使用 cyber_spec/cyber_dt_mode；不能叠加旧模拟器参数')
         if self.resource_model not in ('legacy', 'sessions_v1'):
             raise ValueError('resource_model 必须为 legacy 或 sessions_v1')
         if self.resource_model == 'sessions_v1' and self.network_model != 'ieee33':

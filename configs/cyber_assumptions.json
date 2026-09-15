@@ -1,0 +1,12 @@
+{
+  "bandwidth_bps": 10000.0,
+  "cpu_cycles_per_second": 10000000.0,
+  "packet_overhead_bits": 1000000.0,
+  "update_cycles": 1000000000.0,
+  "queue_capacity": 4,
+  "packet_loss": 0.0,
+  "deadline_seconds": 900.0,
+  "joules_per_bit": 1e-06,
+  "joules_per_cycle": 1e-09,
+  "energy_price_per_kwh": 0.1
+}

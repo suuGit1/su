@@ -23,12 +23,12 @@
     },
     {
       "name": "通信/计算联合事件模型",
-      "status": "pending",
+      "status": "basic_uplink_and_DT_job_queues_implemented; inference_safety_timing_pending",
       "acceptance": "上传与 CPU 决策实际改变 AoI、队列和截止时间；端到端计时"
     },
     {
       "name": "Physics-informed Hybrid DT",
-      "status": "pending",
+      "status": "basic_physics_DT_and_hold_implemented; learned_residual_and_uncertainty_pending",
       "acceptance": "物理先验与残差学习；与简单估计器比较；真值不泄漏给策略"
     },
     {
@@ -46,5 +46,7 @@
       "status": "pending",
       "acceptance": "多训练种子、预算匹配、消融、压力测试、真实设备计时及扩展系统"
     }
-  ]
+  ],
+  "project_title": "Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants",
+  "selected_route": "A: causal closed loop first"
 }
