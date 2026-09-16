@@ -1,10 +1,12 @@
 # Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants
 
+第八阶段已实现 DT 残差/场景分块校准、固定 65 维观察、偏好条件 actor 与向量 critic/GAE，以及五种子/未见偏好/HV/IGD 和 AC 执行前校核。**估计改善已观察到，控制与 Pareto 性能优势尚未证实。** 见 [第八阶段实测报告](docs/stage8.md) 与 [复现协议](docs/research_protocol.md)。
+
 第七阶段已加入观察等价聚合 MPC、影子决策审计及规则式任务/风险协调器。见 [第七阶段说明与 Pareto 路线](docs/stage7.md)。
 
-路线 A 第一批已接入通信/计算队列、基础物理 DT 和普通 MAPPO 联合决策。见 [第六阶段说明](docs/stage6.md)。项目标题是最终研究目标；Hybrid DT、Pareto 条件策略与鲁棒安全仍待实现。
+路线 A 第一批已接入通信/计算队列、基础物理 DT 和普通 MAPPO 联合决策。见 [第六阶段说明](docs/stage6.md)。项目标题是最终研究目标；第八阶段已补齐 Hybrid DT 和 Pareto 主体，论文级鲁棒安全验证仍待完成。
 
-**第四阶段已保留普通 MAPPO，新增三目标记录、固定权重多策略对照和向量奖励接口。见 [第四阶段说明](docs/stage4.md)。偏好条件 Pareto-MAPPO 尚未完成，进度按验收清单如实记录。**
+**第四阶段已保留普通 MAPPO，新增三目标记录、固定权重多策略对照和向量奖励接口。见 [第四阶段说明](docs/stage4.md)。偏好条件 Pareto-MAPPO 已在第八阶段单独新增，进度按验收清单如实记录。**
 
 **第三阶段已接入 IEEE33、统一 MILP/MPC、真实 OPSD 下载与清洗、配对比较和交流潮流审计。完整命令与模型假设见 [第三阶段运行指南](docs/stage3.md)。**
 
@@ -15,7 +17,7 @@
 ## 安装与直接运行
 
 ```bash
-git clone --branch research/stage7-observed-mpc https://github.com/suuGit1/su.git
+git clone --branch research/stage8-dt-pareto-validation https://github.com/suuGit1/su.git
 cd su
 python -m venv .venv
 ```

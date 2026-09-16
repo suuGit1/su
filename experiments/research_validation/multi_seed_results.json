@@ -1,0 +1,1923 @@
+{
+  "suite": {
+    "protocol": "five-seed-budget-matched-smoke-v1",
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "episodes_per_family": 12,
+    "mpc_economic_reference": [
+      {
+        "seed": 9000,
+        "vector": [
+          -3.1617281942095588,
+          -9.4326845717022,
+          4.789734010318183
+        ],
+        "mpc_failures": 0,
+        "violations": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 9001,
+        "vector": [
+          -3.1355598431924707,
+          -9.354179515253476,
+          4.955000081093687
+        ],
+        "mpc_failures": 0,
+        "violations": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 9002,
+        "vector": [
+          -3.1959070814147146,
+          -9.535221229920204,
+          4.927361368019859
+        ],
+        "mpc_failures": 0,
+        "violations": 0,
+        "ac_violations": 0
+      }
+    ],
+    "common_training_interactions": 96,
+    "reference_point": [
+      -50.0,
+      -50.0,
+      0.0
+    ],
+    "validation_weights": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ]
+    ],
+    "unseen_test_weights": [
+      [
+        0.2,
+        0.3,
+        0.5
+      ],
+      [
+        0.6,
+        0.1,
+        0.3
+      ],
+      [
+        0.1,
+        0.7,
+        0.2
+      ]
+    ],
+    "aggregate": {
+      "fixed": {
+        "hv": {
+          "n": 5,
+          "mean": 9499.052047574547,
+          "std": 275.737949562886,
+          "ci95": [
+            9156.678162663786,
+            9841.425932485308
+          ]
+        },
+        "igd": {
+          "n": 5,
+          "mean": 0.34749857274817836,
+          "std": 0.062423659935022476,
+          "ci95": [
+            0.26998936157074604,
+            0.42500778392561067
+          ]
+        },
+        "undefined_igd_runs": 0,
+        "failed_episodes": 0,
+        "paired_hv_delta_vs_ordinary": {
+          "n": 5,
+          "mean": 164.1270184414763,
+          "std": 259.5842662916089,
+          "ci95": [
+            -158.18941951295403,
+            486.44345639590665
+          ]
+        }
+      },
+      "ordinary": {
+        "hv": {
+          "n": 5,
+          "mean": 9334.925029133068,
+          "std": 292.3037094776552,
+          "ci95": [
+            8971.98203653325,
+            9697.868021732886
+          ]
+        },
+        "igd": {
+          "n": 5,
+          "mean": 0.4181930273005567,
+          "std": 0.003905082497687052,
+          "ci95": [
+            0.41334422695316303,
+            0.42304182764795034
+          ]
+        },
+        "undefined_igd_runs": 0,
+        "failed_episodes": 0,
+        "paired_hv_delta_vs_ordinary": {
+          "n": 5,
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "pareto": {
+        "hv": {
+          "n": 5,
+          "mean": 9494.504339932151,
+          "std": 953.2998629958613,
+          "ci95": [
+            8310.826220557607,
+            10678.182459306696
+          ]
+        },
+        "igd": {
+          "n": 5,
+          "mean": 0.4839326696897629,
+          "std": 0.1970526766055171,
+          "ci95": [
+            0.23925945539900276,
+            0.7286058839805231
+          ]
+        },
+        "undefined_igd_runs": 0,
+        "failed_episodes": 0,
+        "paired_hv_delta_vs_ordinary": {
+          "n": 5,
+          "mean": 159.57931079908266,
+          "std": 988.5198799080413,
+          "ci95": [
+            -1067.8302355914432,
+            1386.9888571896083
+          ]
+        }
+      },
+      "pareto_no_coordinator": {
+        "hv": {
+          "n": 5,
+          "mean": 9495.923317617904,
+          "std": 951.5883191196158,
+          "ci95": [
+            8314.370360655841,
+            10677.476274579967
+          ]
+        },
+        "igd": {
+          "n": 5,
+          "mean": 0.48212065233604734,
+          "std": 0.19720168364863858,
+          "ci95": [
+            0.23726242136436443,
+            0.7269788833077302
+          ]
+        },
+        "undefined_igd_runs": 0,
+        "failed_episodes": 0,
+        "paired_hv_delta_vs_ordinary": {
+          "n": 5,
+          "mean": 160.9982884848354,
+          "std": 985.7040109729273,
+          "ci95": [
+            -1062.914894825299,
+            1384.9114717949699
+          ]
+        }
+      },
+      "pareto_no_residual": {
+        "hv": {
+          "n": 5,
+          "mean": 9257.418941010217,
+          "std": 890.4667636579173,
+          "ci95": [
+            8151.75841897916,
+            10363.079463041275
+          ]
+        },
+        "igd": {
+          "n": 5,
+          "mean": 0.43935054846830945,
+          "std": 0.2579971018894944,
+          "ci95": [
+            0.11900483541121537,
+            0.7596962615254035
+          ]
+        },
+        "undefined_igd_runs": 0,
+        "failed_episodes": 0,
+        "paired_hv_delta_vs_ordinary": {
+          "n": 5,
+          "mean": -77.50608812285118,
+          "std": 943.0705705223436,
+          "ci95": [
+            -1248.4828633059315,
+            1093.470687060229
+          ]
+        }
+      }
+    },
+    "per_seed": [
+      {
+        "seed": 1,
+        "family": "ordinary",
+        "training_env_steps": 96,
+        "hv": 9181.103558755318,
+        "igd_validation_reference": 0.41577684815807486,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 1,
+        "family": "fixed",
+        "training_env_steps": 96,
+        "hv": 9718.23228520056,
+        "igd_validation_reference": 0.27001892322109083,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 1,
+        "family": "pareto",
+        "training_env_steps": 96,
+        "hv": 7968.814496021565,
+        "igd_validation_reference": 0.8210624319977317,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 1,
+        "family": "pareto_no_residual",
+        "training_env_steps": 96,
+        "hv": 7840.706609488908,
+        "igd_validation_reference": 0.8820581468601139,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 1,
+        "family": "pareto_no_coordinator",
+        "training_env_steps": 96,
+        "hv": 7972.761434293897,
+        "igd_validation_reference": 0.8190934653034467,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 2,
+        "family": "ordinary",
+        "training_env_steps": 96,
+        "hv": 9253.870119147285,
+        "igd_validation_reference": 0.4196745094050947,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 2,
+        "family": "fixed",
+        "training_env_steps": 96,
+        "hv": 9160.194378815726,
+        "igd_validation_reference": 0.4077509579945784,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 2,
+        "family": "pareto",
+        "training_env_steps": 96,
+        "hv": 10180.451299453573,
+        "igd_validation_reference": 0.44779739115060896,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 2,
+        "family": "pareto_no_residual",
+        "training_env_steps": 96,
+        "hv": 9947.292443167944,
+        "igd_validation_reference": 0.38430180060075675,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 2,
+        "family": "pareto_no_coordinator",
+        "training_env_steps": 96,
+        "hv": 10198.58373572823,
+        "igd_validation_reference": 0.4600243540773965,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 3,
+        "family": "ordinary",
+        "training_env_steps": 96,
+        "hv": 9302.578928134502,
+        "igd_validation_reference": 0.4244298679559547,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 3,
+        "family": "fixed",
+        "training_env_steps": 96,
+        "hv": 9579.955797350773,
+        "igd_validation_reference": 0.3533160821329674,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 3,
+        "family": "pareto",
+        "training_env_steps": 96,
+        "hv": 10384.438014303714,
+        "igd_validation_reference": 0.42795308652760183,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 3,
+        "family": "pareto_no_residual",
+        "training_env_steps": 96,
+        "hv": 10034.031658111857,
+        "igd_validation_reference": 0.28279935370174863,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 3,
+        "family": "pareto_no_coordinator",
+        "training_env_steps": 96,
+        "hv": 10372.448360989207,
+        "igd_validation_reference": 0.41495829674919826,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 4,
+        "family": "ordinary",
+        "training_env_steps": 96,
+        "hv": 9097.871533432883,
+        "igd_validation_reference": 0.4154663858237881,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 4,
+        "family": "fixed",
+        "training_env_steps": 96,
+        "hv": 9259.630025225217,
+        "igd_validation_reference": 0.407307389937971,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 4,
+        "family": "pareto",
+        "training_env_steps": 96,
+        "hv": 9617.105054542933,
+        "igd_validation_reference": 0.3013963515393296,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 4,
+        "family": "pareto_no_residual",
+        "training_env_steps": 96,
+        "hv": 9437.908379838225,
+        "igd_validation_reference": 0.23430933276262364,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 4,
+        "family": "pareto_no_coordinator",
+        "training_env_steps": 96,
+        "hv": 9606.587514271325,
+        "igd_validation_reference": 0.3020356493881162,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 5,
+        "family": "ordinary",
+        "training_env_steps": 96,
+        "hv": 9839.201006195357,
+        "igd_validation_reference": 0.41561752515987116,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 5,
+        "family": "fixed",
+        "training_env_steps": 96,
+        "hv": 9777.24775128045,
+        "igd_validation_reference": 0.29909951045428407,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 5,
+        "family": "pareto",
+        "training_env_steps": 96,
+        "hv": 9321.712835338973,
+        "igd_validation_reference": 0.4214540872335426,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 5,
+        "family": "pareto_no_residual",
+        "training_env_steps": 96,
+        "hv": 9027.155614444155,
+        "igd_validation_reference": 0.41328410841630436,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 5,
+        "family": "pareto_no_coordinator",
+        "training_env_steps": 96,
+        "hv": 9329.235542806862,
+        "igd_validation_reference": 0.41449149616207903,
+        "evaluation_failures": 0
+      }
+    ],
+    "limitations": [
+      "交互预算相同，不声称训练耗时/参数数量完全相同",
+      "IGD 使用验证集经验前沿，不是真实 Pareto 前沿",
+      "短程实验不证明收敛",
+      "区间保护只对所建模盒内单步线性约束检查，不是闭环 AC 鲁棒保证"
+    ],
+    "igd_reference_scope": "common_validation_union_all_training_seeds",
+    "igd_reference_front": [
+      [
+        -3.722265508693101,
+        -9.828586513597404,
+        4.94709071162632
+      ],
+      [
+        -3.726100335781261,
+        -9.809074694882085,
+        4.992951101351447
+      ],
+      [
+        -3.887197333552031,
+        -9.787240935555555,
+        5.132044389051146
+      ],
+      [
+        -4.14819093193065,
+        -9.754887977549977,
+        5.379220867875626
+      ],
+      [
+        -3.9183553244157086,
+        -9.784047436033253,
+        5.163169011668946
+      ],
+      [
+        -3.7379349465699803,
+        -9.807626846366736,
+        4.999710336049359
+      ],
+      [
+        -3.8995797548433715,
+        -9.785745866957221,
+        5.145733505444716
+      ],
+      [
+        -4.159835616692284,
+        -9.753479636417438,
+        5.387739955225944
+      ],
+      [
+        -3.9306265907506988,
+        -9.782567736370439,
+        5.176712815035584
+      ],
+      [
+        -3.5696566071670857,
+        -9.848607972078739,
+        4.87548950134769
+      ],
+      [
+        -3.5509422528754175,
+        -9.851287353171099,
+        4.849324110350548
+      ],
+      [
+        -3.592384582025968,
+        -9.846648675838818,
+        4.885914451316829
+      ],
+      [
+        -4.427567881409965,
+        -9.732252013580096,
+        5.503199777576761
+      ],
+      [
+        -3.8224246213147675,
+        -9.812238688620557,
+        5.075023355028133
+      ],
+      [
+        -3.6902640031530027,
+        -9.829653713880054,
+        4.914403093816583
+      ],
+      [
+        -3.9736030248691843,
+        -9.7923996760794,
+        5.193588968715664
+      ],
+      [
+        -4.413989476326874,
+        -9.733836420130618,
+        5.49794493687328
+      ],
+      [
+        -3.803374564535994,
+        -9.814510036529498,
+        5.061488920264357
+      ],
+      [
+        -3.673699295826716,
+        -9.831587699594397,
+        4.896352208553636
+      ],
+      [
+        -3.9570548548594946,
+        -9.794350479919254,
+        5.182944410892997
+      ],
+      [
+        -3.6568266246093653,
+        -9.830575736572001,
+        4.8556507287920985
+      ],
+      [
+        -3.652309338537222,
+        -9.830595116732017,
+        4.851905984872695
+      ],
+      [
+        -3.689661662988742,
+        -9.8262264179439,
+        4.874431038645325
+      ],
+      [
+        -3.6519622019142304,
+        -9.83115070144847,
+        4.853383891466352
+      ],
+      [
+        -3.6456761228263934,
+        -9.831375748694462,
+        4.849026103856325
+      ],
+      [
+        -3.683650455240712,
+        -9.826939932661876,
+        4.871486405157086
+      ],
+      [
+        -3.7002534238165286,
+        -9.830222027459357,
+        4.972805975839385
+      ],
+      [
+        -3.7012427952490885,
+        -9.830144436817545,
+        4.97348644594463
+      ],
+      [
+        -3.4397978587866263,
+        -9.857177475437942,
+        4.737252514451184
+      ],
+      [
+        -3.4193746623105,
+        -9.86039556426935,
+        4.727977771482037
+      ],
+      [
+        -3.4502140329848747,
+        -9.855918520926599,
+        4.740692947905916
+      ],
+      [
+        -3.4308851512757412,
+        -9.858382281369988,
+        4.73360079166506
+      ],
+      [
+        -3.4193307961110477,
+        -9.860756762233315,
+        4.726946693435025
+      ]
+    ],
+    "cyber_mode": "fixed",
+    "stress_summary": [
+      {
+        "seed": 1,
+        "scenario": "nominal",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "nominal",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "loss_30pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "loss_30pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "cpu_outage",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "cpu_outage",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "wind_jump",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "wind_jump",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "load_shock",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 35
+      },
+      {
+        "seed": 1,
+        "scenario": "load_shock",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 31
+      },
+      {
+        "seed": 2,
+        "scenario": "nominal",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "nominal",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "loss_30pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "loss_30pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "cpu_outage",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "cpu_outage",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "wind_jump",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "wind_jump",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "load_shock",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 40
+      },
+      {
+        "seed": 2,
+        "scenario": "load_shock",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 32
+      },
+      {
+        "seed": 3,
+        "scenario": "nominal",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "nominal",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "loss_30pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "loss_30pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "cpu_outage",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "cpu_outage",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "wind_jump",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "wind_jump",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "load_shock",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 40
+      },
+      {
+        "seed": 3,
+        "scenario": "load_shock",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 32
+      },
+      {
+        "seed": 4,
+        "scenario": "nominal",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "nominal",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "loss_30pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "loss_30pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "cpu_outage",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "cpu_outage",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "wind_jump",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "wind_jump",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "load_shock",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 40
+      },
+      {
+        "seed": 4,
+        "scenario": "load_shock",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 32
+      },
+      {
+        "seed": 5,
+        "scenario": "nominal",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "nominal",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "loss_30pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "loss_30pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "cpu_outage",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "cpu_outage",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "wind_jump",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "wind_jump",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "load_shock",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 40
+      },
+      {
+        "seed": 5,
+        "scenario": "load_shock",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 32
+      }
+    ]
+  },
+  "joint": {
+    "protocol": "five-seed-budget-matched-smoke-v1",
+    "cyber_mode": "joint",
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "episodes_per_family": 12,
+    "mpc_economic_reference": [
+      {
+        "seed": 9000,
+        "vector": [
+          -3.1617281942095588,
+          -9.4326845717022,
+          4.789734010318183
+        ],
+        "mpc_failures": 0,
+        "violations": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 9001,
+        "vector": [
+          -3.1355598431924707,
+          -9.354179515253476,
+          4.955000081093687
+        ],
+        "mpc_failures": 0,
+        "violations": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 9002,
+        "vector": [
+          -3.1959070814147146,
+          -9.535221229920204,
+          4.927361368019859
+        ],
+        "mpc_failures": 0,
+        "violations": 0,
+        "ac_violations": 0
+      }
+    ],
+    "common_training_interactions": 96,
+    "reference_point": [
+      -50.0,
+      -50.0,
+      0.0
+    ],
+    "validation_weights": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ]
+    ],
+    "unseen_test_weights": [
+      [
+        0.2,
+        0.3,
+        0.5
+      ],
+      [
+        0.6,
+        0.1,
+        0.3
+      ],
+      [
+        0.1,
+        0.7,
+        0.2
+      ]
+    ],
+    "aggregate": {
+      "ordinary": {
+        "hv": {
+          "n": 5,
+          "mean": 9457.631158569242,
+          "std": 572.0051020582092,
+          "ci95": [
+            8747.393016554692,
+            10167.869300583792
+          ]
+        },
+        "igd": {
+          "n": 5,
+          "mean": 0.943533275081708,
+          "std": 0.1522649992008223,
+          "ci95": [
+            0.7544713073875218,
+            1.1325952427758943
+          ]
+        },
+        "undefined_igd_runs": 0,
+        "failed_episodes": 0,
+        "paired_hv_delta_vs_ordinary": {
+          "n": 5,
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "pareto": {
+        "hv": {
+          "n": 5,
+          "mean": 9831.043323554155,
+          "std": 1159.169718296542,
+          "ci95": [
+            8391.744016537337,
+            11270.342630570973
+          ]
+        },
+        "igd": {
+          "n": 5,
+          "mean": 0.982564211788322,
+          "std": 0.4317197583641714,
+          "ci95": [
+            0.44651333051430087,
+            1.5186150930623432
+          ]
+        },
+        "undefined_igd_runs": 0,
+        "failed_episodes": 0,
+        "paired_hv_delta_vs_ordinary": {
+          "n": 5,
+          "mean": 373.4121649849141,
+          "std": 1261.3368974733191,
+          "ci95": [
+            -1192.7444502137416,
+            1939.56878018357
+          ]
+        }
+      }
+    },
+    "per_seed": [
+      {
+        "seed": 1,
+        "family": "ordinary",
+        "training_env_steps": 96,
+        "hv": 10231.021205396786,
+        "igd_validation_reference": 0.7532719665043635,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 1,
+        "family": "pareto",
+        "training_env_steps": 96,
+        "hv": 9844.98935215746,
+        "igd_validation_reference": 0.6484152759483094,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 2,
+        "family": "ordinary",
+        "training_env_steps": 96,
+        "hv": 8769.177398966716,
+        "igd_validation_reference": 1.0999875955531109,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 2,
+        "family": "pareto",
+        "training_env_steps": 96,
+        "hv": 10707.970641692778,
+        "igd_validation_reference": 1.4672588026986104,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 3,
+        "family": "ordinary",
+        "training_env_steps": 96,
+        "hv": 9816.745738467023,
+        "igd_validation_reference": 0.809592059527614,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 3,
+        "family": "pareto",
+        "training_env_steps": 96,
+        "hv": 10505.04054577447,
+        "igd_validation_reference": 0.6304508933470473,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 4,
+        "family": "ordinary",
+        "training_env_steps": 96,
+        "hv": 9168.13448784596,
+        "igd_validation_reference": 1.0324680513273023,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 4,
+        "family": "pareto",
+        "training_env_steps": 96,
+        "hv": 7838.893294621201,
+        "igd_validation_reference": 1.4401707521018046,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 5,
+        "family": "ordinary",
+        "training_env_steps": 96,
+        "hv": 9303.07696216972,
+        "igd_validation_reference": 1.02234670249615,
+        "evaluation_failures": 0
+      },
+      {
+        "seed": 5,
+        "family": "pareto",
+        "training_env_steps": 96,
+        "hv": 10258.322783524869,
+        "igd_validation_reference": 0.7265253348458388,
+        "evaluation_failures": 0
+      }
+    ],
+    "limitations": [
+      "交互预算相同，不声称训练耗时/参数数量完全相同",
+      "IGD 使用验证集经验前沿，不是真实 Pareto 前沿",
+      "短程实验不证明收敛",
+      "区间保护只对所建模盒内单步线性约束检查，不是闭环 AC 鲁棒保证"
+    ],
+    "igd_reference_scope": "common_validation_union_all_training_seeds",
+    "igd_reference_front": [
+      [
+        -4.0162165979778015,
+        -9.783855084258159,
+        5.265059431335916
+      ],
+      [
+        -3.854246523930689,
+        -9.799510991157804,
+        4.97493943163146
+      ],
+      [
+        -3.80836961542874,
+        -9.804258802583487,
+        4.904481721218638
+      ],
+      [
+        -4.0977354368021,
+        -9.767851715837562,
+        5.136418851348422
+      ],
+      [
+        -3.8933940235391065,
+        -9.791783291474612,
+        5.0116699604528
+      ],
+      [
+        -5.376249622987698,
+        -9.602099689944946,
+        5.802933904033033
+      ],
+      [
+        -5.675621889464234,
+        -9.560219614664796,
+        5.846660399190474
+      ],
+      [
+        -5.959525464213753,
+        -9.523220519378556,
+        5.794548586050756
+      ],
+      [
+        -3.68413136604073,
+        -9.82586859450983,
+        5.0094328728347595
+      ],
+      [
+        -4.465859735579407,
+        -9.724212765824461,
+        5.5364741008179434
+      ],
+      [
+        -3.87883911756005,
+        -9.793856867230335,
+        5.146989914605815
+      ],
+      [
+        -3.7699964084623208,
+        -9.80931393659425,
+        5.044518243839899
+      ],
+      [
+        -4.139701435690862,
+        -9.76546993971555,
+        5.299184595427818
+      ],
+      [
+        -3.4232422056551717,
+        -9.877693591756149,
+        4.699597322471457
+      ],
+      [
+        -4.561023777864529,
+        -9.715310899094298,
+        5.303368721840959
+      ],
+      [
+        -4.616098955884832,
+        -9.712896741651383,
+        5.289654657087709
+      ],
+      [
+        -4.641262277465925,
+        -9.710659841008514,
+        5.27442099607865
+      ]
+    ],
+    "stress_summary": [
+      {
+        "seed": 1,
+        "scenario": "nominal",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "nominal",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "loss_30pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "loss_30pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "cpu_outage",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "cpu_outage",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "wind_jump",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "wind_jump",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 1,
+        "scenario": "load_shock",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 39
+      },
+      {
+        "seed": 1,
+        "scenario": "load_shock",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 28
+      },
+      {
+        "seed": 2,
+        "scenario": "nominal",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "nominal",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "loss_30pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "loss_30pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "cpu_outage",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "cpu_outage",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "wind_jump",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "wind_jump",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 2,
+        "scenario": "load_shock",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 25
+      },
+      {
+        "seed": 2,
+        "scenario": "load_shock",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 9
+      },
+      {
+        "seed": 3,
+        "scenario": "nominal",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "nominal",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "loss_30pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "loss_30pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "cpu_outage",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "cpu_outage",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "wind_jump",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "wind_jump",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 3,
+        "scenario": "load_shock",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 38
+      },
+      {
+        "seed": 3,
+        "scenario": "load_shock",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 30
+      },
+      {
+        "seed": 4,
+        "scenario": "nominal",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "nominal",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "loss_30pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "loss_30pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "cpu_outage",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "cpu_outage",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "wind_jump",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "wind_jump",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 4,
+        "scenario": "load_shock",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 31
+      },
+      {
+        "seed": 4,
+        "scenario": "load_shock",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 28
+      },
+      {
+        "seed": 5,
+        "scenario": "nominal",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "nominal",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "loss_30pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "loss_30pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "cpu_outage",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "cpu_outage",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "bandwidth_10pct",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "wind_jump",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "wind_jump",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 0
+      },
+      {
+        "seed": 5,
+        "scenario": "load_shock",
+        "interval_guard": false,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 37
+      },
+      {
+        "seed": 5,
+        "scenario": "load_shock",
+        "interval_guard": true,
+        "episodes": 2,
+        "failures": 0,
+        "ac_violations": 28
+      }
+    ]
+  }
+}

@@ -1,0 +1,605 @@
+{
+  "scope": "冻结策略的区间保护+现场 AC 校核；无已验证动作则仿真停止，非实际设备后备控制",
+  "rows": [
+    {
+      "seed": 1,
+      "scenario": "nominal",
+      "results": [
+        {
+          "seed": 9500,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -3.8237407185954337,
+            -9.525404706985611,
+            5.680488029423411
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 8,
+          "estimation_rmse": 0.01664745310789315,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 2287.5
+        },
+        {
+          "seed": 9501,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -3.818403827485818,
+            -9.496627358196736,
+            5.565860619557835
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 8,
+          "estimation_rmse": 0.02001637627110749,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 2287.5
+        }
+      ]
+    },
+    {
+      "seed": 1,
+      "scenario": "load_shock",
+      "results": [
+        {
+          "seed": 9500,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -6.199391375263216,
+            -12.519017238376586,
+            3.1720510996713798
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 2,
+          "estimation_rmse": 0.03741900495906516,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 2287.5
+        },
+        {
+          "seed": 9501,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -6.136290162157769,
+            -12.480493586164183,
+            2.989299549922083
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 2,
+          "estimation_rmse": 0.03885875843213304,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 2287.5
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "scenario": "nominal",
+      "results": [
+        {
+          "seed": 9500,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -5.604240325615713,
+            -9.231042284418438,
+            5.164017579564477
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 8,
+          "estimation_rmse": 0.01753495593464963,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 1687.5
+        },
+        {
+          "seed": 9501,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -5.5871286624683165,
+            -9.171111655367403,
+            5.2484437078030615
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 8,
+          "estimation_rmse": 0.0211546283460978,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 1687.5
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "scenario": "load_shock",
+      "results": [
+        {
+          "seed": 9500,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -7.009897449257491,
+            -12.351600229302395,
+            3.752119846712703
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 2,
+          "estimation_rmse": 0.031110080685247676,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 1687.5
+        },
+        {
+          "seed": 9501,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -6.829097208053895,
+            -12.359240498178233,
+            3.7031438510853594
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 2,
+          "estimation_rmse": 0.03347887637629946,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 1687.5
+        }
+      ]
+    },
+    {
+      "seed": 3,
+      "scenario": "nominal",
+      "results": [
+        {
+          "seed": 9500,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -3.87825143319014,
+            -9.522661646455836,
+            5.791821627539578
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 7,
+          "estimation_rmse": 0.01691213046495746,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 2156.25
+        },
+        {
+          "seed": 9501,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -3.867212364128426,
+            -9.473603228308889,
+            5.862828422748786
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 7,
+          "estimation_rmse": 0.019535652214941066,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 2156.25
+        }
+      ]
+    },
+    {
+      "seed": 3,
+      "scenario": "load_shock",
+      "results": [
+        {
+          "seed": 9500,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -6.451508672479427,
+            -12.48709315395535,
+            3.351408451382698
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 2,
+          "estimation_rmse": 0.03848901187154992,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 2156.25
+        },
+        {
+          "seed": 9501,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -6.3925548134312,
+            -12.429394055200667,
+            3.242251710409497
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 2,
+          "estimation_rmse": 0.039568592095242786,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 2156.25
+        }
+      ]
+    },
+    {
+      "seed": 4,
+      "scenario": "nominal",
+      "results": [
+        {
+          "seed": 9500,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -3.427944149355999,
+            -10.01945162481684,
+            4.499815332363339
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 7,
+          "estimation_rmse": 0.01609891683062399,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 3018.75
+        },
+        {
+          "seed": 9501,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -3.418041792075287,
+            -9.973800715519413,
+            4.157549411769531
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 8,
+          "estimation_rmse": 0.017923510148791604,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 3018.75
+        }
+      ]
+    },
+    {
+      "seed": 4,
+      "scenario": "load_shock",
+      "results": [
+        {
+          "seed": 9500,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -6.184887083797879,
+            -12.57434945819701,
+            2.9303333041097135
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 2,
+          "estimation_rmse": 0.06496106521307995,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 3018.75
+        },
+        {
+          "seed": 9501,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -6.014671346970228,
+            -12.50386395472781,
+            2.788623770431982
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 2,
+          "estimation_rmse": 0.06421913446471521,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 3018.75
+        }
+      ]
+    },
+    {
+      "seed": 5,
+      "scenario": "nominal",
+      "results": [
+        {
+          "seed": 9500,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -4.484070577976308,
+            -9.451890015766626,
+            5.736176910651272
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 8,
+          "estimation_rmse": 0.01600107213865806,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 1725.0
+        },
+        {
+          "seed": 9501,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -4.399059296528058,
+            -9.405896137094015,
+            5.717307797121332
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 8,
+          "estimation_rmse": 0.020278466043000598,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 1725.0
+        }
+      ]
+    },
+    {
+      "seed": 5,
+      "scenario": "load_shock",
+      "results": [
+        {
+          "seed": 9500,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -6.536554631790818,
+            -12.502978985516974,
+            3.2850733874129077
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 2,
+          "estimation_rmse": 0.031704621113665864,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 1725.0
+        },
+        {
+          "seed": 9501,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "vector": [
+            -6.37954383018335,
+            -12.45550561123177,
+            3.1434981474556367
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "interval_covered_steps": 2,
+          "estimation_rmse": 0.03408945840860787,
+          "safety_interventions": 8,
+          "guard_infeasible": 1,
+          "guard_certified_steps": 7,
+          "mean_aoi": 1725.0
+        }
+      ]
+    }
+  ]
+}

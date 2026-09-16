@@ -33,30 +33,30 @@
     },
     {
       "name": "Physics-informed Hybrid DT",
-      "status": "basic_physics_DT_and_hold_implemented; learned_residual_and_uncertainty_pending",
+      "status": "residual_and_block_calibration_implemented; estimation_improved; control_benefit_not_demonstrated",
       "acceptance": "物理先验与残差学习；与简单估计器比较；真值不泄漏给策略"
     },
     {
       "name": "偏好条件 Pareto-MAPPO",
-      "status": "pending",
+      "status": "implemented_and_five_seed_smoke_tested; convergence_and_superiority_pending",
       "acceptance": "向量学习、偏好输入、未见偏好评价；普通 MAPPO 与固定权重模型继续存在"
     },
     {
       "name": "增强安全层",
-      "status": "pending",
+      "status": "interval_guard_and_preexecution_AC_repair_implemented; emergency_fallback_and_recursive_feasibility_pending",
       "acceptance": "陈旧观测的误差界、AC 修正、不可行和超时回退"
     },
     {
       "name": "论文完整实验",
-      "status": "pending",
+      "status": "five_seed_budget_matched_ablations_stress_partial_real_data_completed; full_paper_validation_pending",
       "acceptance": "多训练种子、预算匹配、消融、压力测试、真实设备计时及扩展系统"
     }
   ],
   "project_title": "Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants",
   "selected_route": "A: causal closed loop first",
   "next_batches": [
-    "DT 残差与校准不确定性；冻结 C3 三目标及观察版本",
-    "偏好条件 Pareto-MAPPO 主体及未见偏好测试",
-    "鲁棒安全、真实数据、多种子及扩展系统实验"
+    "识别 DT 对控制有影响的可行场景并重新验证策略变化下的覆盖",
+    "长预算训练与更多独立日期；完整联合 C3 消融",
+    "真实 EV/碳/硬件数据、紧急后备控制及更大网络"
   ]
 }

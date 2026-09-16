@@ -83,7 +83,7 @@ class CyberVPPAdapter:
         self.pipeline.allocations(cpu,self.cyber_spec.cpu_cycles_per_second)
         record=None
         if self.config.coordinator_mode!='off':
-            bw,cpu,record=self.coordinator.allocate(self.encode()[0][0],bw,cpu)
+            bw,cpu,record=self.coordinator.allocate(self.encode()[0][0][:54],bw,cpu)
         else:bw,cpu=np.asarray(bw),np.asarray(cpu)
         events=self.pipeline.enqueue(self.sensor_payloads(),bw>0)
         # 只把候选命令给 DT；安全层实际动作与分车结果没有零时延旁路。

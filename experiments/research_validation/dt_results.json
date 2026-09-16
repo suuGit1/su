@@ -1,0 +1,341 @@
+{
+  "hold": {
+    "estimation": {
+      "rmse": 0.023872219597790602,
+      "per_target_rmse": [
+        0.03219918585668502,
+        0.00333362415981571,
+        0.013957596556037608,
+        0.013198160800431505,
+        0.02511954719680799,
+        0.009216895218703669,
+        0.0,
+        0.0,
+        0.05473660966732961
+      ],
+      "marginal_coverage": 1.0,
+      "simultaneous_scenario_coverage": 1.0,
+      "mean_interval_width": 0.1407528146458354,
+      "ood_fraction": 0.0,
+      "scenarios": 8
+    },
+    "closed_loop": [
+      {
+        "seed": 1200,
+        "objective": 311.7068366658945,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 2,
+        "state_rmse": 0.062125330482260856,
+        "scenario_covered": false
+      },
+      {
+        "seed": 1201,
+        "objective": 318.62839206373854,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 2,
+        "state_rmse": 0.057988434999465446,
+        "scenario_covered": false
+      },
+      {
+        "seed": 1202,
+        "objective": 318.1180857839243,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 2,
+        "state_rmse": 0.05860960970508222,
+        "scenario_covered": false
+      },
+      {
+        "seed": 1203,
+        "objective": 321.1785414131731,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 2,
+        "state_rmse": 0.05675170840816215,
+        "scenario_covered": false
+      },
+      {
+        "seed": 1204,
+        "objective": 315.51676484588216,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 2,
+        "state_rmse": 0.05887707084904833,
+        "scenario_covered": false
+      },
+      {
+        "seed": 1205,
+        "objective": 323.4025851534308,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 2,
+        "state_rmse": 0.062059528119619234,
+        "scenario_covered": false
+      },
+      {
+        "seed": 1206,
+        "objective": 316.3878641668887,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 2,
+        "state_rmse": 0.05746540228809306,
+        "scenario_covered": false
+      },
+      {
+        "seed": 1207,
+        "objective": 310.46796177235626,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 2,
+        "state_rmse": 0.058595973707759215,
+        "scenario_covered": false
+      }
+    ]
+  },
+  "physics": {
+    "estimation": {
+      "rmse": 0.018519901772739617,
+      "per_target_rmse": [
+        0.0,
+        0.0024152142143403998,
+        0.0,
+        0.0,
+        0.0,
+        0.009216895218703669,
+        0.0,
+        0.0,
+        0.05473660966732961
+      ],
+      "marginal_coverage": 1.0,
+      "simultaneous_scenario_coverage": 1.0,
+      "mean_interval_width": 0.07314904327217489,
+      "ood_fraction": 0.0,
+      "scenarios": 8
+    },
+    "closed_loop": [
+      {
+        "seed": 1200,
+        "objective": 311.2068378976705,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.02406552458707978,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1201,
+        "objective": 318.3783476502806,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.018648438526024824,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1202,
+        "objective": 317.8680522721558,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.020498585291563124,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1203,
+        "objective": 320.928508920644,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.014347894621349305,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1204,
+        "objective": 315.0167871588796,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.013584503197613906,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1205,
+        "objective": 322.90258362457075,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.023870739333288322,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1206,
+        "objective": 316.1378202630504,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.016952227929430637,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1207,
+        "objective": 309.9679396718941,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.012316179682032294,
+        "scenario_covered": true
+      }
+    ]
+  },
+  "residual": {
+    "estimation": {
+      "rmse": 0.01485513628288151,
+      "per_target_rmse": [
+        0.0,
+        0.0019469788832322265,
+        0.0,
+        0.0,
+        0.0,
+        0.006965401533954721,
+        0.0,
+        0.0,
+        0.04397463041966212
+      ],
+      "marginal_coverage": 1.0,
+      "simultaneous_scenario_coverage": 1.0,
+      "mean_interval_width": 0.058560605726319256,
+      "ood_fraction": 0.0,
+      "scenarios": 8
+    },
+    "closed_loop": [
+      {
+        "seed": 1200,
+        "objective": 311.2068371755131,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.019756327393108005,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1201,
+        "objective": 318.3783481598974,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.014575665139538478,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1202,
+        "objective": 317.86805329139526,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.013638145173585931,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1203,
+        "objective": 320.92850790140176,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.014793754756988065,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1204,
+        "objective": 315.01676535550087,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.0184129910726505,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1205,
+        "objective": 322.90258290241337,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.016541884908916397,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1206,
+        "objective": 316.1378192438081,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.017239059797939396,
+        "scenario_covered": true
+      },
+      {
+        "seed": 1207,
+        "objective": 309.9679406911335,
+        "violations": 0,
+        "safety_interventions": 5,
+        "mpc_failures": 0,
+        "state_rmse": 0.01718354635187126,
+        "scenario_covered": true
+      }
+    ]
+  },
+  "splits": {
+    "train": [
+      1000,
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007,
+      1008,
+      1009,
+      1010,
+      1011,
+      1012,
+      1013,
+      1014,
+      1015,
+      1016,
+      1017,
+      1018,
+      1019,
+      1020,
+      1021,
+      1022,
+      1023
+    ],
+    "calibration": [
+      1100,
+      1101,
+      1102,
+      1103,
+      1104,
+      1105,
+      1106,
+      1107,
+      1108,
+      1109,
+      1110,
+      1111
+    ],
+    "test": [
+      1200,
+      1201,
+      1202,
+      1203,
+      1204,
+      1205,
+      1206,
+      1207
+    ]
+  },
+  "selection": "residual 是预注册研究分支；即使劣于基线也不隐瞒，未按测试结果调参",
+  "coverage_scope": "按独立场景块校准；策略变化/分布偏移时仅报告实测覆盖，不承诺名义保证"
+}
