@@ -1,0 +1,340 @@
+{
+  "source_manifest": {
+    "source": "https://data.open-power-system-data.org/time_series/2020-10-06/",
+    "raw_file_sha256": "6a7f2bc571314cbf9c321cc03437691cd4be95c3a6f075e60ff99e8035c704c8",
+    "original_columns": {
+      "load_kw": "DE_load_actual_entsoe_transparency",
+      "pv_kw": "DE_solar_generation_actual",
+      "wind_kw": "DE_wind_generation_actual",
+      "price": "DE_LU_price_day_ahead"
+    },
+    "timezone": "UTC",
+    "horizon": 24,
+    "dt_hours": 1.0,
+    "power_mapping": "国家级实测曲线按训练峰值缩放，非原生馈线实测",
+    "currency": "EUR",
+    "scales": {
+      "load_kw": 0.023674865184795474,
+      "pv_kw": 0.053779963122311,
+      "wind_kw": 0.00676178240584218
+    },
+    "fitted_on": "train only",
+    "boundaries": [
+      "2019-01-01 00:00:00+00:00",
+      "2019-02-01 00:00:00+00:00",
+      "2019-03-01 00:00:00+00:00",
+      "2019-04-01 00:00:00+00:00"
+    ],
+    "dropped_days": [
+      "2019-03-31"
+    ],
+    "splits": {
+      "train": {
+        "days": 31,
+        "sha256": "99a39a1f963094eef52f1124746de6df8a602f02dca0e42c51ab9aae52dfa15e"
+      },
+      "validation": {
+        "days": 28,
+        "sha256": "0f9368d9ccd9e6ed6d9cd57c3b3a93ec18de78a6dfbf36145f5485721f1f30de"
+      },
+      "test": {
+        "days": 30,
+        "sha256": "a4722474d2b53aa5e4a637520cdbf73c2095157235150d930fea346c5ce14ab4"
+      }
+    }
+  },
+  "scope": "国家实测曲线缩放至 IEEE33；无 EV 消融；碳和硬件参数未实测；不是完整真实 VPP 三目标实验",
+  "results": {
+    "hold": {
+      "estimation": {
+        "rmse": 0.05085560210754414,
+        "per_target_rmse": [
+          0.11051912777407773,
+          0.0,
+          0.03593448472605687,
+          0.027642396260353856,
+          0.05333048090844008,
+          0.012370779979756025,
+          0.02039243184940255,
+          0.07434209584130735,
+          0.00818465893971022
+        ],
+        "marginal_coverage": 0.9982638888888888,
+        "simultaneous_scenario_coverage": 0.75,
+        "mean_interval_width": 1.8676831973098384,
+        "ood_fraction": 0.020833333333333332,
+        "scenarios": 8
+      },
+      "closed_loop": [
+        {
+          "seed": 22000,
+          "objective": 1488.1321201589033,
+          "violations": 0,
+          "safety_interventions": 1,
+          "mpc_failures": 0,
+          "state_rmse": 0.07471952115756901,
+          "scenario_covered": false
+        },
+        {
+          "seed": 22001,
+          "objective": 1073.0258460086511,
+          "violations": 0,
+          "safety_interventions": 1,
+          "mpc_failures": 0,
+          "state_rmse": 0.07496792951434393,
+          "scenario_covered": false
+        },
+        {
+          "seed": 22002,
+          "objective": 221.86750754641142,
+          "violations": 0,
+          "safety_interventions": 1,
+          "mpc_failures": 0,
+          "state_rmse": 0.0762295632814048,
+          "scenario_covered": false
+        },
+        {
+          "seed": 22003,
+          "objective": 387.47149852027104,
+          "violations": 0,
+          "safety_interventions": 1,
+          "mpc_failures": 0,
+          "state_rmse": 0.07781875838772681,
+          "scenario_covered": false
+        },
+        {
+          "seed": 22004,
+          "objective": 944.7619647068907,
+          "violations": 0,
+          "safety_interventions": 1,
+          "mpc_failures": 0,
+          "state_rmse": 0.07836854885118107,
+          "scenario_covered": false
+        },
+        {
+          "seed": 22005,
+          "objective": 913.3928672407791,
+          "violations": 0,
+          "safety_interventions": 1,
+          "mpc_failures": 0,
+          "state_rmse": 0.08355362934731846,
+          "scenario_covered": false
+        },
+        {
+          "seed": 22006,
+          "objective": 775.9317855970169,
+          "violations": 0,
+          "safety_interventions": 1,
+          "mpc_failures": 0,
+          "state_rmse": 0.07803751482453458,
+          "scenario_covered": false
+        },
+        {
+          "seed": 22007,
+          "objective": 737.2924579667119,
+          "violations": 0,
+          "safety_interventions": 1,
+          "mpc_failures": 0,
+          "state_rmse": 0.08003229954514318,
+          "scenario_covered": false
+        }
+      ]
+    },
+    "physics": {
+      "estimation": {
+        "rmse": 0.027116491300854733,
+        "per_target_rmse": [
+          0.0,
+          0.0,
+          1.7093002070639346e-18,
+          0.0,
+          0.02133339106064491,
+          0.012370779979756025,
+          0.02039243184940255,
+          0.07434209584130735,
+          0.00818465893971022
+        ],
+        "marginal_coverage": 0.9982638888888888,
+        "simultaneous_scenario_coverage": 0.75,
+        "mean_interval_width": 0.47571793298007303,
+        "ood_fraction": 0.020833333333333332,
+        "scenarios": 8
+      },
+      "closed_loop": [
+        {
+          "seed": 22000,
+          "objective": 1487.7631190082352,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.013482296410371353,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22001,
+          "objective": 1072.5922137120685,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.014797155580220598,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22002,
+          "objective": 218.35549462782575,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.02024134239626568,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22003,
+          "objective": 386.5344987227996,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.02558367958801509,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22004,
+          "objective": 941.4099637331562,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.027210194620481992,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22005,
+          "objective": 913.0268675606344,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.03974889382987105,
+          "scenario_covered": false
+        },
+        {
+          "seed": 22006,
+          "objective": 776.7537871425171,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.026241552267079492,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22007,
+          "objective": 734.16145580326,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.03168492390176894,
+          "scenario_covered": false
+        }
+      ]
+    },
+    "residual": {
+      "estimation": {
+        "rmse": 0.025385938691113708,
+        "per_target_rmse": [
+          0.0,
+          0.0,
+          1.6610366047420898e-18,
+          0.0,
+          0.016666555141164482,
+          0.009637517676521698,
+          0.019626843613843183,
+          0.07055555013231965,
+          0.008127637855218488
+        ],
+        "marginal_coverage": 0.9982638888888888,
+        "simultaneous_scenario_coverage": 0.875,
+        "mean_interval_width": 0.2827775814310672,
+        "ood_fraction": 0.020833333333333332,
+        "scenarios": 8
+      },
+      "closed_loop": [
+        {
+          "seed": 22000,
+          "objective": 1487.7631183446827,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.015749902165673586,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22001,
+          "objective": 1072.5922024989093,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.01609474602869296,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22002,
+          "objective": 221.35148315697546,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.021503465174651817,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22003,
+          "objective": 386.5344985893923,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.026046780559227486,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22004,
+          "objective": 941.4099632840229,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.02828507062622441,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22005,
+          "objective": 913.026868477817,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.040013513330683335,
+          "scenario_covered": false
+        },
+        {
+          "seed": 22006,
+          "objective": 776.7537869943898,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.02713790851138836,
+          "scenario_covered": true
+        },
+        {
+          "seed": 22007,
+          "objective": 735.6814556480317,
+          "violations": 0,
+          "safety_interventions": 0,
+          "mpc_failures": 0,
+          "state_rmse": 0.03195904409403913,
+          "scenario_covered": true
+        }
+      ]
+    }
+  },
+  "missing_for_full_experiment": [
+    "接入时申报的真实 EV 需求与离站期限",
+    "同地区、同时段且口径一致的碳强度",
+    "通信/CPU/求解器设备测量"
+  ],
+  "coverage_note": "跨月时序数据不保证交换性；区间覆盖仅作实测，不能自动继承名义覆盖保证"
+}

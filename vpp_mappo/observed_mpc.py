@@ -19,7 +19,7 @@ class ObservedMPC:
         if x.shape!=(54,) or not np.isfinite(x).all():raise ValueError('MPC 要求有限的 54 维公开观察')
         c=self.config;step=round(x[0]*c.horizon);h=c.horizon-step
         if h<1:raise ValueError('MPC 已到终端')
-        row=dict(load_kw=max(0,x[9]*5000),price=max(0,x[10]*.3),pv_kw=max(0,x[11]*1000),wind_kw=max(0,x[12]*1000))
+        row=dict(load_kw=max(0,x[9]*5000),price=float(x[10]*.3),pv_kw=max(0,x[11]*1000),wind_kw=max(0,x[12]*1000))
         need=max(0,x[3]*1000);deadline=max(1,min(h,round(x[5]*c.horizon)))
         # 与 54 维策略输入保持一致：不额外读取 DT 内部逐车信息。
         # 将全部已知聚合需求放在最近期限，属于保守的期限聚合近似。
