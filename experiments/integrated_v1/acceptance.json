@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "checks": {
+    "mpc": {
+      "complete": true,
+      "public_observation": true,
+      "coordinator": true,
+      "dt_intervals": true,
+      "c3_allocations": true,
+      "safe_execution": true,
+      "service_delivery": true,
+      "pcc_objectives": true
+    },
+    "ordinary": {
+      "complete": true,
+      "public_observation": true,
+      "coordinator": true,
+      "dt_intervals": true,
+      "c3_allocations": true,
+      "safe_execution": true,
+      "service_delivery": true,
+      "pcc_objectives": true
+    },
+    "pareto": {
+      "complete": true,
+      "public_observation": true,
+      "coordinator": true,
+      "dt_intervals": true,
+      "c3_allocations": true,
+      "safe_execution": true,
+      "service_delivery": true,
+      "pcc_objectives": true
+    }
+  },
+  "scope": "架构及当前场景功能验收，不证明任意扰动安全或算法优势"
+}

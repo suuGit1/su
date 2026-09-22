@@ -3,6 +3,8 @@ from dataclasses import asdict
 from pathlib import Path
 import json
 import time
+import random
+import os
 import numpy as np
 import torch
 from vpp_mappo.algorithms import OfficialPPO,to_numpy
@@ -12,20 +14,44 @@ from .central_agent import CentralPPO
 from .pareto_agent import ParetoAgent,sample_preference,VERSION
 
 
-def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=False,scenario_offset=0,resource_mode='joint',reserve_mode='linear'):
+def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=False,scenario_offset=0,resource_mode='joint',reserve_mode='linear',resume=False,trace_path=None):
     config.validate()
     if config.algorithm!='mappo' or config.device!='cpu':raise ValueError('本研究驱动当前验证了 CPU MAPPO；旧 GPU/IPPO 入口继续独立保留')
     if method not in ('ordinary','fixed','pareto','central'):raise ValueError('未知学习方法')
     pref=np.asarray(preference,dtype=float)
     if pref.shape!=(3,) or not np.isfinite(pref).all() or np.any(pref<0) or not np.isclose(pref.sum(),1):raise ValueError('训练偏好必须在三维单纯形上')
     out=Path(output)
-    if out.exists() and any(out.iterdir()):raise ValueError('训练目录非空')
+    if out.exists() and any(out.iterdir()) and not resume:raise ValueError('训练目录非空；续训须显式指定 resume')
+    if resume and not (out/'resume.pt').exists():raise ValueError('没有可恢复的回合边界检查点')
     out.mkdir(parents=True,exist_ok=True);seed_all(config.seed,config.threads)
     started=time.perf_counter()
     env=ResearchEnv(config,config.train_csv,dt_model,robust,resource_mode=resource_mode,reserve_mode=reserve_mode);rng=np.random.default_rng(config.seed+31415)
     agent=(CentralPPO if method=='central' else ParetoAgent)(65,env.num_agents,config.hidden_size,config.lr) if method in ('pareto','central') else OfficialPPO(config,env)
     history=[];weights=[]
-    for ep in range(config.episodes):
+    contract=dict(config={k:v for k,v in asdict(config).items() if k!='episodes'},dt_model=dt_model,
+        method=method,preference=pref.tolist(),robust=robust,scenario_offset=scenario_offset,
+        resource_mode=resource_mode,reserve_mode=reserve_mode,dispatch=env.spec.record(),
+        flex=asdict(env.flex),cyber=asdict(env.cyber_spec),ev_bundle=env.bundle,
+        data_fingerprints=env.data.fingerprints if env.data else [])
+    first=0;prior_seconds=0.
+    attempt_id=str(time.time_ns())
+    if resume:
+        saved=torch.load(out/'resume.pt',map_location='cpu',weights_only=True)
+        if json.dumps(saved['contract'],sort_keys=True)!=json.dumps(contract,sort_keys=True):raise ValueError('续训配置或数据与检查点不一致')
+        first=saved['episode'];prior_seconds=saved.get('training_seconds',0.)
+        if config.episodes<=first:raise ValueError('目标回合数必须大于已完成回合数')
+        if method in ('pareto','central'):
+            agent.load_state_dict(saved['agent']);agent.optimizer.load_state_dict(saved['optimizer'])
+        else:
+            agent.load(saved['agent'])
+            agent.policy.actor_optimizer.load_state_dict(saved['agent']['actor_optimizer'])
+            agent.policy.critic_optimizer.load_state_dict(saved['agent']['critic_optimizer'])
+        history=saved['history'];weights=saved['weights'];rng.bit_generator.state=saved['preference_rng']
+        random.setstate(saved['python_rng']);torch.set_rng_state(saved['torch_rng'])
+        ns=saved['numpy_rng'];np.random.set_state((ns[0],np.array(ns[1],dtype=np.uint32),ns[2],ns[3],ns[4]))
+    from .trace import append,step_record
+    append(out/'attempts.jsonl',dict(event='start',attempt_id=attempt_id,resume=resume,completed_episodes=first,target_episodes=config.episodes))
+    for ep in range(first,config.episodes):
         w=sample_preference(rng,ep) if method=='pareto' else np.asarray(preference)
         env.preference=w;env.reward_mode='economic' if method in ('ordinary','central') else 'weighted'
         obs,share=env.reset(config.seed*10000+2000+scenario_offset+ep,ep);weights.append(w.tolist());vectors=[];violations=0
@@ -46,6 +72,8 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
                     shed_used=env.core.shed_used,remaining=env.core.remaining,row=env.core.row())
                 (out/'failure.json').write_text(json.dumps(failure,ensure_ascii=False,indent=2))
                 raise
+            append(out/'attempts.jsonl',dict(event='step',attempt_id=attempt_id,episode=ep,step=t))
+            if trace_path:append(trace_path,step_record(env,obs,a,w,info,attempt_id=attempt_id,episode=ep,step=t,phase='train'))
             vector=np.array(info['objective_vector']);vectors.append(vector);violations+=info['constraint_violations']
             if method in ('pareto','central'):
                 # 将相同安全罚项施加于每个目标，任何和为 1 的偏好都获得同样惩罚。
@@ -64,9 +92,19 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
             metrics={k:float(v.detach()) if torch.is_tensor(v) else float(v) for k,v in metrics.items()}
         history.append(dict(episode=ep+1,env_steps=(ep+1)*config.horizon,preference=json.dumps(w.tolist()),
             vector=json.dumps(np.sum(vectors,axis=0).tolist()),violations=violations,**metrics))
+        # 只在完整 PPO 更新后原子替换检查点；中断回合需重做，尝试日志保留。
+        ns=np.random.get_state()
+        saved=dict(contract=contract,episode=ep+1,history=history,weights=weights,training_seconds=prior_seconds+time.perf_counter()-started,
+            agent=agent.state_dict() if method in ('pareto','central') else agent.state(),
+            optimizer=agent.optimizer.state_dict() if method in ('pareto','central') else None,
+            preference_rng=rng.bit_generator.state,python_rng=random.getstate(),torch_rng=torch.get_rng_state(),
+            numpy_rng=(ns[0],ns[1].tolist(),ns[2],ns[3],ns[4]))
+        torch.save(saved,out/'resume.pt.tmp');os.replace(out/'resume.pt.tmp',out/'resume.pt')
+        write_csv(out/'training.csv',history)
+        append(out/'attempts.jsonl',dict(event='checkpoint',completed_episodes=ep+1,logical_env_steps=(ep+1)*config.horizon))
     state=dict(version=VERSION,observation_version=OBS_VERSION,objective_version=env.objective_version,reserve_mode=reserve_mode,scales=SCALES.tolist(),
         method=method,config=asdict(config),dt_model=dt_model,robust=robust,preference=pref.tolist(),training_preferences=weights,
-        resource_mode=resource_mode,training_seconds=time.perf_counter()-started,n_agents=env.num_agents,dispatch_spec=env.spec.record(),flex_spec=asdict(env.flex),cyber_spec=asdict(env.cyber_spec),ev_bundle=env.bundle,
+        resource_mode=resource_mode,training_seconds=prior_seconds+time.perf_counter()-started,n_agents=env.num_agents,dispatch_spec=env.spec.record(),flex_spec=asdict(env.flex),cyber_spec=asdict(env.cyber_spec),ev_bundle=env.bundle,
         train_scenarios=env.data.scenario_names if env.data else [],train_fingerprints=env.data.fingerprints if env.data else [],
         train_seeds=[config.seed*10000+2000+scenario_offset+ep for ep in range(config.episodes)])
     state['agent']=agent.state_dict() if method in ('pareto','central') else agent.state()

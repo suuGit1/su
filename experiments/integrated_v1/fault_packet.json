@@ -1,0 +1,20 @@
+{
+  "method": "mpc",
+  "scenario_seed": 9103,
+  "fault": "packet_loss",
+  "completed": true,
+  "steps": 8,
+  "cost": 334.87190457575207,
+  "carbon_kg": 999.365676362203,
+  "reserve_kwh": 425.5574737250457,
+  "ac_violations": 0,
+  "service_violations": 0,
+  "packet_drops": 48,
+  "emergency_steps": 0,
+  "dt_updates": 0,
+  "checkpoint": null,
+  "constraint_violations": 0,
+  "ev_unmet_kwh": 0.0,
+  "early_departures": 0,
+  "terminal_dr_kwh": 0.0
+}
