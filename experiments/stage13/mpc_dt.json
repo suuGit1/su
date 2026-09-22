@@ -1,0 +1,68 @@
+{
+  "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+  "seeds": [
+    2010,
+    2011
+  ],
+  "rows": [
+    {
+      "seed": 2010,
+      "method": "physics",
+      "failed": false,
+      "cost": 331.9008028065051,
+      "rmse": 0.018391541999395467,
+      "step_coverage": 1.0,
+      "ac_violations": 0,
+      "service_unmet_kwh": 0.0,
+      "terminal_dr_kwh": 0.0
+    },
+    {
+      "seed": 2010,
+      "method": "residual",
+      "failed": false,
+      "cost": 331.7401878689718,
+      "rmse": 0.015237791380954721,
+      "step_coverage": 1.0,
+      "ac_violations": 0,
+      "service_unmet_kwh": 0.0,
+      "terminal_dr_kwh": 0.0
+    },
+    {
+      "seed": 2011,
+      "method": "physics",
+      "failed": false,
+      "cost": 329.8978803277897,
+      "rmse": 0.016985824793216704,
+      "step_coverage": 1.0,
+      "ac_violations": 0,
+      "service_unmet_kwh": 0.0,
+      "terminal_dr_kwh": 0.0
+    },
+    {
+      "seed": 2011,
+      "method": "residual",
+      "failed": false,
+      "cost": 329.9407963352496,
+      "rmse": 0.017530637013126443,
+      "step_coverage": 1.0,
+      "ac_violations": 0,
+      "service_unmet_kwh": 0.0,
+      "terminal_dr_kwh": 0.0
+    }
+  ],
+  "limits": [
+    "两组合成场景配对功能实验，不代表真实数据显著性",
+    "区间覆盖为所有9个量同时覆盖的逐步比例；不是完整场景覆盖"
+  ],
+  "paired_cost_residual_minus_physics": {
+    "n": 2,
+    "mean": -0.058849465036701076,
+    "std": 0.14391811138599095,
+    "ci95": [
+      -1.3519023936781875,
+      1.2342034636047854
+    ]
+  },
+  "failed_pairs": 0,
+  "network_model": "ieee69"
+}

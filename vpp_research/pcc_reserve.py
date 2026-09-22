@@ -49,11 +49,16 @@ def checked_capacity(core, baseline_kw, upper_kw, iterations=5, fractions=(-1., 
     fractions = np.asarray(fractions, dtype=float)
     if fractions.ndim != 1 or not np.isfinite(fractions).all() or not {-1., 0., 1.}.issubset(set(fractions)) or np.any(abs(fractions)>1):
         raise ValueError('激活比例须位于[-1,1]且包含两个端点和零')
+    # 缓存仅存在于当前状态的一次确认；复用已通过验收的目标，不跨步复用。
+    verified = {}
     def check(q):
         records = []
         try:
             for fraction in fractions:
-                _, meta = target_plan(core, baseline_kw+fraction*q)
+                target = float(baseline_kw+fraction*q)
+                if target not in verified:
+                    _, verified[target] = target_plan(core, target)
+                meta = verified[target]
                 records.append(dict(fraction=float(fraction), target_kw=meta['pcc_target_kw'],
                                     actual_kw=meta['pcc_actual_kw'], error_kw=meta['pcc_error_kw']))
             return records

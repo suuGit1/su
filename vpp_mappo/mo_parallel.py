@@ -12,6 +12,7 @@ class VPPMOParallelEnv(ParallelEnv):
 
     def __init__(self, config, csv_path=None):
         if not config.metrics_enabled: raise ValueError('向量接口必须启用三目标记录')
+        self.metadata = dict(type(self).metadata, name=f'vpp_{config.network_model}_mo_v0')
         self.core = VPPAdapter(config,csv_path)
         self.possible_agents = getattr(self.core,'agent_names',['ess','ev','dr'])
         self.agents = []

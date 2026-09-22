@@ -11,8 +11,8 @@ from .suite import stats
 
 def run(config, dt_folder, output, seeds=(1910,1911,1912)):
     models={m:json.loads((Path(dt_folder)/(m+'.json')).read_text()) for m in ('physics','residual')}
-    rows=[];result=dict(objective_version=PCC_OBJECTIVE_VERSION,seeds=list(seeds),rows=rows,
-        limits=['三组合成场景配对功能实验，不代表真实数据显著性','区间覆盖为所有9个量同时覆盖的逐步比例；不是完整场景覆盖'])
+    rows=[];result=dict(objective_version=PCC_OBJECTIVE_VERSION,network_model=config.network_model,seeds=list(seeds),rows=rows,
+        limits=['合成场景配对功能实验，不代表真实数据显著性','区间覆盖为所有9个量同时覆盖的逐步比例；不是完整场景覆盖'])
     path=Path(output);path.parent.mkdir(parents=True,exist_ok=True)
     for seed in seeds:
         for method in models:

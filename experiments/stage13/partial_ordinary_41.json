@@ -1,0 +1,455 @@
+{
+  "seed": 41,
+  "family": "ordinary",
+  "failed": false,
+  "training_steps": 176,
+  "selection_steps": 16,
+  "test_steps": 48,
+  "budget": {
+    "total_steps": 192,
+    "training_steps": 176,
+    "selection_steps": 16,
+    "members": 1,
+    "episodes_per_member": 22
+  },
+  "budget_matched": true,
+  "validation": [
+    {
+      "seed": 8100,
+      "preference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "unseen_preference": false,
+      "failed": false,
+      "env_steps": 8,
+      "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+      "emergency_steps": 0,
+      "emergency_service_degraded_steps": 0,
+      "inference_seconds": [
+        0.0007940890000099898,
+        0.0007654870000806113,
+        0.0007948499999201886,
+        0.0007890719998613349,
+        0.0011689130001286685,
+        0.0007467909999832045,
+        0.0007861790002152702,
+        0.0007989959999576968
+      ],
+      "training_seconds": 216.085547034,
+      "vector": [
+        -3.847919199276513,
+        -9.85181975599593,
+        4.093459730938075
+      ],
+      "violations": 0,
+      "ac_violations": 0,
+      "ac_failed": 0,
+      "reserve_invalid": 0,
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "ac_safety_seconds": 0.1669229940000605,
+      "ac_safety_attempts": 8,
+      "interval_covered_steps": 8,
+      "estimation_rmse": 0.01626778589223898,
+      "safety_interventions": 8,
+      "guard_infeasible": null,
+      "guard_certified_steps": 0,
+      "mean_aoi": 4050.0
+    },
+    {
+      "seed": 8101,
+      "preference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "unseen_preference": false,
+      "failed": false,
+      "env_steps": 8,
+      "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+      "emergency_steps": 0,
+      "emergency_service_degraded_steps": 0,
+      "inference_seconds": [
+        0.0007191690001491224,
+        0.0008308429999033251,
+        0.0008136080000440415,
+        0.0007326709999233572,
+        0.0010626680000314082,
+        0.0007526980000420735,
+        0.0007595279998895421,
+        0.0007559839998521056
+      ],
+      "training_seconds": 216.085547034,
+      "vector": [
+        -3.798735949264726,
+        -9.704382077826612,
+        4.724055835728562
+      ],
+      "violations": 0,
+      "ac_violations": 0,
+      "ac_failed": 0,
+      "reserve_invalid": 0,
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "ac_safety_seconds": 0.3624503990001813,
+      "ac_safety_attempts": 8,
+      "interval_covered_steps": 8,
+      "estimation_rmse": 0.02042342989641754,
+      "safety_interventions": 8,
+      "guard_infeasible": null,
+      "guard_certified_steps": 0,
+      "mean_aoi": 4050.0
+    }
+  ],
+  "test": [
+    {
+      "seed": 9100,
+      "preference": [
+        0.2,
+        0.3,
+        0.5
+      ],
+      "failed": false,
+      "env_steps": 8,
+      "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+      "emergency_steps": 0,
+      "emergency_service_degraded_steps": 0,
+      "inference_seconds": [
+        0.0008213300000079471,
+        0.0008912829998735106,
+        0.0007421239999985119,
+        0.0007102559998202196,
+        0.0009520129999600613,
+        0.0007626029998846207,
+        0.0008265480000773096,
+        0.0007432050001625612
+      ],
+      "training_seconds": 216.085547034,
+      "vector": [
+        -3.8733920631154963,
+        -9.93305186257298,
+        4.448515275248202
+      ],
+      "violations": 0,
+      "ac_violations": 0,
+      "ac_failed": 0,
+      "reserve_invalid": 0,
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "ac_safety_seconds": 0.17355502300006265,
+      "ac_safety_attempts": 8,
+      "interval_covered_steps": 7,
+      "estimation_rmse": 0.02062418627757219,
+      "safety_interventions": 8,
+      "guard_infeasible": null,
+      "guard_certified_steps": 0,
+      "mean_aoi": 4050.0,
+      "policy_evaluation_preference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "unseen_policy_input_preference": false,
+      "preference_is_selection_weight": false,
+      "selected_checkpoint": "../research_runs/stage13/fair/ordinary_41/member_0/latest.pt"
+    },
+    {
+      "seed": 9101,
+      "preference": [
+        0.2,
+        0.3,
+        0.5
+      ],
+      "failed": false,
+      "env_steps": 8,
+      "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+      "emergency_steps": 0,
+      "emergency_service_degraded_steps": 0,
+      "inference_seconds": [
+        0.0007562139999208739,
+        0.0007957029999943188,
+        0.0007831539999187953,
+        0.0007293139999546838,
+        0.0008536570001069776,
+        0.000768511000160288,
+        0.0007613410000431031,
+        0.0010170980001475982
+      ],
+      "training_seconds": 216.085547034,
+      "vector": [
+        -3.877873793540248,
+        -9.941158861199623,
+        4.199652966053566
+      ],
+      "violations": 0,
+      "ac_violations": 0,
+      "ac_failed": 0,
+      "reserve_invalid": 0,
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "ac_safety_seconds": 0.1667481899996801,
+      "ac_safety_attempts": 8,
+      "interval_covered_steps": 7,
+      "estimation_rmse": 0.017231019953957365,
+      "safety_interventions": 8,
+      "guard_infeasible": null,
+      "guard_certified_steps": 0,
+      "mean_aoi": 4050.0,
+      "policy_evaluation_preference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "unseen_policy_input_preference": false,
+      "preference_is_selection_weight": false,
+      "selected_checkpoint": "../research_runs/stage13/fair/ordinary_41/member_0/latest.pt"
+    },
+    {
+      "seed": 9100,
+      "preference": [
+        0.6,
+        0.1,
+        0.3
+      ],
+      "failed": false,
+      "env_steps": 8,
+      "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+      "emergency_steps": 0,
+      "emergency_service_degraded_steps": 0,
+      "inference_seconds": [
+        0.0007430539999404573,
+        0.0007482819999040657,
+        0.0007652369999959774,
+        0.0007401000000299973,
+        0.0009611959999347164,
+        0.0008330679997925472,
+        0.0007391799999822979,
+        0.0007182080000802671
+      ],
+      "training_seconds": 216.085547034,
+      "vector": [
+        -3.8733920631154963,
+        -9.93305186257298,
+        4.448515275248202
+      ],
+      "violations": 0,
+      "ac_violations": 0,
+      "ac_failed": 0,
+      "reserve_invalid": 0,
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "ac_safety_seconds": 0.1615695760001472,
+      "ac_safety_attempts": 8,
+      "interval_covered_steps": 7,
+      "estimation_rmse": 0.02062418627757219,
+      "safety_interventions": 8,
+      "guard_infeasible": null,
+      "guard_certified_steps": 0,
+      "mean_aoi": 4050.0,
+      "policy_evaluation_preference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "unseen_policy_input_preference": false,
+      "preference_is_selection_weight": false,
+      "selected_checkpoint": "../research_runs/stage13/fair/ordinary_41/member_0/latest.pt"
+    },
+    {
+      "seed": 9101,
+      "preference": [
+        0.6,
+        0.1,
+        0.3
+      ],
+      "failed": false,
+      "env_steps": 8,
+      "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+      "emergency_steps": 0,
+      "emergency_service_degraded_steps": 0,
+      "inference_seconds": [
+        0.00048316200013687194,
+        0.0007164549999743031,
+        0.0007961030000842584,
+        0.0007357049998972798,
+        0.0007418529999085877,
+        0.0007646869999007322,
+        0.0007295550001344964,
+        0.0006975270000566525
+      ],
+      "training_seconds": 216.085547034,
+      "vector": [
+        -3.877873793540248,
+        -9.941158861199623,
+        4.199652966053566
+      ],
+      "violations": 0,
+      "ac_violations": 0,
+      "ac_failed": 0,
+      "reserve_invalid": 0,
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "ac_safety_seconds": 0.16486243999997896,
+      "ac_safety_attempts": 8,
+      "interval_covered_steps": 7,
+      "estimation_rmse": 0.017231019953957365,
+      "safety_interventions": 8,
+      "guard_infeasible": null,
+      "guard_certified_steps": 0,
+      "mean_aoi": 4050.0,
+      "policy_evaluation_preference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "unseen_policy_input_preference": false,
+      "preference_is_selection_weight": false,
+      "selected_checkpoint": "../research_runs/stage13/fair/ordinary_41/member_0/latest.pt"
+    },
+    {
+      "seed": 9100,
+      "preference": [
+        0.1,
+        0.7,
+        0.2
+      ],
+      "failed": false,
+      "env_steps": 8,
+      "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+      "emergency_steps": 0,
+      "emergency_service_degraded_steps": 0,
+      "inference_seconds": [
+        0.0007628450000538578,
+        0.0007475630000044475,
+        0.0010527209999509068,
+        0.0007131300001219643,
+        0.0009252430002106848,
+        0.0007563250001112465,
+        0.0009203669999351405,
+        0.0007063709999783896
+      ],
+      "training_seconds": 216.085547034,
+      "vector": [
+        -3.8733920631154963,
+        -9.93305186257298,
+        4.448515275248202
+      ],
+      "violations": 0,
+      "ac_violations": 0,
+      "ac_failed": 0,
+      "reserve_invalid": 0,
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "ac_safety_seconds": 0.17184924399998636,
+      "ac_safety_attempts": 8,
+      "interval_covered_steps": 7,
+      "estimation_rmse": 0.02062418627757219,
+      "safety_interventions": 8,
+      "guard_infeasible": null,
+      "guard_certified_steps": 0,
+      "mean_aoi": 4050.0,
+      "policy_evaluation_preference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "unseen_policy_input_preference": false,
+      "preference_is_selection_weight": false,
+      "selected_checkpoint": "../research_runs/stage13/fair/ordinary_41/member_0/latest.pt"
+    },
+    {
+      "seed": 9101,
+      "preference": [
+        0.1,
+        0.7,
+        0.2
+      ],
+      "failed": false,
+      "env_steps": 8,
+      "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+      "emergency_steps": 0,
+      "emergency_service_degraded_steps": 0,
+      "inference_seconds": [
+        0.0006599719999940135,
+        0.0011521270000685035,
+        0.0007628040000327019,
+        0.0007262210001499625,
+        0.0007666500000595988,
+        0.0009784819999367755,
+        0.0007512570000471896,
+        0.0007729490000656369
+      ],
+      "training_seconds": 216.085547034,
+      "vector": [
+        -3.877873793540248,
+        -9.941158861199623,
+        4.199652966053566
+      ],
+      "violations": 0,
+      "ac_violations": 0,
+      "ac_failed": 0,
+      "reserve_invalid": 0,
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "ac_safety_seconds": 0.17309159399997043,
+      "ac_safety_attempts": 8,
+      "interval_covered_steps": 7,
+      "estimation_rmse": 0.017231019953957365,
+      "safety_interventions": 8,
+      "guard_infeasible": null,
+      "guard_certified_steps": 0,
+      "mean_aoi": 4050.0,
+      "policy_evaluation_preference": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "unseen_policy_input_preference": false,
+      "preference_is_selection_weight": false,
+      "selected_checkpoint": "../research_runs/stage13/fair/ordinary_41/member_0/latest.pt"
+    }
+  ],
+  "members": [
+    {
+      "checkpoint": "../research_runs/stage13/fair/ordinary_41/member_0/latest.pt",
+      "weight": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "value": [
+        -3.8233275742706194,
+        -9.77810091691127,
+        4.408757783333318
+      ]
+    }
+  ],
+  "validation_points": [
+    [
+      -3.8233275742706194,
+      -9.77810091691127,
+      4.408757783333318
+    ]
+  ],
+  "test_points": [
+    [
+      -3.875632928327872,
+      -9.937105361886301,
+      4.324084120650884
+    ],
+    [
+      -3.875632928327872,
+      -9.937105361886301,
+      4.324084120650884
+    ],
+    [
+      -3.875632928327872,
+      -9.937105361886301,
+      4.324084120650884
+    ]
+  ],
+  "test_failed_or_infeasible": 0,
+  "hv": 7990.369790741883
+}

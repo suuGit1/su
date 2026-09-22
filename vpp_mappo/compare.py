@@ -20,8 +20,8 @@ def compare(checkpoint, output, csv_path=None, episodes=3, seed=100000, lookahea
     if cfg.cyber_mode!='off':
         from .cyber_compare import compare as cyber_compare
         return cyber_compare(checkpoint,output,csv_path,episodes,seed,lookahead,ev_sessions_path)
-    if cfg.network_model!='ieee33' or not cfg.safety:
-        raise ValueError('统一可行域比较要求 IEEE33 且 safety=true；不安全消融请单独评估')
+    if cfg.network_model not in ('ieee33','ieee69') or not cfg.safety:
+        raise ValueError('统一可行域比较要求 IEEE33/69 且 safety=true；不安全消融请单独评估')
     # 学习策略先执行数据隔离检查；失败时不继续跑对照。
     learned=evaluate(checkpoint,out/'learned',episodes,seed,'cpu',csv_path,ev_sessions_path=ev_sessions_path)
     oracle=run(cfg,out/'milp_oracle','milp_oracle',episodes,seed,csv_path,lookahead)

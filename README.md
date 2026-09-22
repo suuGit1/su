@@ -1,5 +1,7 @@
 # Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants
 
+第十三阶段已贯通 IEEE69 的 MPC、普通 MAPPO 与 Pareto-MAPPO 闭环，并保留未完成的扩大预算实验记录。[实际结果与下一步](docs/stage13.md)。
+
 第十二阶段将 OLS 自适应验证纳入四方法总预算，已运行同预算流程验证。[预算规则与运行命令](docs/stage12.md)。
 
 第十一阶段新增含网损 PCC 三目标、紧急后备、OLS 子策略、提前离站事件和真实 SCE DR 数据分析。[实现与未完成验收](docs/stage11.md)。

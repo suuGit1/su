@@ -70,20 +70,20 @@ class Config:
                 raise ValueError('C3 参数使用 cyber_spec/cyber_dt_mode；不能叠加旧模拟器参数')
         if self.resource_model not in ('legacy', 'sessions_v1'):
             raise ValueError('resource_model 必须为 legacy 或 sessions_v1')
-        if self.resource_model == 'sessions_v1' and self.network_model != 'ieee33':
-            raise ValueError('会话资源模型要求 IEEE33')
+        if self.resource_model == 'sessions_v1' and self.network_model not in ('ieee33', 'ieee69'):
+            raise ValueError('会话资源模型要求 IEEE33/69')
         if self.resource_model == 'sessions_v1' and self.metrics_enabled and not math.isclose(self.reserve_hours,self.dt_hours):
             raise ValueError('会话模型当前备用持续时间必须等于一个调度步长')
-        if self.network_model not in ('aggregate', 'ieee33'):
-            raise ValueError('network_model 必须为 aggregate 或 ieee33')
+        if self.network_model not in ('aggregate', 'ieee33', 'ieee69'):
+            raise ValueError('network_model 必须为 aggregate、ieee33 或 ieee69')
         if not math.isfinite(self.solver_time_limit) or self.solver_time_limit <= 0:
             raise ValueError('求解时间必须为有限正数')
         if self.algorithm not in ('mappo', 'ippo', 'weighted_mappo'):
             raise ValueError('支持 mappo、ippo、weighted_mappo；Pareto 条件策略尚未接入，不能用别名替代')
         if type(self.metrics_enabled) is not bool:
             raise ValueError('metrics_enabled 必须为布尔值')
-        if self.metrics_enabled and self.network_model != 'ieee33':
-            raise ValueError('三目标评价要求 IEEE33 统一模型')
+        if self.metrics_enabled and self.network_model not in ('ieee33', 'ieee69'):
+            raise ValueError('三目标评价要求 IEEE33/69 统一模型')
         if self.algorithm == 'weighted_mappo' and not self.metrics_enabled:
             raise ValueError('固定权重多目标方法必须启用三目标评价')
         for name in ('objective_scales', 'objective_weights'):

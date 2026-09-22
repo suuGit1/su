@@ -7,6 +7,7 @@ import numpy as np
 
 @dataclass
 class DispatchSpec:
+    network_name: str = "ieee33"
     capacities: tuple = (500.0, 1200.0)
     power_max: tuple = (250.0, 300.0)
     soc_min: tuple = (0.1, 0.2)
@@ -45,8 +46,11 @@ class DispatchSpec:
                 raise ValueError(key + ' 必须为有限正数')
         if not 0 < obj.efficiency <= 1 or not 0 <= obj.sell_ratio <= 1 or not 0 < obj.voltage_min < 1 < obj.voltage_max:
             raise ValueError('效率、售电比例或电压范围不合法')
-        if not obj.pv_buses or any(type(b) is not int or not 1 <= b <= 32 for b in [obj.ess_bus, obj.ev_bus, obj.wind_bus, *obj.pv_buses]):
-            raise ValueError('资源母线使用 pandapower 的 1–32 索引，0 为平衡母线')
+        if obj.network_name not in ("ieee33", "ieee69"):
+            raise ValueError("不支持的网络算例")
+        max_bus = 68 if obj.network_name == "ieee69" else 32
+        if not obj.pv_buses or any(type(b) is not int or not 1 <= b <= max_bus for b in [obj.ess_bus, obj.ev_bus, obj.wind_bus, *obj.pv_buses]):
+            raise ValueError('资源母线使用 pandapower 的 有效非平衡节点索引，0 为平衡母线')
         return obj
 
     def next_soc(self, soc, action, dt):
