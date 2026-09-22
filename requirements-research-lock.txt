@@ -1,0 +1,9 @@
+# 第九阶段实际验证的 CPU 科学计算版本；先按 README 安装对应平台的 PyTorch。
+numpy==1.26.4
+scipy==1.13.1
+pandas==2.2.3
+pandapower==2.14.11
+gymnasium==0.29.1
+pettingzoo==1.24.3
+torch==2.5.1
+matplotlib==3.10.8

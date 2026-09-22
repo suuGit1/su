@@ -1,0 +1,11 @@
+{
+  "protocol": "c3-budget-campaign-v1",
+  "config": "configs/research_smoke.json",
+  "validation_run_episodes": 60,
+  "candidate_formal_budgets_episodes": [300, 600, 1200],
+  "selection_rule": "仅根据验证场景和预算曲线选定正式预算，然后冻结后运行测试；本文件不宣称候选预算已运行",
+  "seeds": [1, 2, 3, 4, 5],
+  "families": ["ordinary", "central", "fixed", "control", "communication", "computation", "joint", "no_residual", "coordinator"],
+  "safety_rule": "所有评价都执行同一 AC 校核；备用仍为线性代理指标，激活失败单独公开",
+  "data_protocol": "GB OPSD + NESO UTC 匹配；EV 缺失时明确关闭，不自动拼接美国会话"
+}

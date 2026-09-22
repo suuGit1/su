@@ -1,0 +1,188 @@
+{
+  "manifest": {
+    "reserve_mode": "ac_checked",
+    "protocol": "c3-budget-campaign-v1",
+    "config": {
+      "algorithm": "mappo",
+      "episodes": 2,
+      "horizon": 8,
+      "dt_hours": 0.25,
+      "seed": 1,
+      "hidden_size": 32,
+      "ppo_epoch": 2,
+      "num_mini_batch": 1,
+      "lr": 0.0003,
+      "gamma": 0.99,
+      "gae_lambda": 0.95,
+      "clip_param": 0.2,
+      "entropy_coef": 0.01,
+      "reward_scale": 100.0,
+      "violation_penalty": 100.0,
+      "terminal_soc_penalty": 1000.0,
+      "safety": true,
+      "digital_twin": false,
+      "delay_steps": 0,
+      "packet_loss": 0.0,
+      "train_csv": null,
+      "device": "cpu",
+      "threads": 1,
+      "network_model": "ieee33",
+      "dispatch_spec": "configs/dispatch_ieee33.json",
+      "solver_time_limit": 30.0,
+      "metrics_enabled": false,
+      "objective_scales": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "objective_weights": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "reserve_hours": 0.25,
+      "synthetic_carbon_g_per_kwh": 300,
+      "resource_model": "sessions_v1",
+      "flex_spec": null,
+      "ev_sessions_path": null,
+      "cyber_mode": "fixed",
+      "cyber_dt_mode": "physics",
+      "cyber_spec": "configs/cyber_assumptions.json",
+      "coordinator_mode": "schedule",
+      "coordinator_aoi_limit_steps": 2.0,
+      "coordinator_deadline_margin_steps": 1.0,
+      "coordinator_soc_margin": 0.05,
+      "coordinator_reserved_fraction": 0.5
+    },
+    "episodes": 12,
+    "seeds": [
+      1
+    ],
+    "families": [
+      "ordinary",
+      "joint"
+    ],
+    "dt_hashes": {
+      "physics": "1e2c6e942ac6112a8f181c20f15e8780b90d5d7c2ffd7a5fae46109e4d2b85de",
+      "residual": "20b9b7e3bdb0f93813a098c2e00c274f5f393c6db58cda22fb2c49051b9ac9be"
+    },
+    "test_weights": [
+      [
+        0.14285714285714285,
+        0.14285714285714285,
+        0.7142857142857143
+      ],
+      [
+        0.14285714285714285,
+        0.2857142857142857,
+        0.5714285714285714
+      ],
+      [
+        0.14285714285714285,
+        0.42857142857142855,
+        0.42857142857142855
+      ],
+      [
+        0.14285714285714285,
+        0.5714285714285714,
+        0.2857142857142857
+      ],
+      [
+        0.14285714285714285,
+        0.7142857142857143,
+        0.14285714285714285
+      ],
+      [
+        0.2857142857142857,
+        0.14285714285714285,
+        0.5714285714285714
+      ],
+      [
+        0.2857142857142857,
+        0.2857142857142857,
+        0.42857142857142855
+      ],
+      [
+        0.2857142857142857,
+        0.42857142857142855,
+        0.2857142857142857
+      ],
+      [
+        0.2857142857142857,
+        0.5714285714285714,
+        0.14285714285714285
+      ],
+      [
+        0.42857142857142855,
+        0.14285714285714285,
+        0.42857142857142855
+      ],
+      [
+        0.42857142857142855,
+        0.2857142857142857,
+        0.2857142857142857
+      ],
+      [
+        0.42857142857142855,
+        0.42857142857142855,
+        0.14285714285714285
+      ],
+      [
+        0.5714285714285714,
+        0.14285714285714285,
+        0.2857142857142857
+      ],
+      [
+        0.5714285714285714,
+        0.2857142857142857,
+        0.14285714285714285
+      ],
+      [
+        0.7142857142857143,
+        0.14285714285714285,
+        0.14285714285714285
+      ]
+    ],
+    "validation_seeds": [
+      8100,
+      8101
+    ],
+    "test_seeds": [
+      9100,
+      9101,
+      9102
+    ],
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "numpy": "1.26.4"
+  },
+  "aggregate": {
+    "ordinary": {
+      "completed": 1,
+      "failed": 0,
+      "hv": {
+        "n": 1,
+        "mean": 8818.975154231552,
+        "std": null,
+        "ci95": null
+      },
+      "undefined_igd": 0
+    },
+    "joint": {
+      "completed": 1,
+      "failed": 0,
+      "hv": {
+        "n": 1,
+        "mean": 8642.704223887198,
+        "std": null,
+        "ci95": null
+      },
+      "undefined_igd": 0
+    }
+  },
+  "limits": [
+    "增加预算不自动证明收敛，必须检查学习曲线",
+    "四种资源模式固定 18 个动作维度；未启用的维度由执行器忽略",
+    "测试运行 AC 修正，训练未启用；属于统一部署条件"
+  ]
+}
