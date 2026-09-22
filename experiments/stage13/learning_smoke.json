@@ -1,0 +1,94 @@
+[
+  {
+    "seed": 9102,
+    "preference": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "unseen_preference": false,
+    "failed": false,
+    "env_steps": 8,
+    "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+    "emergency_steps": 0,
+    "emergency_service_degraded_steps": 0,
+    "inference_seconds": [
+      0.0007922359999952278,
+      0.003402253999979621,
+      0.0028409779999947204,
+      0.0008522159999984069,
+      0.0007163919999584323,
+      0.0006814289999965695,
+      0.000920950000022458,
+      0.0007388650000166308
+    ],
+    "training_seconds": 11.825069665000001,
+    "vector": [
+      -3.5072289725253474,
+      -10.129198559490888,
+      5.318207354137644
+    ],
+    "violations": 0,
+    "ac_violations": 0,
+    "ac_failed": 0,
+    "reserve_invalid": 0,
+    "ev_unmet_kwh": 0.0,
+    "dr_backlog_kwh": 0.0,
+    "ac_safety_seconds": 0.2245407660000751,
+    "ac_safety_attempts": 8,
+    "interval_covered_steps": 8,
+    "estimation_rmse": 0.01551484843282593,
+    "safety_interventions": 8,
+    "guard_infeasible": null,
+    "guard_certified_steps": 0,
+    "mean_aoi": 4050.0,
+    "method": "ordinary",
+    "network_model": "ieee69"
+  },
+  {
+    "seed": 9102,
+    "preference": [
+      0.2,
+      0.3,
+      0.5
+    ],
+    "unseen_preference": true,
+    "failed": false,
+    "env_steps": 8,
+    "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+    "emergency_steps": 0,
+    "emergency_service_degraded_steps": 0,
+    "inference_seconds": [
+      0.0007705020000230434,
+      0.000678442999969775,
+      0.0006865859999720669,
+      0.000697312999989208,
+      0.0007231309999724544,
+      0.0006842220000180532,
+      0.0008918060000269179,
+      0.0007093209999879946
+    ],
+    "training_seconds": 8.121569773000033,
+    "vector": [
+      -3.5190400744469845,
+      -10.15952292033974,
+      5.290916739805457
+    ],
+    "violations": 0,
+    "ac_violations": 0,
+    "ac_failed": 0,
+    "reserve_invalid": 0,
+    "ev_unmet_kwh": 0.0,
+    "dr_backlog_kwh": 0.0,
+    "ac_safety_seconds": 0.22135944300003985,
+    "ac_safety_attempts": 8,
+    "interval_covered_steps": 8,
+    "estimation_rmse": 0.01542768601905607,
+    "safety_interventions": 8,
+    "guard_infeasible": null,
+    "guard_certified_steps": 0,
+    "mean_aoi": 4050.0,
+    "method": "pareto",
+    "network_model": "ieee69"
+  }
+]

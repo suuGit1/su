@@ -16,6 +16,8 @@ class GridVPPAdapter:
     def __init__(self, config, csv_path=None):
         self.config = config
         self.spec = DispatchSpec.load(getattr(config, '_dispatch_record', None) or config.dispatch_spec)
+        if config.network_model != self.spec.network_name:
+            raise ValueError("配置网络与资源参数中的网络算例不一致")
         self.network = Network33(self.spec)
         self.data = CSVProfiles(csv_path, config.horizon) if csv_path else None
         if config.metrics_enabled:

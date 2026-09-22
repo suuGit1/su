@@ -1,0 +1,82 @@
+{
+  "before": {
+    "seconds": 2.58112832300003,
+    "result": {
+      "kw": 253.125,
+      "baseline_feasible": true,
+      "sampled_checked": true,
+      "samples": [
+        {
+          "fraction": -1.0,
+          "target_kw": 1335.894643011227,
+          "actual_kw": 1335.9246755555887,
+          "error_kw": 0.030032544361802138
+        },
+        {
+          "fraction": -0.5,
+          "target_kw": 1462.457143011227,
+          "actual_kw": 1462.5025118266421,
+          "error_kw": 0.04536881541525872
+        },
+        {
+          "fraction": 0.0,
+          "target_kw": 1589.019643011227,
+          "actual_kw": 1589.0585377931643,
+          "error_kw": 0.038894781937415246
+        },
+        {
+          "fraction": 0.5,
+          "target_kw": 1715.582143011227,
+          "actual_kw": 1715.5643694562173,
+          "error_kw": -0.017773555009625852
+        },
+        {
+          "fraction": 1.0,
+          "target_kw": 1842.144643011227,
+          "actual_kw": 1842.231378871304,
+          "error_kw": 0.08673586007716949
+        }
+      ]
+    }
+  },
+  "after": {
+    "seconds": 2.0311255950000486,
+    "result": {
+      "kw": 253.125,
+      "baseline_feasible": true,
+      "sampled_checked": true,
+      "samples": [
+        {
+          "fraction": -1.0,
+          "target_kw": 1335.894643011227,
+          "actual_kw": 1335.9246755555887,
+          "error_kw": 0.030032544361802138
+        },
+        {
+          "fraction": -0.5,
+          "target_kw": 1462.457143011227,
+          "actual_kw": 1462.5025118266421,
+          "error_kw": 0.04536881541525872
+        },
+        {
+          "fraction": 0.0,
+          "target_kw": 1589.019643011227,
+          "actual_kw": 1589.0585377931643,
+          "error_kw": 0.038894781937415246
+        },
+        {
+          "fraction": 0.5,
+          "target_kw": 1715.582143011227,
+          "actual_kw": 1715.5643694562173,
+          "error_kw": -0.017773555009625852
+        },
+        {
+          "fraction": 1.0,
+          "target_kw": 1842.144643011227,
+          "actual_kw": 1842.231378871304,
+          "error_kw": 0.08673586007716949
+        }
+      ]
+    }
+  }
+}

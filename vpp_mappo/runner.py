@@ -71,7 +71,7 @@ def train(config, output, env_factory=VPPAdapter):
     from .objectives import CONTRACT_VERSION, aggregate_metrics
     if config.resource_model=='sessions_v1': CONTRACT_VERSION += '+sessions-dr-curtail-v1'
     metadata['objective_contract'] = CONTRACT_VERSION if config.metrics_enabled else None
-    if config.network_model == 'ieee33':
+    if config.network_model in ('ieee33', 'ieee69'):
         from importlib.metadata import version
         metadata['grid_dependencies'] = {k: version(k) for k in ('pandapower', 'scipy', 'pandas')}
     (out / 'metadata.json').write_text(json.dumps(metadata, indent=2), encoding='utf-8')
@@ -205,7 +205,7 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
             reward += info['reward']
             violations += info['constraint_violations']
         rows.append(dict(episode=ep+1, scenario_seed=seed+ep, cost=cost, reward=reward, violations=violations))
-        if config.network_model == 'ieee33':
+        if config.network_model in ('ieee33', 'ieee69'):
             episode_steps = trajectories[-config.horizon:]
             rows[-1].update(objective=cost+sum(r['terminal_penalty'] for r in episode_steps),
                 ac_violations=sum(r['ac_violations'] for r in episode_steps),
@@ -230,7 +230,7 @@ def evaluate(checkpoint, output, episodes=3, seed=100000, device='cpu', csv_path
                    mean_cost=float(np.mean([r['cost'] for r in rows])),
                    std_cost=float(np.std([r['cost'] for r in rows], ddof=1)) if episodes > 1 else None,
                    total_violations=sum(r['violations'] for r in rows))
-    if config.network_model == 'ieee33':
+    if config.network_model in ('ieee33', 'ieee69'):
         summary.update(total_ac_violations=sum(r['ac_violations'] for r in rows),
             ac_failed_steps=sum(r['ac_failed_steps'] for r in rows),
             mean_objective=float(np.mean([r['objective'] for r in rows])))

@@ -50,6 +50,11 @@
       "name": "论文完整实验",
       "status": "five_seed_budget_matched_ablations_stress_partial_real_data_completed; full_paper_validation_pending",
       "acceptance": "多训练种子、预算匹配、消融、压力测试、真实设备计时及扩展系统"
+    },
+    {
+      "name": "IEEE69 标准算例扩展",
+      "status": "implemented_and_closed_loop_smoke_tested; long_budget_and_robustness_pending",
+      "acceptance": "固定 MATPOWER 数据版本与物理单位；MPC/普通MAPPO/Pareto 保存加载；基准潮流交叉校核"
     }
   ],
   "project_title": "Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants",
@@ -128,5 +133,6 @@
     "unified_budget": "实现并运行普通/固定权重/Pareto/OLS四方法，训练+选择24步及独立测试12步均匹配",
     "validation": "101项回归通过；9个模型训练重载",
     "remaining": "短时域1种子无DT模型的流程验证；长预算多种子、DT收益、真实EV、IEEE69及设备实测仍未完成"
-  }
+  },
+  "next_priority": "可靠断点续训与训练/选择/测试实际开销账目；然后完成 v3 PCC 统一预算多种子实验"
 }

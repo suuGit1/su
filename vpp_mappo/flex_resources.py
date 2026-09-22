@@ -65,7 +65,7 @@ def grid_power(row, action):
 class FlexNetwork(Network33):
     def __init__(self, spec):
         super().__init__(spec)
-        self.pa=np.zeros((33,6));self.qa=np.zeros((33,6))
+        self.pa=np.zeros((len(self.net.bus),6));self.qa=np.zeros((len(self.net.bus),6))
         self.pa[spec.ess_bus,0]=-0.001
         self.pa[spec.ev_bus,1]=0.001
         for k in (2,3):

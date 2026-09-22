@@ -1,0 +1,12 @@
+{
+  "status": "incomplete",
+  "completed_cells": [
+    "ordinary_41"
+  ],
+  "saved_fixed_members": [
+    "fair/fixed_41/member_1/latest.pt",
+    "fair/fixed_41/member_0/latest.pt",
+    "fair/fixed_41/member_2/latest.pt"
+  ],
+  "note": "原执行进程不可连接；固定偏好三个成员已保存，但无完整选择/测试账目；不能声称完整三种子对照已完成"
+}

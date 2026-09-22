@@ -26,7 +26,7 @@ class VPPAdapter:
         if config.resource_model == 'sessions_v1':
             from .flex_environment import FlexVPPAdapter
             return FlexVPPAdapter(config, csv_path)
-        if config.network_model == 'ieee33':
+        if config.network_model in ('ieee33','ieee69'):
             from .grid_environment import GridVPPAdapter
             return GridVPPAdapter(config, csv_path)
         return super().__new__(cls)

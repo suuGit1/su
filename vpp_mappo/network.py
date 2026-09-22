@@ -1,21 +1,23 @@
-"""Baran–Wu 33 节点：统一无损线性模型与独立交流潮流审计。"""
+"""Baran–Wu 33/69 节点：统一无损线性模型与独立交流潮流审计。"""
 import numpy as np
 import pandapower as pp
 from pandapower.networks import case33bw
+from .network_cases import case69
 
 
 class Network33:
     def __init__(self, spec):
         self.spec = spec
-        self.net = case33bw()
+        self.net = case69() if spec.network_name == "ieee69" else case33bw()
         n = self.net
         # 原案例的热额定值不能作为实测导线容量；显式使用研究假设。
         n.line['max_i_ka'] = spec.assumed_line_ka
         self.lines = n.line[n.line.in_service].copy()
-        if len(n.bus) != 33 or len(self.lines) != 32:
-            raise ValueError('网络必须是 33 节点、32 条投入支路')
-        self.base_p = np.zeros(33)
-        self.base_q = np.zeros(33)
+        nb = len(n.bus); nl = len(self.lines)
+        if nl != nb-1:
+            raise ValueError('网络必须是辐射型树结构')
+        self.base_p = np.zeros(nb)
+        self.base_q = np.zeros(nb)
         for _, row in n.load.iterrows():
             self.base_p[int(row.bus)] += row.p_mw
             self.base_q[int(row.bus)] += row.q_mvar
@@ -23,29 +25,29 @@ class Network33:
         self.q_weights = self.base_q/self.base_p.sum()
         edges = [(int(r.from_bus), int(r.to_bus)) for _, r in self.lines.iterrows()]
         # 自动从平衡节点定向，不依赖支路表的排列顺序。
-        adjacency = {i: [] for i in range(33)}
+        adjacency = {i: [] for i in range(nb)}
         for k, (a, b) in enumerate(edges):
             adjacency[a].append((b, k)); adjacency[b].append((a, k))
-        self.paths = np.zeros((33, 32))
+        self.paths = np.zeros((nb, nl))
         seen = {0}; queue = [0]
         for a in queue:
             for b, k in adjacency[a]:
                 if b in seen: continue
                 seen.add(b); queue.append(b)
                 self.paths[b] = self.paths[a]; self.paths[b, k] = 1
-        if len(seen) != 33: raise ValueError('网络不连通')
+        if len(seen) != nb: raise ValueError('网络不连通')
         self.downstream = self.paths.T
         self.r = (self.lines.r_ohm_per_km*self.lines.length_km).to_numpy()
         self.x = (self.lines.x_ohm_per_km*self.lines.length_km).to_numpy()
         self.kv = float(n.bus.vn_kv.iloc[0])
         self.smax = np.sqrt(3)*self.kv*spec.assumed_line_ka
         # 动作是储能/EV 有功注入与按负荷比例分布的 DR，储能逆变器 Q=0。
-        self.pa = np.zeros((33, 3)); self.qa = np.zeros((33, 3))
+        self.pa = np.zeros((nb, 3)); self.qa = np.zeros((nb, 3))
         self.pa[spec.ess_bus, 0] = -0.001; self.pa[spec.ev_bus, 1] = -0.001
         self.pa[:, 2] = -self.weights/1000; self.qa[:, 2] = -self.q_weights/1000
         self.pcoef = self.downstream@self.pa; self.qcoef = self.downstream@self.qa
         self.vcoef = -2*self.paths@(self.r[:, None]*self.pcoef+self.x[:, None]*self.qcoef)/self.kv**2
-        self.generators = [pp.create_sgen(n, bus=b, p_mw=0, q_mvar=0) for b in range(1, 33)]
+        self.generators = [pp.create_sgen(n, bus=b, p_mw=0, q_mvar=0) for b in range(1, nb)]
 
     def injections(self, row, action):
         p = self.weights*row['load_kw']/1000
@@ -61,8 +63,8 @@ class Network33:
         # 内接正方形是保守的视在功率约束：|P|,|Q| ≤ Smax/sqrt(2)。
         matrix = np.vstack((self.vcoef, self.pcoef, self.qcoef))
         offset = np.r_[v, bp, bq]
-        lower = np.r_[np.full(33, self.spec.voltage_min**2), np.full(64, -self.smax/np.sqrt(2))]
-        upper = np.r_[np.full(33, self.spec.voltage_max**2), np.full(64, self.smax/np.sqrt(2))]
+        lower = np.r_[np.full(len(self.net.bus), self.spec.voltage_min**2), np.full(2*len(self.lines), -self.smax/np.sqrt(2))]
+        upper = np.r_[np.full(len(self.net.bus), self.spec.voltage_max**2), np.full(2*len(self.lines), self.smax/np.sqrt(2))]
         return matrix, lower-offset, upper-offset
 
     def linear(self, row, action):
