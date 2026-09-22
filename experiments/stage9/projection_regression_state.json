@@ -1,0 +1,22 @@
+{
+  "episode": 6,
+  "step": 22,
+  "scenario_seed": 112006,
+  "error": "会话/DR 调度不可行或无可执行解：The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is At lower/fixed bound)",
+  "soc": [
+    0.9,
+    0.0
+  ],
+  "backlog": 0.0,
+  "shifted": 289.57934314617495,
+  "shed_used": 100.0,
+  "remaining": {},
+  "row": {
+    "load_kw": 1129.2951284942267,
+    "pv_kw": 0.0,
+    "wind_kw": 283.0609576728224,
+    "price": 0.0517,
+    "carbon_g_per_kwh": 122.0,
+    "carbon_observed_g_per_kwh": 155.0
+  }
+}

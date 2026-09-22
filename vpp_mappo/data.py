@@ -28,7 +28,7 @@ class CSVProfiles:
             required = {'scenario', 'step', *FIELDS}
             if not required.issubset(reader.fieldnames or []):
                 raise ValueError('CSV 必须包含：' + ', '.join(sorted(required)))
-            optional = [k for k in ('carbon_g_per_kwh',) if k in reader.fieldnames]
+            optional = [k for k in ('carbon_g_per_kwh','carbon_observed_g_per_kwh') if k in reader.fieldnames]
             for row in reader:
                 groups.setdefault(row['scenario'], []).append(row)
         if not groups:

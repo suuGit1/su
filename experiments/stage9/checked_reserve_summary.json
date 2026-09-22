@@ -1,0 +1,15 @@
+{
+  "opportunities": 56,
+  "positive_opportunities": 56,
+  "baseline_infeasible": 0,
+  "activations": 112,
+  "failures": 0,
+  "mean_old_kw": 278.20780664353384,
+  "mean_checked_kw": 241.40967251085584,
+  "limits": [
+    "使用当前真实状态进行现场备用确认，不给策略添加真值输入",
+    "改变了备用能力估计方式；旧策略没有按此目标重训练",
+    "只检查两个端点和所测后续轨迹；非全区间/所有未来扰动安全证明",
+    "无法维持基线或无正容量时保留记录，不算成功履约"
+  ]
+}

@@ -58,14 +58,14 @@ class FlexVPPAdapter:
         obs=np.asarray([common+list(own[i])+np.eye(6)[i].tolist() for i in range(6)],np.float32)
         return obs,np.repeat(obs.reshape(1,-1),6,axis=0)
 
-    def plan(self, oracle=False, lookahead=6, proposal=None, objective='economic', fixed_row=None):
+    def plan(self, oracle=False, lookahead=6, proposal=None, objective='economic', fixed_row=None, grid_target=None):
         # MPC 和安全层只读取已接入会话；尾部保证这些已知任务及 DR 日末约束可达。
         sessions=[s for s in self.sessions if s['departure_step']>self.t and (oracle or s['arrival_step']<=self.t)]
         h=self.config.horizon-self.t
         rows=[self.row(t) for t in range(self.t,self.config.horizon)] if oracle else [(fixed_row or self.row()).copy() for _ in range(h)]
         return solve_flex(self.spec,self.flex,self.network,rows,self.t,self.soc[0],self.backlog,self.shifted,self.shed_used,
             sessions,self.remaining,self.config.dt_hours,self.config.terminal_soc_penalty,self.config.solver_time_limit,
-            proposal=proposal,objective=objective,objective_steps=h if oracle else min(lookahead,h))
+            proposal=proposal,objective=objective,objective_steps=h if oracle else min(lookahead,h),grid_target=grid_target)
 
     def _allocate(self,total):
         result={s['id']:0.0 for s in self.sessions};left=max(0,total)
