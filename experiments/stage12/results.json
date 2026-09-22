@@ -1,0 +1,2538 @@
+{
+  "manifest": {
+    "protocol": "train-plus-selection-budget-v1",
+    "objective": "pcc_checked",
+    "config": {
+      "algorithm": "mappo",
+      "episodes": 2,
+      "horizon": 2,
+      "dt_hours": 0.25,
+      "seed": 1,
+      "hidden_size": 32,
+      "ppo_epoch": 2,
+      "num_mini_batch": 1,
+      "lr": 0.0003,
+      "gamma": 0.99,
+      "gae_lambda": 0.95,
+      "clip_param": 0.2,
+      "entropy_coef": 0.01,
+      "reward_scale": 100.0,
+      "violation_penalty": 100.0,
+      "terminal_soc_penalty": 1000.0,
+      "safety": true,
+      "digital_twin": false,
+      "delay_steps": 0,
+      "packet_loss": 0.0,
+      "train_csv": null,
+      "device": "cpu",
+      "threads": 1,
+      "network_model": "ieee33",
+      "dispatch_spec": "configs/dispatch_ieee33.json",
+      "solver_time_limit": 30.0,
+      "metrics_enabled": false,
+      "objective_scales": [
+        100.0,
+        100.0,
+        100.0
+      ],
+      "objective_weights": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "reserve_hours": 0.25,
+      "synthetic_carbon_g_per_kwh": 300,
+      "resource_model": "sessions_v1",
+      "flex_spec": null,
+      "ev_sessions_path": null,
+      "cyber_mode": "fixed",
+      "cyber_dt_mode": "physics",
+      "cyber_spec": "configs/cyber_assumptions.json",
+      "coordinator_mode": "schedule",
+      "coordinator_aoi_limit_steps": 2.0,
+      "coordinator_deadline_margin_steps": 1.0,
+      "coordinator_soc_margin": 0.05,
+      "coordinator_reserved_fraction": 0.5
+    },
+    "model_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "budgets": {
+      "ordinary": {
+        "total_steps": 24,
+        "training_steps": 20,
+        "selection_steps": 4,
+        "members": 1,
+        "episodes_per_member": 10
+      },
+      "fixed": {
+        "total_steps": 24,
+        "training_steps": 12,
+        "selection_steps": 12,
+        "members": 3,
+        "episodes_per_member": 2
+      },
+      "pareto": {
+        "total_steps": 24,
+        "training_steps": 8,
+        "selection_steps": 16,
+        "members": 1,
+        "episodes_per_member": 4
+      },
+      "ols": {
+        "total_steps": 24,
+        "training_steps": 8,
+        "selection_steps": 16,
+        "members": 4,
+        "episodes_per_member": 1
+      }
+    },
+    "seeds": [
+      31
+    ],
+    "validation_seeds": [
+      8100,
+      8101
+    ],
+    "test_seeds": [
+      9100,
+      9101
+    ],
+    "validation_preferences": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.3333333333333333,
+        0.3333333333333333,
+        0.3333333333333333
+      ]
+    ],
+    "test_preferences": [
+      [
+        0.2,
+        0.3,
+        0.5
+      ],
+      [
+        0.6,
+        0.1,
+        0.3
+      ],
+      [
+        0.1,
+        0.7,
+        0.2
+      ]
+    ]
+  },
+  "reference_point": [
+    -50.0,
+    -50.0,
+    0.0
+  ],
+  "validation_reference": [
+    [
+      -0.8594963528759598,
+      -2.4723772266608695,
+      0.5791518220008813
+    ],
+    [
+      -0.9023816442152723,
+      -2.4633516630294503,
+      0.611534401905192
+    ],
+    [
+      -0.9028381784682733,
+      -2.4632645326677847,
+      0.6113848093112639
+    ],
+    [
+      -0.9024649201805679,
+      -2.4633006429916855,
+      0.6111962343346763
+    ],
+    [
+      -0.9042535238928462,
+      -2.4632459310214143,
+      0.6177023442682597
+    ],
+    [
+      -0.9043998146449097,
+      -2.4632273346862044,
+      0.6177394871064485
+    ],
+    [
+      -0.8878271756452131,
+      -2.46525213958876,
+      0.609892657499416
+    ],
+    [
+      -0.8881061721671561,
+      -2.4652184150352467,
+      0.6099761726552401
+    ]
+  ],
+  "entries": [
+    {
+      "seed": 31,
+      "family": "ordinary",
+      "failed": false,
+      "training_steps": 20,
+      "selection_steps": 4,
+      "test_steps": 12,
+      "budget": {
+        "total_steps": 24,
+        "training_steps": 20,
+        "selection_steps": 4,
+        "members": 1,
+        "episodes_per_member": 10
+      },
+      "budget_matched": true,
+      "validation": [
+        {
+          "seed": 8100,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0008131890000413478,
+            0.0007139130000268779
+          ],
+          "training_seconds": 22.844694371999935,
+          "vector": [
+            -0.8644333050465762,
+            -2.497983733705649,
+            0.5388573399272385
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.037720604000014646,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006357979999620511,
+            0.0007746819999283616
+          ],
+          "training_seconds": 22.844694371999935,
+          "vector": [
+            -0.8545594007053435,
+            -2.44677071961609,
+            0.6194463040745242
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03310977199998888,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        }
+      ],
+      "test": [
+        {
+          "seed": 9100,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.009047045999977854,
+            0.0007955730000048788
+          ],
+          "training_seconds": 22.844694371999935,
+          "vector": [
+            -0.8474766627868717,
+            -2.4301781663899344,
+            0.5869516148262324
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.04010673499999484,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ordinary_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": false
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006981799999721261,
+            0.0007870910000065123
+          ],
+          "training_seconds": 22.844694371999935,
+          "vector": [
+            -0.8421816498563803,
+            -2.4223473515612945,
+            0.5810335774947261
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.032080893999932414,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ordinary_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": false
+        },
+        {
+          "seed": 9100,
+          "preference": [
+            0.6,
+            0.1,
+            0.3
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0008070510000379727,
+            0.000763607000067168
+          ],
+          "training_seconds": 22.844694371999935,
+          "vector": [
+            -0.8474766627868717,
+            -2.4301781663899344,
+            0.5869516148262324
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03525325400005386,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ordinary_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": false
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.6,
+            0.1,
+            0.3
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0007237180000174703,
+            0.001776660999894375
+          ],
+          "training_seconds": 22.844694371999935,
+          "vector": [
+            -0.8421816498563803,
+            -2.4223473515612945,
+            0.5810335774947261
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03687572799992722,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ordinary_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": false
+        },
+        {
+          "seed": 9100,
+          "preference": [
+            0.1,
+            0.7,
+            0.2
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0007147349999740982,
+            0.0007533819999707703
+          ],
+          "training_seconds": 22.844694371999935,
+          "vector": [
+            -0.8474766627868717,
+            -2.4301781663899344,
+            0.5869516148262324
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.04399588100011442,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ordinary_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": false
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.1,
+            0.7,
+            0.2
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.000732440000092538,
+            0.0008073210000247855
+          ],
+          "training_seconds": 22.844694371999935,
+          "vector": [
+            -0.8421816498563803,
+            -2.4223473515612945,
+            0.5810335774947261
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.035707084000023315,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ordinary_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": false
+        }
+      ],
+      "members": [
+        {
+          "checkpoint": "../research_runs/stage12/fair/ordinary_31/member_0/latest.pt",
+          "weight": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "value": [
+            -0.8594963528759598,
+            -2.4723772266608695,
+            0.5791518220008813
+          ]
+        }
+      ],
+      "validation_points": [
+        [
+          -0.8594963528759598,
+          -2.4723772266608695,
+          0.5791518220008813
+        ]
+      ],
+      "test_points": [
+        [
+          -0.844829156321626,
+          -2.4262627589756143,
+          0.5839925961604793
+        ],
+        [
+          -0.844829156321626,
+          -2.4262627589756143,
+          0.5839925961604793
+        ],
+        [
+          -0.844829156321626,
+          -2.4262627589756143,
+          0.5839925961604793
+        ]
+      ],
+      "hv": 1365.6638723017682,
+      "igd": 0.06912742361036041,
+      "test_failed_or_infeasible": 0
+    },
+    {
+      "seed": 31,
+      "family": "fixed",
+      "failed": false,
+      "training_steps": 12,
+      "selection_steps": 12,
+      "test_steps": 12,
+      "budget": {
+        "total_steps": 24,
+        "training_steps": 12,
+        "selection_steps": 12,
+        "members": 3,
+        "episodes_per_member": 2
+      },
+      "budget_matched": true,
+      "validation": [
+        {
+          "seed": 8100,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0007691939999858732,
+            0.0007119400000874521
+          ],
+          "training_seconds": 2.812171840000019,
+          "vector": [
+            -0.9067864163123338,
+            -2.4881505887422493,
+            0.5836115416874414
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.034231516999966516,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006153479999966294,
+            0.005057690000057846
+          ],
+          "training_seconds": 2.812171840000019,
+          "vector": [
+            -0.8979768721182109,
+            -2.438552737316651,
+            0.6394572621229426
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03427889700003561,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8100,
+          "preference": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0008453469999949448,
+            0.000793179999845961
+          ],
+          "training_seconds": 3.7992183659998773,
+          "vector": [
+            -0.9071934984931678,
+            -2.488074758370641,
+            0.5834389955256278
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03583695500014983,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006493679998129664,
+            0.0008094340000752709
+          ],
+          "training_seconds": 3.7992183659998773,
+          "vector": [
+            -0.8984828584433788,
+            -2.4384543069649283,
+            0.6393306230969
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.043927209999992556,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8100,
+          "preference": [
+            0.3,
+            0.2,
+            0.5
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0064592789999551314,
+            0.005456550000189964
+          ],
+          "training_seconds": 3.2086991979999766,
+          "vector": [
+            -0.9068380297645643,
+            -2.4881112900601763,
+            0.5832371997511417
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.037072277000106624,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            0.3,
+            0.2,
+            0.5
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006405449998965196,
+            0.005288340999868524
+          ],
+          "training_seconds": 3.2086991979999766,
+          "vector": [
+            -0.8980918105965716,
+            -2.4384899959231947,
+            0.6391552689182108
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03373902099974657,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        }
+      ],
+      "test": [
+        {
+          "seed": 9100,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.005817682000042623,
+            0.0007434460001150001
+          ],
+          "training_seconds": 2.812171840000019,
+          "vector": [
+            -0.890736500690701,
+            -2.421598292774613,
+            0.6076520784280597
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.0340187720000813,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/fixed_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006802329999118228,
+            0.0010053030000563012
+          ],
+          "training_seconds": 2.812171840000019,
+          "vector": [
+            -0.8849649948839158,
+            -2.4131758741712734,
+            0.6029220997596912
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03310721699995156,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/fixed_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        },
+        {
+          "seed": 9100,
+          "preference": [
+            0.6,
+            0.1,
+            0.3
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0007478930001525441,
+            0.0011515689998304879
+          ],
+          "training_seconds": 2.812171840000019,
+          "vector": [
+            -0.890736500690701,
+            -2.421598292774613,
+            0.6076520784280597
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03481612900009168,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/fixed_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.6,
+            0.1,
+            0.3
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.000743557000077999,
+            0.0010093890000462125
+          ],
+          "training_seconds": 2.812171840000019,
+          "vector": [
+            -0.8849649948839158,
+            -2.4131758741712734,
+            0.6029220997596912
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03336900500016782,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/fixed_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        },
+        {
+          "seed": 9100,
+          "preference": [
+            0.1,
+            0.7,
+            0.2
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0009428500000012718,
+            0.0007918679998510925
+          ],
+          "training_seconds": 2.812171840000019,
+          "vector": [
+            -0.890736500690701,
+            -2.421598292774613,
+            0.6076520784280597
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03943475099981697,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/fixed_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.1,
+            0.7,
+            0.2
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006893770000715449,
+            0.000911153999823
+          ],
+          "training_seconds": 2.812171840000019,
+          "vector": [
+            -0.8849649948839158,
+            -2.4131758741712734,
+            0.6029220997596912
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.038555463999955464,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/fixed_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        }
+      ],
+      "members": [
+        {
+          "checkpoint": "../research_runs/stage12/fair/fixed_31/member_0/latest.pt",
+          "weight": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "value": [
+            -0.9023816442152723,
+            -2.4633516630294503,
+            0.611534401905192
+          ]
+        },
+        {
+          "checkpoint": "../research_runs/stage12/fair/fixed_31/member_1/latest.pt",
+          "weight": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "value": [
+            -0.9028381784682733,
+            -2.4632645326677847,
+            0.6113848093112639
+          ]
+        },
+        {
+          "checkpoint": "../research_runs/stage12/fair/fixed_31/member_2/latest.pt",
+          "weight": [
+            0.3,
+            0.2,
+            0.5
+          ],
+          "value": [
+            -0.9024649201805679,
+            -2.4633006429916855,
+            0.6111962343346763
+          ]
+        }
+      ],
+      "validation_points": [
+        [
+          -0.9023816442152723,
+          -2.4633516630294503,
+          0.611534401905192
+        ],
+        [
+          -0.9028381784682733,
+          -2.4632645326677847,
+          0.6113848093112639
+        ],
+        [
+          -0.9024649201805679,
+          -2.4633006429916855,
+          0.6111962343346763
+        ]
+      ],
+      "test_points": [
+        [
+          -0.8878507477873083,
+          -2.417387083472943,
+          0.6052870890938755
+        ],
+        [
+          -0.8878507477873083,
+          -2.417387083472943,
+          0.6052870890938755
+        ],
+        [
+          -0.8878507477873083,
+          -2.417387083472943,
+          0.6052870890938755
+        ]
+      ],
+      "hv": 1414.4859483781386,
+      "igd": 0.0512094396786328,
+      "test_failed_or_infeasible": 0
+    },
+    {
+      "seed": 31,
+      "family": "pareto",
+      "failed": false,
+      "training_steps": 8,
+      "selection_steps": 16,
+      "test_steps": 12,
+      "budget": {
+        "total_steps": 24,
+        "training_steps": 8,
+        "selection_steps": 16,
+        "members": 1,
+        "episodes_per_member": 4
+      },
+      "budget_matched": true,
+      "validation": [
+        {
+          "seed": 8100,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0007666409999274038,
+            0.005019904999926439
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8852952544014592,
+            -2.569964951134054,
+            0.4415813417232988
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03930794499979129,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006609150000258524,
+            0.005448366999871723
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8711309010894523,
+            -2.510093680143086,
+            0.5282414002291831
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.2750362199999472,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8100,
+          "preference": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.005993902000000162,
+            0.02651247000017065
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8841871394577095,
+            -2.5658178873830906,
+            0.44567272279894565
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.052746096999953807,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0011330319998705818,
+            0.0053342090000114695
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8703160005118841,
+            -2.5065413790455437,
+            0.5317284623005887
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.06760966399974677,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8100,
+          "preference": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0005319849999523285,
+            0.0006924509998498252
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8836369902008967,
+            -2.5635389350885873,
+            0.44917084481296987
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03300090199991246,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006710499999371677,
+            0.0006804140000440384
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8699888735668486,
+            -2.504725876988587,
+            0.5345644209068063
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03588256100010767,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8100,
+          "preference": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.00048032900008365687,
+            0.0006576700000096025
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8844110224780981,
+            -2.566569331722164,
+            0.44527561114067365
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03150688799996715,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.000564353000072515,
+            0.0007986880000316887
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8705077076542089,
+            -2.5072316331737454,
+            0.5313403456815045
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.036852753999937704,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        }
+      ],
+      "test": [
+        {
+          "seed": 9100,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0008820109999305714,
+            0.0008198699999866221
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8641385727021759,
+            -2.491655791614491,
+            0.4991814043512966
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.046531059000017194,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/pareto_31/member_0/latest.pt",
+          "unseen_policy_input_preference": true,
+          "preference_is_selection_weight": false
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0010498690000986244,
+            0.0007770160000291071
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8602675884498253,
+            -2.486635334872531,
+            0.49048314083867384
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03866866599992136,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/pareto_31/member_0/latest.pt",
+          "unseen_policy_input_preference": true,
+          "preference_is_selection_weight": false
+        },
+        {
+          "seed": 9100,
+          "preference": [
+            0.6,
+            0.1,
+            0.3
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.001074764999884792,
+            0.0007640660001015931
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8645622610887238,
+            -2.493504937370261,
+            0.4971319565070691
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.04719396699988465,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            0.6,
+            0.1,
+            0.3
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/pareto_31/member_0/latest.pt",
+          "unseen_policy_input_preference": true,
+          "preference_is_selection_weight": false
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.6,
+            0.1,
+            0.3
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0007353739999871323,
+            0.000988727000049039
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8607509574581217,
+            -2.488605390832177,
+            0.4882914360520844
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.042832528999952046,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            0.6,
+            0.1,
+            0.3
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/pareto_31/member_0/latest.pt",
+          "unseen_policy_input_preference": true,
+          "preference_is_selection_weight": false
+        },
+        {
+          "seed": 9100,
+          "preference": [
+            0.1,
+            0.7,
+            0.2
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0009406980000221665,
+            0.0007339229998706287
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8641578485652605,
+            -2.4918404944256167,
+            0.49869133733020815
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.034648050999976476,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            0.1,
+            0.7,
+            0.2
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/pareto_31/member_0/latest.pt",
+          "unseen_policy_input_preference": true,
+          "preference_is_selection_weight": false
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.1,
+            0.7,
+            0.2
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0008161239998116798,
+            0.0007503570000153559
+          ],
+          "training_seconds": 5.571116094999979,
+          "vector": [
+            -0.8602999175655122,
+            -2.4868477547127554,
+            0.48994410856786663
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.031855629999881785,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            0.1,
+            0.7,
+            0.2
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/pareto_31/member_0/latest.pt",
+          "unseen_policy_input_preference": true,
+          "preference_is_selection_weight": false
+        }
+      ],
+      "members": [
+        {
+          "checkpoint": "../research_runs/stage12/fair/pareto_31/member_0/latest.pt",
+          "weight": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "value": [
+            -0.8774342361700698,
+            -2.5368104593348573,
+            0.4884468936992463
+          ]
+        }
+      ],
+      "validation_points": [
+        [
+          -0.8782130777454558,
+          -2.54002931563857,
+          0.48491137097624093
+        ],
+        [
+          -0.8772515699847968,
+          -2.536179633214317,
+          0.48870059254976717
+        ],
+        [
+          -0.8768129318838727,
+          -2.5341324060385872,
+          0.4918676328598881
+        ],
+        [
+          -0.8774593650661535,
+          -2.5369004824479546,
+          0.4883079784110891
+        ]
+      ],
+      "test_points": [
+        [
+          -0.8622030805760006,
+          -2.489145563243511,
+          0.4948322725949852
+        ],
+        [
+          -0.8626566092734227,
+          -2.491055164101219,
+          0.4927116962795768
+        ],
+        [
+          -0.8622288830653864,
+          -2.489344124569186,
+          0.4943177229490374
+        ]
+      ],
+      "hv": 1155.2248919769509,
+      "igd": 0.12120857054745642,
+      "test_failed_or_infeasible": 0
+    },
+    {
+      "seed": 31,
+      "family": "ols",
+      "failed": false,
+      "training_steps": 8,
+      "selection_steps": 16,
+      "test_steps": 12,
+      "budget": {
+        "total_steps": 24,
+        "training_steps": 8,
+        "selection_steps": 16,
+        "members": 4,
+        "episodes_per_member": 1
+      },
+      "budget_matched": true,
+      "validation": [
+        {
+          "seed": 8100,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0009147490000032121,
+            0.0007802300001458207
+          ],
+          "training_seconds": 1.573336253999969,
+          "vector": [
+            -0.9086220084634697,
+            -2.4880181547762517,
+            0.5901283276832001
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.038358021000021836,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006350469998324115,
+            0.0007864899998821784
+          ],
+          "training_seconds": 1.573336253999969,
+          "vector": [
+            -0.8998850393222225,
+            -2.438473707266577,
+            0.6452763608533192
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.033172408000154974,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8100,
+          "preference": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0007704759998432564,
+            0.0008615209999334184
+          ],
+          "training_seconds": 2.4709081440000773,
+          "vector": [
+            -0.9087645879669989,
+            -2.487999115960819,
+            0.5901662183814258
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.036461403999965114,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006595719999040739,
+            0.0007663199999115022
+          ],
+          "training_seconds": 2.4709081440000773,
+          "vector": [
+            -0.9000350413228204,
+            -2.4384555534115897,
+            0.6453127558314712
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.038154089999807184,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8100,
+          "preference": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0007502769999518932,
+            0.0007973760000368202
+          ],
+          "training_seconds": 2.8951632490000065,
+          "vector": [
+            -0.8922804384636971,
+            -2.4901026405626387,
+            0.5820074764033992
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03952687700007118,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006773590000648255,
+            0.0009925440001552488
+          ],
+          "training_seconds": 2.8951632490000065,
+          "vector": [
+            -0.8833739128267291,
+            -2.4404016386148815,
+            0.6377778385954328
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.036502655999811395,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8100,
+          "preference": [
+            0.32223450591378716,
+            0.0,
+            0.6777654940862129
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0007561760000953655,
+            0.0007807209999555198
+          ],
+          "training_seconds": 3.7243744079999033,
+          "vector": [
+            -0.8925578880668168,
+            -2.490067082984112,
+            0.5820948161588545
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03495954600020923,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.00493947508324105,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        },
+        {
+          "seed": 8101,
+          "preference": [
+            0.32223450591378716,
+            0.0,
+            0.6777654940862129
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0008144109999648208,
+            0.0063806619998558745
+          ],
+          "training_seconds": 3.7243744079999033,
+          "vector": [
+            -0.8836544562674954,
+            -2.4403697470863817,
+            0.6378575291516256
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03751214599992636,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.02041151222488516,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0
+        }
+      ],
+      "test": [
+        {
+          "seed": 9100,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0008179169999493752,
+            0.0007112589998996555
+          ],
+          "training_seconds": 1.573336253999969,
+          "vector": [
+            -0.8925812770737066,
+            -2.421512814336072,
+            0.6135569979012685
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.032523028000014165,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ols_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0005084800000076939,
+            0.0007176789999903121
+          ],
+          "training_seconds": 1.573336253999969,
+          "vector": [
+            -0.8868339823770055,
+            -2.4130652043318968,
+            0.6089866897650554
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.031149112000093737,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ols_31/member_0/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        },
+        {
+          "seed": 9100,
+          "preference": [
+            0.6,
+            0.1,
+            0.3
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0008260890001565713,
+            0.0008662879999974393
+          ],
+          "training_seconds": 2.8951632490000065,
+          "vector": [
+            -0.8761964608636075,
+            -2.4234623557545554,
+            0.6059954983949387
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03542867200008004,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ols_31/member_2/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.6,
+            0.1,
+            0.3
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0009518040001239569,
+            0.0009151599999768223
+          ],
+          "training_seconds": 2.8951632490000065,
+          "vector": [
+            -0.8703636582394674,
+            -2.4150950126242163,
+            0.6012877465334626
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.032635842999980014,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ols_31/member_2/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        },
+        {
+          "seed": 9100,
+          "preference": [
+            0.1,
+            0.7,
+            0.2
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.000780862000056004,
+            0.0009623900000406138
+          ],
+          "training_seconds": 2.4709081440000773,
+          "vector": [
+            -0.8927271108445798,
+            -2.4214948565207526,
+            0.6135922854523794
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.03560494400016978,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0025448251885971437,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ols_31/member_1/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.1,
+            0.7,
+            0.2
+          ],
+          "failed": false,
+          "env_steps": 2,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0005523550000816613,
+            0.000978983999857519
+          ],
+          "training_seconds": 2.4709081440000773,
+          "vector": [
+            -0.8869797178248418,
+            -2.413046561492145,
+            0.6090225982825284
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.034377693000124054,
+          "ac_safety_attempts": 2,
+          "interval_covered_steps": 1,
+          "estimation_rmse": 0.0026500409430661766,
+          "safety_interventions": 2,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 1350.0,
+          "policy_evaluation_preference": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "selected_checkpoint": "../research_runs/stage12/fair/ols_31/member_1/latest.pt",
+          "unseen_policy_input_preference": false,
+          "preference_is_selection_weight": true
+        }
+      ],
+      "members": [
+        {
+          "checkpoint": "../research_runs/stage12/fair/ols_31/member_0/latest.pt",
+          "weight": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "value": [
+            -0.9042535238928462,
+            -2.4632459310214143,
+            0.6177023442682597
+          ]
+        },
+        {
+          "checkpoint": "../research_runs/stage12/fair/ols_31/member_1/latest.pt",
+          "weight": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "value": [
+            -0.9043998146449097,
+            -2.4632273346862044,
+            0.6177394871064485
+          ]
+        },
+        {
+          "checkpoint": "../research_runs/stage12/fair/ols_31/member_2/latest.pt",
+          "weight": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "value": [
+            -0.8878271756452131,
+            -2.46525213958876,
+            0.609892657499416
+          ]
+        },
+        {
+          "checkpoint": "../research_runs/stage12/fair/ols_31/member_3/latest.pt",
+          "weight": [
+            0.32223450591378716,
+            0.0,
+            0.6777654940862129
+          ],
+          "value": [
+            -0.8881061721671561,
+            -2.4652184150352467,
+            0.6099761726552401
+          ]
+        }
+      ],
+      "validation_points": [
+        [
+          -0.9042535238928462,
+          -2.4632459310214143,
+          0.6177023442682597
+        ],
+        [
+          -0.9043998146449097,
+          -2.4632273346862044,
+          0.6177394871064485
+        ],
+        [
+          -0.8878271756452131,
+          -2.46525213958876,
+          0.609892657499416
+        ],
+        [
+          -0.8881061721671561,
+          -2.4652184150352467,
+          0.6099761726552401
+        ]
+      ],
+      "test_points": [
+        [
+          -0.8897076297253561,
+          -2.4172890093339845,
+          0.6112718438331619
+        ],
+        [
+          -0.8732800595515374,
+          -2.419278684189386,
+          0.6036416224642007
+        ],
+        [
+          -0.8898534143347108,
+          -2.4172707090064485,
+          0.6113074418674539
+        ]
+      ],
+      "hv": 1428.9761258229933,
+      "igd": 0.04957170105104708,
+      "test_failed_or_infeasible": 0
+    }
+  ],
+  "limits": [
+    "预算是环境交互而不是CPU时间；PCC确认内部求解次数另属计算成本",
+    "短预算仅验证流程；失败/预算不足单元保留，不进入优势比较",
+    "共同参考来自验证集，不是已知真实前沿；测试不能反向挑选成员"
+  ]
+}

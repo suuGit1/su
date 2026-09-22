@@ -1,0 +1,50 @@
+[
+  {
+    "family": "ordinary",
+    "seed": 31,
+    "training_steps": 20,
+    "selection_steps": 4,
+    "test_steps": 12,
+    "budget_matched": true,
+    "failed": false,
+    "test_failed_or_infeasible": 0,
+    "hv": 1365.6638723017682,
+    "igd": 0.06912742361036041
+  },
+  {
+    "family": "fixed",
+    "seed": 31,
+    "training_steps": 12,
+    "selection_steps": 12,
+    "test_steps": 12,
+    "budget_matched": true,
+    "failed": false,
+    "test_failed_or_infeasible": 0,
+    "hv": 1414.4859483781386,
+    "igd": 0.0512094396786328
+  },
+  {
+    "family": "pareto",
+    "seed": 31,
+    "training_steps": 8,
+    "selection_steps": 16,
+    "test_steps": 12,
+    "budget_matched": true,
+    "failed": false,
+    "test_failed_or_infeasible": 0,
+    "hv": 1155.2248919769509,
+    "igd": 0.12120857054745642
+  },
+  {
+    "family": "ols",
+    "seed": 31,
+    "training_steps": 8,
+    "selection_steps": 16,
+    "test_steps": 12,
+    "budget_matched": true,
+    "failed": false,
+    "test_failed_or_infeasible": 0,
+    "hv": 1428.9761258229933,
+    "igd": 0.04957170105104708
+  }
+]
