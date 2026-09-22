@@ -1,5 +1,20 @@
 # Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants
 
+## 完整运行版 v1
+
+统一入口已接入 **IEEE33＋任务/风险协调器＋18 个 C3 角色＋残差/校准 DT＋MILP/AC 安全执行器＋普通 MAPPO / Pareto-MAPPO**。
+
+在 Python 3.11 虚拟环境中，从项目根目录执行：
+
+```bash
+python -m pip install -r requirements-research-lock.txt
+python run_vpp.py all --output runs/integrated
+```
+
+[安装、分模块运行、续训、异常场景及模块状态](docs/INTEGRATED_RUN.md)。默认使用合成数据完成端到端功能验收，普通 MAPPO 独立保留。`acceptance.json` 的 `passed=true` 表示本次闭环验收通过，不代表研究性能优势已成立。
+
+以下保留阶段历史，首次运行不需要逐阶段拼接。
+
 第十三阶段已贯通 IEEE69 的 MPC、普通 MAPPO 与 Pareto-MAPPO 闭环，并保留未完成的扩大预算实验记录。[实际结果与下一步](docs/stage13.md)。
 
 第十二阶段将 OLS 自适应验证纳入四方法总预算，已运行同预算流程验证。[预算规则与运行命令](docs/stage12.md)。
