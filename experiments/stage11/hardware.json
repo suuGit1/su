@@ -1,0 +1,14 @@
+{
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "machine": "x86_64",
+  "processor": "x86_64",
+  "clock": {
+    "name": "perf_counter",
+    "resolution_seconds": 1e-09,
+    "monotonic": true
+  },
+  "energy_measurement_available": false,
+  "energy_counters": [],
+  "provenance": "当前执行主机；不是目标边缘设备，也没有测量物理通信链路",
+  "limitation": "若有计数器，系统级能量仍需扣除空闲基线及并发任务；无计数器则能耗不可实测，禁止以CPU时间替代能量"
+}

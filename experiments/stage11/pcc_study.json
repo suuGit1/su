@@ -1,0 +1,1557 @@
+{
+  "protocol": "stage11-functional-validation-v1",
+  "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+  "activations": [
+    {
+      "failed": false,
+      "fraction": -1.0,
+      "target_kw": 1504.495372984802,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1504.5413915160566,
+          "linear_grid_kw": 1474.742587317055,
+          "error_kw": 0.046018531254503614,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1700,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -0.5,
+      "target_kw": 1514.495372984802,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1514.5216670248374,
+          "linear_grid_kw": 1484.3586096610306,
+          "error_kw": 0.026294040035281796,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1700,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.0,
+      "target_kw": 1524.495372984802,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1524.5287182057154,
+          "linear_grid_kw": 1494.1748208605077,
+          "error_kw": 0.03334522091336112,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1700,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.5,
+      "target_kw": 1534.495372984802,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1534.5896032553696,
+          "linear_grid_kw": 1503.7390727123056,
+          "error_kw": 0.09423027056755018,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1700,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 1.0,
+      "target_kw": 1544.495372984802,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1544.4898601634804,
+          "linear_grid_kw": 1513.1367984209464,
+          "error_kw": 0.0055128213216448785,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1700,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -1.0,
+      "target_kw": 1504.495372984802,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1504.5413915160566,
+          "linear_grid_kw": 1474.742587317055,
+          "error_kw": 0.046018531254503614,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1504.5470483971712,
+          "linear_grid_kw": 1474.4739573691868,
+          "error_kw": 0.051675412369149853,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1700,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -0.5,
+      "target_kw": 1514.495372984802,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1514.5216670248374,
+          "linear_grid_kw": 1484.3586096610306,
+          "error_kw": 0.026294040035281796,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1514.5484806095055,
+          "linear_grid_kw": 1484.0854411592386,
+          "error_kw": 0.053107624703443435,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1700,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.0,
+      "target_kw": 1524.495372984802,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1524.5287182057154,
+          "linear_grid_kw": 1494.1748208605077,
+          "error_kw": 0.03334522091336112,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1524.54994348318,
+          "linear_grid_kw": 1493.6943096489586,
+          "error_kw": 0.054570498377870535,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1700,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.5,
+      "target_kw": 1534.495372984802,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1534.5896032553696,
+          "linear_grid_kw": 1503.7390727123056,
+          "error_kw": 0.09423027056755018,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1534.547376529929,
+          "linear_grid_kw": 1503.296662652217,
+          "error_kw": 0.052003545126808604,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1700,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 1.0,
+      "target_kw": 1544.495372984802,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1544.4898601634804,
+          "linear_grid_kw": 1513.1367984209464,
+          "error_kw": 0.0055128213216448785,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1544.5439415495343,
+          "linear_grid_kw": 1512.895538288601,
+          "error_kw": 0.0485685647322498,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1700,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -1.0,
+      "target_kw": 1466.1310376446113,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1466.1731472966721,
+          "linear_grid_kw": 1437.144564533528,
+          "error_kw": 0.04210965206084438,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1701,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -0.5,
+      "target_kw": 1476.1310376446113,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1476.1545569058399,
+          "linear_grid_kw": 1446.7713146903816,
+          "error_kw": 0.023519261228557298,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1701,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.0,
+      "target_kw": 1486.1310376446113,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1486.1626325901511,
+          "linear_grid_kw": 1456.5900025149858,
+          "error_kw": 0.03159494553983677,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1701,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.5,
+      "target_kw": 1496.1310376446113,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1496.219393262379,
+          "linear_grid_kw": 1466.1591684243535,
+          "error_kw": 0.08835561776777467,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1701,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 1.0,
+      "target_kw": 1506.1310376446113,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1506.226432618405,
+          "linear_grid_kw": 1475.6669513863562,
+          "error_kw": 0.09539497379364548,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1701,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -1.0,
+      "target_kw": 1466.1310376446113,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1466.1731472966721,
+          "linear_grid_kw": 1437.144564533528,
+          "error_kw": 0.04210965206084438,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1466.1769277481085,
+          "linear_grid_kw": 1438.0219486693613,
+          "error_kw": 0.04589010349718592,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1701,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -0.5,
+      "target_kw": 1476.1310376446113,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1476.1545569058399,
+          "linear_grid_kw": 1446.7713146903816,
+          "error_kw": 0.023519261228557298,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1476.1782408817226,
+          "linear_grid_kw": 1447.642807652444,
+          "error_kw": 0.04720323711126184,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1701,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.0,
+      "target_kw": 1486.1310376446113,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1486.1626325901511,
+          "linear_grid_kw": 1456.5900025149858,
+          "error_kw": 0.03159494553983677,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1486.1795820249313,
+          "linear_grid_kw": 1457.2613098863485,
+          "error_kw": 0.04854438031998143,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1701,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.5,
+      "target_kw": 1496.1310376446113,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1496.219393262379,
+          "linear_grid_kw": 1466.1591684243535,
+          "error_kw": 0.08835561776777467,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1496.1841953282828,
+          "linear_grid_kw": 1466.9592514864848,
+          "error_kw": 0.053157683671543055,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1701,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 1.0,
+      "target_kw": 1506.1310376446113,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1506.226432618405,
+          "linear_grid_kw": 1475.6669513863562,
+          "error_kw": 0.09539497379364548,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1506.1998179547231,
+          "linear_grid_kw": 1476.6332750369293,
+          "error_kw": 0.06878031011183339,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1701,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -1.0,
+      "target_kw": 1594.1166757140013,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1594.1714035054133,
+          "linear_grid_kw": 1561.0435109127275,
+          "error_kw": 0.0547277914120059,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1702,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -0.5,
+      "target_kw": 1604.1166757140013,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1604.1782999388943,
+          "linear_grid_kw": 1570.6356183544312,
+          "error_kw": 0.061624224892966595,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1702,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.0,
+      "target_kw": 1614.1166757140013,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1614.1843587394078,
+          "linear_grid_kw": 1580.2257600935832,
+          "error_kw": 0.06768302540649529,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1702,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.5,
+      "target_kw": 1624.1166757140013,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1624.1567043368832,
+          "linear_grid_kw": 1589.9990353831572,
+          "error_kw": 0.04002862288189135,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1702,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 1.0,
+      "target_kw": 1634.1166757140013,
+      "duration_steps": 1,
+      "steps": [
+        {
+          "pcc_kw": 1634.109973671798,
+          "linear_grid_kw": 1599.4694886235993,
+          "error_kw": 0.006702042203414749,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1702,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -1.0,
+      "target_kw": 1594.1166757140013,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1594.1714035054133,
+          "linear_grid_kw": 1561.0435109127275,
+          "error_kw": 0.0547277914120059,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1594.1110738569364,
+          "linear_grid_kw": 1561.2923052868678,
+          "error_kw": 0.005601857064903015,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1702,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": -0.5,
+      "target_kw": 1604.1166757140013,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1604.1782999388943,
+          "linear_grid_kw": 1570.6356183544312,
+          "error_kw": 0.061624224892966595,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1604.1104707153409,
+          "linear_grid_kw": 1570.775325966074,
+          "error_kw": 0.006204998660450656,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1702,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.0,
+      "target_kw": 1614.1166757140013,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1614.1843587394078,
+          "linear_grid_kw": 1580.2257600935832,
+          "error_kw": 0.06768302540649529,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1614.1098157720535,
+          "linear_grid_kw": 1580.244322797455,
+          "error_kw": 0.006859941947823245,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1702,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 0.5,
+      "target_kw": 1624.1166757140013,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1624.1567043368832,
+          "linear_grid_kw": 1589.9990353831572,
+          "error_kw": 0.04002862288189135,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1624.1091054746448,
+          "linear_grid_kw": 1589.6992924065012,
+          "error_kw": 0.007570239356482489,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1702,
+      "declared_kw": 20.0
+    },
+    {
+      "failed": false,
+      "fraction": 1.0,
+      "target_kw": 1634.1166757140013,
+      "duration_steps": 2,
+      "steps": [
+        {
+          "pcc_kw": 1634.109973671798,
+          "linear_grid_kw": 1599.4694886235993,
+          "error_kw": 0.006702042203414749,
+          "ac_violations": 0
+        },
+        {
+          "pcc_kw": 1634.1083360765651,
+          "linear_grid_kw": 1599.1402312024138,
+          "error_kw": 0.008339637436165503,
+          "ac_violations": 0
+        }
+      ],
+      "ev_unmet_kwh": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "seed": 1702,
+      "declared_kw": 20.0
+    }
+  ],
+  "policies": [
+    {
+      "seed": 21,
+      "method": "ordinary",
+      "training_steps": 24,
+      "results": [
+        {
+          "seed": 9100,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 8,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0007405500000459142,
+            0.0038733569999749307,
+            0.0007362329997704364,
+            0.0008481730001221877,
+            0.0008786989997133787,
+            0.005080323000129283,
+            0.0007539499997619714,
+            0.0008520879996467556
+          ],
+          "training_seconds": 52.849319064000156,
+          "vector": [
+            -3.4623082691902165,
+            -10.014808918609095,
+            3.9326811215502686
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.1645571589992869,
+          "ac_safety_attempts": 8,
+          "interval_covered_steps": 7,
+          "estimation_rmse": 0.020324948457713803,
+          "safety_interventions": 8,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 4050.0
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 8,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0005756410000685719,
+            0.004866097999638441,
+            0.004583061000175803,
+            0.0007366840000031516,
+            0.004340494999723887,
+            0.0007676810000702972,
+            0.0008231250003518653,
+            0.0008004609999261447
+          ],
+          "training_seconds": 52.849319064000156,
+          "vector": [
+            -3.466670332002966,
+            -10.022257983761778,
+            3.9226444218727026
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.17249603499931254,
+          "ac_safety_attempts": 8,
+          "interval_covered_steps": 6,
+          "estimation_rmse": 0.017099313352206227,
+          "safety_interventions": 8,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 4050.0
+        }
+      ]
+    },
+    {
+      "seed": 21,
+      "method": "pareto",
+      "training_steps": 24,
+      "results": [
+        {
+          "seed": 9100,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "env_steps": 8,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0008298249999825202,
+            0.0008766359997025575,
+            0.0008522489997631055,
+            0.0007647660004295176,
+            0.0006947810002202459,
+            0.0010742850004135107,
+            0.000687128999743436,
+            0.0007563639996988059
+          ],
+          "training_seconds": 52.443996698999854,
+          "vector": [
+            -4.616861420515059,
+            -9.890926253336662,
+            4.804712836957519
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.2133751240003221,
+          "ac_safety_attempts": 8,
+          "interval_covered_steps": 8,
+          "estimation_rmse": 0.01752878549258317,
+          "safety_interventions": 8,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 2062.5
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "env_steps": 8,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006643850001637475,
+            0.0009222449998560478,
+            0.0007173449998845172,
+            0.0006969239998397825,
+            0.0007614019996253774,
+            0.0007708960001764353,
+            0.0007834749999346968,
+            0.0007538999998359941
+          ],
+          "training_seconds": 52.443996698999854,
+          "vector": [
+            -4.616874394531491,
+            -9.884726307051787,
+            4.466397774228693
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.174323832999562,
+          "ac_safety_attempts": 8,
+          "interval_covered_steps": 8,
+          "estimation_rmse": 0.015472781118124028,
+          "safety_interventions": 8,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 2062.5
+        }
+      ]
+    },
+    {
+      "seed": 22,
+      "method": "ordinary",
+      "training_steps": 24,
+      "results": [
+        {
+          "seed": 9100,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 8,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0008446179999737069,
+            0.0007176549997893744,
+            0.0007431340000039199,
+            0.0007530190000579751,
+            0.0007317770000554447,
+            0.000745757999993657,
+            0.0007593479999741248,
+            0.0007207499998003186
+          ],
+          "training_seconds": 38.32026248400007,
+          "vector": [
+            -3.486061899285465,
+            -9.98885519566436,
+            4.018819054748415
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.15491854300034902,
+          "ac_safety_attempts": 8,
+          "interval_covered_steps": 7,
+          "estimation_rmse": 0.020528692478094152,
+          "safety_interventions": 8,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 4050.0
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 8,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0006151699999463744,
+            0.0007479810001314036,
+            0.0008935709997786034,
+            0.00473143599992909,
+            0.0010252410002067336,
+            0.0008423040003435744,
+            0.0007250859998748638,
+            0.0023510350001743063
+          ],
+          "training_seconds": 38.32026248400007,
+          "vector": [
+            -3.4904488009643084,
+            -9.996537926227868,
+            3.9844238184951575
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.1685885319998306,
+          "ac_safety_attempts": 8,
+          "interval_covered_steps": 6,
+          "estimation_rmse": 0.01724768229718046,
+          "safety_interventions": 8,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 4050.0
+        }
+      ]
+    },
+    {
+      "seed": 22,
+      "method": "pareto",
+      "training_steps": 24,
+      "results": [
+        {
+          "seed": 9100,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "env_steps": 8,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.000762442999985069,
+            0.0006795179997425294,
+            0.0006812410001657554,
+            0.000799988999915513,
+            0.0008003799998732575,
+            0.0008054979998632916,
+            0.0007188370000221767,
+            0.0007147209998947801
+          ],
+          "training_seconds": 49.073220971999945,
+          "vector": [
+            -3.517278966083052,
+            -10.21145290416733,
+            3.33380461235067
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.16393349200006924,
+          "ac_safety_attempts": 8,
+          "interval_covered_steps": 7,
+          "estimation_rmse": 0.01969562036257588,
+          "safety_interventions": 8,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 4050.0
+        },
+        {
+          "seed": 9101,
+          "preference": [
+            0.2,
+            0.3,
+            0.5
+          ],
+          "unseen_preference": true,
+          "failed": false,
+          "env_steps": 8,
+          "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0005709939996449975,
+            0.0007331289998546708,
+            0.0007461689997398935,
+            0.0006969539999772678,
+            0.0007212810000964964,
+            0.0006743599997207639,
+            0.0007279709998329054,
+            0.0007175750001806591
+          ],
+          "training_seconds": 49.073220971999945,
+          "vector": [
+            -3.5207795753695863,
+            -10.217194922714796,
+            3.368547737581344
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.15853687099979652,
+          "ac_safety_attempts": 8,
+          "interval_covered_steps": 6,
+          "estimation_rmse": 0.016624350276544676,
+          "safety_interventions": 8,
+          "guard_infeasible": null,
+          "guard_certified_steps": 0,
+          "mean_aoi": 4050.0
+        }
+      ]
+    }
+  ],
+  "ols": {
+    "protocol": "ols-official-mappo-v1",
+    "reserve_mode": "pcc_checked",
+    "status": "completed",
+    "planned_training_steps": 32,
+    "completed_training_steps": 32,
+    "completed_selection_steps": 64,
+    "budget_note": "所有子策略训练均计入；自适应验证交互另记，论文比较还须匹配总交互或明确独立调参预算",
+    "priorities_are_certified_bounds": false,
+    "members": [
+      {
+        "index": 0,
+        "weight": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "priority": null,
+        "training_steps": 8,
+        "selection_steps": 16,
+        "checkpoint": "member_0/latest.pt",
+        "validation": [
+          {
+            "seed": 8100,
+            "preference": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "unseen_preference": false,
+            "failed": false,
+            "env_steps": 8,
+            "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+            "emergency_steps": 0,
+            "emergency_service_degraded_steps": 0,
+            "inference_seconds": [
+              0.0007086820000949956,
+              0.0007025119998615992,
+              0.0024286629995913245,
+              0.000748752000163222,
+              0.000811937999969814,
+              0.0007272499997270643,
+              0.006393740000021353,
+              0.0006870889997117047
+            ],
+            "training_seconds": 16.966867949999596,
+            "vector": [
+              -3.432482129999813,
+              -9.918625645660217,
+              3.7482835630538256
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "ac_safety_seconds": 0.1547009459995934,
+            "ac_safety_attempts": 8,
+            "interval_covered_steps": 8,
+            "estimation_rmse": 0.016104454926043017,
+            "safety_interventions": 8,
+            "guard_infeasible": null,
+            "guard_certified_steps": 0,
+            "mean_aoi": 4050.0
+          },
+          {
+            "seed": 8101,
+            "preference": [
+              1.0,
+              0.0,
+              0.0
+            ],
+            "unseen_preference": false,
+            "failed": false,
+            "env_steps": 8,
+            "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+            "emergency_steps": 0,
+            "emergency_service_degraded_steps": 0,
+            "inference_seconds": [
+              0.0004710520001935947,
+              0.0008491549997415859,
+              0.0008591890000388958,
+              0.0007406600002468622,
+              0.0007419419998768717,
+              0.000723264000043855,
+              0.0016466099996250705,
+              0.0007696540001234098
+            ],
+            "training_seconds": 16.966867949999596,
+            "vector": [
+              -3.3835433953892067,
+              -9.771079085471,
+              4.286361547418415
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "ac_safety_seconds": 0.17128195699979187,
+            "ac_safety_attempts": 8,
+            "interval_covered_steps": 7,
+            "estimation_rmse": 0.019965724274613107,
+            "safety_interventions": 8,
+            "guard_infeasible": null,
+            "guard_certified_steps": 0,
+            "mean_aoi": 4050.0
+          }
+        ],
+        "validation_value": [
+          -3.4080127626945096,
+          -9.844852365565607,
+          4.01732255523612
+        ]
+      },
+      {
+        "index": 1,
+        "weight": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "priority": null,
+        "training_steps": 8,
+        "selection_steps": 16,
+        "checkpoint": "member_1/latest.pt",
+        "validation": [
+          {
+            "seed": 8100,
+            "preference": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "unseen_preference": false,
+            "failed": false,
+            "env_steps": 8,
+            "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+            "emergency_steps": 0,
+            "emergency_service_degraded_steps": 0,
+            "inference_seconds": [
+              0.0007529690001319977,
+              0.0007441759998982889,
+              0.0008161949999703211,
+              0.0006946600001356273,
+              0.0007791190000716597,
+              0.0007287519997589698,
+              0.0007605500004501664,
+              0.0007136389999686799
+            ],
+            "training_seconds": 17.918743403999997,
+            "vector": [
+              -3.431744722910296,
+              -9.916386581591594,
+              3.7492366746474444
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "ac_safety_seconds": 0.16317049399958705,
+            "ac_safety_attempts": 8,
+            "interval_covered_steps": 8,
+            "estimation_rmse": 0.016103032196869142,
+            "safety_interventions": 8,
+            "guard_infeasible": null,
+            "guard_certified_steps": 0,
+            "mean_aoi": 4050.0
+          },
+          {
+            "seed": 8101,
+            "preference": [
+              0.0,
+              1.0,
+              0.0
+            ],
+            "unseen_preference": false,
+            "failed": false,
+            "env_steps": 8,
+            "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+            "emergency_steps": 0,
+            "emergency_service_degraded_steps": 0,
+            "inference_seconds": [
+              0.0006441350001296087,
+              0.0007420219999403344,
+              0.0007189680000010412,
+              0.0007537600004070555,
+              0.0007356020000770513,
+              0.0007446060003530874,
+              0.0007418219997816777,
+              0.000699928999893018
+            ],
+            "training_seconds": 17.918743403999997,
+            "vector": [
+              -3.38280620715238,
+              -9.768839152959833,
+              4.353610643134325
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "ac_safety_seconds": 0.1574312089992418,
+            "ac_safety_attempts": 8,
+            "interval_covered_steps": 7,
+            "estimation_rmse": 0.019956276697009518,
+            "safety_interventions": 8,
+            "guard_infeasible": null,
+            "guard_certified_steps": 0,
+            "mean_aoi": 4050.0
+          }
+        ],
+        "validation_value": [
+          -3.407275465031338,
+          -9.842612867275713,
+          4.051423658890885
+        ]
+      },
+      {
+        "index": 2,
+        "weight": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "priority": null,
+        "training_steps": 8,
+        "selection_steps": 16,
+        "checkpoint": "member_2/latest.pt",
+        "validation": [
+          {
+            "seed": 8100,
+            "preference": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "unseen_preference": false,
+            "failed": false,
+            "env_steps": 8,
+            "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+            "emergency_steps": 0,
+            "emergency_service_degraded_steps": 0,
+            "inference_seconds": [
+              0.0008153429998856154,
+              0.0007472500001313165,
+              0.0007427329996971821,
+              0.0007312259999707749,
+              0.0074144540003544535,
+              0.0006994980003582896,
+              0.0007430539999404573,
+              0.0007665289999749803
+            ],
+            "training_seconds": 15.393686603999868,
+            "vector": [
+              -3.4896170795279433,
+              -9.901408025196536,
+              3.811678147490301
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "ac_safety_seconds": 0.1643842979992769,
+            "ac_safety_attempts": 8,
+            "interval_covered_steps": 8,
+            "estimation_rmse": 0.016217511741810176,
+            "safety_interventions": 8,
+            "guard_infeasible": null,
+            "guard_certified_steps": 0,
+            "mean_aoi": 4050.0
+          },
+          {
+            "seed": 8101,
+            "preference": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "unseen_preference": false,
+            "failed": false,
+            "env_steps": 8,
+            "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+            "emergency_steps": 0,
+            "emergency_service_degraded_steps": 0,
+            "inference_seconds": [
+              0.0005554099998335005,
+              0.0007824630001778132,
+              0.0007402490000458783,
+              0.0007292029999916849,
+              0.0008431050000581308,
+              0.0007519770001636061,
+              0.0009035570001287851,
+              0.0008049980001487711
+            ],
+            "training_seconds": 15.393686603999868,
+            "vector": [
+              -3.4407108522342646,
+              -9.753862570050115,
+              4.460334164166293
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "ac_safety_seconds": 0.16896507399906113,
+            "ac_safety_attempts": 8,
+            "interval_covered_steps": 7,
+            "estimation_rmse": 0.0201169980137311,
+            "safety_interventions": 8,
+            "guard_infeasible": null,
+            "guard_certified_steps": 0,
+            "mean_aoi": 4050.0
+          }
+        ],
+        "validation_value": [
+          -3.465163965881104,
+          -9.827635297623326,
+          4.136006155828297
+        ]
+      },
+      {
+        "index": 3,
+        "weight": [
+          0.5936822107735973,
+          0.0,
+          0.4063177892264027
+        ],
+        "priority": 0.034367373162858095,
+        "training_steps": 8,
+        "selection_steps": 16,
+        "checkpoint": "member_3/latest.pt",
+        "validation": [
+          {
+            "seed": 8100,
+            "preference": [
+              0.5936822107735973,
+              0.0,
+              0.4063177892264027
+            ],
+            "unseen_preference": false,
+            "failed": false,
+            "env_steps": 8,
+            "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+            "emergency_steps": 0,
+            "emergency_service_degraded_steps": 0,
+            "inference_seconds": [
+              0.000702793000073143,
+              0.0008104160001494165,
+              0.0007717069997852377,
+              0.0007098230003066419,
+              0.000819338999917818,
+              0.0006882309999127756,
+              0.0008643969999866385,
+              0.0007447170000887127
+            ],
+            "training_seconds": 17.851732116999756,
+            "vector": [
+              -3.480247879939756,
+              -9.903270374649438,
+              3.8018805616853864
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "ac_safety_seconds": 0.14622635899922898,
+            "ac_safety_attempts": 8,
+            "interval_covered_steps": 8,
+            "estimation_rmse": 0.016190110251039988,
+            "safety_interventions": 8,
+            "guard_infeasible": null,
+            "guard_certified_steps": 0,
+            "mean_aoi": 4050.0
+          },
+          {
+            "seed": 8101,
+            "preference": [
+              0.5936822107735973,
+              0.0,
+              0.4063177892264027
+            ],
+            "unseen_preference": false,
+            "failed": false,
+            "env_steps": 8,
+            "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+            "emergency_steps": 0,
+            "emergency_service_degraded_steps": 0,
+            "inference_seconds": [
+              0.0006011790001139161,
+              0.0009250690000044415,
+              0.0010237779997623875,
+              0.0010532230003263976,
+              0.000759549000122206,
+              0.0007452870004271972,
+              0.0007684219999646302,
+              0.0008906570001272485
+            ],
+            "training_seconds": 17.851732116999756,
+            "vector": [
+              -3.4313557048588534,
+              -9.755722968309977,
+              4.442092513997286
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "ac_safety_seconds": 0.1695940509994216,
+            "ac_safety_attempts": 8,
+            "interval_covered_steps": 7,
+            "estimation_rmse": 0.02008185832140986,
+            "safety_interventions": 8,
+            "guard_infeasible": null,
+            "guard_certified_steps": 0,
+            "mean_aoi": 4050.0
+          }
+        ],
+        "validation_value": [
+          -3.4558017923993045,
+          -9.829496671479706,
+          4.1219865378413365
+        ]
+      }
+    ]
+  },
+  "warning": "有限样本与小预算功能验证；不是收敛、多种子显著性或连续区间安全证明",
+  "ols_test": {
+    "requested_preference": [
+      0.2,
+      0.3,
+      0.5
+    ],
+    "selected_member": 2,
+    "results": [
+      {
+        "seed": 9100,
+        "preference": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "unseen_preference": false,
+        "failed": false,
+        "env_steps": 8,
+        "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+        "emergency_steps": 0,
+        "emergency_service_degraded_steps": 0,
+        "inference_seconds": [
+          0.000702942999851075,
+          0.0007697239998378791,
+          0.0007527180000579392,
+          0.0007560740000371879,
+          0.0010029969998868182,
+          0.0009652399999140471,
+          0.000730944999759231,
+          0.000832369000363542
+        ],
+        "training_seconds": 15.393686603999868,
+        "vector": [
+          -3.5152900489260093,
+          -9.98300423030314,
+          4.04964794689679
+        ],
+        "violations": 0,
+        "ac_violations": 0,
+        "ac_failed": 0,
+        "reserve_invalid": 0,
+        "ev_unmet_kwh": 0.0,
+        "dr_backlog_kwh": 0.0,
+        "ac_safety_seconds": 0.17274098300049445,
+        "ac_safety_attempts": 8,
+        "interval_covered_steps": 7,
+        "estimation_rmse": 0.020536361713111517,
+        "safety_interventions": 8,
+        "guard_infeasible": null,
+        "guard_certified_steps": 0,
+        "mean_aoi": 4050.0
+      },
+      {
+        "seed": 9101,
+        "preference": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "unseen_preference": false,
+        "failed": false,
+        "env_steps": 8,
+        "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+        "emergency_steps": 0,
+        "emergency_service_degraded_steps": 0,
+        "inference_seconds": [
+          0.0006037339999238611,
+          0.0008282029998554208,
+          0.0009063810002771788,
+          0.000751516000036645,
+          0.18063716899996507,
+          0.0007085320003170636,
+          0.001012922000427352,
+          0.0007302650001292932
+        ],
+        "training_seconds": 15.393686603999868,
+        "vector": [
+          -3.519814602886732,
+          -9.990630227181779,
+          3.9917577168929994
+        ],
+        "violations": 0,
+        "ac_violations": 0,
+        "ac_failed": 0,
+        "reserve_invalid": 0,
+        "ev_unmet_kwh": 0.0,
+        "dr_backlog_kwh": 0.0,
+        "ac_safety_seconds": 0.16262530199946923,
+        "ac_safety_attempts": 8,
+        "interval_covered_steps": 6,
+        "estimation_rmse": 0.017239618556533196,
+        "safety_interventions": 8,
+        "guard_infeasible": null,
+        "guard_certified_steps": 0,
+        "mean_aoi": 4050.0
+      }
+    ]
+  }
+}

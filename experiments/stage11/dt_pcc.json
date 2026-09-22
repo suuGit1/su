@@ -1,0 +1,90 @@
+{
+  "objective_version": "c3-ac-pcc-cost-carbon-sampled-reserve-v3",
+  "seeds": [
+    1910,
+    1911,
+    1912
+  ],
+  "rows": [
+    {
+      "seed": 1910,
+      "method": "physics",
+      "failed": false,
+      "cost": 316.5453232774688,
+      "rmse": 0.0187840233861413,
+      "step_coverage": 1.0,
+      "ac_violations": 0,
+      "service_unmet_kwh": 0.0,
+      "terminal_dr_kwh": 0.0
+    },
+    {
+      "seed": 1910,
+      "method": "residual",
+      "failed": false,
+      "cost": 316.54543435889093,
+      "rmse": 0.019602956874823725,
+      "step_coverage": 1.0,
+      "ac_violations": 0,
+      "service_unmet_kwh": 0.0,
+      "terminal_dr_kwh": 0.0
+    },
+    {
+      "seed": 1911,
+      "method": "physics",
+      "failed": false,
+      "cost": 317.70392896303196,
+      "rmse": 0.023948865108444062,
+      "step_coverage": 1.0,
+      "ac_violations": 0,
+      "service_unmet_kwh": 0.0,
+      "terminal_dr_kwh": 0.0
+    },
+    {
+      "seed": 1911,
+      "method": "residual",
+      "failed": false,
+      "cost": 317.7053063491088,
+      "rmse": 0.020632722349113806,
+      "step_coverage": 1.0,
+      "ac_violations": 0,
+      "service_unmet_kwh": 0.0,
+      "terminal_dr_kwh": 0.0
+    },
+    {
+      "seed": 1912,
+      "method": "physics",
+      "failed": false,
+      "cost": 322.3799357439451,
+      "rmse": 0.01466172281456044,
+      "step_coverage": 1.0,
+      "ac_violations": 0,
+      "service_unmet_kwh": 0.0,
+      "terminal_dr_kwh": 0.0
+    },
+    {
+      "seed": 1912,
+      "method": "residual",
+      "failed": false,
+      "cost": 322.3799350232049,
+      "rmse": 0.016423978672526006,
+      "step_coverage": 1.0,
+      "ac_violations": 0,
+      "service_unmet_kwh": 0.0,
+      "terminal_dr_kwh": 0.0
+    }
+  ],
+  "limits": [
+    "三组合成场景配对功能实验，不代表真实数据显著性",
+    "区间覆盖为所有9个量同时覆盖的逐步比例；不是完整场景覆盖"
+  ],
+  "paired_cost_residual_minus_physics": {
+    "n": 3,
+    "mean": 0.0004959155862517642,
+    "std": 0.0007654198849177009,
+    "ci95": [
+      -0.0014054928151723315,
+      0.0023973239876758598
+    ]
+  },
+  "failed_pairs": 0
+}

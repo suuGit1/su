@@ -55,9 +55,9 @@
   "project_title": "Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants",
   "selected_route": "A: causal closed loop first",
   "next_batches": [
-    "统一 AC 备用目标口径，补强真实配网功率跟踪及安全失败后备",
-    "新增 OLS 多策略基线，按环境交互总量统一预算；所有方法长预算重训",
-    "检验 DT 控制收益与策略漂移下覆盖；真实 EV/DR、硬件及扩展网络实验"
+    "统一包含OLS选择交互的实验总预算，执行v3长预算多种子比较并保留普通MAPPO",
+    "扩大DT配对控制与漂移覆盖验证；只用训练/校准数据更新模型",
+    "接入完整真实EV会话、运行DR降额场景；扩展IEEE69及真实设备计时能耗"
   ],
   "stage9_acceptance": [
     {
@@ -115,5 +115,13 @@
     "parallel_vector_api": "implemented; trajectory_equivalence_tested; upstream_MOMAland_integration_pending",
     "pareto_archive": "475 solution records across 5 seeds and 9 families; 450 unseen preference records; stage9 linear objective only",
     "OLS_baseline": "pending; current conditional single-policy algorithm is distinct"
+  },
+  "stage11_acceptance": {
+    "PCC": "新增v3含网损成本/碳/PCC离散备用；30次1/2步激活通过；全区间与递归保证未完成",
+    "fallback": "无MILP现场候选后备；显式服务降级；无硬安全候选时停止执行；硬实时未验证",
+    "OLS": "独立三维角点及乐观LP搜索，官方MAPPO子策略；4成员功能验证，长预算公平对比待完成",
+    "DT": "v3三组合成场景配对成本CI跨零；未证明控制收益，漂移校准仍待增强",
+    "EV_DR": "提前离站因果事件导入/执行完成；真实EV仍缺；真实SCE DR 55小时/35激活接入分析及训练期降额参数",
+    "hardware_network": "当前主机计时接口已记录、无能量计数器；真实边缘设备、物理通信、IEEE69未完成"
   }
 }
