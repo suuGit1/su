@@ -1,5 +1,7 @@
 # Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants
 
+第十阶段新增 MOMAland 风格向量 Parallel 接口、偏好解集和前沿投影；普通 MAPPO 保留。[当前缺口与验收顺序](docs/stage10.md)。
+
 第九阶段已补充公开英国能源/碳数据、C3 四组消融、集中式 PPO、备用激活与 AC 确认、下行/CPU 时序、再校准及数值问题修复。**研究验收仍有未通过项，不能宣称全部 P0/P1 已完成。** 见 [第九阶段协议](docs/stage9_protocol.md) 与 [验收报告](docs/stage9.md)。
 
 第八阶段已实现 DT 残差/场景分块校准、固定 65 维观察、偏好条件 actor 与向量 critic/GAE，以及五种子/未见偏好/HV/IGD 和 AC 执行前校核。**估计改善已观察到，控制与 Pareto 性能优势尚未证实。** 见 [第八阶段实测报告](docs/stage8.md) 与 [复现协议](docs/research_protocol.md)。

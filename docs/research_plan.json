@@ -18,12 +18,12 @@
     },
     {
       "name": "真实碳数据与细粒度曲线",
-      "status": "pending",
+      "status": "GB_hourly_OPSD_NESO_completed; publication_vintage_and_finer_resolution_pending",
       "acceptance": "地区、UTC 时间和来源匹配；区分在线预测与事后核算"
     },
     {
       "name": "通信/计算联合事件模型",
-      "status": "basic_uplink_and_DT_job_queues_implemented; inference_safety_timing_pending",
+      "status": "uplink_DT_downlink_deadline_budget_implemented; hardware_calibration_and_hard_realtime_pending",
       "acceptance": "上传与 CPU 决策实际改变 AoI、队列和截止时间；端到端计时"
     },
     {
@@ -55,9 +55,9 @@
   "project_title": "Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants",
   "selected_route": "A: causal closed loop first",
   "next_batches": [
-    "识别 DT 对控制有影响的可行场景并重新验证策略变化下的覆盖",
-    "长预算训练与更多独立日期；完整联合 C3 消融",
-    "真实 EV/碳/硬件数据、紧急后备控制及更大网络"
+    "统一 AC 备用目标口径，补强真实配网功率跟踪及安全失败后备",
+    "新增 OLS 多策略基线，按环境交互总量统一预算；所有方法长预算重训",
+    "检验 DT 控制收益与策略漂移下覆盖；真实 EV/DR、硬件及扩展网络实验"
   ],
   "stage9_acceptance": [
     {
@@ -110,5 +110,10 @@
       "implementation": "版本化代码、模型、数据来源哈希、运行命令、统计与图",
       "acceptance": "以最终测试及已提交成果为准"
     }
-  ]
+  ],
+  "stage10_acceptance": {
+    "parallel_vector_api": "implemented; trajectory_equivalence_tested; upstream_MOMAland_integration_pending",
+    "pareto_archive": "475 solution records across 5 seeds and 9 families; 450 unseen preference records; stage9 linear objective only",
+    "OLS_baseline": "pending; current conditional single-policy algorithm is distinct"
+  }
 }
