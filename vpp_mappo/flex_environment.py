@@ -41,10 +41,33 @@ class FlexVPPAdapter:
                      dict(id='demo_1',arrival_step=h//2,departure_step=h,energy_kwh=min(8.,5.*dt*(h-h//2)),max_kw=7.)]
         self.sessions=validate_sessions(records,self.config.horizon,self.config.dt_hours)
         self.remaining={s['id']:float(s['energy_kwh']) for s in self.sessions}
+        self.departure_events=list(self.bundle.get('actual_departure_events',{}).get(key,[])) if self.bundle else []
+        self.observed_departures=set();self.pending_early_departures=[]
+        sessions_by_id={s['id']:s for s in self.sessions};seen=set()
+        for event in self.departure_events:
+            sid=event.get('id');step=event.get('departure_step')
+            if sid not in sessions_by_id or sid in seen or type(step) is not int:
+                raise ValueError('实际离站事件的会话标识或时刻非法')
+            session=sessions_by_id[sid]
+            if not session['arrival_step']<=step<session['departure_step']:
+                raise ValueError('提前离站事件必须位于接入与申报离站之间')
+            seen.add(sid)
         return self.encode()
 
     def row(self,t=None):return {k:float(v[self.t if t is None else t]) for k,v in self.profiles.items()}
-    def active(self):return [s for s in self.sessions if s['arrival_step']<=self.t<s['departure_step']]
+    def apply_departures(self):
+        # 事件表只在物理现场持有；发生之前不修改申报期限或提供给规划器。
+        for event in getattr(self,'departure_events',[]):
+            sid=event['id']
+            if event['departure_step']<=self.t and sid not in self.observed_departures:
+                self.observed_departures.add(sid)
+                session=next(s for s in self.sessions if s['id']==sid)
+                session['departure_step']=event['departure_step']
+                self.pending_early_departures.append(dict(id=sid,unmet_kwh=max(0.,self.remaining[sid])))
+
+    def active(self):
+        self.apply_departures()
+        return [s for s in self.sessions if s['arrival_step']<=self.t<s['departure_step']]
 
     def encode(self):
         if self.t>=self.config.horizon:return np.zeros((6,*self.observation_space.shape),np.float32),np.zeros((6,*self.share_observation_space.shape),np.float32)
@@ -60,6 +83,7 @@ class FlexVPPAdapter:
 
     def plan(self, oracle=False, lookahead=6, proposal=None, objective='economic', fixed_row=None, grid_target=None):
         # MPC 和安全层只读取已接入会话；尾部保证这些已知任务及 DR 日末约束可达。
+        self.apply_departures()
         sessions=[s for s in self.sessions if s['departure_step']>self.t and (oracle or s['arrival_step']<=self.t)]
         h=self.config.horizon-self.t
         rows=[self.row(t) for t in range(self.t,self.config.horizon)] if oracle else [(fixed_row or self.row()).copy() for _ in range(h)]
@@ -74,7 +98,8 @@ class FlexVPPAdapter:
             result[s['id']]=q;left-=q
         return result
 
-    def check(self,row,a,allocation):
+    def check(self,row,a,allocation,include_service=True):
+        self.apply_departures()
         dt=self.config.dt_hours;s=self.spec;f=self.flex;e,ev,shift,shed,pv,wind=a
         next_soc=s.next_soc(self.soc,[e,0],dt)[0]
         backlog=self.backlog+shift*dt
@@ -93,6 +118,9 @@ class FlexVPPAdapter:
             flags['ev_'+key]=q<-1e-5 or q>(session['max_kw'] if active else 0)+1e-5 or after<-1e-5
             if active:flags['ev_deadline_'+key]=after>session['max_kw']*max(0,session['departure_step']-self.t-1)*dt+1e-5
         grid=grid_power(row,a);flags['grid']=not -s.grid_export-1e-5<=grid<=s.grid_import+1e-5
+        if not include_service:
+            # 紧急模式只移除未来服务可达性；电量/功率/SOC/网络等物理边界仍验收。
+            flags={k:v for k,v in flags.items() if k!='dr_reachable' and not k.startswith('ev_deadline_')}
         return int(sum(flags.values()))+self.network.linear(row,a)['linear_network_violations']
 
     def step(self,actions):
@@ -117,7 +145,9 @@ class FlexVPPAdapter:
         count=self.check(row,a,allocation);dt=self.config.dt_hours
         departures=[s for s in self.active() if s['departure_step']==self.t+1]
         for key,q in allocation.items():self.remaining[key]-=q*dt
-        unmet=sum(max(0,self.remaining[s['id']]) for s in departures)
+        early=list(self.pending_early_departures);self.pending_early_departures.clear()
+        early_unmet=sum(event['unmet_kwh'] for event in early)
+        unmet=sum(max(0,self.remaining[s['id']]) for s in departures)+early_unmet
         self.soc[0]=self.spec.next_soc(self.soc,[a[0],0],dt)[0]
         self.backlog+=a[2]*dt;self.shifted+=max(a[2],0)*dt;self.shed_used+=a[3]*dt
         grid=grid_power(row,a);cost=self.flex.cost(self.spec,grid,a,row['price'],dt)
@@ -127,7 +157,8 @@ class FlexVPPAdapter:
         reward=-(cost+terminal+self.config.violation_penalty*count)/self.config.reward_scale
         info=dict(cost=cost,reward=float(reward),constraint_violations=count,pre_shield_violations=pre,shield_l1_kw=float(abs(a-requested).sum()),
             shield_solver_seconds=solver_seconds,ess_soc=float(self.soc[0]),ess_power_kw=float(a[0]),ev_charge_kw=float(a[1]),
-            ev_departures=len(departures),ev_unmet_kwh=float(unmet),ev_delivered_kwh=float(a[1]*dt),
+            early_ev_departures=len(early),early_ev_unmet_kwh=float(early_unmet),
+            ev_departures=len(departures)+len(early),ev_unmet_kwh=float(unmet),ev_delivered_kwh=float(a[1]*dt),
             ev_allocation_json=__import__('json').dumps(allocation,sort_keys=True),dr_shift_kw=float(a[2]),dr_shed_kw=float(a[3]),
             dr_backlog_kwh=float(self.backlog),dr_shifted_kwh=float(max(a[2],0)*dt),dr_repaid_kwh=float(max(-a[2],0)*dt),dr_shed_kwh=float(a[3]*dt),
             pv_curtail_kw=float(a[4]),wind_curtail_kw=float(a[5]),curtailment_kwh=float((a[4]+a[5])*dt),

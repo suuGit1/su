@@ -8,6 +8,7 @@ from vpp_mappo.flex_resources import FlexNetwork
 from vpp_mappo.objectives import carbon_kg
 from .dt import TARGETS,predict,VERSION as DT_VERSION
 from .safety import guard
+PCC_OBJECTIVE_VERSION='c3-ac-pcc-cost-carbon-sampled-reserve-v3'
 
 OBS_VERSION='c3-65-state-interval-carbon-v1'
 OBJECTIVE_VERSION='c3-cost-carbon-symmetric-reserve-v1'
@@ -17,9 +18,9 @@ SCALES=np.array([100.,100.,100.])
 
 class ResearchEnv(CyberVPPAdapter):
     def __init__(self,config,csv_path=None,dt_model=None,robust=False,vector_metrics=True,ac_safe=False,resource_mode="joint",timing_contract=None,control_cycles=0.,reserve_mode="linear"):
-        if reserve_mode not in ("linear","ac_checked"):raise ValueError("未知备用目标版本")
+        if reserve_mode not in ("linear","ac_checked","pcc_checked"):raise ValueError("未知备用目标版本")
         self.reserve_mode=reserve_mode
-        self.objective_version=AC_OBJECTIVE_VERSION if reserve_mode=="ac_checked" else OBJECTIVE_VERSION
+        self.objective_version={"linear":OBJECTIVE_VERSION,"ac_checked":AC_OBJECTIVE_VERSION,"pcc_checked":PCC_OBJECTIVE_VERSION}[reserve_mode]
         if resource_mode not in ("control", "communication", "computation", "joint"):
             raise ValueError("未知 C3 消融模式")
         self.resource_mode=resource_mode
@@ -34,9 +35,9 @@ class ResearchEnv(CyberVPPAdapter):
                 raise ValueError('DT 校准模型版本或区间非法')
             config=copy.copy(config);config.cyber_dt_mode='hold' if dt_model['method']=='hold' else 'physics'
         super().__init__(config,csv_path)
-        if ac_safe:
+        if ac_safe or reserve_mode=="pcc_checked":
             from .ac_safety import ACCheckedFlex
-            self.core=ACCheckedFlex(config,csv_path)
+            self.core=ACCheckedFlex(config,csv_path,emergency=reserve_mode=="pcc_checked")
         self.network=FlexNetwork(self.spec)
         if vector_metrics:
             if self.data and any('carbon_g_per_kwh' not in p for p in self.data.profiles):raise ValueError('真实三目标实验缺少碳数据；禁止静默填补')
@@ -119,7 +120,11 @@ class ResearchEnv(CyberVPPAdapter):
             # 仅事后奖励核算使用物理执行结果；策略碳观察仍通过遥测。
             factor=row.get('carbon_g_per_kwh',self.config.synthetic_carbon_g_per_kwh)
             cyber_kg=info['cyber_energy_j']/3.6e6*factor/1000
-            kg=carbon_kg(info['grid_power_kw'],self.config.dt_hours,factor)+cyber_kg
+            pcc_mode=self.reserve_mode=='pcc_checked'
+            if pcc_mode and (not info['ac_converged'] or info['ac_violations']):raise RuntimeError('PCC 目标要求通过 AC 验收的执行结果')
+            accounted_grid=info['ac_grid_kw'] if pcc_mode else info['grid_power_kw']
+            accounted_cost=info['ac_cost'] if pcc_mode else info['cost']
+            kg=carbon_kg(accounted_grid,self.config.dt_hours,factor)+cyber_kg
             reserve=0.;reserve_valid=info['constraint_violations']==0
             if reserve_valid and not done:
                 values=[]
@@ -132,6 +137,12 @@ class ResearchEnv(CyberVPPAdapter):
                     g=info['grid_power_kw'];lo,hi=values
                     reserve=max(0,min(g-lo,hi-g))*self.config.dt_hours if lo-1e-5<=g<=hi+1e-5 else 0.
                 except (RuntimeError,ValueError):reserve_valid=False
+            if self.reserve_mode=='pcc_checked' and reserve_valid and not done:
+                from .pcc_reserve import checked_capacity as pcc_capacity
+                confirmation=pcc_capacity(self.core,info['ac_grid_kw'],reserve/self.config.dt_hours)
+                reserve=confirmation['kw']*self.config.dt_hours
+                reserve_valid=confirmation['baseline_feasible']
+                info['reserve_confirmation']=confirmation
             if self.reserve_mode=='ac_checked' and reserve_valid and not done:
                 from .checked_reserve import checked_capacity
                 try:
@@ -140,10 +151,11 @@ class ResearchEnv(CyberVPPAdapter):
                     info['reserve_confirmation']=confirmation
                 except (RuntimeError,ValueError) as exc:
                     reserve=0.;reserve_valid=False;info['reserve_confirmation_error']=str(exc)
-            vector=np.array([-(info['cost']+info['terminal_penalty']),-kg,reserve])/SCALES
+            vector=np.array([-(accounted_cost+info['terminal_penalty']),-kg,reserve])/SCALES
             penalty=self.config.violation_penalty*info['constraint_violations']/self.config.reward_scale
             reward=float(vector[0] if self.reward_mode=='economic' else self.preference@vector)-penalty
             info.update(objective_version=self.objective_version,objective_vector=vector.tolist(),carbon_kg=kg,
+                objective_cost=accounted_cost,objective_grid_kw=accounted_grid,
                 ac_carbon_kg=carbon_kg(info['ac_grid_kw'],self.config.dt_hours,factor)+cyber_kg if info['ac_converged'] else None,
                 flexibility_kwh=reserve,reserve_valid=reserve_valid,reward=reward)
             rewards=np.full((self.num_agents,1),reward,np.float32)

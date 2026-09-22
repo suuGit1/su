@@ -40,7 +40,7 @@ def run(runs, output):
         data = path.read_bytes()
         sources.append(dict(path=f'{group}/results.json', sha256=hashlib.sha256(data).hexdigest()))
         payload = json.loads(data)
-        if payload['manifest']['protocol'] != 'c3-budget-campaign-v1' or payload['manifest']['test_seeds'] != [9100, 9101, 9102]:
+        if payload['manifest'].get('reserve_mode','linear') != 'linear' or payload['manifest']['protocol'] != 'c3-budget-campaign-v1' or payload['manifest']['test_seeds'] != [9100, 9101, 9102]:
             raise ValueError('此报告仅适用于 stage9 固定协议')
         entries.extend(payload['entries'])
     records = [r for e in entries for r in solutions(e, [9100, 9101, 9102])]

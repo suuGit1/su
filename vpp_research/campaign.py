@@ -22,7 +22,7 @@ def run(config,dt_folder,output,episodes=120,seeds=(1,2,3,4,5),families=FAMILIES
     if episodes<3 or episodes%3:raise ValueError('预算必须能被三个固定权重模型均分')
     out=Path(output);out.mkdir(parents=True,exist_ok=True)
     models={m:json.loads((Path(dt_folder)/(m+'.json')).read_text()) for m in ('physics','residual')}
-    manifest=dict(reserve_mode=reserve_mode,protocol='c3-budget-campaign-v1',config=config.__dict__,episodes=episodes,seeds=list(seeds),families=list(families),
+    manifest=dict(reserve_mode=reserve_mode,protocol='c3-budget-campaign-v2' if reserve_mode=='pcc_checked' else 'c3-budget-campaign-v1',config=config.__dict__,episodes=episodes,seeds=list(seeds),families=list(families),
         dt_hashes={m:hashlib.sha256(json.dumps(v,sort_keys=True).encode()).hexdigest() for m,v in models.items()},
         test_weights=TEST_WEIGHTS,validation_seeds=[8100,8101],test_seeds=[9100,9101,9102],
         python=platform.python_version(),torch=torch.__version__,numpy=np.__version__)
@@ -68,8 +68,8 @@ def run(config,dt_folder,output,episodes=120,seeds=(1,2,3,4,5),families=FAMILIES
         aggregate[family]=dict(completed=len(valid),failed=len(seeds)-len(valid),hv=stats([e['hv'] for e in valid]) if valid else None,
             undefined_igd=sum(e['igd'] is None for e in valid))
     result=dict(manifest=manifest,reference_point=REFERENCE,validation_reference=reference,aggregate=aggregate,entries=entries,
-        limits=['增加预算不自动证明收敛，必须检查学习曲线','四种资源模式固定 18 个动作维度；未启用的维度由执行器忽略','测试运行 AC 修正，训练未启用；属于统一部署条件'])
+        limits=['增加预算不自动证明收敛，必须检查学习曲线','四种资源模式固定 18 个动作维度；未启用的维度由执行器忽略','pcc_checked 在训练和测试均运行 AC 修正；旧模式仅测试启用' ])
     (out/'results.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));return result
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--config',default='configs/research_smoke.json');p.add_argument('--dt-folder',required=True);p.add_argument('--output',required=True);p.add_argument('--episodes',type=int,default=120);p.add_argument('--seeds',type=int,nargs='+',default=[1,2,3,4,5]);p.add_argument('--families',nargs='+',choices=FAMILIES,default=list(FAMILIES));p.add_argument('--reserve-mode',choices=['linear','ac_checked'],default='linear');a=p.parse_args();run(Config.load(a.config),a.dt_folder,a.output,a.episodes,a.seeds,a.families,a.reserve_mode)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--config',default='configs/research_smoke.json');p.add_argument('--dt-folder',required=True);p.add_argument('--output',required=True);p.add_argument('--episodes',type=int,default=120);p.add_argument('--seeds',type=int,nargs='+',default=[1,2,3,4,5]);p.add_argument('--families',nargs='+',choices=FAMILIES,default=list(FAMILIES));p.add_argument('--reserve-mode',choices=['linear','ac_checked','pcc_checked'],default='linear');a=p.parse_args();run(Config.load(a.config),a.dt_folder,a.output,a.episodes,a.seeds,a.families,a.reserve_mode)

@@ -7,7 +7,7 @@ import numpy as np
 import torch
 from vpp_mappo.algorithms import OfficialPPO,to_numpy
 from vpp_mappo.runner import seed_all,write_csv
-from .environment import ResearchEnv,OBS_VERSION,OBJECTIVE_VERSION,AC_OBJECTIVE_VERSION,SCALES
+from .environment import ResearchEnv,OBS_VERSION,OBJECTIVE_VERSION,AC_OBJECTIVE_VERSION,PCC_OBJECTIVE_VERSION,SCALES
 from .central_agent import CentralPPO
 from .pareto_agent import ParetoAgent,sample_preference,VERSION
 
@@ -41,7 +41,7 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
                 a=to_numpy(a)
             try:no,ns,reward,done,info=env.step(a)
             except (RuntimeError,ValueError) as exc:
-                failure=dict(episode=ep,step=t,scenario_seed=config.seed*10000+2000+scenario_offset+ep,
+                failure=dict(completed_env_steps=ep*config.horizon+env.core.t,episode=ep,step=t,scenario_seed=config.seed*10000+2000+scenario_offset+ep,
                     error=str(exc),soc=env.core.soc.tolist(),backlog=env.core.backlog,shifted=env.core.shifted,
                     shed_used=env.core.shed_used,remaining=env.core.remaining,row=env.core.row())
                 (out/'failure.json').write_text(json.dumps(failure,ensure_ascii=False,indent=2))
@@ -65,7 +65,7 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
         history.append(dict(episode=ep+1,env_steps=(ep+1)*config.horizon,preference=json.dumps(w.tolist()),
             vector=json.dumps(np.sum(vectors,axis=0).tolist()),violations=violations,**metrics))
     state=dict(version=VERSION,observation_version=OBS_VERSION,objective_version=env.objective_version,reserve_mode=reserve_mode,scales=SCALES.tolist(),
-        method=method,config=asdict(config),dt_model=dt_model,robust=robust,preference=list(preference),training_preferences=weights,
+        method=method,config=asdict(config),dt_model=dt_model,robust=robust,preference=pref.tolist(),training_preferences=weights,
         resource_mode=resource_mode,training_seconds=time.perf_counter()-started,n_agents=env.num_agents,dispatch_spec=env.spec.record(),flex_spec=asdict(env.flex),cyber_spec=asdict(env.cyber_spec),ev_bundle=env.bundle,
         train_scenarios=env.data.scenario_names if env.data else [],train_fingerprints=env.data.fingerprints if env.data else [],
         train_seeds=[config.seed*10000+2000+scenario_offset+ep for ep in range(config.episodes)])
@@ -78,7 +78,7 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
 def load(checkpoint):
     from vpp_mappo.config import Config
     state=torch.load(checkpoint,map_location='cpu',weights_only=True)
-    expected=AC_OBJECTIVE_VERSION if state.get('reserve_mode','linear')=='ac_checked' else OBJECTIVE_VERSION
+    expected={'linear':OBJECTIVE_VERSION,'ac_checked':AC_OBJECTIVE_VERSION,'pcc_checked':PCC_OBJECTIVE_VERSION}.get(state.get('reserve_mode','linear'))
     if (state['version'],state['observation_version'],state['objective_version'])!=(VERSION,OBS_VERSION,expected):raise ValueError('研究检查点协议不匹配')
     c=Config(**state['config']);c._dispatch_record=state['dispatch_spec'];c._flex_record=state['flex_spec'];c._cyber_record=state['cyber_spec'];c._ev_bundle=state['ev_bundle']
     c.train_csv=None;env=ResearchEnv(c,dt_model=state['dt_model'],robust=state['robust'],resource_mode=state.get('resource_mode','joint'),vector_metrics=False,reserve_mode=state.get('reserve_mode','linear'))
@@ -104,7 +104,7 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
         w=np.asarray(preference,dtype=float)
         if w.shape!=(3,) or np.any(w<0) or not np.isclose(w.sum(),1):raise ValueError('偏好必须在三维单纯形上')
         for index,seed in enumerate(seeds):
-            row=dict(seed=seed,preference=w.tolist(),unseen_preference=not any(np.allclose(w,p,atol=1e-9,rtol=0) for p in state['training_preferences']),failed=False)
+            row=dict(seed=seed,preference=w.tolist(),unseen_preference=not any(np.allclose(w,p,atol=1e-9,rtol=0) for p in state['training_preferences']),failed=False,env_steps=0)
             try:
                 env.preference=w;env.reward_mode="economic" if state["method"]=="ordinary" else "weighted"
                 obs,_=env.reset(seed,index)
@@ -120,8 +120,9 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
                         with torch.no_grad():a,r=agent.policy.act(obs,rnn,masks,deterministic=True)
                         a=to_numpy(a);rnn=to_numpy(r)
                     inference_times.append(time.perf_counter()-started)
-                    obs,_,_,_,info=env.step(a);infos.append(info)
-                row.update(inference_seconds=inference_times,training_seconds=state.get('training_seconds'),vector=np.sum([i['objective_vector'] for i in infos],axis=0).tolist(),
+                    obs,_,_,_,info=env.step(a);infos.append(info);row['env_steps']+=1
+                row.update(objective_version=state['objective_version'],emergency_steps=sum(i.get('emergency',False) for i in infos),
+                    emergency_service_degraded_steps=sum(i.get('emergency_service_degraded',False) for i in infos),inference_seconds=inference_times,training_seconds=state.get('training_seconds'),vector=np.sum([i['objective_vector'] for i in infos],axis=0).tolist(),
                     violations=sum(i['constraint_violations'] for i in infos),ac_violations=sum(i['ac_violations'] for i in infos),
                     ac_failed=sum(not i['ac_converged'] for i in infos),reserve_invalid=sum(not i['reserve_valid'] for i in infos),
                     ev_unmet_kwh=sum(i['ev_unmet_kwh'] for i in infos),dr_backlog_kwh=infos[-1]['dr_backlog_kwh'],
@@ -131,7 +132,7 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
                     estimation_rmse=float(np.sqrt(np.mean([i['research_dt_mse'] for i in infos]))),
                     safety_interventions=sum(i['shield_l1_kw']>1e-5 for i in infos),guard_infeasible=sum(not i['guard_feasible'] for i in infos) if env.robust else None,
                     guard_certified_steps=sum(i['guard_certificate_survived'] for i in infos),mean_aoi=float(np.mean([i['aoi_mean_seconds'] for i in infos])))
-            except (RuntimeError,ValueError) as exc:row.update(failed=True,error=str(exc),vector=None)
+            except (RuntimeError,ValueError) as exc:row.update(failed=True,error=str(exc),vector=None,env_steps=max(row['env_steps'],env.core.t))
             results.append(row)
     if output:Path(output).write_text(json.dumps(results,ensure_ascii=False,indent=2),encoding='utf-8')
     return results
