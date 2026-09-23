@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/64667ed70b88/su/scripts/run_all_seeds.py", line 7, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/workspace/scratch/64667ed70b88/su/vpp_research/real_campaign.py", line 126, in main
+    run(p.parse_args())
+  File "/workspace/scratch/64667ed70b88/su/vpp_research/real_campaign.py", line 45, in run
+    raise ValueError(f'训练回合必须为正；独立测试只有 {len(sets["test"].profiles)} 天，禁止重复凑天数')
+ValueError: 训练回合必须为正；独立测试只有 29 天，禁止重复凑天数

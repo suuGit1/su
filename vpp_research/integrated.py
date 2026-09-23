@@ -40,7 +40,7 @@ def prepare(config,out):
     return model
 
 
-def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),seed=9103,fault=None):
+def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),seed=9103,fault=None,csv_path=None,ev_bundle=None,profile_index=0):
     out=fresh(out);w=np.asarray(preference,dtype=float)
     if w.shape!=(3,) or not np.isfinite(w).all() or min(w)<0 or not np.isclose(w.sum(),1):raise ValueError('偏好必须是三维概率向量')
     if method!='mpc':
@@ -51,6 +51,7 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
         if config.network_model!='ieee33' or config.cyber_mode!='joint' or config.coordinator_mode!='schedule' or state['reserve_mode']!='pcc_checked':
             raise ValueError('该模型不满足集成 IEEE33/C3/协调器/PCC 协议')
         if model is None:raise ValueError('集成模型必须包含校准 DT')
+    if ev_bundle is not None:config._ev_bundle=ev_bundle
     if model and f'synthetic:{seed}' in model['training_scenarios']+model['calibration_scenarios']:
         raise ValueError('闭环测试与 DT 拟合/校准重叠')
     if fault=='packet_loss':
@@ -64,13 +65,19 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
             scenarios={key:[dict(id='early_demo',arrival_step=0,departure_step=config.horizon,
                 energy_kwh=min(12.,7.*config.dt_hours*config.horizon),max_kw=11.)]},
             actual_departure_events={key:[dict(id='early_demo',departure_step=1)]})
-    env=ResearchEnv(config,dt_model=model,reserve_mode='pcc_checked')
+    env=ResearchEnv(config,csv_path=csv_path,dt_model=model,reserve_mode='pcc_checked')
+    if env.data and method!='mpc':
+        if set(env.data.scenario_names)&set(state['train_scenarios']) or set(env.data.fingerprints)&set(state['train_fingerprints']):
+            raise ValueError('真实测试曲线与策略训练重叠')
+    if env.data and model and set(env.data.scenario_names)&set(model['training_scenarios']+model['calibration_scenarios']):
+        raise ValueError('真实测试日期与DT拟合/校准重叠')
+    if env.data and not 0<=profile_index<len(env.data.profiles):raise ValueError('测试日期索引超出范围')
     env.preference=w;env.reward_mode='economic' if method=='ordinary' else 'weighted'
-    obs,_=env.reset(seed);mpc=ObservedMPC(config,env.spec,env.flex,2)
+    obs,_=env.reset(seed,profile_index);mpc=ObservedMPC(config,env.spec,env.flex,2)
     rnn=np.zeros((env.num_agents,1,config.hidden_size),np.float32);masks=np.ones((env.num_agents,1),np.float32)
-    summary=dict(method=method,scenario_seed=seed,fault=fault,completed=False,steps=0,
+    summary=dict(method=method,scenario_seed=seed,scenario_date=env.data.scenario_names[profile_index] if env.data else None,fault=fault,completed=False,steps=0,
         cost=0.,carbon_kg=0.,reserve_kwh=0.,ac_violations=0,constraint_violations=0,service_violations=0,packet_drops=0,
-        emergency_steps=0,dt_updates=0,ev_unmet_kwh=0.,early_departures=0,terminal_dr_kwh=0.,checkpoint=str(checkpoint) if checkpoint else None)
+        emergency_steps=0,dt_updates=0,reserve_unconfirmed_steps=0,ev_unmet_kwh=0.,early_departures=0,terminal_dr_kwh=0.,checkpoint=str(checkpoint) if checkpoint else None)
     write(out/'config.json',config.__dict__)
     try:
         for step in range(config.horizon):
@@ -94,6 +101,7 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
             summary['service_violations']+=int(info['ev_unmet_kwh']>1e-6 or (done and abs(info['dr_backlog_kwh'])>1e-6))
             summary['packet_drops']+=info['packet_drops'];summary['emergency_steps']+=int(info.get('emergency',False))
             summary['dt_updates']+=info['dt_updates']
+            summary['reserve_unconfirmed_steps']+=int(not info['reserve_valid'])
             summary['ev_unmet_kwh']+=info['ev_unmet_kwh'];summary['early_departures']+=info.get('early_ev_departures',0)
             summary['terminal_dr_kwh']=info['dr_backlog_kwh']
             write(out/'summary.json',summary)
@@ -111,6 +119,10 @@ def main():
     p.add_argument('--output',required=True)
     p.add_argument('--dt-model');p.add_argument('--checkpoint')
     p.add_argument('--method',choices=['mpc','ordinary','pareto'],default='mpc')
+    p.add_argument('--synthetic',action='store_true',help='显式选择合成演示；默认必须使用真实目录')
+    p.add_argument('--data-root',default='data/real');p.add_argument('--ev-sessions')
+    p.add_argument('--dr-mode',choices=['off','sce-derated'],default='off')
+    p.add_argument('--eval-days',type=int,default=29);p.add_argument('--day-index',type=int,default=0)
     p.add_argument('--episodes',type=int);p.add_argument('--resume',action='store_true')
     p.add_argument('--seed',type=int,default=9103)
     p.add_argument('--preference',type=float,nargs=3,default=[.2,.3,.5])
@@ -120,6 +132,32 @@ def main():
     if c.network_model!='ieee33' or c.cyber_mode!='joint' or c.coordinator_mode!='schedule' or not c.safety:
         p.error('集成入口要求 IEEE33、joint C3、schedule 协调器和 safety=true')
     out=Path(a.output)
+    if not a.synthetic:
+        from .real_inputs import connect
+        from .real_campaign import prepare_real,run as real_run
+        c,paths,sets,protocol=connect(a.data_root,c,a.ev_sessions,a.dr_mode)
+        if a.fault=='early_departure':p.error('合成提前离站演示须显式 --synthetic；真实EV事件请传入会话文件')
+        if a.command=='all':
+            real_run(argparse.Namespace(config=a.config,learning_rate=None,ppo_epochs=None,cpu_threads=None,solver_time_limit=None,data_root=a.data_root,ev_sessions=a.ev_sessions,dr_mode=a.dr_mode,
+                seeds=[c.seed],episodes=c.episodes,eval_days=a.eval_days,dt_train_days=None,dt_calibration_days=None,
+                methods=['mpc','ordinary','pareto'],eval_preferences=','.join(map(str,a.preference)),output=str(out),resume=a.resume,dry_run=False))
+        elif a.command=='prepare':
+            prepare_real(c,paths,protocol,out,{'train':len(sets['train'].profiles),'validation':len(sets['validation'].profiles)})
+        elif a.command=='train':
+            if a.method=='mpc' or not a.dt_model:p.error('训练要求 ordinary/pareto 与真实 --dt-model')
+            model=json.loads(Path(a.dt_model).read_text())
+            if model.get('real_input_fingerprint')!=protocol['fingerprint']:p.error('DT与真实输入协议不一致，请重新prepare')
+            train(c,model,out,method=a.method,reserve_mode='pcc_checked',resume=a.resume,trace_path=out/'trajectory.jsonl')
+        else:
+            if a.method=='mpc':
+                if not a.dt_model:p.error('MPC要求真实 --dt-model')
+                model=json.loads(Path(a.dt_model).read_text())
+            else:
+                if not a.checkpoint:p.error('策略运行要求 --checkpoint')
+                state,_,_=load(a.checkpoint);model=state['dt_model']
+            if not model or model.get('real_input_fingerprint')!=protocol['fingerprint']:p.error('模型不是当前真实数据/EV/DR协议训练的模型')
+            rollout(c,model,out,a.method,a.checkpoint,a.preference,a.seed,a.fault,paths['test'],c._ev_bundle,a.day_index)
+        print('真实数据流程完成：',out.resolve());return
     if a.command=='prepare':prepare(c,out)
     elif a.command=='all':
         fresh(out);model=prepare(c,out/'dt');rows=[]

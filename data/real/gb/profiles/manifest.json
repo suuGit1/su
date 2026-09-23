@@ -1,0 +1,497 @@
+{
+  "sources": [
+    "https://data.open-power-system-data.org/time_series/2020-10-06/",
+    "https://api.carbonintensity.org.uk/intensity/date/"
+  ],
+  "region": "GB",
+  "timezone": "UTC",
+  "currency": "GBP",
+  "horizon": 24,
+  "dt_hours": 1.0,
+  "scales": {
+    "load_kw": 0.03499086349675363,
+    "pv_kw": 0.14814814814814814,
+    "wind_kw": 0.024513809445987907
+  },
+  "scaling_fit": "2019-01 only",
+  "dropped_days": [
+    "2019-02-03",
+    "2019-03-30",
+    "2019-03-31"
+  ],
+  "raw_opsd_sha256": "6a7f2bc571314cbf9c321cc03437691cd4be95c3a6f075e60ff99e8035c704c8",
+  "carbon_sources": [
+    {
+      "date": "2018-12-31",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2018-12-31",
+      "sha256": "3de829335eb71d7b597615c9a69b8e706b143e26ca13395551fa5871ae98bdad"
+    },
+    {
+      "date": "2019-01-01",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-01",
+      "sha256": "e6e30647ad03bbb56cb7c9747c7fdd189a7b179f3ce437f8b2c090b0dcc2fd7a"
+    },
+    {
+      "date": "2019-01-02",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-02",
+      "sha256": "1ae0ee5a0597f519afdeb4775faead9a00b63108b100636657d0ba576cef0538"
+    },
+    {
+      "date": "2019-01-03",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-03",
+      "sha256": "032eca8f0e169386394e3f7a2d6c25bcec288789ce15a6ceb9867ee0f858be4a"
+    },
+    {
+      "date": "2019-01-04",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-04",
+      "sha256": "327e9bfffd267fdad9b4e351b1aedee876edf67afa00a0bcbe640aabb3eef3c4"
+    },
+    {
+      "date": "2019-01-05",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-05",
+      "sha256": "b51c30311b37930aa1a8bba5004f6e57c6ef39ddb99b26bebbe845882b17ca0f"
+    },
+    {
+      "date": "2019-01-06",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-06",
+      "sha256": "efce0d93f3dd98d4ac35c262b5e123992bc2c4eccedea0d29d74203531a66992"
+    },
+    {
+      "date": "2019-01-07",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-07",
+      "sha256": "38aa1f02c9a890bd2df7540c66c654a2eaadd02f23f41a19babe48a467bdf2e6"
+    },
+    {
+      "date": "2019-01-08",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-08",
+      "sha256": "2b44db7de1e7a3a24d7dc1acfa79ab7dfea55a5fc8d2578126c128ad9f136637"
+    },
+    {
+      "date": "2019-01-09",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-09",
+      "sha256": "c0e6fc8e73b9d9bba7ea31bae678d675102ff5798ddea24815b8b83170f665c5"
+    },
+    {
+      "date": "2019-01-10",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-10",
+      "sha256": "ec02c73bbed543deab6f75e62fc3011869cd7e4027ca0ae0dbd6f16f6fcb6477"
+    },
+    {
+      "date": "2019-01-11",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-11",
+      "sha256": "6fdfb342065a48eef22435e08f16eace96b529b60ba68421390b7537e11cb393"
+    },
+    {
+      "date": "2019-01-12",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-12",
+      "sha256": "b4db09cd1274f6a7fdc5d394a426831ac2e642b5e9317a6cb00478889e319ef5"
+    },
+    {
+      "date": "2019-01-13",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-13",
+      "sha256": "3611773ee689d5470eaa407c54047df3839da0ff3fc834650f1d9234f62a5f3d"
+    },
+    {
+      "date": "2019-01-14",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-14",
+      "sha256": "8c18e6fc27905c65099f16a597a2f52a721f7538acab4aab3e48adc2f1092ba6"
+    },
+    {
+      "date": "2019-01-15",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-15",
+      "sha256": "ce762165b13a0d7b2517ddc2f021af15686728a3f0fb7c02ad21226360e96733"
+    },
+    {
+      "date": "2019-01-16",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-16",
+      "sha256": "9a17a6993f83f7854f89074d32680794584f65f3d872a032f5a0b600252f432a"
+    },
+    {
+      "date": "2019-01-17",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-17",
+      "sha256": "0884a0d537b67c65ad43de4637b8b9dd6d0333b007946ad2b2e9c1a57aba05c1"
+    },
+    {
+      "date": "2019-01-18",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-18",
+      "sha256": "6deef09814c1d5f9d7b2a62de5c3ab2829712b9967ab736858ca0b037a594bab"
+    },
+    {
+      "date": "2019-01-19",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-19",
+      "sha256": "105ca5bb25f089b3681caddc3285d58ba36cd4ddbbb8088e529e14c336517795"
+    },
+    {
+      "date": "2019-01-20",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-20",
+      "sha256": "736a62bd6e36ccc490fc923bb84f73f9937e493770f440838212626e5276c43b"
+    },
+    {
+      "date": "2019-01-21",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-21",
+      "sha256": "9d15f930d5d4fabe6346525fff0cc988c14850bc6e1051f0704d906d9b3dbc3a"
+    },
+    {
+      "date": "2019-01-22",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-22",
+      "sha256": "a2991c90810178f2b33ef879e848bcc475216f40fd03451385425f67b4bcde24"
+    },
+    {
+      "date": "2019-01-23",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-23",
+      "sha256": "dda701672cc2d81bf3cb91eff67bfd17d02b8bfd9ab8a95c48a0ce8a3ace06bf"
+    },
+    {
+      "date": "2019-01-24",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-24",
+      "sha256": "836a4f2d4d817600a3ae7529e6b42c25814f620e01f4006568024ec2044f8e65"
+    },
+    {
+      "date": "2019-01-25",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-25",
+      "sha256": "f76698b7f9f7cb85ee9109f1fa6bc52ba12994a9009c13afb9ccd2fbf671173a"
+    },
+    {
+      "date": "2019-01-26",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-26",
+      "sha256": "b3c95d7322f0cfe4c5decb3f2679e9b6b3d10f250a6cec88b6492e067a038fc1"
+    },
+    {
+      "date": "2019-01-27",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-27",
+      "sha256": "532ec03c2e03677632cae26941a0bb44d4f7caa0beeb85b3c5ed1dd6c852b2db"
+    },
+    {
+      "date": "2019-01-28",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-28",
+      "sha256": "ad0c39d1183c7d39e3a9cc71bffa9186587e6b3f142b0ca32053ca9e61c8e754"
+    },
+    {
+      "date": "2019-01-29",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-29",
+      "sha256": "44de502e477c18a1b76a877919689e6d01d52a6e2d6cd5ecd14725e3ebac0db5"
+    },
+    {
+      "date": "2019-01-30",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-30",
+      "sha256": "a814eed3dd3e9220d1b342676ebf3aacd734ff9a69b8ca80cbabbb9aa30bd927"
+    },
+    {
+      "date": "2019-01-31",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-01-31",
+      "sha256": "b715d24536c842699217ed29735e0f7b33f1de25e3a8bc94a2016a176f9b1e97"
+    },
+    {
+      "date": "2019-02-01",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-01",
+      "sha256": "6bdd34d4c26027efa848df15774c5c3a845f8f53862cff71f8bd0a410203aa59"
+    },
+    {
+      "date": "2019-02-02",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-02",
+      "sha256": "d878ebe77ca1125cdfb73939b61770dcd8e467f4184af46a68a5e5ba1cd6371f"
+    },
+    {
+      "date": "2019-02-03",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-03",
+      "sha256": "98ed67f0bb35817f33c977458314faef5b431d33e44dc1e4aa190923761660d3"
+    },
+    {
+      "date": "2019-02-04",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-04",
+      "sha256": "aa3c5894b6b2e30a35bd66ebfa9d29f385edbe11fe3257887988c02ebaadc34a"
+    },
+    {
+      "date": "2019-02-05",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-05",
+      "sha256": "11f3f33d6c5156f710f267be4ef90a9c254e0c534500e21c91216e96b988411a"
+    },
+    {
+      "date": "2019-02-06",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-06",
+      "sha256": "aa247b80f8f390ceb6cf8a25fba567aa971c3c4c9fe8d68ab250aaed5ce77cff"
+    },
+    {
+      "date": "2019-02-07",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-07",
+      "sha256": "9721bb21113e385d19dbe43608f88a30646edd2d36ea02f9ed6e203350702176"
+    },
+    {
+      "date": "2019-02-08",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-08",
+      "sha256": "6056fec5a9d772d34bcde61f42c1afd5d0d145a947f64c439edd65940b1b7043"
+    },
+    {
+      "date": "2019-02-09",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-09",
+      "sha256": "9e8afb741a010474da21355fdae488e235970eb2eb132100ce47e8ea73481f5a"
+    },
+    {
+      "date": "2019-02-10",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-10",
+      "sha256": "7a37225410107b786feba4a7cfcb9c0e50ecb6937d71ac4b6f08f9f95a5e6060"
+    },
+    {
+      "date": "2019-02-11",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-11",
+      "sha256": "360834f1c7762441c43dcc79d300d832c8e9e8853197722576f20e0447d2b416"
+    },
+    {
+      "date": "2019-02-12",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-12",
+      "sha256": "57ca999818fc6a487ac3e8e907c24d8bb2f80ecc72ef72ffd4a795fac43909ff"
+    },
+    {
+      "date": "2019-02-13",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-13",
+      "sha256": "0205765a51e39910875e7905e5f9848d6ce92538e511d37a9514df1559073a0f"
+    },
+    {
+      "date": "2019-02-14",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-14",
+      "sha256": "9d14607c4b1a3af3ce7a39fe2357ddeaa904b4b1de748b6fc9f84b9dff23aaf9"
+    },
+    {
+      "date": "2019-02-15",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-15",
+      "sha256": "de925594bde5384faf2629bd847bedfbca8b992cde51a8e2ec003f139817295e"
+    },
+    {
+      "date": "2019-02-16",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-16",
+      "sha256": "b19c18cd02ad1658bc417815fde76b0489537a239571aff9ffd0964bf0b9d080"
+    },
+    {
+      "date": "2019-02-17",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-17",
+      "sha256": "91c7567de795a9642f632feb18ff83d73451815133d4783d229748df770317e2"
+    },
+    {
+      "date": "2019-02-18",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-18",
+      "sha256": "82149ee804f141621a4b88eba83a7549f7d743793842ae33d8fe43e01cc8d9e4"
+    },
+    {
+      "date": "2019-02-19",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-19",
+      "sha256": "dc7388325304f85c42ad39f9a14136809df1d09c1e283e448f732e3e3dc9bbf7"
+    },
+    {
+      "date": "2019-02-20",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-20",
+      "sha256": "2edd2fc5e8019f169e93c2a3b195adb2e6524fa4f7d6b8fbb8183ff1a838fe94"
+    },
+    {
+      "date": "2019-02-21",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-21",
+      "sha256": "9f0f45ee1c07204a881d7f16ae9f459532d45abba755fcbc817c07c8242c921a"
+    },
+    {
+      "date": "2019-02-22",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-22",
+      "sha256": "e5ad28748c64a54cf6a54d08dc4bd062c3d0cfb3c9241b7c32eb384ce76c64ed"
+    },
+    {
+      "date": "2019-02-23",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-23",
+      "sha256": "780bc0649cb67e6cd1115c5d3a35ea4f07daac138b4ab47a46d022de3bad64f0"
+    },
+    {
+      "date": "2019-02-24",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-24",
+      "sha256": "46d5989a7f0dc04c61624cf43547aa29607259921fe00f0b0d2eee617f1581f4"
+    },
+    {
+      "date": "2019-02-25",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-25",
+      "sha256": "0b1f0c9102c90347f980e188d2536d033260698765f625b9e5708d0bdb3c605f"
+    },
+    {
+      "date": "2019-02-26",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-26",
+      "sha256": "9d203500e77d4bf5ebc312e9b3d4cc0e96ab32b6946de78cd28b8d7d1a03960e"
+    },
+    {
+      "date": "2019-02-27",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-27",
+      "sha256": "8d23347585d866269647a693bba03138cfa33d525d27f65b03d6dfc8feb2f7ee"
+    },
+    {
+      "date": "2019-02-28",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-02-28",
+      "sha256": "28c8c3512e2490cc2afe83285b117db278895e59c171933ca3aba55472f1ee14"
+    },
+    {
+      "date": "2019-03-01",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-01",
+      "sha256": "008f97542ce4e21c7cb7a0a7c8d34b02d4183d43ad937883ebf31986f8228133"
+    },
+    {
+      "date": "2019-03-02",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-02",
+      "sha256": "3d8132e7d8a507678349ec70fdeb9462ee36fb616c840cb9608ba623cd3515be"
+    },
+    {
+      "date": "2019-03-03",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-03",
+      "sha256": "327850f3b8aeaf02c647539e1815e08e4fce562c32e4112d7b13861ff02894be"
+    },
+    {
+      "date": "2019-03-04",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-04",
+      "sha256": "ac32560ff14842ca00d438d1835ce0af89e93b813920296f8fb3bc4d59b4eeb3"
+    },
+    {
+      "date": "2019-03-05",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-05",
+      "sha256": "d6dd06442f9a27b9b7df5ce04835b1ca78cac1388b4ec0d3a159721458f41ea5"
+    },
+    {
+      "date": "2019-03-06",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-06",
+      "sha256": "43613eef07eb52016b6589445a4ebc23bf95b0447f83b8ba506d6bba58cb7593"
+    },
+    {
+      "date": "2019-03-07",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-07",
+      "sha256": "95f54703df91af5a14b44e4f89cdabf4d6c3bd528b13ba183b572c31a03affa0"
+    },
+    {
+      "date": "2019-03-08",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-08",
+      "sha256": "bd94583daa5a32e464fed8e9c2780d7e527ac1538412265977a4068dcbec576a"
+    },
+    {
+      "date": "2019-03-09",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-09",
+      "sha256": "068d85cf458d4d87843bf0b4196c51dd262e37f4ac2d41b8e5ee31070c8ce70c"
+    },
+    {
+      "date": "2019-03-10",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-10",
+      "sha256": "7104d0fb39b93527ad55de86b01a1cda48cd64511389844aaf602829f12b5868"
+    },
+    {
+      "date": "2019-03-11",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-11",
+      "sha256": "fbab11665c70013539406594a32bf0910025b0597a17bdb6404d94a65880dbe2"
+    },
+    {
+      "date": "2019-03-12",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-12",
+      "sha256": "1cd99c5d6f1273ef48b25e9dcfe3775d6a971da7fac69c6c4d804b020a333e42"
+    },
+    {
+      "date": "2019-03-13",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-13",
+      "sha256": "5c2cdb7fa89ae8fa041011eb4c2ae3d1ac4d417fc1af86805aec2132126540d9"
+    },
+    {
+      "date": "2019-03-14",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-14",
+      "sha256": "7ac62f2025862dd3b11d98dee2b5ff750170d685992e353b8ae07e6a3ea1c764"
+    },
+    {
+      "date": "2019-03-15",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-15",
+      "sha256": "a9e4aba95c54bf32dbb7eefef04e72e37f052845c2200e0176c7e7ed13543164"
+    },
+    {
+      "date": "2019-03-16",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-16",
+      "sha256": "89b245bf6675fa7426eecdd455cb5f8f35a9dc9cd3bda9137f165b1be2cdd4f3"
+    },
+    {
+      "date": "2019-03-17",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-17",
+      "sha256": "299c05924f900445ff44a7998271d3374fed977b9c28a0514496498e5f151c6d"
+    },
+    {
+      "date": "2019-03-18",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-18",
+      "sha256": "6e4ff9fecc3bfe98175e4e408923888f54d574018ba7462dcc456cfe63e8fe68"
+    },
+    {
+      "date": "2019-03-19",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-19",
+      "sha256": "ea8bbd2a827303ce05094fb4b8105b504a1131b6f81e213d0c7be881911483b7"
+    },
+    {
+      "date": "2019-03-20",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-20",
+      "sha256": "b9154a158e2acfa7608257b63048200065d2b5699089cc9fea14ffffcf0649ff"
+    },
+    {
+      "date": "2019-03-21",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-21",
+      "sha256": "f404c6369aed92c8391b333272f8a954a532c47b0ba4ad5b9a85157c8132e7e8"
+    },
+    {
+      "date": "2019-03-22",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-22",
+      "sha256": "91c4ce61353b410d98887d8db7f5eb17ec729f46ad14aca64175384867357fc4"
+    },
+    {
+      "date": "2019-03-23",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-23",
+      "sha256": "a8107164d49335a57a0c95d2b997695599787c63bc54d18980d65708635a6a2c"
+    },
+    {
+      "date": "2019-03-24",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-24",
+      "sha256": "65678c67ab863ce156b88187e4fe348c1d8023e756e3467c959e6a8707d326a2"
+    },
+    {
+      "date": "2019-03-25",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-25",
+      "sha256": "24c154e406c1942e25bc0fcdaa7290cdfb1cef294a0597029163e774a6fa1953"
+    },
+    {
+      "date": "2019-03-26",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-26",
+      "sha256": "6665646ef644ed9ea38d2bec617ad52502c252a7bc9a39dc2ff58536bc53e553"
+    },
+    {
+      "date": "2019-03-27",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-27",
+      "sha256": "d20f3d1b7d77f6cf172442781b880320a9c47818b76f707d00f0a57510d19fb0"
+    },
+    {
+      "date": "2019-03-28",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-28",
+      "sha256": "74fdaf9280ddae1998e4e156014f26a1da9a8d0984b3373275a10ad40ad5277c"
+    },
+    {
+      "date": "2019-03-29",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-29",
+      "sha256": "9df3637d2cdb4baefe0ede3c7f74545098327fd2009985813a830e3f746e94cc"
+    },
+    {
+      "date": "2019-03-30",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-30",
+      "sha256": "6d55ddf8daba893b43c435dcea53b6a4bc3efe14012b6113abab5d8e9540af21"
+    },
+    {
+      "date": "2019-03-31",
+      "url": "https://api.carbonintensity.org.uk/intensity/date/2019-03-31",
+      "sha256": "59074722e3558c5d418528aa78820f7c8400256551e68b4f2371f9026aa67bd3"
+    }
+  ],
+  "carbon_scope": "NESO 电力运行 CO2 估计；不包含设备生命周期；上小时实际值作为滞后可用性假设，非已核验历史发布版本",
+  "scope": "英国国家曲线缩放至 IEEE33；真实曲线驱动仿真，不是同一馈线实测",
+  "splits": {
+    "train": {
+      "days": 31,
+      "sha256": "0e1500d9aaab8d620f30573b5b8975945b51bf6d8d080f928cb85c8fe01dec10"
+    },
+    "validation": {
+      "days": 27,
+      "sha256": "e6113c7467d6626713397033d965727fd13a9ea1383683072024298a0ba0ba04"
+    },
+    "test": {
+      "days": 29,
+      "sha256": "1803e98348f96f538e91ba5bd5108af359cecf481f0e8762c8bba4ec66e290ea"
+    }
+  },
+  "price_conversion": "GBP/MWh 除以 1000 得 GBP/kWh；退化、DR 和通信费用参数按 GBP 假设声明"
+}

@@ -1,0 +1,22 @@
+{
+  "method": "ordinary",
+  "scenario_seed": 9103,
+  "scenario_date": "2019-03-01",
+  "fault": null,
+  "completed": true,
+  "steps": 24,
+  "cost": 1653.055339374631,
+  "carbon_kg": 8840.7419749008,
+  "reserve_kwh": 3765.40866673102,
+  "ac_violations": 0,
+  "constraint_violations": 0,
+  "service_violations": 0,
+  "packet_drops": 0,
+  "emergency_steps": 0,
+  "dt_updates": 138,
+  "reserve_unconfirmed_steps": 2,
+  "ev_unmet_kwh": 0.0,
+  "early_departures": 0,
+  "terminal_dr_kwh": 0.0,
+  "checkpoint": "../research_runs/real_unified_smoke/ordinary_71/latest.pt"
+}
