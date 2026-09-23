@@ -1,0 +1,129 @@
+"""真实数据统一 DT 准备、双 MAPPO 多种子训练与独立日期评价。"""
+import argparse
+from dataclasses import replace
+import json
+from pathlib import Path
+from .real_inputs import connect
+from vpp_mappo.config import Config
+from .dt import fit,assess,save,digest
+from .validate_dt import collect
+from .train import train,evaluate
+
+
+def parse_seeds(value):
+    try:items=[int(s.strip()) for s in value.split(',')]
+    except ValueError as exc:raise argparse.ArgumentTypeError('种子格式示例：1,2,3') from exc
+    if not items or len(set(items))!=len(items) or min(items)<0:raise argparse.ArgumentTypeError('种子须唯一且非负')
+    return items
+
+
+def write(path,data):
+    temp=Path(str(path)+'.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2));temp.replace(path)
+
+
+def prepare_real(c,paths,protocol,dt,counts):
+    dt=Path(dt);dt.mkdir(parents=True,exist_ok=True);key=digest(dict(protocol=protocol,days=counts,config=c.__dict__))
+    if (dt/'contract.json').exists() and json.loads((dt/'contract.json').read_text())['fingerprint']!=key:raise ValueError('DT 数据或配置发生变化')
+    if (dt/'residual.json').exists():model=json.loads((dt/'residual.json').read_text())
+    else:
+        # 标签仅用于离线DT拟合；在线actor和MPC仍只读取受限公开观察。
+        data={k:collect(c,range(30000,30000+n),'physics',paths[k]) for k,n in counts.items()}
+        model=fit(data['train'],data['validation'],method='residual')
+        model['real_input_fingerprint']=protocol['fingerprint']
+        write(dt/'contract.json',dict(fingerprint=key));write(dt/'datasets.json',data);save(model,dt/'residual.json')
+        print('真实数据DT训练与校准完成',flush=True)
+    return model
+
+
+def run(a):
+    c,paths,sets,protocol=connect(a.data_root,Config.load(a.config),ev_sessions=a.ev_sessions,dr_mode=a.dr_mode)
+    for key,value in [('lr',a.learning_rate),('ppo_epoch',a.ppo_epochs),('threads',a.cpu_threads),('solver_time_limit',a.solver_time_limit)]:
+        if value is not None:setattr(c,key,value)
+    c.validate()
+    if len(set(a.methods))!=len(a.methods):raise ValueError('算法列表不能重复')
+    if a.episodes<1 or a.eval_days<1 or a.eval_days>len(sets['test'].profiles):
+        raise ValueError(f'训练回合必须为正；独立测试只有 {len(sets["test"].profiles)} 天，禁止重复凑天数')
+    counts={'train':len(sets['train'].profiles) if a.dt_train_days is None else a.dt_train_days,
+            'validation':len(sets['validation'].profiles) if a.dt_calibration_days is None else a.dt_calibration_days}
+    if any(n<1 or n>len(sets[k].profiles) for k,n in counts.items()) or counts['validation']<9:
+        raise ValueError('DT 天数超出数据范围，90%场景块校准至少需要9个独立日期')
+    preferences=[]
+    for part in a.eval_preferences.split(';'):
+        w=[float(x) for x in part.split(',')]
+        import numpy as np
+        if len(w)!=3 or not np.isfinite(w).all() or min(w)<0 or not np.isclose(sum(w),1):raise ValueError('测试偏好非法')
+        preferences.append(w)
+    plan=dict(config=c.__dict__,protocol=protocol,seeds=a.seeds,episodes=a.episodes,eval_days=a.eval_days,dt_days=counts,
+        methods=a.methods,preferences=preferences,train_steps_per_method_seed={m:0 if m=='mpc' else a.episodes*c.horizon for m in a.methods},
+        eval_steps_per_method_seed={m:a.eval_days*c.horizon*(1 if m=='mpc' else len(preferences)) for m in a.methods},
+        test_dates=sets['test'].scenario_names[:a.eval_days],
+        note='训练回合可循环训练日期；eval-days为不重复测试日期；各测试偏好分别执行')
+    out=Path(a.output);out.mkdir(parents=True,exist_ok=True)
+    manifest=out/'manifest.json'
+    if manifest.exists():
+        if json.loads(manifest.read_text())!=plan:raise ValueError('输出目录协议不同，请使用新目录')
+        if not a.resume and not a.dry_run:raise ValueError('已有实验目录，请显式使用 --resume')
+    write(manifest,plan)
+    if a.dry_run:
+        print(json.dumps(plan,ensure_ascii=False,indent=2));return
+    model=prepare_real(c,paths,protocol,out/'dt',counts)
+    entries=[]
+    for seed in a.seeds:
+        for method in a.methods:
+            dest=out/f'{method}_{seed}';result_path=out/f'{method}_{seed}.json'
+            if result_path.exists():entries.append(json.loads(result_path.read_text()));continue
+            cfg=replace(c,seed=seed,episodes=a.episodes)
+            # dataclasses.replace 不复制动态快照；必须显式传入真实EV与DR协议。
+            cfg._ev_bundle=c._ev_bundle;cfg._flex_record=c._flex_record
+            row=dict(seed=seed,method=method,failed=False)
+            try:
+                if method=='mpc':
+                    from .integrated import rollout
+                    results=[]
+                    for day in range(a.eval_days):
+                        target=dest/f'day_{day}'
+                        if (target/'summary.json').exists() and json.loads((target/'summary.json').read_text()).get('completed'):
+                            result=json.loads((target/'summary.json').read_text())
+                        else:
+                            result=rollout(cfg,model,target,preference=preferences[0],seed=40000+day,csv_path=paths['test'],ev_bundle=c._ev_bundle,profile_index=day)
+                        results.append(result)
+                    row.update(training_steps=0,test_steps=sum(r['steps'] for r in results),test_dates=plan['test_dates'],
+                        results=results,reserve_unconfirmed_steps=sum(r.get('reserve_unconfirmed_steps',0) for r in results),failed_or_infeasible=sum(not r['completed'] or r['ac_violations']>0 or r['service_violations']>0 for r in results))
+                    write(result_path,row);entries.append(row)
+                    write(out/'results.json',dict(manifest=plan,entries=entries,completed=False))
+                    print(seed,method,'完成',flush=True);continue
+                if not (dest/'latest.pt').exists():
+                    train(cfg,model,dest,method=method,reserve_mode='pcc_checked',
+                        resume=a.resume and (dest/'resume.pt').exists(),trace_path=dest/'trajectory.jsonl')
+                results=evaluate(dest/'latest.pt',preferences,range(40000,40000+a.eval_days),
+                    csv_path=paths['test'],ev_bundle=c._ev_bundle,ac_safe=True)
+                row.update(training_steps=a.episodes*c.horizon,test_steps=sum(r['env_steps'] for r in results),
+                    test_dates=plan['test_dates'],results=results,
+                    reserve_unconfirmed_steps=sum(r.get('reserve_invalid',0) for r in results),
+                    failed_or_infeasible=sum(r['failed'] or r.get('violations',0)>0 or r.get('ac_violations',0)>0 or r.get('ev_unmet_kwh',0)>1e-6 for r in results))
+            except (RuntimeError,ValueError) as exc:row.update(failed=True,error=str(exc))
+            write(result_path,row);entries.append(row)
+            write(out/'results.json',dict(manifest=plan,entries=entries,completed=False))
+            print(seed,method,'完成' if not row['failed'] else row['error'],flush=True)
+    write(out/'results.json',dict(manifest=plan,entries=entries,completed=True,
+        all_successful=all(not r['failed'] and r['failed_or_infeasible']==0 for r in entries),
+        all_objectives_confirmed=all(not r['failed'] and r['failed_or_infeasible']==0 and r.get('reserve_unconfirmed_steps',0)==0 for r in entries)))
+
+
+def main():
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--config',default='configs/integrated_ieee33.json')
+    p.add_argument('--learning-rate',type=float);p.add_argument('--ppo-epochs',type=int)
+    p.add_argument('--cpu-threads',type=int);p.add_argument('--solver-time-limit',type=float)
+    p.add_argument('--data-root',default='data/real');p.add_argument('--output',default='runs/real_campaign')
+    p.add_argument('--seeds',type=parse_seeds,default=[1,2,3]);p.add_argument('--episodes',type=int,default=100)
+    p.add_argument('--eval-days',type=int,default=29)
+    p.add_argument('--methods',nargs='+',choices=['mpc','ordinary','pareto'],default=['mpc','ordinary','pareto'])
+    p.add_argument('--eval-preferences',default='0.2,0.3,0.5;0.6,0.1,0.3;0.1,0.7,0.2')
+    p.add_argument('--dt-train-days',type=int);p.add_argument('--dt-calibration-days',type=int)
+    p.add_argument('--ev-sessions');p.add_argument('--dr-mode',choices=['off','sce-derated'],default='off')
+    p.add_argument('--resume',action='store_true');p.add_argument('--dry-run',action='store_true')
+    run(p.parse_args())
+
+
+if __name__=='__main__':main()

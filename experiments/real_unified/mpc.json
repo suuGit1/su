@@ -1,0 +1,22 @@
+{
+  "method": "mpc",
+  "scenario_seed": 9103,
+  "scenario_date": "2019-03-01",
+  "fault": null,
+  "completed": true,
+  "steps": 24,
+  "cost": 1532.1551855411362,
+  "carbon_kg": 8479.303459662458,
+  "reserve_kwh": 3539.508044817765,
+  "ac_violations": 0,
+  "constraint_violations": 0,
+  "service_violations": 0,
+  "packet_drops": 0,
+  "emergency_steps": 0,
+  "dt_updates": 138,
+  "ev_unmet_kwh": 0.0,
+  "early_departures": 0,
+  "terminal_dr_kwh": 0.0,
+  "checkpoint": null,
+  "reserve_unconfirmed_steps": 1
+}

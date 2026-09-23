@@ -1,5 +1,15 @@
 # Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants
 
+## 真实数据统一入口
+
+默认使用 `data/real/gb/profiles` 的英国真实能源与碳曲线，缺数据时不回退合成。
+
+```bash
+python scripts/run_all_seeds.py --seeds 1,2,3 --episodes 100 --eval-days 29 --output runs/real_100
+```
+
+[开放参数、数据清单与使用说明](docs/REAL_DATA_CLI.md)。当前有29个完整独立测试日；真实EV缺失时明确关闭，SCE DR以显式降额选项接入。
+
 ## 完整运行版 v1
 
 统一入口已接入 **IEEE33＋任务/风险协调器＋18 个 C3 角色＋残差/校准 DT＋MILP/AC 安全执行器＋普通 MAPPO / Pareto-MAPPO**。
@@ -11,7 +21,7 @@ python -m pip install -r requirements-research-lock.txt
 python run_vpp.py all --output runs/integrated
 ```
 
-[安装、分模块运行、续训、异常场景及模块状态](docs/INTEGRATED_RUN.md)。默认使用合成数据完成端到端功能验收，普通 MAPPO 独立保留。`acceptance.json` 的 `passed=true` 表示本次闭环验收通过，不代表研究性能优势已成立。
+[安装、分模块运行、续训、异常场景及模块状态](docs/INTEGRATED_RUN.md)。当前默认使用真实数据；旧版合成功能演示须显式加 `--synthetic`，普通 MAPPO 独立保留。合成演示的 `acceptance.json` 中 `passed=true` 表示本次闭环验收通过，不代表研究性能优势已成立。
 
 以下保留阶段历史，首次运行不需要逐阶段拼接。
 

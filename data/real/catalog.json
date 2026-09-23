@@ -1,0 +1,51 @@
+{
+  "schema": "vpp-real-data-v1",
+  "default_profiles": "gb/profiles",
+  "datasets": [
+    {
+      "name": "GB OPSD",
+      "status": "available",
+      "uses": [
+        "load",
+        "pv",
+        "wind",
+        "price"
+      ],
+      "raw": "raw/opsd/time_series_60min.csv.gz",
+      "source": "https://data.open-power-system-data.org/time_series/2020-10-06/",
+      "limits": "已重新下载并校验完整固定版本；默认选取GB 2019年1–3月，国家曲线缩放不是馈线实测",
+      "raw_sha256": "6a7f2bc571314cbf9c321cc03437691cd4be95c3a6f075e60ff99e8035c704c8",
+      "raw_bytes": 130339665
+    },
+    {
+      "name": "GB NESO carbon",
+      "status": "available",
+      "raw": "raw/neso",
+      "source": "https://api.carbonintensity.org.uk/intensity/date/",
+      "limits": "运行CO2估计；上小时核算值作为滞后观察代理"
+    },
+    {
+      "name": "SCE A.4 DR",
+      "status": "available",
+      "processed": "dr/sce/events.json",
+      "raw": "dr/sce/source.xlsx",
+      "limits": "美国加州2022年事后响应，不与英国2019年日期合并，仅显式跨来源降额情景"
+    },
+    {
+      "name": "EV complete sessions",
+      "status": "missing",
+      "limits": "没有可用真实完整会话，默认关闭EV；禁止生成合成会话补缺"
+    },
+    {
+      "name": "DE OPSD archive",
+      "status": "archive_not_default",
+      "processed": "archive/de",
+      "limits": "旧能源曲线处理结果；不作为同地区真实碳三目标训练入口"
+    },
+    {
+      "name": "hardware",
+      "status": "missing",
+      "limits": "通信、计算、储能和网络工程参数仍属仿真假设"
+    }
+  ]
+}
