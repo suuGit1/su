@@ -12,7 +12,7 @@ from .dt import TARGETS,fit,assess,save
 def collect(config,seeds,mode,csv_path=None):
     records=[]
     for index,seed in enumerate(seeds):
-        c=copy.copy(config);c.cyber_dt_mode=mode;e=ResearchEnv(c,csv_path,vector_metrics=False)
+        c=copy.copy(config);c.cyber_dt_mode=mode;c.interval_safety=False;e=ResearchEnv(c,csv_path,vector_metrics=False)
         if e.data and len(seeds)>len(e.data.profiles):raise ValueError('真实独立场景数量不足')
         e.reset(seed,index)
         rng=np.random.default_rng(seed+71)

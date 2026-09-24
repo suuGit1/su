@@ -1,0 +1,228 @@
+{
+  "rows": [
+    {
+      "seed": 82,
+      "method": "ordinary",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 1,
+      "training_steps": 96,
+      "selection_steps": 24,
+      "test_steps": 24,
+      "budget_complete": true,
+      "feasible_points": 0,
+      "hv": 0.0,
+      "igd": null,
+      "guard_infeasible": 24,
+      "guard_certified_steps": 0,
+      "reserve_unconfirmed_steps": 4,
+      "front": []
+    },
+    {
+      "seed": 82,
+      "method": "pareto",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 1,
+      "training_steps": 96,
+      "selection_steps": 96,
+      "test_steps": 24,
+      "budget_complete": true,
+      "feasible_points": 0,
+      "hv": 0.0,
+      "igd": null,
+      "guard_infeasible": 24,
+      "guard_certified_steps": 0,
+      "reserve_unconfirmed_steps": 1,
+      "front": []
+    },
+    {
+      "seed": 82,
+      "method": "central",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 1,
+      "training_steps": 96,
+      "selection_steps": 24,
+      "test_steps": 24,
+      "budget_complete": true,
+      "feasible_points": 0,
+      "hv": 0.0,
+      "igd": null,
+      "guard_infeasible": 24,
+      "guard_certified_steps": 0,
+      "reserve_unconfirmed_steps": 10,
+      "front": []
+    },
+    {
+      "seed": 82,
+      "method": "fixed",
+      "failed": false,
+      "selection_failed": true,
+      "failed_or_infeasible": 1,
+      "training_steps": 96,
+      "selection_steps": 72,
+      "test_steps": 0,
+      "budget_complete": true,
+      "feasible_points": 0,
+      "hv": 0.0,
+      "igd": null,
+      "guard_infeasible": 0,
+      "guard_certified_steps": 0,
+      "reserve_unconfirmed_steps": 0,
+      "front": []
+    },
+    {
+      "seed": 82,
+      "method": "ols",
+      "failed": false,
+      "selection_failed": true,
+      "failed_or_infeasible": 1,
+      "training_steps": 24,
+      "selection_steps": 24,
+      "test_steps": 0,
+      "budget_complete": false,
+      "feasible_points": 0,
+      "hv": 0.0,
+      "igd": null,
+      "guard_infeasible": 0,
+      "guard_certified_steps": 0,
+      "reserve_unconfirmed_steps": 0,
+      "front": []
+    },
+    {
+      "seed": 82,
+      "method": "mpc",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 1,
+      "training_steps": 0,
+      "selection_steps": 24,
+      "test_steps": 24,
+      "budget_complete": true,
+      "feasible_points": 0,
+      "hv": 0.0,
+      "igd": null,
+      "guard_infeasible": 24,
+      "guard_certified_steps": 0,
+      "reserve_unconfirmed_steps": 1,
+      "front": []
+    },
+    {
+      "seed": 82,
+      "method": "milp_oracle",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 1,
+      "training_steps": 0,
+      "selection_steps": 24,
+      "test_steps": 24,
+      "budget_complete": true,
+      "feasible_points": 0,
+      "hv": 0.0,
+      "igd": null,
+      "guard_infeasible": 24,
+      "guard_certified_steps": 0,
+      "reserve_unconfirmed_steps": 3,
+      "front": []
+    }
+  ],
+  "aggregate": {
+    "central": {
+      "hv": {
+        "n": 1,
+        "mean": 0.0,
+        "std": null,
+        "ci95": null
+      },
+      "igd": null,
+      "undefined_igd": 1,
+      "failed_runs": 0,
+      "incomplete_budgets": 0
+    },
+    "fixed": {
+      "hv": {
+        "n": 1,
+        "mean": 0.0,
+        "std": null,
+        "ci95": null
+      },
+      "igd": null,
+      "undefined_igd": 1,
+      "failed_runs": 0,
+      "incomplete_budgets": 0
+    },
+    "milp_oracle": {
+      "hv": {
+        "n": 1,
+        "mean": 0.0,
+        "std": null,
+        "ci95": null
+      },
+      "igd": null,
+      "undefined_igd": 1,
+      "failed_runs": 0,
+      "incomplete_budgets": 0
+    },
+    "mpc": {
+      "hv": {
+        "n": 1,
+        "mean": 0.0,
+        "std": null,
+        "ci95": null
+      },
+      "igd": null,
+      "undefined_igd": 1,
+      "failed_runs": 0,
+      "incomplete_budgets": 0
+    },
+    "ols": {
+      "hv": {
+        "n": 1,
+        "mean": 0.0,
+        "std": null,
+        "ci95": null
+      },
+      "igd": null,
+      "undefined_igd": 1,
+      "failed_runs": 0,
+      "incomplete_budgets": 1
+    },
+    "ordinary": {
+      "hv": {
+        "n": 1,
+        "mean": 0.0,
+        "std": null,
+        "ci95": null
+      },
+      "igd": null,
+      "undefined_igd": 1,
+      "failed_runs": 0,
+      "incomplete_budgets": 0
+    },
+    "pareto": {
+      "hv": {
+        "n": 1,
+        "mean": 0.0,
+        "std": null,
+        "ci95": null
+      },
+      "igd": null,
+      "undefined_igd": 1,
+      "failed_runs": 0,
+      "incomplete_budgets": 0
+    }
+  },
+  "hv_reference": [
+    -100.0,
+    -200.0,
+    0.0
+  ],
+  "empirical_validation_reference": [],
+  "notes": [
+    "IGD参考集只来自独立策略选择日期，不是真实Pareto前沿；验证与测试日期不同，IGD含场景差异。",
+    "训练预算合计所有子策略；选择交互另列，不能声称开发总交互等预算。",
+    "备用未确认或物理/服务约束失败的整组偏好不进入HV/IGD；空集HV=0、IGD=null。",
+    "区间证书是单步线性约束证书，不是AC鲁棒保证。"
+  ]
+}

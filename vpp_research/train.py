@@ -103,7 +103,7 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
         write_csv(out/'training.csv',history)
         append(out/'attempts.jsonl',dict(event='checkpoint',completed_episodes=ep+1,logical_env_steps=(ep+1)*config.horizon))
     state=dict(version=VERSION,observation_version=OBS_VERSION,objective_version=env.objective_version,reserve_mode=reserve_mode,scales=SCALES.tolist(),
-        method=method,config=asdict(config),dt_model=dt_model,robust=robust,preference=pref.tolist(),training_preferences=weights,
+        method=method,config=asdict(config),dt_model=dt_model,robust=env.robust,preference=pref.tolist(),training_preferences=weights,
         resource_mode=resource_mode,training_seconds=prior_seconds+time.perf_counter()-started,n_agents=env.num_agents,dispatch_spec=env.spec.record(),flex_spec=asdict(env.flex),cyber_spec=asdict(env.cyber_spec),ev_bundle=env.bundle,
         train_scenarios=env.data.scenario_names if env.data else [],train_fingerprints=env.data.fingerprints if env.data else [],
         train_seeds=[config.seed*10000+2000+scenario_offset+ep for ep in range(config.episodes)])
@@ -144,7 +144,7 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
         for index,seed in enumerate(seeds):
             row=dict(seed=seed,preference=w.tolist(),unseen_preference=not any(np.allclose(w,p,atol=1e-9,rtol=0) for p in state['training_preferences']),failed=False,env_steps=0)
             try:
-                env.preference=w;env.reward_mode="economic" if state["method"]=="ordinary" else "weighted"
+                env.preference=w;env.reward_mode="economic" if state["method"] in ("ordinary","central") else "weighted"
                 obs,_=env.reset(seed,index)
                 if stress:
                     for name in ('wind','load'):

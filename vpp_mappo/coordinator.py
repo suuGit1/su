@@ -29,6 +29,20 @@ class TaskRiskCoordinator:
         if soc_margin<c.coordinator_soc_margin:
             scores[0]+=1;reasons[0].append('soc_near_limit')
         # 每个资源始终保留基础权重，防止按风险排队导致其它资源永久饥饿。
+        task=self.config.task_focus
+        fraction=self.config.coordinator_reserved_fraction
+        uncertainty=np.zeros(6)
+        if self.config.risk_adaptive:
+            widths=np.asarray(getattr(self,'interval_width',np.zeros(9)))
+            uncertainty=np.minimum(5.,widths[[0,1,2,4,7,8]]/.05)
+            scores+=uncertainty
+            preference=np.asarray(getattr(self,'preference',[1.,0.,0.]))
+            task_weights=np.array([0.,preference[0],0.,0.,preference[1],preference[1]])
+            if task=='carbon':task_weights[4:]+=1.
+            elif task=='reserve':task_weights[[0,1,2]]+=1.
+            elif task=='economic':task_weights[[0,1]]+=1.
+            scores+=task_weights
+            fraction=min(.95,fraction+(1-fraction)*float(scores.max())/(1+float(scores.max())))
         priority=1+scores
         tasks=[dict(kind='refresh_dt',channel=name,age_steps=float(ages[k]),
                     due_in_steps=float(c.coordinator_aoi_limit_steps-ages[k]),reasons=reasons[k]) for k,name in enumerate(CHANNELS)]
@@ -36,12 +50,13 @@ class TaskRiskCoordinator:
         if backlog>1e-7:tasks.append(dict(kind='dr_repay',remaining_kwh=backlog,due_in_steps=left))
         return dict(contract=CONTRACT_VERSION,step=step,risk_channels=int(np.count_nonzero(scores)),
                     risk_scores=scores.tolist(),priority=priority.tolist(),tasks=tasks,
-                    risk_semantics='heuristic_thresholds_not_probability')
+                    risk_semantics='heuristic_thresholds_not_probability',task_focus=task,
+                    interval_risk=uncertainty.tolist(),reserved_fraction=float(fraction))
 
     def allocate(self,observation,bw,cpu):
         record=self.assess(observation)
         if self.config.coordinator_mode!='schedule':return np.asarray(bw),np.asarray(cpu),record
-        p=np.asarray(record['priority']);p/=p.sum();fraction=self.config.coordinator_reserved_fraction
+        p=np.asarray(record['priority']);p/=p.sum();fraction=record['reserved_fraction']
         def blend(values):
             v=np.asarray(values,dtype=float)
             return (1-fraction)*v/max(1,float(v.sum()))+fraction*p

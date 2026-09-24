@@ -19,6 +19,13 @@ SCALES=np.array([100.,100.,100.])
 class ResearchEnv(CyberVPPAdapter):
     def __init__(self,config,csv_path=None,dt_model=None,robust=False,vector_metrics=True,ac_safe=False,resource_mode="joint",timing_contract=None,control_cycles=0.,reserve_mode="linear"):
         if reserve_mode not in ("linear","ac_checked","pcc_checked"):raise ValueError("未知备用目标版本")
+        robust=robust or config.interval_safety
+        if config.command_timing and timing_contract is None:
+            from .timing import TimingContract
+            timing_contract=TimingContract(downlink_bps=config.downlink_bps,
+                propagation_seconds=config.downlink_propagation_seconds,
+                deadline_seconds=config.command_deadline_steps*config.dt_hours*3600)
+            control_cycles=config.control_cycles
         self.reserve_mode=reserve_mode
         self.objective_version={"linear":OBJECTIVE_VERSION,"ac_checked":AC_OBJECTIVE_VERSION,"pcc_checked":PCC_OBJECTIVE_VERSION}[reserve_mode]
         if resource_mode not in ("control", "communication", "computation", "joint"):
@@ -27,6 +34,7 @@ class ResearchEnv(CyberVPPAdapter):
         self.timing_contract=timing_contract;self.control_cycles=float(control_cycles)
         if not np.isfinite(self.control_cycles) or self.control_cycles<0:raise ValueError("控制计算周期必须有限非负")
         if config.reward_scale!=100.:raise ValueError('研究协议固定经济尺度为 100，不能改变 reward_scale')
+        if not np.array_equal(config.objective_scales,SCALES):raise ValueError('研究协议三目标尺度固定为 [100,100,100]')
         self.dt_model=copy.deepcopy(dt_model);self.robust=robust;self.vector_metrics=vector_metrics
         if robust and dt_model is None:raise ValueError('区间保护要求独立校准的 DT 模型')
         if dt_model is not None:
@@ -92,8 +100,8 @@ class ResearchEnv(CyberVPPAdapter):
             else:delivery=dict(delivered=False,seconds=None,deadline_missed=True)
             received,expired=self.command_queue.receive(self.pipeline.now)
             if received is None:
-                # 下行缺失时由同一现场约束的经济规划提供后备；不可行仍显式失败。
-                backup,_=self.core.plan();energy=backup[0]['action']
+                # 下行缺失时提交零候选，由现场公共安全执行器修正或服务降级。
+                energy=np.zeros(6)
             else:energy=received
             used=min(self.control_cycles,capacity*dt_seconds)
             available=max(0.,capacity-used/dt_seconds)
@@ -102,12 +110,18 @@ class ResearchEnv(CyberVPPAdapter):
             timing_meta=dict(command_latency_seconds=delivery['seconds'],command_deadline_missed=delivery['deadline_missed'],
                 command_expired=expired,local_fallback=received is None,control_cycles=used,dt_available_cpu_cycles_per_second=available,
                 command_queue_length=len(self.command_queue.pending),timing_provenance=self.timing_contract.provenance)
-        public=self.encode()[0][0];truth=self.features(self.sensor_payloads())[TARGETS]
+        public=self.encode()[0][0]
+        self.coordinator.preference=self.preference.copy()
+        self.coordinator.interval_width=public[54:63].copy()
+        truth=self.features(self.sensor_payloads())[TARGETS]
         squared=float(np.mean((public[TARGETS]-truth)**2));covered=bool(np.all(np.abs(public[TARGETS]-truth)<=public[54:63]+1e-7))
         row=self.core.row().copy();certificate=None;meta=dict(guard_feasible=False,guard_status='disabled',guard_seconds=0.)
         if self.robust:
             energy,meta,certificate=guard(energy,self.encode()[0][0],self.spec,self.flex,self.network,self.config.dt_hours,self.config.horizon)
+        guarded_candidate=np.asarray(energy).copy()
         obs,share,rewards,done,info=super().step_candidate(energy,bw,cpu)
+        info['interval_guard_candidate_kw']=guarded_candidate.tolist()
+        info['interval_guard_enabled']=self.robust
         info.update(timing_meta)
         if control_energy:
             extra=control_energy/3.6e6*self.cyber_spec.energy_price_per_kwh

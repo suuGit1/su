@@ -2,6 +2,8 @@
 
 ## 真实数据统一入口
 
+最新连接版：[三条连接、七种基线与统一报告](docs/CONNECTED_SYSTEM.md)。`scripts/run_all_seeds.py` 默认启用区间安全、命令时序和任务风险协调；运行完成与鲁棒证书有效性分别报告。
+
 默认使用 `data/real/gb/profiles` 的英国真实能源与碳曲线，缺数据时不回退合成。
 
 ```bash

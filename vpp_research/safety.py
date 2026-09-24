@@ -17,6 +17,9 @@ def guard(action,observation,dispatch,flex,network,dt,horizon):
         for r,l,u in zip(m,lo,hi):add(r,u);add(-r,-l)
         net=values[0]-values[1]-values[2];g=np.array([-1,1,-1,-1,1,1])
         add(g,dispatch.grid_import-net);add(-g,dispatch.grid_export+net)
+    w=w.copy()
+    if flex.dr_shift_kw==0 and flex.dr_repay_kw==0:w[2:4]=0.
+    if flex.dr_shed_kw==0:w[4]=0.
     low_soc=x[1]-w[0];high_soc=x[1]+w[0];cap=dispatch.capacities[0];eta=dispatch.efficiency
     b_low=max(0,(x[6]-w[2])*max(1,flex.dr_backlog_kwh));b_high=(x[6]+w[2])*max(1,flex.dr_backlog_kwh)
     steps=max(0,horizon-round(x[0]*horizon)-1)
@@ -33,11 +36,13 @@ def guard(action,observation,dispatch,flex,network,dt,horizon):
     if all(lo<=hi for lo,hi in bounds):
         eye=np.eye(6);amat=np.block([[m,np.zeros_like(m)],[eye,-eye],[-eye,-eye]])
         rhs=np.r_[u,a,-a]
-        scales=np.array([dispatch.power_max[0],flex.ev_station_kw,max(flex.dr_shift_kw,flex.dr_repay_kw),max(1,flex.dr_shed_kw),max(1,center[1]),max(1,center[2])])
+        scales=np.array([dispatch.power_max[0],flex.ev_station_kw,max(1,flex.dr_shift_kw,flex.dr_repay_kw),max(1,flex.dr_shed_kw),max(1,center[1]),max(1,center[2])])
         result=linprog(np.r_[np.zeros(6),1/scales],A_ub=amat,b_ub=rhs,bounds=bounds+[(0,None)]*6,method='highs')
         status=str(result.message)
     ok=result is not None and result.success
     candidate=result.x[:6] if ok else a.copy()
     def certified(executed):
         return bool(ok and np.max(m@executed-u)<=1e-5 and all(lo-1e-5<=v<=hi+1e-5 for v,(lo,hi) in zip(executed,bounds)))
-    return candidate,dict(guard_feasible=bool(ok),guard_status=status,guard_seconds=time.perf_counter()-began),certified
+    return candidate,dict(guard_feasible=bool(ok),guard_status=status,
+        guard_inconsistent_dimensions=[i for i,(lo,hi) in enumerate(bounds) if lo>hi],
+        guard_action_bounds=[list(b) for b in bounds],guard_seconds=time.perf_counter()-began),certified

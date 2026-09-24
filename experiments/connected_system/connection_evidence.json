@@ -1,0 +1,39 @@
+{
+  "scope": "真实数据三连接功能验证，不是性能优势实验",
+  "seed": 81,
+  "episodes": 1,
+  "dt_train_days": 2,
+  "dt_calibration_days": 9,
+  "test_dates": [
+    "2019-03-01"
+  ],
+  "runs": [
+    {
+      "method": "ordinary",
+      "training_steps": 24,
+      "test_steps": 24,
+      "violations": 0,
+      "ac_violations": 0,
+      "reserve_invalid": 1,
+      "guard_infeasible": 24,
+      "guard_certified_steps": 0
+    },
+    {
+      "method": "pareto",
+      "training_steps": 24,
+      "test_steps": 24,
+      "violations": 0,
+      "ac_violations": 0,
+      "reserve_invalid": 7,
+      "guard_infeasible": 24,
+      "guard_certified_steps": 0
+    }
+  ],
+  "timing": {
+    "steps": 24,
+    "local_fallback_steps": 1,
+    "first_latency_seconds": 100.1224,
+    "control_cycles_per_step": 1000000000.0,
+    "dt_cpu_cycles_per_second": 9722222.222222222
+  }
+}
