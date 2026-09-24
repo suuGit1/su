@@ -6,7 +6,7 @@ from vpp_mappo.optimization import DispatchInfeasible
 from .checked_reserve import ac_economic_plan
 
 TOLERANCE_KW = 0.1
-VERSION = 'c3-ac-pcc-cost-carbon-sampled-reserve-v3'
+VERSION = 'c3-ac-pcc-same-period-sampled-reserve-v4'
 
 
 def target_plan(core, target_kw, tolerance_kw=TOLERANCE_KW, max_iterations=12):
@@ -42,7 +42,7 @@ def target_plan(core, target_kw, tolerance_kw=TOLERANCE_KW, max_iterations=12):
     raise DispatchInfeasible('PCC 目标未通过功率误差与 AC 约束联合验收；最后误差='+str(errors[-1:] or None))
 
 
-def checked_capacity(core, baseline_kw, upper_kw, iterations=5, fractions=(-1., -.5, 0., .5, 1.)):
+def checked_capacity(core, baseline_kw, upper_kw, iterations=5, fractions=(-1., -.5, 0., .5, 1.), baseline_plan=None):
     """对指定离散激活比例同时检查；有限搜索不等于最大能力或连续区间证明。"""
     if not np.isfinite([baseline_kw, upper_kw]).all() or upper_kw < 0 or type(iterations) is not int or iterations < 0:
         raise ValueError('PCC 备用搜索参数非法')
@@ -51,6 +51,11 @@ def checked_capacity(core, baseline_kw, upper_kw, iterations=5, fractions=(-1., 
         raise ValueError('激活比例须位于[-1,1]且包含两个端点和零')
     # 缓存仅存在于当前状态的一次确认；复用已通过验收的目标，不跨步复用。
     verified = {}
+    if baseline_plan is not None:
+        audit=core.network.audit(core.row(),baseline_plan['action'])
+        error=float(audit['ac_grid_kw']-baseline_kw) if audit['ac_converged'] else float('inf')
+        if audit['ac_converged'] and not audit['ac_violations'] and abs(error)<=TOLERANCE_KW and core.check(core.row(),baseline_plan['action'],baseline_plan['ev_kw'])==0:
+            verified[float(baseline_kw)]=dict(pcc_target_kw=float(baseline_kw),pcc_actual_kw=audit['ac_grid_kw'],pcc_error_kw=error)
     def check(q):
         records = []
         try:

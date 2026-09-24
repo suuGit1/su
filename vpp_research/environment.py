@@ -8,7 +8,7 @@ from vpp_mappo.flex_resources import FlexNetwork
 from vpp_mappo.objectives import carbon_kg
 from .dt import TARGETS,predict,VERSION as DT_VERSION
 from .safety import guard
-PCC_OBJECTIVE_VERSION='c3-ac-pcc-cost-carbon-sampled-reserve-v3'
+PCC_OBJECTIVE_VERSION='c3-ac-pcc-same-period-sampled-reserve-v4'
 
 OBS_VERSION='c3-65-state-interval-carbon-v1'
 OBJECTIVE_VERSION='c3-cost-carbon-symmetric-reserve-v1'
@@ -119,6 +119,7 @@ class ResearchEnv(CyberVPPAdapter):
         if self.robust:
             energy,meta,certificate=guard(energy,self.encode()[0][0],self.spec,self.flex,self.network,self.config.dt_hours,self.config.horizon)
         guarded_candidate=np.asarray(energy).copy()
+        reserve_core=copy.deepcopy(self.core) if self.vector_metrics and self.reserve_mode=='pcc_checked' else None
         obs,share,rewards,done,info=super().step_candidate(energy,bw,cpu)
         info['interval_guard_candidate_kw']=guarded_candidate.tolist()
         info['interval_guard_enabled']=self.robust
@@ -140,20 +141,24 @@ class ResearchEnv(CyberVPPAdapter):
             accounted_cost=info['ac_cost'] if pcc_mode else info['cost']
             kg=carbon_kg(accounted_grid,self.config.dt_hours,factor)+cyber_kg
             reserve=0.;reserve_valid=info['constraint_violations']==0
-            if reserve_valid and not done:
+            capacity_core=reserve_core if pcc_mode else self.core
+            if reserve_valid and (pcc_mode or not done):
                 values=[]
                 try:
                     for mode in ('min_grid','max_grid'):
-                        plans,m=self.core.plan(objective=mode,fixed_row=row)
+                        plans,m=capacity_core.plan(objective=mode,fixed_row=row)
                         if not m['solver_optimal']:raise RuntimeError('备用包络未达最优')
                         from vpp_mappo.flex_resources import grid_power
                         values.append(grid_power(row,plans[0]['action']))
                     g=info['grid_power_kw'];lo,hi=values
                     reserve=max(0,min(g-lo,hi-g))*self.config.dt_hours if lo-1e-5<=g<=hi+1e-5 else 0.
                 except (RuntimeError,ValueError):reserve_valid=False
-            if self.reserve_mode=='pcc_checked' and reserve_valid and not done:
+            if self.reserve_mode=='pcc_checked' and reserve_valid:
                 from .pcc_reserve import checked_capacity as pcc_capacity
-                confirmation=pcc_capacity(self.core,info['ac_grid_kw'],reserve/self.config.dt_hours)
+                import json
+                witness=dict(action=executed,ev_kw=json.loads(info['ev_allocation_json']))
+                confirmation=pcc_capacity(capacity_core,info['ac_grid_kw'],reserve/self.config.dt_hours,baseline_plan=witness)
+                confirmation.update(state_step=capacity_core.t,execution_step=self.core.t-1,semantics='同一时段起点状态与曲线上的替代调度，持续一个调度步')
                 reserve=confirmation['kw']*self.config.dt_hours
                 reserve_valid=confirmation['baseline_feasible']
                 info['reserve_confirmation']=confirmation

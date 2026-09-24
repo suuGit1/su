@@ -1,0 +1,136 @@
+{
+  "physics": {
+    "estimation": {
+      "rmse": 0.022126202471435697,
+      "per_target_rmse": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.015388450719160838,
+        0.02526820733869847,
+        0.05179876692900779,
+        0.029115640972671997
+      ],
+      "marginal_coverage": 1.0,
+      "simultaneous_scenario_coverage": 1.0,
+      "mean_interval_width": 0.33866613887592756,
+      "ood_fraction": 0.0,
+      "scenarios": 3
+    },
+    "closed_loop": [
+      {
+        "date": "2019-03-01",
+        "ac_cost": 1670.8465592220334,
+        "ac_violations": 0,
+        "constraints": 0,
+        "rmse": 0.016246789234533186,
+        "simultaneous_day_covered": true,
+        "guard_feasible_steps": 10,
+        "guard_certified_steps": 10
+      },
+      {
+        "date": "2019-03-02",
+        "ac_cost": 1095.184407179446,
+        "ac_violations": 0,
+        "constraints": 0,
+        "rmse": 0.030646807775061777,
+        "simultaneous_day_covered": true,
+        "guard_feasible_steps": 21,
+        "guard_certified_steps": 21
+      },
+      {
+        "date": "2019-03-03",
+        "ac_cost": 1194.0301747162516,
+        "ac_violations": 0,
+        "constraints": 0,
+        "rmse": 0.016294831717226805,
+        "simultaneous_day_covered": true,
+        "guard_feasible_steps": 20,
+        "guard_certified_steps": 20
+      }
+    ],
+    "halfwidth": [
+      0.055957749885235504,
+      0.055957749885235504,
+      0.055957749885235504,
+      0.055957749885235504,
+      0.055957749885235504,
+      0.20805740151147928,
+      0.2679271957927207,
+      0.6008684967902311,
+      0.16735578142106533
+    ]
+  },
+  "residual": {
+    "estimation": {
+      "rmse": 0.021044850567425052,
+      "per_target_rmse": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.014507237473257084,
+        0.024647070685773775,
+        0.04830525051122033,
+        0.02889007371400252
+      ],
+      "marginal_coverage": 1.0,
+      "simultaneous_scenario_coverage": 1.0,
+      "mean_interval_width": 0.32097653624195666,
+      "ood_fraction": 0.0,
+      "scenarios": 3
+    },
+    "closed_loop": [
+      {
+        "date": "2019-03-01",
+        "ac_cost": 1619.4151087779344,
+        "ac_violations": 0,
+        "constraints": 0,
+        "rmse": 0.014651170423292377,
+        "simultaneous_day_covered": true,
+        "guard_feasible_steps": 16,
+        "guard_certified_steps": 16
+      },
+      {
+        "date": "2019-03-02",
+        "ac_cost": 1090.7913177343044,
+        "ac_violations": 0,
+        "constraints": 0,
+        "rmse": 0.029473030923501852,
+        "simultaneous_day_covered": true,
+        "guard_feasible_steps": 24,
+        "guard_certified_steps": 24
+      },
+      {
+        "date": "2019-03-03",
+        "ac_cost": 1078.621769636596,
+        "ac_violations": 0,
+        "constraints": 0,
+        "rmse": 0.015725049305339262,
+        "simultaneous_day_covered": true,
+        "guard_feasible_steps": 24,
+        "guard_certified_steps": 24
+      }
+    ],
+    "halfwidth": [
+      0.05615111563984221,
+      0.05615111563984221,
+      0.05615111563984221,
+      0.05615111563984221,
+      0.05615111563984221,
+      0.18622216616244888,
+      0.25389865957876984,
+      0.5567337890888043,
+      0.16678422005957078
+    ]
+  },
+  "paired_cost_delta_residual_minus_physics": [
+    -51.43145044409903,
+    -4.393089445141641,
+    -115.40840507965572
+  ],
+  "scope": "独立真实日期、相同MPC和执行器；分布变化下报告覆盖实测，非名义保证；未用测试日期选择模型"
+}

@@ -20,6 +20,7 @@ def report(folder):
         rows.append(dict(seed=e['seed'],method=e['method'],failed=e.get('failed',False),
             selection_failed=e.get('selection_failed',False),failed_or_infeasible=e.get('failed_or_infeasible'),
             training_steps=e.get('training_steps',0),selection_steps=e.get('selection_steps',0),test_steps=e.get('test_steps',0),
+            actual_training_steps=e.get('actual_training_steps'),
             budget_complete=e.get('budget_complete',not e.get('failed',False)),
             feasible_points=len(front),hv=hypervolume(front,reference),
             igd=igd(front,empirical) if front and empirical else None,
@@ -34,6 +35,7 @@ def report(folder):
             undefined_igd=len(selected)-len(distances),failed_runs=sum(r['failed'] for r in selected),
             incomplete_budgets=sum(not r['budget_complete'] for r in selected))
     result=dict(rows=rows,aggregate=aggregate,hv_reference=reference,empirical_validation_reference=empirical,
+        totals={k:sum(e.get(k,0) for e in entries) for k in ('training_steps','selection_steps','test_steps')},
         notes=['IGD参考集只来自独立策略选择日期，不是真实Pareto前沿；验证与测试日期不同，IGD含场景差异。',
         '训练预算合计所有子策略；选择交互另列，不能声称开发总交互等预算。',
         '备用未确认或物理/服务约束失败的整组偏好不进入HV/IGD；空集HV=0、IGD=null。',
