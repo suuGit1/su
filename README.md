@@ -1,5 +1,13 @@
 # Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants
 
+## v2运行入口
+
+```bash
+python run_v2.py --seeds 1,2,3 --episodes 12 --eval-days 3 --workers 3 --output runs/v2
+```
+
+[v2安装、开放参数、七种方法、续跑与目标版本说明](docs/V2_RUN.md)。本版修正DR预测与PCC备用时刻口径，旧目标版本必须重训；普通MAPPO继续独立保留。
+
 ## 真实数据统一入口
 
 最新连接版：[三条连接、七种基线与统一报告](docs/CONNECTED_SYSTEM.md)。`scripts/run_all_seeds.py` 默认启用区间安全、命令时序和任务风险协调；运行完成与鲁棒证书有效性分别报告。

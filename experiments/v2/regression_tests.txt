@@ -1,0 +1,87 @@
+.....................................31 ols matched False failed True
+........episode=1/1 cost=56.933 reward=-0.881 violations=0
+...episode=1/2 cost=53.354 reward=-0.845 violations=0
+episode=2/2 cost=78.397 reward=-0.784 violations=0
+........{
+  "algorithm": "mappo",
+  "episodes": 2,
+  "checkpoint_episode": 2,
+  "data_source": "synthetic",
+  "data_sha256": null,
+  "mean_cost": 52.607499204850384,
+  "std_cost": 0.5602395571751124,
+  "total_violations": 0
+}
+{
+  "algorithm": "mappo",
+  "episodes": 2,
+  "checkpoint_episode": 2,
+  "data_source": "synthetic",
+  "data_sha256": null,
+  "mean_cost": 52.607499204850384,
+  "std_cost": 0.5602395571751124,
+  "total_violations": 0
+}
+{
+  "train": {
+    "days": 1,
+    "sha256": "6341addeddc957986f69d5ab0bbdce527c9b9cc5e8d6adaebc16ebf2d15209ee"
+  },
+  "validation": {
+    "days": 1,
+    "sha256": "4446d9cf4c12706b3ec7dc9c728fe68704615d209b03b7e24e647eebe4842519"
+  },
+  "test": {
+    "days": 1,
+    "sha256": "9233937ec2a73889f5e00706027c12224b67f3de30fbcbbf9ebe71f2b6151a01"
+  }
+}
+episode=1/1 cost=72.707 reward=-1.046 violations=0
+....................{
+  "algorithm": "mappo",
+  "episodes": 1,
+  "checkpoint_episode": 1,
+  "data_source": "synthetic",
+  "data_sha256": null,
+  "mean_cost": 69.75438604514625,
+  "std_cost": null,
+  "total_violations": 0,
+  "total_ac_violations": 0,
+  "ac_failed_steps": 0,
+  "mean_objective": 72.04150333873268
+}
+episode=1/1 cost=80.048 reward=-1.110 violations=0
+..........................................
+----------------------------------------------------------------------
+Ran 118 tests in 42.751s
+
+OK
+{
+  "algorithm": "mappo",
+  "episodes": 1,
+  "checkpoint_episode": 1,
+  "data_source": "synthetic",
+  "data_sha256": null,
+  "mean_cost": 82.32559334899072,
+  "std_cost": null,
+  "total_violations": 0,
+  "total_ac_violations": 0,
+  "ac_failed_steps": 0,
+  "mean_objective": 83.68744340871316,
+  "cyber_contract": "causal-c3-basic-dt-v1",
+  "cyber_spec": {
+    "bandwidth_bps": 100000000.0,
+    "cpu_cycles_per_second": 1000000000000.0,
+    "packet_overhead_bits": 1000000.0,
+    "update_cycles": 1000000000.0,
+    "queue_capacity": 4,
+    "packet_loss": 0.0,
+    "deadline_seconds": 900.0,
+    "joules_per_bit": 1e-06,
+    "joules_per_cycle": 1e-09,
+    "energy_price_per_kwh": 0.1
+  },
+  "mean_aoi_seconds": 900.0,
+  "total_dt_updates": 6,
+  "safety_information": "local_current_sensors"
+}

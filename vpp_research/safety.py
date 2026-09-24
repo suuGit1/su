@@ -20,7 +20,8 @@ def guard(action,observation,dispatch,flex,network,dt,horizon):
     w=w.copy()
     if flex.dr_shift_kw==0 and flex.dr_repay_kw==0:w[2:4]=0.
     if flex.dr_shed_kw==0:w[4]=0.
-    low_soc=x[1]-w[0];high_soc=x[1]+w[0];cap=dispatch.capacities[0];eta=dispatch.efficiency
+    # 与已知物理支撑集取交集，不把不可能的SOC状态加入不确定集。
+    low_soc=max(dispatch.soc_min[0],x[1]-w[0]);high_soc=min(dispatch.soc_max[0],x[1]+w[0]);cap=dispatch.capacities[0];eta=dispatch.efficiency
     b_low=max(0,(x[6]-w[2])*max(1,flex.dr_backlog_kwh));b_high=(x[6]+w[2])*max(1,flex.dr_backlog_kwh)
     steps=max(0,horizon-round(x[0]*horizon)-1)
     bounds=[(max(-dispatch.power_max[0],-(dispatch.soc_max[0]-high_soc)*cap/(eta*dt)),
@@ -33,7 +34,8 @@ def guard(action,observation,dispatch,flex,network,dt,horizon):
     add([0,0,0,1,0,0],flex.dr_fraction*lows[0]);add([0,0,1,1,0,0],flex.dr_fraction*lows[0])
     m=np.asarray(matrix);u=np.asarray(upper)
     status='inconsistent_interval';result=None
-    if all(lo<=hi for lo,hi in bounds):
+    support_valid=low_soc<=high_soc
+    if support_valid and all(lo<=hi for lo,hi in bounds):
         eye=np.eye(6);amat=np.block([[m,np.zeros_like(m)],[eye,-eye],[-eye,-eye]])
         rhs=np.r_[u,a,-a]
         scales=np.array([dispatch.power_max[0],flex.ev_station_kw,max(1,flex.dr_shift_kw,flex.dr_repay_kw),max(1,flex.dr_shed_kw),max(1,center[1]),max(1,center[2])])

@@ -102,6 +102,7 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
         torch.save(saved,out/'resume.pt.tmp');os.replace(out/'resume.pt.tmp',out/'resume.pt')
         write_csv(out/'training.csv',history)
         append(out/'attempts.jsonl',dict(event='checkpoint',completed_episodes=ep+1,logical_env_steps=(ep+1)*config.horizon))
+        print(f'[{method} 种子={config.seed}] 已保存回合 {ep+1}/{config.episodes}，训练步 {(ep+1)*config.horizon}',flush=True)
     state=dict(version=VERSION,observation_version=OBS_VERSION,objective_version=env.objective_version,reserve_mode=reserve_mode,scales=SCALES.tolist(),
         method=method,config=asdict(config),dt_model=dt_model,robust=env.robust,preference=pref.tolist(),training_preferences=weights,
         resource_mode=resource_mode,training_seconds=prior_seconds+time.perf_counter()-started,n_agents=env.num_agents,dispatch_spec=env.spec.record(),flex_spec=asdict(env.flex),cyber_spec=asdict(env.cyber_spec),ev_bundle=env.bundle,

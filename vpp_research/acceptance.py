@@ -18,7 +18,7 @@ def verify(folder):
             c3_allocations=all(len(r['bandwidth_bps'])==len(r['cpu_cycles_per_second'])==6 for r in rows),
             safe_execution=all(r['feedback']['ac_violations']==0 and r['feedback']['constraint_violations']==0 for r in rows),
             service_delivery=all(r['feedback']['ev_unmet_kwh']<=1e-6 for r in rows) and abs(rows[-1]['feedback']['dr_backlog_kwh'])<=1e-6,
-            pcc_objectives=all(r['feedback']['objective_version']=='c3-ac-pcc-cost-carbon-sampled-reserve-v3' for r in rows))
+            pcc_objectives=all(r['feedback']['objective_version']=='c3-ac-pcc-same-period-sampled-reserve-v4' for r in rows))
     passed=all(all(row.values()) for row in checks.values())
     report=dict(passed=passed,checks=checks,scope='架构及当前场景功能验收，不证明任意扰动安全或算法优势')
     (root/'acceptance.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))

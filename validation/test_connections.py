@@ -19,10 +19,10 @@ class ConnectionTests(unittest.TestCase):
         s=DispatchSpec();a=np.array([10000.,0,0,0,0,0])
         candidate,meta,certificate=guard(a,x,s,f,Network(),1,24)
         self.assertTrue(meta['guard_feasible']);self.assertTrue(certificate(candidate));self.assertFalse(certificate(a))
-        x[54]=2.
+        x[1]=3.;x[54]=.1
         _,meta,certificate=guard(a,x,s,f,Network(),1,24)
         self.assertFalse(meta['guard_feasible']);self.assertFalse(certificate(candidate))
-        self.assertIn(0,meta['guard_inconsistent_dimensions'])
+        self.assertEqual(meta['guard_status'],'inconsistent_interval')
     def test_task_and_uncertainty_change_actual_allocations(self):
         c=Config.load('configs/connected_ieee33.json')
         x=np.zeros(54);x[1]=.55
