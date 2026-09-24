@@ -52,7 +52,21 @@ class Config:
     coordinator_soc_margin: float = 0.05
     coordinator_reserved_fraction: float = 0.5
 
+    interval_safety: bool = False
+    command_timing: bool = False
+    downlink_bps: float = 10000.
+    downlink_propagation_seconds: float = .02
+    command_deadline_steps: float = 2.
+    control_cycles: float = 1.e9
+    risk_adaptive: bool = False
+    task_focus: str = 'balanced'
+
     def validate(self):
+        if self.task_focus not in ('balanced','economic','carbon','reserve'):
+            raise ValueError('未知协调任务')
+        for name in ('downlink_bps','downlink_propagation_seconds','control_cycles'):
+            if not math.isfinite(getattr(self,name)) or getattr(self,name)<0:raise ValueError(name+' 非法')
+        if not math.isfinite(self.command_deadline_steps) or self.command_deadline_steps<=0:raise ValueError('命令期限必须为正')
         if self.coordinator_mode not in ('off','monitor','schedule'):
             raise ValueError('协调器模式必须为 off、monitor 或 schedule')
         if self.coordinator_mode!='off' and self.cyber_mode=='off':
@@ -65,7 +79,7 @@ class Config:
             raise ValueError('C3 模式或基础 DT 模式不合法')
         if self.cyber_mode!='off':
             if self.resource_model!='sessions_v1' or self.metrics_enabled:
-                raise ValueError('基础 C3 闭环要求 sessions_v1，当前阶段仅支持普通 MAPPO/IPPO 单目标')
+                raise ValueError('C3 闭环要求 sessions_v1；多目标研究指标由 ResearchEnv 统一核算')
             if self.digital_twin or self.delay_steps or self.packet_loss:
                 raise ValueError('C3 参数使用 cyber_spec/cyber_dt_mode；不能叠加旧模拟器参数')
         if self.resource_model not in ('legacy', 'sessions_v1'):
@@ -79,7 +93,7 @@ class Config:
         if not math.isfinite(self.solver_time_limit) or self.solver_time_limit <= 0:
             raise ValueError('求解时间必须为有限正数')
         if self.algorithm not in ('mappo', 'ippo', 'weighted_mappo'):
-            raise ValueError('支持 mappo、ippo、weighted_mappo；Pareto 条件策略尚未接入，不能用别名替代')
+            raise ValueError('基础入口支持 mappo、ippo、weighted_mappo；Pareto 条件策略请用研究入口 --methods pareto')
         if type(self.metrics_enabled) is not bool:
             raise ValueError('metrics_enabled 必须为布尔值')
         if self.metrics_enabled and self.network_model not in ('ieee33', 'ieee69'):
@@ -98,7 +112,7 @@ class Config:
             raise ValueError('示例碳因子必须为有限非负数')
         if type(self.seed) is not int or self.seed < 0:
             raise ValueError('seed 必须为非负整数')
-        for key in ('safety', 'digital_twin'):
+        for key in ('safety', 'digital_twin', 'interval_safety', 'command_timing', 'risk_adaptive'):
             if type(getattr(self, key)) is not bool:
                 raise ValueError(key + ' 必须为布尔值')
         for key in ('episodes', 'horizon', 'hidden_size', 'ppo_epoch', 'num_mini_batch', 'threads'):

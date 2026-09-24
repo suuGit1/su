@@ -1,0 +1,19 @@
+test_interval_guard_changes_action_and_rejects_impossible_box (validation.test_connections.ConnectionTests.test_interval_guard_changes_action_and_rejects_impossible_box) ... ok
+test_nonzero_delivery_reaches_next_boundary_and_expired_is_removed (validation.test_connections.ConnectionTests.test_nonzero_delivery_reaches_next_boundary_and_expired_is_removed) ... ok
+test_task_and_uncertainty_change_actual_allocations (validation.test_connections.ConnectionTests.test_task_and_uncertainty_change_actual_allocations) ... ok
+test_total_budget_includes_all_members (validation.test_real_benchmarks.BenchmarkTests.test_total_budget_includes_all_members) ... ok
+test_unconfirmed_reserve_excluded_and_reference_validation_only (validation.test_real_benchmarks.BenchmarkTests.test_unconfirmed_reserve_excluded_and_reference_validation_only) ... ok
+test_default_bundle_uses_real_days_and_disables_unavailable_resources (validation.test_real_inputs.RealInputTests.test_default_bundle_uses_real_days_and_disables_unavailable_resources) ... ok
+test_missing_data_never_falls_back_to_synthetic (validation.test_real_inputs.RealInputTests.test_missing_data_never_falls_back_to_synthetic) ... ok
+test_sce_option_is_explicit_cross_region_and_training_only (validation.test_real_inputs.RealInputTests.test_sce_option_is_explicit_cross_region_and_training_only) ... ok
+test_seed_list_is_open_but_unique (validation.test_real_inputs.RealInputTests.test_seed_list_is_open_but_unique) ... ok
+test_both_algorithms_match_uninterrupted_episode_updates (validation.test_integrated.ResumeTests.test_both_algorithms_match_uninterrupted_episode_updates) ... ok
+test_same_target_solved_once_but_next_confirmation_recomputes (validation.test_stage13.CapacityCacheTests.test_same_target_solved_once_but_next_confirmation_recomputes) ... ok
+test_network_mismatch_rejected (validation.test_stage13.Network69Tests.test_network_mismatch_rejected) ... ok
+test_pcc_tracking_on_69_nodes (validation.test_stage13.Network69Tests.test_pcc_tracking_on_69_nodes) ... ok
+test_physical_units_and_net_injection_mapping (validation.test_stage13.Network69Tests.test_physical_units_and_net_injection_mapping) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 6.419s
+
+OK

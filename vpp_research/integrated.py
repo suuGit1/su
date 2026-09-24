@@ -43,7 +43,7 @@ def prepare(config,out):
 def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),seed=9103,fault=None,csv_path=None,ev_bundle=None,profile_index=0):
     out=fresh(out);w=np.asarray(preference,dtype=float)
     if w.shape!=(3,) or not np.isfinite(w).all() or min(w)<0 or not np.isclose(w.sum(),1):raise ValueError('偏好必须是三维概率向量')
-    if method!='mpc':
+    if method not in ('mpc','milp_oracle'):
         state,config,agent=load(checkpoint)
         if state['method']!=method:raise ValueError('模型算法与请求模式不一致')
         if seed in state['train_seeds']:raise ValueError('闭环测试种子与训练重叠')
@@ -66,7 +66,7 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
                 energy_kwh=min(12.,7.*config.dt_hours*config.horizon),max_kw=11.)]},
             actual_departure_events={key:[dict(id='early_demo',departure_step=1)]})
     env=ResearchEnv(config,csv_path=csv_path,dt_model=model,reserve_mode='pcc_checked')
-    if env.data and method!='mpc':
+    if env.data and method not in ('mpc','milp_oracle'):
         if set(env.data.scenario_names)&set(state['train_scenarios']) or set(env.data.fingerprints)&set(state['train_fingerprints']):
             raise ValueError('真实测试曲线与策略训练重叠')
     if env.data and model and set(env.data.scenario_names)&set(model['training_scenarios']+model['calibration_scenarios']):
@@ -76,13 +76,16 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
     obs,_=env.reset(seed,profile_index);mpc=ObservedMPC(config,env.spec,env.flex,2)
     rnn=np.zeros((env.num_agents,1,config.hidden_size),np.float32);masks=np.ones((env.num_agents,1),np.float32)
     summary=dict(method=method,scenario_seed=seed,scenario_date=env.data.scenario_names[profile_index] if env.data else None,fault=fault,completed=False,steps=0,
-        cost=0.,carbon_kg=0.,reserve_kwh=0.,ac_violations=0,constraint_violations=0,service_violations=0,packet_drops=0,
+        guard_infeasible=0,guard_certified_steps=0,cost=0.,carbon_kg=0.,reserve_kwh=0.,ac_violations=0,constraint_violations=0,service_violations=0,packet_drops=0,
         emergency_steps=0,dt_updates=0,reserve_unconfirmed_steps=0,ev_unmet_kwh=0.,early_departures=0,terminal_dr_kwh=0.,checkpoint=str(checkpoint) if checkpoint else None)
     write(out/'config.json',config.__dict__)
     try:
         for step in range(config.horizon):
             before=obs.copy();raw=None;planner={}
             if method=='mpc':energy,planner=mpc.propose(obs[0,:54])
+            elif method=='milp_oracle':
+                plans,planner=env.core.plan(oracle=True);energy=plans[0]['action']
+                planner['information']='完美预知全日曲线与会话；仅作非因果参考'
             elif method=='pareto':raw,_,_=agent.act(obs,w,True)
             else:
                 with torch.no_grad():raw,new_rnn=agent.policy.act(obs,rnn,masks,deterministic=True)
@@ -93,8 +96,10 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
             from vpp_mappo.optimization import DispatchInfeasible
             context=patch.object(env.core,'plan',side_effect=DispatchInfeasible('集成验收：求解超时')) if fault=='solver_timeout' and step==0 else nullcontext()
             with context:
-                obs,_,_,done,info=env.step_candidate(energy,np.ones(6),np.ones(6)) if method=='mpc' else env.step(raw)
+                obs,_,_,done,info=env.step_candidate(energy,np.ones(6),np.ones(6)) if method in ('mpc','milp_oracle') else env.step(raw)
             append(out/'trajectory.jsonl',step_record(env,before,raw,w,info,phase='rollout',step=step,planner=planner))
+            summary['guard_infeasible']+=int(info.get('interval_guard_enabled',False) and not info['guard_feasible'])
+            summary['guard_certified_steps']+=int(info['guard_certificate_survived'])
             summary['steps']+=1;summary['cost']+=info['objective_cost']+info['terminal_penalty']
             summary['carbon_kg']+=info['carbon_kg'];summary['reserve_kwh']+=info['flexibility_kwh']
             summary['ac_violations']+=info['ac_violations'];summary['constraint_violations']+=info['constraint_violations']
@@ -118,7 +123,7 @@ def main():
     p.add_argument('--config',default='configs/integrated_ieee33.json')
     p.add_argument('--output',required=True)
     p.add_argument('--dt-model');p.add_argument('--checkpoint')
-    p.add_argument('--method',choices=['mpc','ordinary','pareto'],default='mpc')
+    p.add_argument('--method',choices=['mpc','milp_oracle','ordinary','pareto'],default='mpc')
     p.add_argument('--synthetic',action='store_true',help='显式选择合成演示；默认必须使用真实目录')
     p.add_argument('--data-root',default='data/real');p.add_argument('--ev-sessions')
     p.add_argument('--dr-mode',choices=['off','sce-derated'],default='off')
@@ -144,12 +149,12 @@ def main():
         elif a.command=='prepare':
             prepare_real(c,paths,protocol,out,{'train':len(sets['train'].profiles),'validation':len(sets['validation'].profiles)})
         elif a.command=='train':
-            if a.method=='mpc' or not a.dt_model:p.error('训练要求 ordinary/pareto 与真实 --dt-model')
+            if a.method in ('mpc','milp_oracle') or not a.dt_model:p.error('训练要求 ordinary/pareto 与真实 --dt-model')
             model=json.loads(Path(a.dt_model).read_text())
             if model.get('real_input_fingerprint')!=protocol['fingerprint']:p.error('DT与真实输入协议不一致，请重新prepare')
             train(c,model,out,method=a.method,reserve_mode='pcc_checked',resume=a.resume,trace_path=out/'trajectory.jsonl')
         else:
-            if a.method=='mpc':
+            if a.method in ('mpc','milp_oracle'):
                 if not a.dt_model:p.error('MPC要求真实 --dt-model')
                 model=json.loads(Path(a.dt_model).read_text())
             else:
@@ -169,12 +174,12 @@ def main():
         from .acceptance import verify
         verify(out)
     elif a.command=='train':
-        if a.method=='mpc' or not a.dt_model:p.error('训练要求 ordinary/pareto 与 --dt-model')
+        if a.method in ('mpc','milp_oracle') or not a.dt_model:p.error('训练要求 ordinary/pareto 与 --dt-model')
         model=json.loads(Path(a.dt_model).read_text())
         train(c,model,out,method=a.method,reserve_mode='pcc_checked',resume=a.resume,trace_path=out/'trajectory.jsonl')
     else:
-        if a.method!='mpc' and not a.checkpoint:p.error('策略运行必须给出 --checkpoint')
-        if a.method=='mpc' and not a.dt_model:p.error('MPC 闭环必须给出 --dt-model')
+        if a.method not in ('mpc','milp_oracle') and not a.checkpoint:p.error('策略运行必须给出 --checkpoint')
+        if a.method in ('mpc','milp_oracle') and not a.dt_model:p.error('MPC 闭环必须给出 --dt-model')
         model=json.loads(Path(a.dt_model).read_text()) if a.dt_model else None
         rollout(c,model,out,a.method,a.checkpoint,a.preference,a.seed,a.fault)
     print('已完成：',out.resolve())
