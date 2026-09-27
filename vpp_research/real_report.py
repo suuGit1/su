@@ -26,6 +26,8 @@ def report(folder):
             igd=igd(front,empirical) if front and empirical else None,
             guard_infeasible=sum(r.get('guard_infeasible',0) or 0 for r in results),
             guard_certified_steps=sum(r.get('guard_certified_steps',0) for r in results),
+            all_test_steps_interval_certified=bool(results) and all(
+                r.get('guard_certified_steps',0)==r.get('env_steps',0) and r.get('env_steps',0)>0 for r in results),
             reserve_unconfirmed_steps=e.get('reserve_unconfirmed_steps',0),front=front))
     aggregate={}
     for m in sorted({r['method'] for r in rows}):
@@ -34,10 +36,13 @@ def report(folder):
         aggregate[m]=dict(hv=stats([r['hv'] for r in selected]),igd=stats(distances) if distances else None,
             undefined_igd=len(selected)-len(distances),failed_runs=sum(r['failed'] for r in selected),
             incomplete_budgets=sum(not r['budget_complete'] for r in selected))
+        matched=[r['hv'] for r in selected if r['budget_complete'] and not r['failed']]
+        aggregate[m]['budget_matched_hv']=stats(matched) if matched else None
     result=dict(rows=rows,aggregate=aggregate,hv_reference=reference,empirical_validation_reference=empirical,
-        totals={k:sum(e.get(k,0) for e in entries) for k in ('training_steps','selection_steps','test_steps')},
+        totals={k:sum(e.get(k,0) or 0 for e in entries) for k in ('training_steps','actual_training_steps','selection_steps','test_steps')},
         notes=['IGD参考集只来自独立策略选择日期，不是真实Pareto前沿；验证与测试日期不同，IGD含场景差异。',
         '训练预算合计所有子策略；选择交互另列，不能声称开发总交互等预算。',
+        'hv统计保留全部种子；budget_matched_hv仅筛选完成名义回合预算的运行，提前停止的OLS被排除；actual_training_steps按尝试日志计数，日志与名义步数不一致时仍需审计，不能称严格等交互预算。',
         '备用未确认或物理/服务约束失败的整组偏好不进入HV/IGD；空集HV=0、IGD=null。',
         '区间证书是单步线性约束证书，不是AC鲁棒保证。'])
     (folder/'report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))

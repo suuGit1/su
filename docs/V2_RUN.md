@@ -13,11 +13,10 @@ python -m venv .venv
 # Linux/macOS 激活环境；Windows请使用 .venv\Scripts\activate
 source .venv/bin/activate
 python -m pip install -r requirements-research-lock.txt
-python scripts/prepare_real_data.py --verify-only
 python run_v2.py --seeds 1,2,3 --episodes 12 --eval-days 3 --selection-days 1 --workers 3 --dt-train-days 31 --dt-calibration-days 12 --output runs/v2
 ```
 
-`data/real`目录必须存在。原始数据大文件通过之前的数据包提供，已校验的训练/验证/测试CSV在仓库中；数据校验失败会明确报错，不会回退合成曲线。
+`data/real`目录必须存在。原始数据大文件通过之前的数据包提供，已校验的训练/验证/测试CSV在仓库中；数据校验失败会明确报错，不会回退合成曲线。默认训练只需仓库中的预处理数据；下载并解压完整原始数据包后，可额外运行 `python scripts/prepare_real_data.py --verify-only` 核验来源。
 
 扩大预算示例（没有预先声称这组100回合实验已完成）：
 
@@ -72,3 +71,19 @@ python -m unittest discover -s validation -p "test_*.py"
 python run_vpp.py run --config configs/v2_ieee33.json --method ordinary --checkpoint v2_models/seed_1/ordinary_1/latest.pt --day-index 0 --output runs/v2_replay_ordinary
 python run_vpp.py run --config configs/v2_ieee33.json --method pareto --checkpoint v2_models/seed_1/pareto_1/latest.pt --day-index 0 --output runs/v2_replay_pareto
 ```
+
+## 已完成的v2扩大验证
+
+3个种子、7种方法、每种学习方法每种子总预算12回合、3个测试日及3个测试偏好。21组均完成评估，保存28个学习模型。测试共4536步，策略选择1320步。OLS种子2、3只扩展3个子策略，名义训练216/288步；种子1完成4个子策略及288步。所有学习方法名义训练合计4176步，尝试日志可计数4149步，部分日志存在缺项，原因尚未确定；因此保留两种计数，不声称逐步审计完整或严格等实际交互预算。
+
+| 方法 | 三种子平均HV | 说明 |
+|---|---:|---|
+| MPC | 547057 | 确定性重复场景 |
+| 完美预知MILP | 402438 | 非因果参考 |
+| 普通MAPPO | 445834 | 独立保留 |
+| 集中式PPO | 434327 | 集中控制对照 |
+| 固定权重MAPPO | 544020 | 子策略预算合计 |
+| OLS | 571762 | 含两个预算未完成种子 |
+| Pareto-MAPPO | 369065 | 尚无稳定优势 |
+
+全部测试组未发现物理/服务约束失败或备用未确认，但并非全部步骤取得区间安全证书。Pareto-MAPPO仅种子1得到3个可行非支配点，另外两种子各1个；短预算尚不足以建立收敛或算法优势。下一阶段优先核对日志完整性、分析偏好响应与安全投影对动作的影响，再开展预注册长预算实验。

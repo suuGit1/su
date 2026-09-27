@@ -15,10 +15,12 @@ def plot(folder):
     fig,ax=plt.subplots(figsize=(9,4),layout='constrained')
     for i,method in enumerate(methods):
         values=[r['hv'] for r in rows if r['method']==method]
-        ax.scatter(np.full(len(values),i),values,label=method,s=32)
+        for row in [r for r in rows if r['method']==method]:
+            color=f'C{i%10}'
+            ax.scatter(i,row['hv'],facecolors=color if row['budget_complete'] else 'none',edgecolors=color,s=32)
         ax.plot([i-.2,i+.2],[np.mean(values)]*2,color='black')
     ax.set_xticks(range(len(methods)),methods,rotation=20);ax.set_ylabel('Hypervolume')
-    ax.set_title('Per-seed feasible fronts (bar: mean; empty front: zero)')
+    ax.set_title('HV per seed (hollow: early stop; bar: all-run mean)')
     fig.savefig(out/'hypervolume.png',dpi=180);fig.savefig(out/'hypervolume.svg');plt.close(fig)
     fig=plt.figure(figsize=(8,6),layout='constrained');ax=fig.add_subplot(projection='3d')
     for method in methods:
