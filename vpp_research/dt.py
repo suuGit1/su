@@ -7,7 +7,7 @@ import numpy as np
 
 TARGETS=np.array([1,3,6,7,8,9,10,11,12])
 FEATURES=36
-VERSION='ridge-block-conformal-dt-v1'
+VERSION='ridge-block-conformal-physical-dt-v2'
 
 
 def digest(x):return hashlib.sha256(json.dumps(x,sort_keys=True).encode()).hexdigest()
@@ -31,7 +31,8 @@ def fit(training,calibration,method='residual',alpha=.1,ridge=10.):
     model=dict(version=VERSION,method=method,mean=mean.tolist(),scale=scale.tolist(),coef=coef.tolist(),alpha=alpha,
         training_scenarios=sorted(train_ids),calibration_scenarios=sorted(cal_ids),training_hash=digest(training),calibration_hash=digest(calibration))
     # 每场景取所有时刻/输出维度的最大标准化误差，避免把同一天当作多条独立校准样本。
-    train_err=np.abs(y-predict(model,x)[0]);output_scale=np.maximum(np.median(train_err,axis=0),.005)
+    train_err=y-predict(model,x)[0];output_scale=np.maximum(np.sqrt(np.mean(train_err**2,axis=0)),.005)
+    model['scale_rule']='training_rmse_floor_0.005';model['output_scale']=output_scale.tolist()
     scores=[]
     for scene in sorted(cal_ids):
         part=[r for r in calibration if r['scenario']==scene]

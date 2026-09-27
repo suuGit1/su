@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from .real_inputs import connect
 from vpp_mappo.config import Config
-from .dt import fit,assess,save,digest
+from .dt import fit,assess,save,digest,VERSION as DT_VERSION
 from .validate_dt import collect
 from .train import train,evaluate
 
@@ -25,7 +25,7 @@ def write(path,data):
 
 
 def prepare_real(c,paths,protocol,dt,counts):
-    dt=Path(dt);dt.mkdir(parents=True,exist_ok=True);key=digest(dict(protocol=protocol,days=counts,config=c.__dict__))
+    dt=Path(dt);dt.mkdir(parents=True,exist_ok=True);key=digest(dict(protocol=protocol,days=counts,config=c.__dict__,dt_version=DT_VERSION))
     if (dt/'contract.json').exists() and json.loads((dt/'contract.json').read_text())['fingerprint']!=key:raise ValueError('DT 数据或配置发生变化')
     if (dt/'residual.json').exists():model=json.loads((dt/'residual.json').read_text())
     else:
@@ -86,12 +86,17 @@ def run(a):
     with paths['validation'].open() as source,selection_csv.open('w',newline='') as target:
         reader=csv.DictReader(source);writer=csv.DictWriter(target,reader.fieldnames);writer.writeheader()
         writer.writerows(r for r in reader if r['scenario'] in selection_dates)
-    model=prepare_real(c,paths,protocol,out/'dt',counts)
+    model=prepare_real(c,paths,protocol,getattr(a,'dt_cache',None) or out/'dt',counts)
     entries=[]
     for seed in a.seeds:
         for method in a.methods:
             dest=out/f'{method}_{seed}';result_path=out/f'{method}_{seed}.json'
-            if result_path.exists():entries.append(json.loads(result_path.read_text()));continue
+            if result_path.exists():
+                previous=json.loads(result_path.read_text())
+                if not previous.get('failed') or not a.resume:
+                    entries.append(previous);continue
+                archive=dest/'failed_attempt_results';archive.mkdir(parents=True,exist_ok=True)
+                result_path.rename(archive/f'{len(list(archive.iterdir()))+1}.json')
             cfg=replace(c,seed=seed,episodes=a.episodes)
             # dataclasses.replace 不复制动态快照；必须显式传入真实EV与DR协议。
             cfg._ev_bundle=c._ev_bundle;cfg._flex_record=c._flex_record
@@ -104,7 +109,16 @@ def run(a):
                         for wi,w in enumerate(preferences):
                             for day in range(days):
                                 target=dest/phase/f'weight_{wi}_day_{day}'
-                                r=rollout(cfg,model,target,method=method,preference=w,seed=40000+day,csv_path=csv_path,ev_bundle=c._ev_bundle,profile_index=day)
+                                saved=target/'summary.json'
+                                if saved.exists() and json.loads(saved.read_text()).get('completed'):
+                                    r=json.loads(saved.read_text())
+                                else:
+                                    if target.exists() and any(target.iterdir()):
+                                        if not a.resume:raise ValueError('不完整控制器轨迹，请使用 --resume')
+                                        index=1
+                                        while target.with_name(target.name+f'_interrupted_{index}').exists():index+=1
+                                        target.rename(target.with_name(target.name+f'_interrupted_{index}'))
+                                    r=rollout(cfg,model,target,method=method,preference=w,seed=40000+day,csv_path=csv_path,ev_bundle=c._ev_bundle,profile_index=day)
                                 rows.append(dict(preference=w,failed=not r['completed'],env_steps=r['steps'],
                                     vector=[-r['cost']/cfg.objective_scales[0],-r['carbon_kg']/cfg.objective_scales[1],r['reserve_kwh']/cfg.objective_scales[2]],
                                     violations=r['constraint_violations'],ac_violations=r['ac_violations'],ac_failed=0,
@@ -139,7 +153,7 @@ def run(a):
 
     report(out)
 
-def main():
+def parser():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--config',default='configs/connected_ieee33.json')
     p.add_argument('--learning-rate',type=float);p.add_argument('--ppo-epochs',type=int)
@@ -155,7 +169,11 @@ def main():
     p.add_argument('--hv-reference',type=float,nargs=3,default=[-100.,-200.,0.])
     p.add_argument('--ev-sessions');p.add_argument('--dr-mode',choices=['off','sce-derated'],default='off')
     p.add_argument('--resume',action='store_true');p.add_argument('--dry-run',action='store_true')
-    run(p.parse_args())
+    p.add_argument('--dt-cache',help='共享已准备的DT缓存；协议不匹配则拒绝')
+    return p
+
+def main():
+    run(parser().parse_args())
 
 
 if __name__=='__main__':main()

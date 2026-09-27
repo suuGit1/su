@@ -1,0 +1,10 @@
+test_total_budget_includes_all_members (validation.test_real_benchmarks.BenchmarkTests.test_total_budget_includes_all_members) ... ok
+test_unconfirmed_reserve_excluded_and_reference_validation_only (validation.test_real_benchmarks.BenchmarkTests.test_unconfirmed_reserve_excluded_and_reference_validation_only) ... ok
+test_disabled_dr_cannot_grow_from_unexecuted_candidate (validation.test_v2.V2Tests.test_disabled_dr_cannot_grow_from_unexecuted_candidate) ... ok
+test_large_soc_interval_intersects_known_physical_support (validation.test_v2.V2Tests.test_large_soc_interval_intersects_known_physical_support) ... ok
+test_reserve_audits_same_period_including_last_step (validation.test_v2.V2Tests.test_reserve_audits_same_period_including_last_step) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 3.628s
+
+OK

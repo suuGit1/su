@@ -68,7 +68,7 @@ class Stage8Tests(unittest.TestCase):
         with self.assertRaises(DispatchInfeasible):e.core.step_physical(np.zeros(6))
 
     def test_inconsistent_interval_reports_failure(self):
-        c=Config.load('configs/research_smoke.json');e=ResearchEnv(c);x=e.reset(1)[0][0];x[54]=1
+        c=Config.load('configs/research_smoke.json');e=ResearchEnv(c);x=e.reset(1)[0][0];x[1]=3.;x[54]=.1
         a,m,cert=guard(np.zeros(6),x,e.spec,e.flex,e.network,c.dt_hours,c.horizon)
         self.assertFalse(m['guard_feasible']);self.assertFalse(cert(a))
 

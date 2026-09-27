@@ -34,9 +34,12 @@ class BasicDT:
                             delivered=min(left,s['remaining_kwh'],s['max_kw']*self.dt)
                             s['remaining_kwh']-=delivered;left-=delivered
                     elif k==2:
-                        data[2]['backlog']=float(np.clip(data[2]['backlog']+a[2]*self.dt,0,self.flex.dr_backlog_kwh))
-                        data[2]['shifted']+=max(0,a[2])*self.dt
-                    elif k==3:data[3]['shed_used']+=max(0,a[3])*self.dt
+                        shift=float(np.clip(a[2],-self.flex.dr_repay_kw,self.flex.dr_shift_kw))
+                        data[2]['backlog']=float(np.clip(data[2]['backlog']+shift*self.dt,0,self.flex.dr_backlog_kwh))
+                        data[2]['shifted']=min(self.flex.dr_shift_budget_kwh,data[2]['shifted']+max(0,shift)*self.dt)
+                    elif k==3:
+                        shed=float(np.clip(a[3],0,self.flex.dr_shed_kw))
+                        data[3]['shed_used']=min(self.flex.dr_shed_budget_kwh,data[3]['shed_used']+shed*self.dt)
         # 到期从已知会话集合移除；绝不推断未上传的新接入车辆。
         data[1]['sessions']=[s for s in data[1]['sessions'] if s['arrival_step']<=step<s['departure_step']]
         return data
