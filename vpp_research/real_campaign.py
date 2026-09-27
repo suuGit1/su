@@ -73,6 +73,9 @@ def run(a):
         eval_steps_per_method_seed={m:a.eval_days*c.horizon*len(preferences) for m in a.methods},
         test_dates=sets['test'].scenario_names[:a.eval_days],
         note='训练回合可循环训练日期；eval-days为不重复测试日期；各测试偏好分别执行')
+    if getattr(a,'release_version',2)==3:
+        from .protocol_v3 import contract
+        plan['experiment_contract']=contract(c,plan)
     out=Path(a.output);out.mkdir(parents=True,exist_ok=True)
     manifest=out/'manifest.json'
     if manifest.exists():
@@ -119,7 +122,7 @@ def run(a):
                                         while target.with_name(target.name+f'_interrupted_{index}').exists():index+=1
                                         target.rename(target.with_name(target.name+f'_interrupted_{index}'))
                                     r=rollout(cfg,model,target,method=method,preference=w,seed=40000+day,csv_path=csv_path,ev_bundle=c._ev_bundle,profile_index=day)
-                                rows.append(dict(preference=w,failed=not r['completed'],env_steps=r['steps'],
+                                rows.append(dict(trace_path=str(target/'trajectory.jsonl'),scenario_date=sets['test'].scenario_names[day] if phase=='test' else selection_dates[day],preference=w,failed=not r['completed'],env_steps=r['steps'],
                                     vector=[-r['cost']/cfg.objective_scales[0],-r['carbon_kg']/cfg.objective_scales[1],r['reserve_kwh']/cfg.objective_scales[2]],
                                     violations=r['constraint_violations'],ac_violations=r['ac_violations'],ac_failed=0,
                                     reserve_invalid=r['reserve_unconfirmed_steps'],ev_unmet_kwh=r['ev_unmet_kwh'],dr_backlog_kwh=r['terminal_dr_kwh'],
@@ -144,6 +147,13 @@ def run(a):
                 row['training_steps']=completed
             row['actual_training_steps']=sum(
                 json.loads(line).get('event')=='step' for log in dest.rglob('attempts.jsonl') for line in log.read_text().splitlines())
+            if getattr(a,'release_version',2)==3 and method not in ('mpc','milp_oracle'):
+                from .ledger import audit_training
+                audit=audit_training(dest);row['training_audit']=audit
+                row['recorded_training_steps']=row['actual_training_steps']
+                row['actual_training_steps']=sum(x.get('successful_calls',0) for x in audit['runs'])
+                row['attempted_training_calls']=sum(x.get('attempted_calls',0) for x in audit['runs'])
+                row['audit_consistent']=audit['consistent']
             write(result_path,row);entries.append(row)
             write(out/'results.json',dict(manifest=plan,entries=entries,completed=False))
             print(seed,method,'完成' if not row['failed'] else row['error'],flush=True)

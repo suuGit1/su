@@ -34,7 +34,7 @@ def learning(cfg,model,dest,method,preferences,selection_csv,test_csv,selection_
                   resume=resume and (folder/'resume.pt').exists(),trace_path=folder/'trajectory.jsonl')
         offset+=episodes
         weights=VALIDATION_WEIGHTS if method=='pareto' else [w]
-        rows=evaluate(folder/'latest.pt',weights,range(50000,50000+selection_days),csv_path=selection_csv,ev_bundle=cfg._ev_bundle,ac_safe=True)
+        rows=evaluate(folder/'latest.pt',weights,range(50000,50000+selection_days),csv_path=selection_csv,ev_bundle=cfg._ev_bundle,ac_safe=True,trace_dir=folder/'validation')
         validation+=rows
         member=dict(checkpoint=str(folder/'latest.pt'),weight=w,training_steps=episodes*cfg.horizon,
                     selection_steps=sum(r['env_steps'] for r in rows),priority=priority)
@@ -49,9 +49,9 @@ def learning(cfg,model,dest,method,preferences,selection_csv,test_csv,selection_
     results=[]
     selection_failed=count>1 and not any('validation_value' in m for m in members)
     if not selection_failed:
-        for w in preferences:
+        for wi,w in enumerate(preferences):
             member=select_member({'members':members},w) if count>1 else members[0]
-            results+=evaluate(member['checkpoint'],[w],range(40000,40000+eval_days),csv_path=test_csv,ev_bundle=cfg._ev_bundle,ac_safe=True)
+            results+=evaluate(member['checkpoint'],[w],range(40000,40000+eval_days),csv_path=test_csv,ev_bundle=cfg._ev_bundle,ac_safe=True,trace_dir=dest/'test'/f'weight_{wi}')
     return dict(training_steps=sum(m['training_steps'] for m in members),
         planned_training_steps=cfg.episodes*cfg.horizon,selection_steps=sum(m['selection_steps'] for m in members),
         budget_complete=offset==cfg.episodes,selection_failed=selection_failed,members=members,validation=validation,

@@ -79,6 +79,8 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
         guard_infeasible=0,guard_certified_steps=0,cost=0.,carbon_kg=0.,reserve_kwh=0.,ac_violations=0,constraint_violations=0,service_violations=0,packet_drops=0,
         emergency_steps=0,dt_updates=0,reserve_unconfirmed_steps=0,ev_unmet_kwh=0.,early_departures=0,terminal_dr_kwh=0.,checkpoint=str(checkpoint) if checkpoint else None)
     write(out/'config.json',config.__dict__)
+    from .ledger import Ledger
+    ledger=Ledger(out/'evaluation.sqlite')
     try:
         for step in range(config.horizon):
             before=obs.copy();raw=None;planner={}
@@ -95,8 +97,13 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
             from unittest.mock import patch
             from vpp_mappo.optimization import DispatchInfeasible
             context=patch.object(env.core,'plan',side_effect=DispatchInfeasible('集成验收：求解超时')) if fault=='solver_timeout' and step==0 else nullcontext()
-            with context:
-                obs,_,_,done,info=env.step_candidate(energy,np.ones(6),np.ones(6)) if method in ('mpc','milp_oracle') else env.step(raw)
+            ident=ledger.begin('rollout',0,step)
+            try:
+                with context:
+                    obs,_,_,done,info=env.step_candidate(energy,np.ones(6),np.ones(6)) if method in ('mpc','milp_oracle') else env.step(raw)
+            except Exception as exc:
+                ledger.finish(ident,'error',str(exc));raise
+            ledger.finish(ident,'success')
             append(out/'trajectory.jsonl',step_record(env,before,raw,w,info,phase='rollout',step=step,planner=planner))
             summary['guard_infeasible']+=int(info.get('interval_guard_enabled',False) and not info['guard_feasible'])
             summary['guard_certified_steps']+=int(info['guard_certificate_survived'])
@@ -112,7 +119,8 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
             write(out/'summary.json',summary)
         summary['completed']=bool(done)
     except Exception as exc:
-        summary['error']=str(exc);write(out/'summary.json',summary);raise
+        summary['error']=str(exc);summary['interaction_ledger']=ledger.summary();ledger.close();write(out/'summary.json',summary);raise
+    summary['interaction_ledger']=ledger.summary();ledger.close()
     write(out/'summary.json',summary)
     return summary
 

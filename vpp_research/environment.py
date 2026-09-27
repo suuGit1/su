@@ -92,6 +92,7 @@ class ResearchEnv(CyberVPPAdapter):
         return self.step_candidate(a,bw,cpu)
 
     def step_candidate(self,energy,bw,cpu):
+        issued_candidate=np.asarray(energy).copy()
         timing_meta={};control_energy=0.
         if self.command_queue is not None:
             capacity=self.cyber_spec.cpu_cycles_per_second;dt_seconds=self.config.dt_hours*3600
@@ -115,6 +116,7 @@ class ResearchEnv(CyberVPPAdapter):
         self.coordinator.interval_width=public[54:63].copy()
         truth=self.features(self.sensor_payloads())[TARGETS]
         squared=float(np.mean((public[TARGETS]-truth)**2));covered=bool(np.all(np.abs(public[TARGETS]-truth)<=public[54:63]+1e-7))
+        received_candidate=np.asarray(energy).copy()
         row=self.core.row().copy();certificate=None;meta=dict(guard_feasible=False,guard_status='disabled',guard_seconds=0.)
         if self.robust:
             energy,meta,certificate=guard(energy,self.encode()[0][0],self.spec,self.flex,self.network,self.config.dt_hours,self.config.horizon)
@@ -122,6 +124,8 @@ class ResearchEnv(CyberVPPAdapter):
         reserve_core=copy.deepcopy(self.core) if self.vector_metrics and self.reserve_mode=='pcc_checked' else None
         obs,share,rewards,done,info=super().step_candidate(energy,bw,cpu)
         info['interval_guard_candidate_kw']=guarded_candidate.tolist()
+        info['issued_energy_candidate_kw']=issued_candidate.tolist()
+        info['received_energy_candidate_kw']=received_candidate.tolist()
         info['interval_guard_enabled']=self.robust
         info.update(timing_meta)
         if control_energy:
