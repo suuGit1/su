@@ -1,0 +1,306 @@
+{
+  "schema": "trace-evidence-v3",
+  "entries": [
+    {
+      "method": "mpc",
+      "seed": 1,
+      "failed": false,
+      "traces": [
+        {
+          "phase": "validation",
+          "path": "../research_runs/v3_final/seed_1/mpc_1/validation/weight_0_day_0/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -15.036934400492326,
+              -62.33635058469535,
+              40.0440441896601
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 16,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        },
+        {
+          "phase": "results",
+          "path": "../research_runs/v3_final/seed_1/mpc_1/test/weight_0_day_0/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -16.194151087779343,
+              -84.87319856398324,
+              35.39536872815739
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 16,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        }
+      ],
+      "test_count_ok": true,
+      "consistent": true
+    },
+    {
+      "method": "milp_oracle",
+      "seed": 1,
+      "failed": false,
+      "traces": [
+        {
+          "phase": "validation",
+          "path": "../research_runs/v3_final/seed_1/milp_oracle_1/validation/weight_0_day_0/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -17.536314793763086,
+              -61.75920749609722,
+              36.020378016932
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 14,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        },
+        {
+          "phase": "results",
+          "path": "../research_runs/v3_final/seed_1/milp_oracle_1/test/weight_0_day_0/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -18.565143308312887,
+              -84.35144592447003,
+              28.407153678311772
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 15,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        }
+      ],
+      "test_count_ok": true,
+      "consistent": true
+    },
+    {
+      "method": "ordinary",
+      "seed": 1,
+      "failed": false,
+      "traces": [
+        {
+          "phase": "validation",
+          "path": "../research_runs/v3_final/seed_1/ordinary_1/validation/0a46794ad3be_seed_50000/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -17.650774933897225,
+              -64.20202384733524,
+              46.12044317301285
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 14,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        },
+        {
+          "phase": "results",
+          "path": "../research_runs/v3_final/seed_1/ordinary_1/test/weight_0/25775891314b_seed_40000/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -19.280913233102172,
+              -86.11187701980982,
+              35.20059164732131
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 14,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        }
+      ],
+      "test_count_ok": true,
+      "consistent": true
+    },
+    {
+      "method": "central",
+      "seed": 1,
+      "failed": false,
+      "traces": [
+        {
+          "phase": "validation",
+          "path": "../research_runs/v3_final/seed_1/central_1/validation/0a46794ad3be_seed_50000/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -20.47487660877969,
+              -67.39864945406838,
+              26.95194418251945
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 8,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        },
+        {
+          "phase": "results",
+          "path": "../research_runs/v3_final/seed_1/central_1/test/weight_0/25775891314b_seed_40000/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -20.590249246844387,
+              -86.85414972243244,
+              13.954799184480084
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 10,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        }
+      ],
+      "test_count_ok": true,
+      "consistent": true
+    },
+    {
+      "method": "fixed",
+      "seed": 1,
+      "failed": false,
+      "traces": [
+        {
+          "phase": "validation",
+          "path": "../research_runs/v3_final/seed_1/fixed_1/member_0/validation/0a46794ad3be_seed_50000/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -17.82858231594456,
+              -64.1905663802425,
+              44.72685215850733
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 14,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        },
+        {
+          "phase": "validation",
+          "path": "../research_runs/v3_final/seed_1/fixed_1/member_1/validation/5172df57f826_seed_50000/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -17.88831932568619,
+              -64.18682945608599,
+              44.39263609444332
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 14,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        },
+        {
+          "phase": "validation",
+          "path": "../research_runs/v3_final/seed_1/fixed_1/member_2/validation/3ff5c187b6f5_seed_50000/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -17.35991840191022,
+              -65.26683061356054,
+              48.43153401762123
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 13,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        },
+        {
+          "phase": "results",
+          "path": "../research_runs/v3_final/seed_1/fixed_1/test/weight_0/25775891314b_seed_40000/trajectory.jsonl",
+          "consistent": true,
+          "errors": [],
+          "recomputed": {
+            "env_steps": 24,
+            "vector": [
+              -19.62361134084295,
+              -86.36727562493341,
+              34.59335532007901
+            ],
+            "violations": 0,
+            "ac_violations": 0,
+            "reserve_invalid": 0,
+            "guard_certified_steps": 13,
+            "ev_unmet_kwh": 0.0,
+            "dr_backlog_kwh": 0.0
+          }
+        }
+      ],
+      "test_count_ok": true,
+      "consistent": true
+    }
+  ],
+  "campaign_complete": false,
+  "all_attempt_evaluation_budget": {
+    "test": {
+      "attempted_calls": 120,
+      "successful_calls": 120,
+      "error_calls": 0,
+      "unknown_calls": 0
+    },
+    "validation": {
+      "attempted_calls": 192,
+      "successful_calls": 192,
+      "error_calls": 0,
+      "unknown_calls": 0
+    }
+  },
+  "consistent": false
+}

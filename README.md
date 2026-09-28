@@ -1,5 +1,14 @@
 # Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants
 
+## v3运行入口
+
+```bash
+python run_v3.py --seeds 1,2,3 --episodes 12 --eval-days 3 --selection-days 1 --workers 3 --output runs/v3
+python scripts/report_v3.py runs/v3
+```
+
+[v3完整安装、审计、实验协议、轨迹、B1诊断与已知限制](docs/V3_RUN.md)。普通MAPPO和Pareto-MAPPO保持独立。v3增加事务交互账本，所有方法验证/测试轨迹可复算；v2模型可用于同目标版本推理，v2训练检查点不能冒充具备v3账本的续训。
+
 ## v2运行入口
 
 ```bash

@@ -1,0 +1,404 @@
+{
+  "rows": [
+    {
+      "seed": 1,
+      "method": "mpc",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 0,
+      "training_steps": 0,
+      "selection_steps": 2,
+      "test_steps": 2,
+      "actual_training_steps": 0,
+      "budget_complete": true,
+      "feasible_points": 1,
+      "hv": 82633.05975399079,
+      "igd": 0.9071051186199812,
+      "guard_infeasible": 0,
+      "guard_certified_steps": 2,
+      "all_test_steps_interval_certified": true,
+      "reserve_unconfirmed_steps": 0,
+      "front": [
+        [
+          -0.8730077632745433,
+          -5.003959844215717,
+          4.274999943375588
+        ]
+      ]
+    },
+    {
+      "seed": 1,
+      "method": "milp_oracle",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 0,
+      "training_steps": 0,
+      "selection_steps": 2,
+      "test_steps": 2,
+      "actual_training_steps": 0,
+      "budget_complete": true,
+      "feasible_points": 1,
+      "hv": 82633.06094024058,
+      "igd": 0.9071051677394689,
+      "guard_infeasible": 0,
+      "guard_certified_steps": 2,
+      "all_test_steps_interval_certified": true,
+      "reserve_unconfirmed_steps": 0,
+      "front": [
+        [
+          -0.8730076459878384,
+          -5.003959858458489,
+          4.275
+        ]
+      ]
+    },
+    {
+      "seed": 1,
+      "method": "ordinary",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 0,
+      "training_steps": 8,
+      "selection_steps": 2,
+      "test_steps": 2,
+      "actual_training_steps": 8,
+      "budget_complete": true,
+      "feasible_points": 1,
+      "hv": 82189.692363204,
+      "igd": 0.8898965439268292,
+      "guard_infeasible": 0,
+      "guard_certified_steps": 2,
+      "all_test_steps_interval_certified": true,
+      "reserve_unconfirmed_steps": 0,
+      "front": [
+        [
+          -0.9168611122646048,
+          -4.998635354146656,
+          4.25382821921945
+        ]
+      ]
+    },
+    {
+      "seed": 1,
+      "method": "central",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 0,
+      "training_steps": 8,
+      "selection_steps": 2,
+      "test_steps": 2,
+      "actual_training_steps": 8,
+      "budget_complete": true,
+      "feasible_points": 1,
+      "hv": 79036.73170448253,
+      "igd": 0.8422409810199297,
+      "guard_infeasible": 0,
+      "guard_certified_steps": 2,
+      "all_test_steps_interval_certified": true,
+      "reserve_unconfirmed_steps": 0,
+      "front": [
+        [
+          -1.229694808490959,
+          -4.960701823376893,
+          4.1028009929444575
+        ]
+      ]
+    },
+    {
+      "seed": 1,
+      "method": "fixed",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 0,
+      "training_steps": 8,
+      "selection_steps": 6,
+      "test_steps": 2,
+      "actual_training_steps": 8,
+      "budget_complete": true,
+      "feasible_points": 1,
+      "hv": 82108.74338410441,
+      "igd": 0.8870086334596046,
+      "guard_infeasible": 0,
+      "guard_certified_steps": 2,
+      "all_test_steps_interval_certified": true,
+      "reserve_unconfirmed_steps": 0,
+      "front": [
+        [
+          -0.9248713838896938,
+          -4.997662964929843,
+          4.249960998197354
+        ]
+      ]
+    },
+    {
+      "seed": 1,
+      "method": "ols",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 0,
+      "training_steps": 8,
+      "selection_steps": 8,
+      "test_steps": 2,
+      "actual_training_steps": 8,
+      "budget_complete": true,
+      "feasible_points": 1,
+      "hv": 81988.54170112002,
+      "igd": 0.8828689166455346,
+      "guard_infeasible": 0,
+      "guard_certified_steps": 2,
+      "all_test_steps_interval_certified": true,
+      "reserve_unconfirmed_steps": 0,
+      "front": [
+        [
+          -0.9367679603506427,
+          -4.99621891141655,
+          4.244217544892197
+        ]
+      ]
+    },
+    {
+      "seed": 1,
+      "method": "pareto",
+      "failed": false,
+      "selection_failed": false,
+      "failed_or_infeasible": 0,
+      "training_steps": 8,
+      "selection_steps": 8,
+      "test_steps": 2,
+      "actual_training_steps": 8,
+      "budget_complete": true,
+      "feasible_points": 1,
+      "hv": 79086.99902985452,
+      "igd": 0.9423663268417791,
+      "guard_infeasible": 0,
+      "guard_certified_steps": 2,
+      "all_test_steps_interval_certified": true,
+      "reserve_unconfirmed_steps": 0,
+      "front": [
+        [
+          -0.8836814280639456,
+          -5.0537346276973025,
+          4.093030810753361
+        ]
+      ]
+    }
+  ],
+  "aggregate": {
+    "central": {
+      "hv": {
+        "n": 1,
+        "mean": 79036.73170448253,
+        "std": null,
+        "ci95": null
+      },
+      "igd": {
+        "n": 1,
+        "mean": 0.8422409810199297,
+        "std": null,
+        "ci95": null
+      },
+      "undefined_igd": 0,
+      "failed_runs": 0,
+      "incomplete_budgets": 0,
+      "budget_matched_hv": {
+        "n": 1,
+        "mean": 79036.73170448253,
+        "std": null,
+        "ci95": null
+      }
+    },
+    "fixed": {
+      "hv": {
+        "n": 1,
+        "mean": 82108.74338410441,
+        "std": null,
+        "ci95": null
+      },
+      "igd": {
+        "n": 1,
+        "mean": 0.8870086334596046,
+        "std": null,
+        "ci95": null
+      },
+      "undefined_igd": 0,
+      "failed_runs": 0,
+      "incomplete_budgets": 0,
+      "budget_matched_hv": {
+        "n": 1,
+        "mean": 82108.74338410441,
+        "std": null,
+        "ci95": null
+      }
+    },
+    "milp_oracle": {
+      "hv": {
+        "n": 1,
+        "mean": 82633.06094024058,
+        "std": null,
+        "ci95": null
+      },
+      "igd": {
+        "n": 1,
+        "mean": 0.9071051677394689,
+        "std": null,
+        "ci95": null
+      },
+      "undefined_igd": 0,
+      "failed_runs": 0,
+      "incomplete_budgets": 0,
+      "budget_matched_hv": {
+        "n": 1,
+        "mean": 82633.06094024058,
+        "std": null,
+        "ci95": null
+      }
+    },
+    "mpc": {
+      "hv": {
+        "n": 1,
+        "mean": 82633.05975399079,
+        "std": null,
+        "ci95": null
+      },
+      "igd": {
+        "n": 1,
+        "mean": 0.9071051186199812,
+        "std": null,
+        "ci95": null
+      },
+      "undefined_igd": 0,
+      "failed_runs": 0,
+      "incomplete_budgets": 0,
+      "budget_matched_hv": {
+        "n": 1,
+        "mean": 82633.05975399079,
+        "std": null,
+        "ci95": null
+      }
+    },
+    "ols": {
+      "hv": {
+        "n": 1,
+        "mean": 81988.54170112002,
+        "std": null,
+        "ci95": null
+      },
+      "igd": {
+        "n": 1,
+        "mean": 0.8828689166455346,
+        "std": null,
+        "ci95": null
+      },
+      "undefined_igd": 0,
+      "failed_runs": 0,
+      "incomplete_budgets": 0,
+      "budget_matched_hv": {
+        "n": 1,
+        "mean": 81988.54170112002,
+        "std": null,
+        "ci95": null
+      }
+    },
+    "ordinary": {
+      "hv": {
+        "n": 1,
+        "mean": 82189.692363204,
+        "std": null,
+        "ci95": null
+      },
+      "igd": {
+        "n": 1,
+        "mean": 0.8898965439268292,
+        "std": null,
+        "ci95": null
+      },
+      "undefined_igd": 0,
+      "failed_runs": 0,
+      "incomplete_budgets": 0,
+      "budget_matched_hv": {
+        "n": 1,
+        "mean": 82189.692363204,
+        "std": null,
+        "ci95": null
+      }
+    },
+    "pareto": {
+      "hv": {
+        "n": 1,
+        "mean": 79086.99902985452,
+        "std": null,
+        "ci95": null
+      },
+      "igd": {
+        "n": 1,
+        "mean": 0.9423663268417791,
+        "std": null,
+        "ci95": null
+      },
+      "undefined_igd": 0,
+      "failed_runs": 0,
+      "incomplete_budgets": 0,
+      "budget_matched_hv": {
+        "n": 1,
+        "mean": 79086.99902985452,
+        "std": null,
+        "ci95": null
+      }
+    }
+  },
+  "hv_reference": [
+    -100.0,
+    -200.0,
+    0.0
+  ],
+  "empirical_validation_reference": [
+    [
+      -1.0008527744240636,
+      -4.149412960539726,
+      4.1414061951451
+    ],
+    [
+      -1.0008526576334993,
+      -4.149412972304019,
+      4.14140625
+    ],
+    [
+      -1.0446015074559534,
+      -4.145006840693471,
+      4.120858104433513
+    ],
+    [
+      -1.361926523170595,
+      -4.113090196242609,
+      4.03314684847151
+    ],
+    [
+      -1.0525583927762763,
+      -4.144205622086994,
+      4.1171208985204775
+    ],
+    [
+      -1.0644418058023495,
+      -4.1430091093645185,
+      4.177372914266504
+    ],
+    [
+      -1.0644418154055568,
+      -4.143009108397919,
+      4.1773729096106
+    ]
+  ],
+  "totals": {
+    "training_steps": 40,
+    "actual_training_steps": 40,
+    "selection_steps": 30,
+    "test_steps": 14
+  },
+  "notes": [
+    "IGD参考集只来自独立策略选择日期，不是真实Pareto前沿；验证与测试日期不同，IGD含场景差异。",
+    "训练预算合计所有子策略；选择交互另列，不能声称开发总交互等预算。",
+    "hv统计保留全部种子；budget_matched_hv仅筛选完成名义回合预算的运行，提前停止的OLS被排除；actual_training_steps按尝试日志计数，日志与名义步数不一致时仍需审计，不能称严格等交互预算。",
+    "备用未确认或物理/服务约束失败的整组偏好不进入HV/IGD；空集HV=0、IGD=null。",
+    "区间证书是单步线性约束证书，不是AC鲁棒保证。"
+  ]
+}

@@ -27,7 +27,9 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
     started=time.perf_counter()
     env=ResearchEnv(config,config.train_csv,dt_model,robust,resource_mode=resource_mode,reserve_mode=reserve_mode);rng=np.random.default_rng(config.seed+31415)
     agent=(CentralPPO if method=='central' else ParetoAgent)(65,env.num_agents,config.hidden_size,config.lr) if method in ('pareto','central') else OfficialPPO(config,env)
-    history=[];weights=[]
+    history=[];weights=[];episode_attempts=[]
+    from .ledger import Ledger
+    ledger=Ledger(out/'interactions.sqlite')
     contract=dict(config={k:v for k,v in asdict(config).items() if k!='episodes'},dt_model=dt_model,
         method=method,preference=pref.tolist(),robust=robust,scenario_offset=scenario_offset,
         resource_mode=resource_mode,reserve_mode=reserve_mode,dispatch=env.spec.record(),
@@ -39,7 +41,10 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
         saved=torch.load(out/'resume.pt',map_location='cpu',weights_only=True)
         if json.dumps(saved['contract'],sort_keys=True)!=json.dumps(contract,sort_keys=True):raise ValueError('续训配置或数据与检查点不一致')
         first=saved['episode'];prior_seconds=saved.get('training_seconds',0.)
-        if config.episodes<=first:raise ValueError('目标回合数必须大于已完成回合数')
+        if config.episodes<first:raise ValueError('目标回合数小于已完成回合数')
+        if 'episode_attempts' not in saved:raise ValueError('旧检查点缺少事务账本关联，仅支持推理；v3训练请使用新目录')
+        episode_attempts=saved['episode_attempts']
+        ledger.reconcile(episode_attempts,config.horizon)
         if method in ('pareto','central'):
             agent.load_state_dict(saved['agent']);agent.optimizer.load_state_dict(saved['optimizer'])
         else:
@@ -65,15 +70,19 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
                 with torch.no_grad():
                     v,a,lp,ra,rc=agent.policy.get_actions(buffer.share_obs[t,0],buffer.obs[t,0],buffer.rnn_states[t,0],buffer.rnn_states_critic[t,0],buffer.masks[t,0])
                 a=to_numpy(a)
+            call_id=ledger.begin(attempt_id,ep,t)
             try:no,ns,reward,done,info=env.step(a)
-            except (RuntimeError,ValueError) as exc:
+            except Exception as exc:
+                ledger.finish(call_id,'error',str(exc));ledger.close()
                 failure=dict(completed_env_steps=ep*config.horizon+env.core.t,episode=ep,step=t,scenario_seed=config.seed*10000+2000+scenario_offset+ep,
                     error=str(exc),soc=env.core.soc.tolist(),backlog=env.core.backlog,shifted=env.core.shifted,
                     shed_used=env.core.shed_used,remaining=env.core.remaining,row=env.core.row())
                 (out/'failure.json').write_text(json.dumps(failure,ensure_ascii=False,indent=2))
                 raise
+            record=step_record(env,obs,a,w,info,attempt_id=attempt_id,episode=ep,step=t,phase='train') if trace_path else dict(attempt_id=attempt_id,episode=ep,step=t,phase='train')
+            ledger.finish(call_id,'success',record)
             append(out/'attempts.jsonl',dict(event='step',attempt_id=attempt_id,episode=ep,step=t))
-            if trace_path:append(trace_path,step_record(env,obs,a,w,info,attempt_id=attempt_id,episode=ep,step=t,phase='train'))
+            if trace_path:append(trace_path,record)
             vector=np.array(info['objective_vector']);vectors.append(vector);violations+=info['constraint_violations']
             if method in ('pareto','central'):
                 # 将相同安全罚项施加于每个目标，任何和为 1 的偏好都获得同样惩罚。
@@ -94,12 +103,16 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
             vector=json.dumps(np.sum(vectors,axis=0).tolist()),violations=violations,**metrics))
         # 只在完整 PPO 更新后原子替换检查点；中断回合需重做，尝试日志保留。
         ns=np.random.get_state()
-        saved=dict(contract=contract,episode=ep+1,history=history,weights=weights,training_seconds=prior_seconds+time.perf_counter()-started,
+        episode_attempts.append(attempt_id)
+        saved=dict(episode_attempts=episode_attempts,contract=contract,episode=ep+1,history=history,weights=weights,training_seconds=prior_seconds+time.perf_counter()-started,
             agent=agent.state_dict() if method in ('pareto','central') else agent.state(),
             optimizer=agent.optimizer.state_dict() if method in ('pareto','central') else None,
             preference_rng=rng.bit_generator.state,python_rng=random.getstate(),torch_rng=torch.get_rng_state(),
             numpy_rng=(ns[0],ns[1].tolist(),ns[2],ns[3],ns[4]))
-        torch.save(saved,out/'resume.pt.tmp');os.replace(out/'resume.pt.tmp',out/'resume.pt')
+        torch.save(saved,out/'resume.pt.tmp')
+        with (out/'resume.pt.tmp').open('rb') as f:os.fsync(f.fileno())
+        os.replace(out/'resume.pt.tmp',out/'resume.pt')
+        ledger.commit_episode(ep,attempt_id,config.horizon)
         write_csv(out/'training.csv',history)
         append(out/'attempts.jsonl',dict(event='checkpoint',completed_episodes=ep+1,logical_env_steps=(ep+1)*config.horizon))
         print(f'[{method} 种子={config.seed}] 已保存回合 {ep+1}/{config.episodes}，训练步 {(ep+1)*config.horizon}',flush=True)
@@ -109,8 +122,13 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
         train_scenarios=env.data.scenario_names if env.data else [],train_fingerprints=env.data.fingerprints if env.data else [],
         train_seeds=[config.seed*10000+2000+scenario_offset+ep for ep in range(config.episodes)])
     state['agent']=agent.state_dict() if method in ('pareto','central') else agent.state()
-    torch.save(state,out/'latest.pt');write_csv(out/'training.csv',history)
+    torch.save(state,out/'latest.pt.tmp')
+    with (out/'latest.pt.tmp').open('rb') as f:os.fsync(f.fileno())
+    os.replace(out/'latest.pt.tmp',out/'latest.pt');write_csv(out/'training.csv',history)
     (out/'metadata.json').write_text(json.dumps({k:v for k,v in state.items() if k!='agent'},ensure_ascii=False,indent=2),encoding='utf-8')
+    ledger.export()
+    (out/'budget_ledger.json').write_text(json.dumps(ledger.summary(),ensure_ascii=False,indent=2))
+    ledger.close()
     return state
 
 
@@ -127,7 +145,7 @@ def load(checkpoint):
     return state,c,agent
 
 
-def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,csv_path=None,ev_bundle=None,ac_safe=False):
+def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,csv_path=None,ev_bundle=None,ac_safe=False,trace_dir=None):
     state,c,agent=load(checkpoint)
     if set(seeds)&set(state['train_seeds']):raise ValueError('策略训练与评估种子重叠')
     if ev_bundle is not None:c._ev_bundle=ev_bundle
@@ -143,6 +161,18 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
         w=np.asarray(preference,dtype=float)
         if w.shape!=(3,) or np.any(w<0) or not np.isclose(w.sum(),1):raise ValueError('偏好必须在三维单纯形上')
         for index,seed in enumerate(seeds):
+            trace_path=None;eval_ledger=None
+            if trace_dir is not None:
+                from .dt import digest
+                from .trace import append,step_record
+                target=Path(trace_dir)/(digest(w.tolist())[:12]+f'_seed_{seed}')
+                if target.exists():
+                    count=1
+                    while target.with_name(target.name+f'_attempt_{count}').exists():count+=1
+                    target.rename(target.with_name(target.name+f'_attempt_{count}'))
+                target.mkdir(parents=True,exist_ok=True);trace_path=target/'trajectory.jsonl'
+                from .ledger import Ledger
+                eval_ledger=Ledger(target/'evaluation.sqlite')
             row=dict(seed=seed,preference=w.tolist(),unseen_preference=not any(np.allclose(w,p,atol=1e-9,rtol=0) for p in state['training_preferences']),failed=False,env_steps=0)
             try:
                 env.preference=w;env.reward_mode="economic" if state["method"] in ("ordinary","central") else "weighted"
@@ -152,14 +182,23 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
                         if name+'_scale' in stress:env.core.profiles[name+'_kw'][2:]*=stress[name+'_scale']
                 rnn=np.zeros((env.num_agents,1,c.hidden_size),np.float32);masks=np.ones((env.num_agents,1),np.float32);infos=[]
                 inference_times=[]
-                for _ in range(c.horizon):
+                for step in range(c.horizon):
+                    before=obs.copy()
                     started=time.perf_counter()
                     if state['method'] in ('pareto','central'):a,_,_=agent.act(obs,w,True)
                     else:
                         with torch.no_grad():a,r=agent.policy.act(obs,rnn,masks,deterministic=True)
                         a=to_numpy(a);rnn=to_numpy(r)
                     inference_times.append(time.perf_counter()-started)
-                    obs,_,_,_,info=env.step(a);infos.append(info);row['env_steps']+=1
+                    ident=eval_ledger.begin('evaluation',0,step) if eval_ledger else None
+                    try:obs,_,_,_,info=env.step(a)
+                    except Exception as exc:
+                        if eval_ledger:eval_ledger.finish(ident,'error',str(exc))
+                        raise
+                    infos.append(info);row['env_steps']+=1
+                    if trace_path:
+                        record=step_record(env,before,a,w,info,phase='evaluation',step=step,episode=0,attempt_id='evaluation',inference_seconds=inference_times[-1],scenario_seed=seed,scenario_date=env.data.scenario_names[index] if env.data else None)
+                        eval_ledger.finish(ident,'success',record);append(trace_path,record)
                 row.update(objective_version=state['objective_version'],emergency_steps=sum(i.get('emergency',False) for i in infos),
                     emergency_service_degraded_steps=sum(i.get('emergency_service_degraded',False) for i in infos),inference_seconds=inference_times,training_seconds=state.get('training_seconds'),vector=np.sum([i['objective_vector'] for i in infos],axis=0).tolist(),
                     violations=sum(i['constraint_violations'] for i in infos),ac_violations=sum(i['ac_violations'] for i in infos),
@@ -172,6 +211,11 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
                     safety_interventions=sum(i['shield_l1_kw']>1e-5 for i in infos),guard_infeasible=sum(not i['guard_feasible'] for i in infos) if env.robust else None,
                     guard_certified_steps=sum(i['guard_certificate_survived'] for i in infos),mean_aoi=float(np.mean([i['aoi_mean_seconds'] for i in infos])))
             except (RuntimeError,ValueError) as exc:row.update(failed=True,error=str(exc),vector=None,env_steps=max(row['env_steps'],env.core.t))
+            if eval_ledger:
+                row['interaction_ledger']=eval_ledger.summary();eval_ledger.export();eval_ledger.close()
+            if trace_path:
+                row['trace_path']=str(target/'trajectory_complete.jsonl')
+                (target/'evaluation.json').write_text(json.dumps(row,ensure_ascii=False,indent=2))
             results.append(row)
     if output:Path(output).write_text(json.dumps(results,ensure_ascii=False,indent=2),encoding='utf-8')
     return results

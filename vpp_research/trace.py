@@ -1,5 +1,6 @@
 """逐步记录公开观察、候选命令、协调结果和物理执行，便于闭环审计。"""
 import json
+import os
 from pathlib import Path
 import numpy as np
 
@@ -14,6 +15,7 @@ def append(path,record):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
     with path.open('a',encoding='utf-8') as f:
         f.write(json.dumps(record,ensure_ascii=False,default=plain,allow_nan=False)+'\n')
+        f.flush();os.fsync(f.fileno())
 
 
 def step_record(env,obs,raw,preference,info,**tags):
@@ -25,6 +27,9 @@ def step_record(env,obs,raw,preference,info,**tags):
         dt_ood=bool(obs[0,63]),preference=list(preference),
         raw_policy_action=None if raw is None else np.asarray(raw).tolist(),
         energy_candidate=json.loads(info['requested_energy_action_json']),
+        issued_energy_candidate=info.get('issued_energy_candidate_kw'),
+        received_energy_candidate=info.get('received_energy_candidate_kw'),
+        guarded_energy_candidate=info.get('interval_guard_candidate_kw'),
         coordinator=coordinator,bandwidth_bps=json.loads(info['bandwidth_allocated_bps_json']),
         cpu_cycles_per_second=json.loads(info['cpu_allocated_cycles_per_second_json']),
         executed_energy=[info[k] for k in ('ess_power_kw','ev_charge_kw','dr_shift_kw','dr_shed_kw','pv_curtail_kw','wind_curtail_kw')],
