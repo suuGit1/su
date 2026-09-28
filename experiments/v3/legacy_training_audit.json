@@ -1,0 +1,203 @@
+{
+  "schema": "training-audit-v3",
+  "runs": [
+    {
+      "path": "../research_runs/v2_expanded/seed_1/central_1",
+      "nominal_steps": 288,
+      "logged_steps": 288,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_1/fixed_1/member_0",
+      "nominal_steps": 96,
+      "logged_steps": 94,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_1/fixed_1/member_1",
+      "nominal_steps": 96,
+      "logged_steps": 96,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_1/fixed_1/member_2",
+      "nominal_steps": 96,
+      "logged_steps": 96,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_1/ols_1/member_0",
+      "nominal_steps": 72,
+      "logged_steps": 72,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_1/ols_1/member_1",
+      "nominal_steps": 72,
+      "logged_steps": 72,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_1/ols_1/member_2",
+      "nominal_steps": 72,
+      "logged_steps": 72,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_1/ols_1/member_3",
+      "nominal_steps": 72,
+      "logged_steps": 72,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_1/ordinary_1",
+      "nominal_steps": 288,
+      "logged_steps": 286,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_1/pareto_1",
+      "nominal_steps": 288,
+      "logged_steps": 283,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_2/central_2",
+      "nominal_steps": 288,
+      "logged_steps": 286,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_2/fixed_2/member_0",
+      "nominal_steps": 96,
+      "logged_steps": 95,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_2/fixed_2/member_1",
+      "nominal_steps": 96,
+      "logged_steps": 96,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_2/fixed_2/member_2",
+      "nominal_steps": 96,
+      "logged_steps": 95,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_2/ols_2/member_0",
+      "nominal_steps": 72,
+      "logged_steps": 71,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_2/ols_2/member_1",
+      "nominal_steps": 72,
+      "logged_steps": 71,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_2/ols_2/member_2",
+      "nominal_steps": 72,
+      "logged_steps": 71,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_2/ordinary_2",
+      "nominal_steps": 288,
+      "logged_steps": 287,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_2/pareto_2",
+      "nominal_steps": 288,
+      "logged_steps": 288,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_3/central_3",
+      "nominal_steps": 288,
+      "logged_steps": 287,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_3/fixed_3/member_0",
+      "nominal_steps": 96,
+      "logged_steps": 96,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_3/fixed_3/member_1",
+      "nominal_steps": 96,
+      "logged_steps": 94,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_3/fixed_3/member_2",
+      "nominal_steps": 96,
+      "logged_steps": 96,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_3/ols_3/member_0",
+      "nominal_steps": 72,
+      "logged_steps": 69,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_3/ols_3/member_1",
+      "nominal_steps": 72,
+      "logged_steps": 72,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_3/ols_3/member_2",
+      "nominal_steps": 72,
+      "logged_steps": 72,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_3/ordinary_3",
+      "nominal_steps": 288,
+      "logged_steps": 287,
+      "ledger_available": false,
+      "consistent": false
+    },
+    {
+      "path": "../research_runs/v2_expanded/seed_3/pareto_3",
+      "nominal_steps": 288,
+      "logged_steps": 285,
+      "ledger_available": false,
+      "consistent": false
+    }
+  ],
+  "consistent": false,
+  "note": "旧日志不能证明完整实际交互；未知调用不自动视为成功；重做回合计入successful_calls"
+}

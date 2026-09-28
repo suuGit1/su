@@ -1,0 +1,20 @@
+test_actor_preference_and_vector_critic_interfaces (validation.test_v3.V3Tests.test_actor_preference_and_vector_critic_interfaces) ... ok
+test_missing_step_blocks_commit (validation.test_v3.V3Tests.test_missing_step_blocks_commit) ... ok
+test_retries_are_charged_but_only_checkpoint_committed (validation.test_v3.V3Tests.test_retries_are_charged_but_only_checkpoint_committed) ... ok
+test_trace_catches_missing_duplicate_and_wrong_vector (validation.test_v3.V3Tests.test_trace_catches_missing_duplicate_and_wrong_vector) ... ok
+test_unknown_call_blocks_resume (validation.test_v3.V3Tests.test_unknown_call_blocks_resume) ... ok
+test_vector_gae_keeps_objectives_and_terminal_mask (validation.test_v3.V3Tests.test_vector_gae_keeps_objectives_and_terminal_mask) ... ok
+test_both_algorithms_match_uninterrupted_episode_updates (validation.test_integrated.ResumeTests.test_both_algorithms_match_uninterrupted_episode_updates) ... [ordinary 种子=61] 已保存回合 1/2，训练步 2
+[ordinary 种子=61] 已保存回合 2/2，训练步 4
+[ordinary 种子=61] 已保存回合 1/1，训练步 2
+[ordinary 种子=61] 已保存回合 2/2，训练步 4
+[pareto 种子=61] 已保存回合 1/2，训练步 2
+[pareto 种子=61] 已保存回合 2/2，训练步 4
+[pareto 种子=61] 已保存回合 1/1，训练步 2
+[pareto 种子=61] 已保存回合 2/2，训练步 4
+ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 11.615s
+
+OK

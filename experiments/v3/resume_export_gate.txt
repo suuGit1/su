@@ -1,0 +1,13 @@
+test_actor_preference_and_vector_critic_interfaces (validation.test_v3.V3Tests.test_actor_preference_and_vector_critic_interfaces) ... ok
+test_completed_checkpoint_can_export_without_extra_interactions (validation.test_v3.V3Tests.test_completed_checkpoint_can_export_without_extra_interactions) ... [pareto 种子=1] 已保存回合 1/1，训练步 2
+ok
+test_missing_step_blocks_commit (validation.test_v3.V3Tests.test_missing_step_blocks_commit) ... ok
+test_retries_are_charged_but_only_checkpoint_committed (validation.test_v3.V3Tests.test_retries_are_charged_but_only_checkpoint_committed) ... ok
+test_trace_catches_missing_duplicate_and_wrong_vector (validation.test_v3.V3Tests.test_trace_catches_missing_duplicate_and_wrong_vector) ... ok
+test_unknown_call_blocks_resume (validation.test_v3.V3Tests.test_unknown_call_blocks_resume) ... ok
+test_vector_gae_keeps_objectives_and_terminal_mask (validation.test_v3.V3Tests.test_vector_gae_keeps_objectives_and_terminal_mask) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 7.114s
+
+OK

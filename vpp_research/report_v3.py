@@ -42,7 +42,7 @@ def report_v3(root):
                 note='审计完整不等于方法优越；预算早停、重试与选择交互需单独比较；旧v2不补造证据')
     (root/'v3_report.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
     lines=['# v3实验审计','',f'- 逐步证据完整：{audit_ok}',f'- 名义回合预算完整：{result["nominal_budget_complete"]}',
-           '- 训练实际交互来自事务账本；完整性同时核对尝试日志及回合汇总。',
+           '- 训练实际交互来自事务账本完整载荷及提交回合；辅助追加日志差异单列。',
            '- 测试和验证三目标、安全计数从轨迹复算；详情见trace_audit.json。',
            '- 不能把固定权重、OLS子策略的选择交互忽略后声称开发总预算相同。',
            '- HV/IGD见report.md；三目标图只展示各方法自身的可行非支配点，不代表真实前沿。']

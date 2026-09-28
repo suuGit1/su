@@ -1,0 +1,10 @@
+{
+  "version": "3.0.0",
+  "objective_version": "c3-ac-pcc-same-period-sampled-reserve-v4",
+  "dt_version": "ridge-block-conformal-physical-dt-v2",
+  "seeds": [
+    1
+  ],
+  "workers": 1,
+  "note": "按种子并行，子策略预算合计；训练完成不等于算法优势或AC鲁棒证明"
+}

@@ -1,0 +1,829 @@
+{
+  "version": "3.0.0",
+  "evidence_complete": true,
+  "training": {
+    "schema": "training-audit-v3",
+    "runs": [
+      {
+        "path": "../research_runs/v3_release_verified/seed_1/central_1",
+        "nominal_steps": 8,
+        "logged_steps": 8,
+        "ledger_available": true,
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 8,
+        "successful_calls": 8,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 8,
+        "step_identities_match": true,
+        "transaction_payload_complete": true,
+        "training_trace_matches": true,
+        "consistent": true,
+        "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+        "live_ledger_summary": {
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 8,
+          "successful_calls": 8,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 8
+        },
+        "snapshot_matches_live_ledger": true
+      },
+      {
+        "path": "../research_runs/v3_release_verified/seed_1/fixed_1/member_0",
+        "nominal_steps": 4,
+        "logged_steps": 4,
+        "ledger_available": true,
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 4,
+        "successful_calls": 4,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 4,
+        "step_identities_match": true,
+        "transaction_payload_complete": true,
+        "training_trace_matches": true,
+        "consistent": true,
+        "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+        "live_ledger_summary": {
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 4,
+          "successful_calls": 4,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 4
+        },
+        "snapshot_matches_live_ledger": true
+      },
+      {
+        "path": "../research_runs/v3_release_verified/seed_1/fixed_1/member_1",
+        "nominal_steps": 2,
+        "logged_steps": 2,
+        "ledger_available": true,
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 2,
+        "successful_calls": 2,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 2,
+        "step_identities_match": true,
+        "transaction_payload_complete": true,
+        "training_trace_matches": true,
+        "consistent": true,
+        "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+        "live_ledger_summary": {
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 2,
+          "successful_calls": 2,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 2
+        },
+        "snapshot_matches_live_ledger": true
+      },
+      {
+        "path": "../research_runs/v3_release_verified/seed_1/fixed_1/member_2",
+        "nominal_steps": 2,
+        "logged_steps": 2,
+        "ledger_available": true,
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 2,
+        "successful_calls": 2,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 2,
+        "step_identities_match": true,
+        "transaction_payload_complete": true,
+        "training_trace_matches": true,
+        "consistent": true,
+        "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+        "live_ledger_summary": {
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 2,
+          "successful_calls": 2,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 2
+        },
+        "snapshot_matches_live_ledger": true
+      },
+      {
+        "path": "../research_runs/v3_release_verified/seed_1/ols_1/member_0",
+        "nominal_steps": 2,
+        "logged_steps": 2,
+        "ledger_available": true,
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 2,
+        "successful_calls": 2,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 2,
+        "step_identities_match": true,
+        "transaction_payload_complete": true,
+        "training_trace_matches": true,
+        "consistent": true,
+        "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+        "live_ledger_summary": {
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 2,
+          "successful_calls": 2,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 2
+        },
+        "snapshot_matches_live_ledger": true
+      },
+      {
+        "path": "../research_runs/v3_release_verified/seed_1/ols_1/member_1",
+        "nominal_steps": 2,
+        "logged_steps": 2,
+        "ledger_available": true,
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 2,
+        "successful_calls": 2,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 2,
+        "step_identities_match": true,
+        "transaction_payload_complete": true,
+        "training_trace_matches": true,
+        "consistent": true,
+        "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+        "live_ledger_summary": {
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 2,
+          "successful_calls": 2,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 2
+        },
+        "snapshot_matches_live_ledger": true
+      },
+      {
+        "path": "../research_runs/v3_release_verified/seed_1/ols_1/member_2",
+        "nominal_steps": 2,
+        "logged_steps": 2,
+        "ledger_available": true,
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 2,
+        "successful_calls": 2,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 2,
+        "step_identities_match": true,
+        "transaction_payload_complete": true,
+        "training_trace_matches": true,
+        "consistent": true,
+        "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+        "live_ledger_summary": {
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 2,
+          "successful_calls": 2,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 2
+        },
+        "snapshot_matches_live_ledger": true
+      },
+      {
+        "path": "../research_runs/v3_release_verified/seed_1/ols_1/member_3",
+        "nominal_steps": 2,
+        "logged_steps": 2,
+        "ledger_available": true,
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 2,
+        "successful_calls": 2,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 2,
+        "step_identities_match": true,
+        "transaction_payload_complete": true,
+        "training_trace_matches": true,
+        "consistent": true,
+        "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+        "live_ledger_summary": {
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 2,
+          "successful_calls": 2,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 2
+        },
+        "snapshot_matches_live_ledger": true
+      },
+      {
+        "path": "../research_runs/v3_release_verified/seed_1/ordinary_1",
+        "nominal_steps": 8,
+        "logged_steps": 8,
+        "ledger_available": true,
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 8,
+        "successful_calls": 8,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 8,
+        "step_identities_match": true,
+        "transaction_payload_complete": true,
+        "training_trace_matches": true,
+        "consistent": true,
+        "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+        "live_ledger_summary": {
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 8,
+          "successful_calls": 8,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 8
+        },
+        "snapshot_matches_live_ledger": true
+      },
+      {
+        "path": "../research_runs/v3_release_verified/seed_1/pareto_1",
+        "nominal_steps": 8,
+        "logged_steps": 8,
+        "ledger_available": true,
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 8,
+        "successful_calls": 8,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 8,
+        "step_identities_match": true,
+        "transaction_payload_complete": true,
+        "training_trace_matches": true,
+        "consistent": true,
+        "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+        "live_ledger_summary": {
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 8,
+          "successful_calls": 8,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 8
+        },
+        "snapshot_matches_live_ledger": true
+      }
+    ],
+    "consistent": true,
+    "note": "旧日志不能证明完整实际交互；未知调用不自动视为成功；重做回合计入successful_calls"
+  },
+  "traces": {
+    "schema": "trace-evidence-v3",
+    "entries": [
+      {
+        "method": "mpc",
+        "seed": 1,
+        "failed": false,
+        "traces": [
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/mpc_1/validation/weight_0_day_0/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0008527744240634,
+                -4.149412960539726,
+                4.1414061951451
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "results",
+            "path": "../research_runs/v3_release_verified/seed_1/mpc_1/test/weight_0_day_0/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -0.8730077632745432,
+                -5.003959844215718,
+                4.274999943375588
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          }
+        ],
+        "test_count_ok": true,
+        "consistent": true
+      },
+      {
+        "method": "milp_oracle",
+        "seed": 1,
+        "failed": false,
+        "traces": [
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/milp_oracle_1/validation/weight_0_day_0/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0008526576334993,
+                -4.14941297230402,
+                4.14140625
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "results",
+            "path": "../research_runs/v3_release_verified/seed_1/milp_oracle_1/test/weight_0_day_0/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -0.8730076459878384,
+                -5.00395985845849,
+                4.275
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          }
+        ],
+        "test_count_ok": true,
+        "consistent": true
+      },
+      {
+        "method": "ordinary",
+        "seed": 1,
+        "failed": false,
+        "traces": [
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/ordinary_1/validation/0a46794ad3be_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0446015074559534,
+                -4.145006840693471,
+                4.120858104433513
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "results",
+            "path": "../research_runs/v3_release_verified/seed_1/ordinary_1/test/weight_0/25775891314b_seed_40000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -0.9168611122646048,
+                -4.998635354146656,
+                4.25382821921945
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          }
+        ],
+        "test_count_ok": true,
+        "consistent": true
+      },
+      {
+        "method": "central",
+        "seed": 1,
+        "failed": false,
+        "traces": [
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/central_1/validation/0a46794ad3be_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.361926523170595,
+                -4.113090196242609,
+                4.03314684847151
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "results",
+            "path": "../research_runs/v3_release_verified/seed_1/central_1/test/weight_0/25775891314b_seed_40000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.229694808490959,
+                -4.960701823376893,
+                4.1028009929444575
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          }
+        ],
+        "test_count_ok": true,
+        "consistent": true
+      },
+      {
+        "method": "fixed",
+        "seed": 1,
+        "failed": false,
+        "traces": [
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/fixed_1/member_0/validation/0a46794ad3be_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0525583927762763,
+                -4.144205622086994,
+                4.1171208985204775
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/fixed_1/member_1/validation/5172df57f826_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0035218352107387,
+                -4.1582557519234165,
+                4.0463722798607105
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/fixed_1/member_2/validation/3ff5c187b6f5_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0035218352107387,
+                -4.1582557519234165,
+                4.0463722798607105
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "results",
+            "path": "../research_runs/v3_release_verified/seed_1/fixed_1/test/weight_0/25775891314b_seed_40000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -0.9248713838896938,
+                -4.997662964929843,
+                4.249960998197354
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          }
+        ],
+        "test_count_ok": true,
+        "consistent": true
+      },
+      {
+        "method": "ols",
+        "seed": 1,
+        "failed": false,
+        "traces": [
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/ols_1/member_0/validation/0a46794ad3be_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0644418058023495,
+                -4.1430091093645185,
+                4.177372914266504
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/ols_1/member_1/validation/8966c3d12f34_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0644418154055568,
+                -4.143009108397919,
+                4.1773729096106
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/ols_1/member_2/validation/9b1117bacce3_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.003521835502838,
+                -4.158255752891159,
+                4.046372284079544
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/ols_1/member_3/validation/2a05aac304ee_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0035218352107387,
+                -4.1582557519234165,
+                4.0463722798607105
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "results",
+            "path": "../research_runs/v3_release_verified/seed_1/ols_1/test/weight_0/25775891314b_seed_40000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -0.9367679603506427,
+                -4.99621891141655,
+                4.244217544892197
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          }
+        ],
+        "test_count_ok": true,
+        "consistent": true
+      },
+      {
+        "method": "pareto",
+        "seed": 1,
+        "failed": false,
+        "traces": [
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/pareto_1/validation/0a46794ad3be_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0139345659596433,
+                -4.1927608533949545,
+                3.8965527675717224
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/pareto_1/validation/8966c3d12f34_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0165575652451535,
+                -4.201454937508473,
+                3.8587587310147162
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/pareto_1/validation/9b1117bacce3_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0099787273092131,
+                -4.179650625931577,
+                3.953588791748051
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "validation",
+            "path": "../research_runs/v3_release_verified/seed_1/pareto_1/validation/80deeb4efd4f_seed_50000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -1.0135457245902246,
+                -4.191472089378934,
+                3.9021571575382126
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          },
+          {
+            "phase": "results",
+            "path": "../research_runs/v3_release_verified/seed_1/pareto_1/test/weight_0/25775891314b_seed_40000/trajectory_complete.jsonl",
+            "consistent": true,
+            "errors": [],
+            "recomputed": {
+              "env_steps": 2,
+              "vector": [
+                -0.8836814280639456,
+                -5.0537346276973025,
+                4.093030810753361
+              ],
+              "violations": 0,
+              "ac_violations": 0,
+              "reserve_invalid": 0,
+              "guard_certified_steps": 2,
+              "ev_unmet_kwh": 0.0,
+              "dr_backlog_kwh": 0.0
+            }
+          }
+        ],
+        "test_count_ok": true,
+        "consistent": true
+      }
+    ],
+    "campaign_complete": true,
+    "all_attempt_evaluation_budget": {
+      "test": {
+        "attempted_calls": 14,
+        "successful_calls": 14,
+        "error_calls": 0,
+        "unknown_calls": 0
+      },
+      "validation": {
+        "attempted_calls": 30,
+        "successful_calls": 30,
+        "error_calls": 0,
+        "unknown_calls": 0
+      }
+    },
+    "consistent": true
+  },
+  "strict_training_budget_hv": {
+    "central": {
+      "n": 1,
+      "mean": 79036.73170448253,
+      "std": null,
+      "ci95": null
+    },
+    "fixed": {
+      "n": 1,
+      "mean": 82108.74338410441,
+      "std": null,
+      "ci95": null
+    },
+    "ols": {
+      "n": 1,
+      "mean": 81988.54170112002,
+      "std": null,
+      "ci95": null
+    },
+    "ordinary": {
+      "n": 1,
+      "mean": 82189.692363204,
+      "std": null,
+      "ci95": null
+    },
+    "pareto": {
+      "n": 1,
+      "mean": 79086.99902985452,
+      "std": null,
+      "ci95": null
+    }
+  },
+  "nominal_budget_complete": true,
+  "note": "审计完整不等于方法优越；预算早停、重试与选择交互需单独比较；旧v2不补造证据"
+}

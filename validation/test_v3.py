@@ -10,6 +10,47 @@ from vpp_research.pareto_agent import vector_gae,ParetoAgent
 
 
 class V3Tests(unittest.TestCase):
+    def test_transaction_payload_survives_projection_loss(self):
+        from vpp_research.ledger import completed_evidence
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);x=Ledger(root/'interactions.sqlite')
+            record=dict(attempt_id='a',episode=0,step=0,feedback=dict(actual=7.5))
+            x.finish(x.begin('a',0,0),'success',record);x.close()
+            x=Ledger(root/'interactions.sqlite');x.export();x.close()
+            self.assertEqual(json.loads((root/'trajectory_complete.jsonl').read_text()),record)
+            self.assertEqual(completed_evidence(root)['summary']['successful_calls'],1)
+            p=root/'completed_evidence.json';r=json.loads(p.read_text());r['evidence']['calls'][0]['detail']['feedback']['actual']=9
+            p.write_text(json.dumps(r))
+            with self.assertRaises(ValueError):completed_evidence(root)
+
+    def test_partial_campaign_cannot_pass_evidence_gate(self):
+        from unittest.mock import patch
+        from vpp_research.evidence_v3 import audit_campaign
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d)
+            plan=dict(methods=['ordinary','pareto'],seeds=[1],eval_days=1,preferences=[[1,0,0]])
+            entry=dict(method='ordinary',seed=1,results=[dict(trace_path='mock')],validation=[])
+            data=dict(manifest=plan,entries=[entry],completed=True)
+            (root/'results.json').write_text(json.dumps(data))
+            with patch('vpp_research.evidence_v3.audit_trace',return_value=dict(consistent=True,errors=[])):
+                self.assertFalse(audit_campaign(root)['consistent'])
+                data['entries'].append(dict(entry,method='pareto'))
+                (root/'results.json').write_text(json.dumps(data))
+                self.assertTrue(audit_campaign(root)['consistent'])
+
+    def test_completed_checkpoint_can_export_without_extra_interactions(self):
+        from vpp_mappo.config import Config
+        from vpp_research.train import train
+        c=Config.load('configs/research_smoke.json');c.episodes=1;c.horizon=2
+        with tempfile.TemporaryDirectory() as d:
+            out=Path(d)/'run';first=train(c,None,out,method='pareto')
+            ledger=Ledger(out/'interactions.sqlite');before=ledger.summary();ledger.close()
+            (out/'latest.pt').unlink()
+            recovered=train(c,None,out,method='pareto',resume=True)
+            ledger=Ledger(out/'interactions.sqlite');after=ledger.summary();ledger.close()
+            self.assertEqual(before,after);self.assertEqual(first['training_preferences'],recovered['training_preferences'])
+            self.assertTrue((out/'latest.pt').exists())
+
     def test_unknown_call_blocks_resume(self):
         with tempfile.TemporaryDirectory() as d:
             x=Ledger(Path(d)/'calls.sqlite');x.begin('a',0,0);x.close()

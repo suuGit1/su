@@ -79,9 +79,10 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
                     shed_used=env.core.shed_used,remaining=env.core.remaining,row=env.core.row())
                 (out/'failure.json').write_text(json.dumps(failure,ensure_ascii=False,indent=2))
                 raise
-            ledger.finish(call_id,'success')
+            record=step_record(env,obs,a,w,info,attempt_id=attempt_id,episode=ep,step=t,phase='train') if trace_path else dict(attempt_id=attempt_id,episode=ep,step=t,phase='train')
+            ledger.finish(call_id,'success',record)
             append(out/'attempts.jsonl',dict(event='step',attempt_id=attempt_id,episode=ep,step=t))
-            if trace_path:append(trace_path,step_record(env,obs,a,w,info,attempt_id=attempt_id,episode=ep,step=t,phase='train'))
+            if trace_path:append(trace_path,record)
             vector=np.array(info['objective_vector']);vectors.append(vector);violations+=info['constraint_violations']
             if method in ('pareto','central'):
                 # 将相同安全罚项施加于每个目标，任何和为 1 的偏好都获得同样惩罚。
@@ -121,8 +122,11 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
         train_scenarios=env.data.scenario_names if env.data else [],train_fingerprints=env.data.fingerprints if env.data else [],
         train_seeds=[config.seed*10000+2000+scenario_offset+ep for ep in range(config.episodes)])
     state['agent']=agent.state_dict() if method in ('pareto','central') else agent.state()
-    torch.save(state,out/'latest.pt');write_csv(out/'training.csv',history)
+    torch.save(state,out/'latest.pt.tmp')
+    with (out/'latest.pt.tmp').open('rb') as f:os.fsync(f.fileno())
+    os.replace(out/'latest.pt.tmp',out/'latest.pt');write_csv(out/'training.csv',history)
     (out/'metadata.json').write_text(json.dumps({k:v for k,v in state.items() if k!='agent'},ensure_ascii=False,indent=2),encoding='utf-8')
+    ledger.export()
     (out/'budget_ledger.json').write_text(json.dumps(ledger.summary(),ensure_ascii=False,indent=2))
     ledger.close()
     return state
@@ -191,9 +195,10 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
                     except Exception as exc:
                         if eval_ledger:eval_ledger.finish(ident,'error',str(exc))
                         raise
-                    if eval_ledger:eval_ledger.finish(ident,'success')
                     infos.append(info);row['env_steps']+=1
-                    if trace_path:append(trace_path,step_record(env,before,a,w,info,phase='evaluation',step=step,inference_seconds=inference_times[-1],scenario_seed=seed,scenario_date=env.data.scenario_names[index] if env.data else None))
+                    if trace_path:
+                        record=step_record(env,before,a,w,info,phase='evaluation',step=step,episode=0,attempt_id='evaluation',inference_seconds=inference_times[-1],scenario_seed=seed,scenario_date=env.data.scenario_names[index] if env.data else None)
+                        eval_ledger.finish(ident,'success',record);append(trace_path,record)
                 row.update(objective_version=state['objective_version'],emergency_steps=sum(i.get('emergency',False) for i in infos),
                     emergency_service_degraded_steps=sum(i.get('emergency_service_degraded',False) for i in infos),inference_seconds=inference_times,training_seconds=state.get('training_seconds'),vector=np.sum([i['objective_vector'] for i in infos],axis=0).tolist(),
                     violations=sum(i['constraint_violations'] for i in infos),ac_violations=sum(i['ac_violations'] for i in infos),
@@ -207,9 +212,9 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
                     guard_certified_steps=sum(i['guard_certificate_survived'] for i in infos),mean_aoi=float(np.mean([i['aoi_mean_seconds'] for i in infos])))
             except (RuntimeError,ValueError) as exc:row.update(failed=True,error=str(exc),vector=None,env_steps=max(row['env_steps'],env.core.t))
             if eval_ledger:
-                row['interaction_ledger']=eval_ledger.summary();eval_ledger.close()
+                row['interaction_ledger']=eval_ledger.summary();eval_ledger.export();eval_ledger.close()
             if trace_path:
-                row['trace_path']=str(trace_path)
+                row['trace_path']=str(target/'trajectory_complete.jsonl')
                 (target/'evaluation.json').write_text(json.dumps(row,ensure_ascii=False,indent=2))
             results.append(row)
     if output:Path(output).write_text(json.dumps(results,ensure_ascii=False,indent=2),encoding='utf-8')

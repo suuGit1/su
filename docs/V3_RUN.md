@@ -95,3 +95,27 @@ python -m unittest discover -s validation -p "test_*.py"
 重点验证未知交互拒绝恢复、重试记账、回合缺步拒绝提交、轨迹复算、向量GAE终止掩码、actor偏好接口及双MAPPO恢复一致性。已完成实验的确切配置与结果见 `experiments/v3/`；开发验收不作为长期性能结论。
 
 真实EV完整会话、同地区DR、C3硬件测量和大网络证据仍需后续补充。当前框架是国家真实曲线缩放驱动的IEEE33仿真，不是现场部署。
+
+## B1本轮发现
+
+在2019-02-14两个初始状态、四种偏好、两时段窗口上，冻结v2种子1模型进行了配对诊断。普通MAPPO的发出和执行动作均不随显式偏好变化；Pareto-MAPPO发出能量动作的偏好差异L2约9.75–9.83 kW，当步尚未接收；下一时段最终执行仍保留约7.99–8.29 kW差异。该结果确认偏好通路与下行延迟作用，不代表已解决低HV或证明算法优势。完整数值和定义见experiments/v3/DIAGNOSTIC_FINDINGS.md。
+
+## 快速七方法端到端验收
+
+以下命令从已有真实日曲线中截取前两个小时，保留原始值与父文件哈希；只验证程序、账本和报告，禁止据此得出论文性能结论。完整24小时实验仍使用默认data/real目录。
+
+```bash
+python scripts/prepare_v3_acceptance_data.py --output runs/acceptance_data
+python run_v3.py --data-root runs/acceptance_data --seeds 1 --episodes 4 --eval-days 1 --selection-days 1 --eval-preferences "0.2,0.3,0.5" --dt-train-days 2 --dt-calibration-days 9 --workers 1 --output runs/v3_acceptance
+python scripts/report_v3.py runs/v3_acceptance
+```
+
+本轮完整日验收在第五种方法后中断，OLS出现未知调用，未被强行恢复或改记成功。已完成的五种方法结果独立归档；它们不等于完整七方法验收。源码保存与未完成整日实验分开，复现实验请使用新目录，避免混用开发过程中的源码指纹。
+
+## 最终事务轨迹格式
+
+最终v3在环境调用成功时，将完整观察、动作、反馈与step标识一起写入SQLite事务，计数与载荷同时提交。`trajectory_complete.jsonl`和`successful_calls.jsonl`从这些实际保存的载荷原子导出，供报告复算；它们不是根据回合数补造的数据。训练与验证/测试均使用此机制。
+
+原来的 `attempts.jsonl`、`trajectory.jsonl`仍作为追加式辅助副本保留，缺项情况单列。审计主证据为事务内完整载荷和提交回合，不再依赖单一追加文件。没有载荷的历史账本不能重建缺失轨迹；未知调用仍拒绝自动恢复。
+
+完成时还会将交互、完整载荷、提交回合及计数打包为单个 `completed_evidence.json`，并保存SHA-256摘要。报告优先检查该完成快照的内部一致性，再与导出轨迹逐条比较，避免读取多个文件时混合不同提交版本。实时SQLite与追加副本的差异仍单列；没有完成快照的中断运行不享有此确认，也不会凭预算补出结果。
