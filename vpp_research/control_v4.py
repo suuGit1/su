@@ -47,8 +47,10 @@ def decode(env,raw):
     energy=np.array([ess,(x[1]+1)*env.flex.ev_station_kw/2,
         x[2]*(env.flex.dr_shift_kw if x[2]>=0 else env.flex.dr_repay_kw),fraction[3]*env.flex.dr_shed_kw,
         fraction[4]*max(0,obs[11]*1000),fraction[5]*max(0,obs[12]*1000)])
-    bw=np.logaddexp(0,raw[6:12,0]) if env.num_agents==18 else np.ones(6)
-    cpu=np.logaddexp(0,raw[12:18,0]) if env.num_agents==18 else np.ones(6)
+    # 保留零分配/关闭上传能力，将截零区移至低端，避免初始策略半数通道关闭。
+    floor=np.logaddexp(0,-2.)
+    bw=np.maximum(0,np.logaddexp(0,raw[6:12,0])-floor) if env.num_agents==18 else np.ones(6)
+    cpu=np.maximum(0,np.logaddexp(0,raw[12:18,0])-floor) if env.num_agents==18 else np.ones(6)
     if env.resource_mode in ('control','computation'):bw=np.ones(6)
     if env.resource_mode in ('control','communication'):cpu=np.ones(6)
     return energy,bw,cpu

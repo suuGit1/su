@@ -30,6 +30,9 @@ class V4Tests(unittest.TestCase):
         c=Config.load('configs/research_smoke.json');c.research_version=4;env=ResearchEnv(c);obs,_=env.reset(9)
         obs[0,1]=env.spec.soc_min[0];obs[0,54]=0;self.assertLess(ess_bounds(env,obs[0])[1],1e-5)
         a,bw,cpu=decode(env,np.zeros((env.num_agents,1)));self.assertTrue((bw>0).all() and (cpu>0).all())
+        if env.num_agents==18:
+            _,idle_bw,idle_cpu=decode(env,np.full((env.num_agents,1),-20.))
+            self.assertTrue((idle_bw==0).all() and (idle_cpu==0).all())
         public=env.encode()[0][0]
         if public[11]>0:self.assertLess(a[4]/(public[11]*1000),.03)
 
