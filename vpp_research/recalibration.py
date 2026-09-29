@@ -46,4 +46,4 @@ def replay(model,calibration,test,delay_blocks=1):
 if __name__=='__main__':
     import argparse
     p=argparse.ArgumentParser();p.add_argument('--dataset',required=True);p.add_argument('--model',required=True);p.add_argument('--output',required=True);a=p.parse_args()
-    d=json.loads(Path(a.dataset).read_text())['physics'];m=json.loads(Path(a.model).read_text());Path(a.output).write_text(json.dumps(replay(m,d['calibration'],d['test']),ensure_ascii=False,indent=2))
+    d=json.loads(Path(a.dataset).read_text(encoding='utf-8'))['physics'];m=json.loads(Path(a.model).read_text(encoding='utf-8'));Path(a.output).write_text(json.dumps(replay(m,d['calibration'],d['test']),ensure_ascii=False,indent=2))

@@ -73,4 +73,4 @@ def run(config,model,output):
 if __name__=='__main__':
     import argparse
     from vpp_mappo.config import Config
-    p=argparse.ArgumentParser();p.add_argument('--model',required=True);p.add_argument('--output',required=True);a=p.parse_args();run(Config.load('configs/research_smoke.json'),json.loads(Path(a.model).read_text()),a.output)
+    p=argparse.ArgumentParser();p.add_argument('--model',required=True);p.add_argument('--output',required=True);a=p.parse_args();run(Config.load('configs/research_smoke.json'),json.loads(Path(a.model).read_text(encoding='utf-8')),a.output)

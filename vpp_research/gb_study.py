@@ -22,7 +22,7 @@ def run(profiles,output):
     if any(len(names[k])<counts[k] for k in counts):raise ValueError('完整日期不足')
     c._ev_bundle=dict(schema_version=1,energy_basis='grid_kwh',source='无 EV 消融；未将美国会话伪装为英国实测',horizon=24,dt_hours=1.,scenarios={n:[] for group in names.values() for n in group})
     datasets_path=out/'dt_datasets.json'
-    if datasets_path.exists():datasets=json.loads(datasets_path.read_text())
+    if datasets_path.exists():datasets=json.loads(datasets_path.read_text(encoding='utf-8'))
     else:
         datasets={mode:{k:collect(c,range(30000,30000+counts[k]),mode,v) for k,v in sources.items()} for mode in ('hold','physics')}
         datasets_path.write_text(json.dumps(datasets))
@@ -30,7 +30,7 @@ def run(profiles,output):
     for method in ('hold','physics','residual'):
         d=datasets['hold' if method=='hold' else 'physics'];model=fit(d['train'],d['calibration'],method);save(model,out/(method+'.json'));models[method]=model
         dt_cache=out/(method+'_evaluation.json')
-        if dt_cache.exists():dt[method]=json.loads(dt_cache.read_text())
+        if dt_cache.exists():dt[method]=json.loads(dt_cache.read_text(encoding='utf-8'))
         else:
             dt[method]=dict(estimation=assess(model,d['test']),control=control(c,model,range(31000,31016),csv_path=sources['test']))
             dt_cache.write_text(json.dumps(dt[method],ensure_ascii=False,indent=2))
@@ -47,7 +47,7 @@ def run(profiles,output):
                 policies.append(dict(seed=seed,method=method,failed=True,error=str(exc)))
             (out/'policies.partial.json').write_text(json.dumps(policies,ensure_ascii=False,indent=2))
             print(seed,method,flush=True)
-    result=dict(protocol='GB-public-curves-carbon-v1',manifest=json.loads((folder/'manifest.json').read_text()),dt=dt,policies=policies,
+    result=dict(protocol='GB-public-curves-carbon-v1',manifest=json.loads((folder/'manifest.json').read_text(encoding='utf-8')),dt=dt,policies=policies,
         limits=['真实国家能源/碳曲线缩放，非馈线实测','EV 关闭；DR 和设备参数仍是公开声明的假设','碳观测使用上小时实际值，尚无历史发布时点档案','此预算与三种子验证不足以声称收敛或跨季节泛化'])
     (out/'results.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));return result
 

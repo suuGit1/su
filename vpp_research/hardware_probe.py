@@ -11,8 +11,8 @@ def probe():
     counters=[]
     for p in paths:
         try:
-            counters.append(dict(path=str(p),energy_uj=int(p.read_text()),
-                                 max_energy_range_uj=int((p.parent/'max_energy_range_uj').read_text())))
+            counters.append(dict(path=str(p),energy_uj=int(p.read_text(encoding='utf-8')),
+                                 max_energy_range_uj=int((p.parent/'max_energy_range_uj').read_text(encoding='utf-8'))))
         except (OSError,ValueError):continue
     clock=time.get_clock_info('perf_counter')
     return dict(platform=platform.platform(),machine=platform.machine(),processor=platform.processor(),

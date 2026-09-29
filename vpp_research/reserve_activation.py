@@ -57,4 +57,4 @@ def run(config,model,output,seeds=range(1700,1708)):
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser();p.add_argument('--dt-model',required=True);p.add_argument('--output',required=True);a=p.parse_args();run(Config.load('configs/research_smoke.json'),json.loads(Path(a.dt_model).read_text()),a.output)
+    p=argparse.ArgumentParser();p.add_argument('--dt-model',required=True);p.add_argument('--output',required=True);a=p.parse_args();run(Config.load('configs/research_smoke.json'),json.loads(Path(a.dt_model).read_text(encoding='utf-8')),a.output)

@@ -21,21 +21,21 @@ TEST_WEIGHTS=[[a/7,b/7,(7-a-b)/7] for a in range(1,6) for b in range(1,7-a)]
 def run(config,dt_folder,output,episodes=120,seeds=(1,2,3,4,5),families=FAMILIES,reserve_mode="linear"):
     if episodes<3 or episodes%3:raise ValueError('预算必须能被三个固定权重模型均分')
     out=Path(output);out.mkdir(parents=True,exist_ok=True)
-    models={m:json.loads((Path(dt_folder)/(m+'.json')).read_text()) for m in ('physics','residual')}
+    models={m:json.loads((Path(dt_folder)/(m+'.json')).read_text(encoding='utf-8')) for m in ('physics','residual')}
     manifest=dict(reserve_mode=reserve_mode,protocol='c3-budget-campaign-v2' if reserve_mode=='pcc_checked' else 'c3-budget-campaign-v1',config=config.__dict__,episodes=episodes,seeds=list(seeds),families=list(families),
         dt_hashes={m:hashlib.sha256(json.dumps(v,sort_keys=True).encode()).hexdigest() for m,v in models.items()},
         test_weights=TEST_WEIGHTS,validation_seeds=[8100,8101],test_seeds=[9100,9101,9102],
         python=platform.python_version(),torch=torch.__version__,numpy=np.__version__)
     manifest_path=out/'manifest.json'
     if manifest_path.exists():
-        previous=json.loads(manifest_path.read_text());previous.setdefault('reserve_mode','linear')
+        previous=json.loads(manifest_path.read_text(encoding='utf-8'));previous.setdefault('reserve_mode','linear')
         if previous!=manifest:raise ValueError('恢复实验的协议或版本发生改变')
     manifest_path.write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
     entries=[]
     for seed in seeds:
         for family in families:
             result_path=out/f'{family}_{seed}.json'
-            if result_path.exists():entries.append(json.loads(result_path.read_text()));continue
+            if result_path.exists():entries.append(json.loads(result_path.read_text(encoding='utf-8')));continue
             started=time.perf_counter();cfg=replace(config,seed=seed,episodes=episodes,cyber_mode='joint',coordinator_mode='off')
             # 所有 C3 四组关闭协调器，避免固定资源被协调器再次改变。协调器单独成对比较。
             if family=='coordinator':cfg.coordinator_mode='schedule'
