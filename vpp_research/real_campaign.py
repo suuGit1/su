@@ -26,8 +26,8 @@ def write(path,data):
 
 def prepare_real(c,paths,protocol,dt,counts):
     dt=Path(dt);dt.mkdir(parents=True,exist_ok=True);key=digest(dict(protocol=protocol,days=counts,config=c.__dict__,dt_version=DT_VERSION))
-    if (dt/'contract.json').exists() and json.loads((dt/'contract.json').read_text())['fingerprint']!=key:raise ValueError('DT 数据或配置发生变化')
-    if (dt/'residual.json').exists():model=json.loads((dt/'residual.json').read_text())
+    if (dt/'contract.json').exists() and json.loads((dt/'contract.json').read_text(encoding='utf-8'))['fingerprint']!=key:raise ValueError('DT 数据或配置发生变化')
+    if (dt/'residual.json').exists():model=json.loads((dt/'residual.json').read_text(encoding='utf-8'))
     else:
         # 标签仅用于离线DT拟合；在线actor和MPC仍只读取受限公开观察。
         data={k:collect(c,range(30000,30000+n),'physics',paths[k]) for k,n in counts.items()}
@@ -42,10 +42,17 @@ def run(a):
     c,paths,sets,protocol=connect(a.data_root,Config.load(a.config),ev_sessions=a.ev_sessions,dr_mode=a.dr_mode)
     for key,value in [('lr',a.learning_rate),('ppo_epoch',a.ppo_epochs),('threads',a.cpu_threads),('solver_time_limit',a.solver_time_limit)]:
         if value is not None:setattr(c,key,value)
+    for key in ('rollout_episodes','validation_every','target_kl'):
+        value=getattr(a,key,None)
+        if value is not None:setattr(c,key,value)
+    if getattr(a,'release_version',2)==4:
+        if c.research_version!=4:raise ValueError('v4入口要求research_version=4配置')
+        c.validation_days=a.selection_days
     c.validate()
     import numpy as np
     reference=getattr(a,'hv_reference',[-100.,-200.,0.])
     if len(reference)!=3 or not np.isfinite(reference).all():raise ValueError('HV参考点须包含三个有限数')
+    if c.research_version==4:c.selection_hv_reference=tuple(reference)
     if len(set(a.methods))!=len(a.methods):raise ValueError('算法列表不能重复')
     if a.episodes<1 or a.eval_days<1 or a.eval_days>len(sets['test'].profiles):
         raise ValueError(f'训练回合必须为正；独立测试只有 {len(sets["test"].profiles)} 天，禁止重复凑天数')
@@ -73,13 +80,15 @@ def run(a):
         eval_steps_per_method_seed={m:a.eval_days*c.horizon*len(preferences) for m in a.methods},
         test_dates=sets['test'].scenario_names[:a.eval_days],
         note='训练回合可循环训练日期；eval-days为不重复测试日期；各测试偏好分别执行')
-    if getattr(a,'release_version',2)==3:
+    if getattr(a,'release_version',2)>=3:
         from .protocol_v3 import contract
         plan['experiment_contract']=contract(c,plan)
+    # JSON规范化避免元组/列表导致父子进程伪协议冲突。
+    plan=json.loads(json.dumps(plan))
     out=Path(a.output);out.mkdir(parents=True,exist_ok=True)
     manifest=out/'manifest.json'
     if manifest.exists():
-        if json.loads(manifest.read_text())!=plan:raise ValueError('输出目录协议不同，请使用新目录')
+        if json.loads(manifest.read_text(encoding='utf-8'))!=plan:raise ValueError('输出目录协议不同，请使用新目录')
         if not a.resume and not a.dry_run:raise ValueError('已有实验目录，请显式使用 --resume')
     write(manifest,plan)
     if a.dry_run:
@@ -95,7 +104,7 @@ def run(a):
         for method in a.methods:
             dest=out/f'{method}_{seed}';result_path=out/f'{method}_{seed}.json'
             if result_path.exists():
-                previous=json.loads(result_path.read_text())
+                previous=json.loads(result_path.read_text(encoding='utf-8'))
                 if not previous.get('failed') or not a.resume:
                     entries.append(previous);continue
                 archive=dest/'failed_attempt_results';archive.mkdir(parents=True,exist_ok=True)
@@ -113,8 +122,8 @@ def run(a):
                             for day in range(days):
                                 target=dest/phase/f'weight_{wi}_day_{day}'
                                 saved=target/'summary.json'
-                                if saved.exists() and json.loads(saved.read_text()).get('completed'):
-                                    r=json.loads(saved.read_text())
+                                if saved.exists() and json.loads(saved.read_text(encoding='utf-8')).get('completed'):
+                                    r=json.loads(saved.read_text(encoding='utf-8'))
                                 else:
                                     if target.exists() and any(target.iterdir()):
                                         if not a.resume:raise ValueError('不完整控制器轨迹，请使用 --resume')
@@ -142,12 +151,12 @@ def run(a):
                 # 即使评价失败，也不能把已经完成的训练交互记成零。
                 completed=0
                 for log in dest.rglob('attempts.jsonl'):
-                    events=[json.loads(line) for line in log.read_text().splitlines()]
+                    events=[json.loads(line) for line in log.read_text(encoding='utf-8').splitlines()]
                     completed+=sum(e.get('event')=='step' for e in events)
                 row['training_steps']=completed
             row['actual_training_steps']=sum(
-                json.loads(line).get('event')=='step' for log in dest.rglob('attempts.jsonl') for line in log.read_text().splitlines())
-            if getattr(a,'release_version',2)==3 and method not in ('mpc','milp_oracle'):
+                json.loads(line).get('event')=='step' for log in dest.rglob('attempts.jsonl') for line in log.read_text(encoding='utf-8').splitlines())
+            if getattr(a,'release_version',2)>=3 and method not in ('mpc','milp_oracle'):
                 from .ledger import audit_training
                 audit=audit_training(dest);row['training_audit']=audit
                 row['recorded_training_steps']=row['actual_training_steps']
@@ -167,6 +176,9 @@ def parser():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--config',default='configs/connected_ieee33.json')
     p.add_argument('--learning-rate',type=float);p.add_argument('--ppo-epochs',type=int)
+    p.add_argument('--rollout-episodes',type=int)
+    p.add_argument('--validation-every',type=int,help='固定验证回合间隔；0关闭，在完整更新边界执行')
+    p.add_argument('--target-kl',type=float)
     p.add_argument('--cpu-threads',type=int);p.add_argument('--solver-time-limit',type=float)
     p.add_argument('--data-root',default='data/real');p.add_argument('--output',default='runs/real_campaign')
     p.add_argument('--seeds',type=parse_seeds,default=[1,2,3]);p.add_argument('--episodes',type=int,default=100)

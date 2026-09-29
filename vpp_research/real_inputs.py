@@ -11,9 +11,9 @@ from .dt import digest
 
 def connect(folder,config=None,ev_sessions=None,dr_mode='off'):
     root=Path(folder).resolve()
-    catalog=json.loads((root/'catalog.json').read_text())
+    catalog=json.loads((root/'catalog.json').read_text(encoding='utf-8'))
     paths={k:root/catalog['default_profiles']/(k+'.csv') for k in ('train','validation','test')}
-    manifest=json.loads((paths['train'].parent/'manifest.json').read_text())
+    manifest=json.loads((paths['train'].parent/'manifest.json').read_text(encoding='utf-8'))
     datasets={k:CSVProfiles(path,manifest['horizon']) for k,path in paths.items()}
     for a,b in [('train','validation'),('train','test'),('validation','test')]:
         if set(datasets[a].scenario_names)&set(datasets[b].scenario_names) or set(datasets[a].fingerprints)&set(datasets[b].fingerprints):
@@ -25,7 +25,7 @@ def connect(folder,config=None,ev_sessions=None,dr_mode='off'):
               train_csv=str(paths['train']),synthetic_carbon_g_per_kwh=None)
     names=[n for d in datasets.values() for n in d.scenario_names]
     if ev_sessions:
-        bundle=json.loads(Path(ev_sessions).read_text())
+        bundle=json.loads(Path(ev_sessions).read_text(encoding='utf-8'))
         if bundle.get('horizon')!=c.horizon or bundle.get('dt_hours')!=c.dt_hours:raise ValueError('EV 时间粒度不匹配')
         if any(n not in bundle.get('scenarios',{}) for n in names):raise ValueError('EV 文件缺少能源数据中的日期')
         ev_scope='用户提供会话，地域/需求口径以其source为准'
@@ -39,7 +39,7 @@ def connect(folder,config=None,ev_sessions=None,dr_mode='off'):
         for key in ('dr_shift_kw','dr_repay_kw','dr_backlog_kwh','dr_shift_budget_kwh','dr_shed_kw','dr_shed_budget_kwh'):base_flex[key]=0.
         dr=dict(mode='off',reason='没有同地区真实可控DR参数，不自动代入合成DR')
     elif dr_mode=='sce-derated':
-        events=json.loads((root/'dr/sce/events.json').read_text())
+        events=json.loads((root/'dr/sce/events.json').read_text(encoding='utf-8'))
         base_flex,dr=conservative_flex(base_flex,events)
         for key in ('dr_shift_kw','dr_repay_kw','dr_backlog_kwh','dr_shift_budget_kwh'):base_flex[key]=0.
         dr.update(mode=dr_mode,scope='明确跨地区敏感性：GB曲线+SCE历史训练响应分位数；不模拟SCE实站')

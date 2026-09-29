@@ -11,6 +11,7 @@ from .safety import guard
 PCC_OBJECTIVE_VERSION='c3-ac-pcc-same-period-sampled-reserve-v4'
 
 OBS_VERSION='c3-65-state-interval-carbon-v1'
+OBS_VERSION_V4='c3-80-public-command-queue-v4'
 OBJECTIVE_VERSION='c3-cost-carbon-symmetric-reserve-v1'
 AC_OBJECTIVE_VERSION='c3-cost-carbon-ac-endpoint-reserve-v2'
 SCALES=np.array([100.,100.,100.])
@@ -50,12 +51,15 @@ class ResearchEnv(CyberVPPAdapter):
         if vector_metrics:
             if self.data and any('carbon_g_per_kwh' not in p for p in self.data.profiles):raise ValueError('真实三目标实验缺少碳数据；禁止静默填补')
             if not self.data and config.synthetic_carbon_g_per_kwh is None:raise ValueError('合成碳假设必须显式指定')
-        self.observation_space=Box(-np.inf,np.inf,(65,),dtype=np.float32)
-        self.share_observation_space=Box(-np.inf,np.inf,(65*self.num_agents,),dtype=np.float32)
+        self.obs_dim=80 if config.research_version==4 else 65
+        self.last_received_command=np.zeros(6)
+        self.observation_space=Box(-np.inf,np.inf,(self.obs_dim,),dtype=np.float32)
+        self.share_observation_space=Box(-np.inf,np.inf,(self.obs_dim*self.num_agents,),dtype=np.float32)
         self.preference=np.array([1.,0.,0.]);self.reward_mode='economic'
 
     def reset(self,scenario_seed,profile_index=0):
         from .timing import CommandQueue
+        self.last_received_command=np.zeros(6)
         self.command_queue=CommandQueue(self.timing_contract) if self.timing_contract else None
         return super().reset(scenario_seed,profile_index)
 
@@ -68,7 +72,7 @@ class ResearchEnv(CyberVPPAdapter):
 
     def encode(self):
         if self.t>=self.config.horizon:
-            return np.zeros((self.num_agents,65),np.float32),np.zeros((self.num_agents,65*self.num_agents),np.float32)
+            return np.zeros((self.num_agents,self.obs_dim),np.float32),np.zeros((self.num_agents,self.obs_dim*self.num_agents),np.float32)
         obs,_=super().encode();width=np.zeros(9);ood=False
         if self.dt_model:
             prediction,ood=predict(self.dt_model,obs[0]);obs[:,TARGETS]=prediction
@@ -76,11 +80,18 @@ class ResearchEnv(CyberVPPAdapter):
             obs[:,13]=(obs[:,9]*5000-obs[:,11]*1000-obs[:,12]*1000)/5000
         carbon=self.dt.cache[2].get('carbon_g_per_kwh',0)/1000
         ext=np.tile(np.r_[width,float(ood),carbon],(self.num_agents,1));obs=np.c_[obs,ext].astype(np.float32)
+        if self.config.research_version==4:
+            from .control_v4 import queue_features
+            obs=np.c_[obs,np.tile(queue_features(self),(self.num_agents,1))].astype(np.float32)
         return obs,np.repeat(obs.reshape(1,-1),self.num_agents,axis=0)
 
     def step(self,actions):
         raw=np.asarray(actions,dtype=float)
         if raw.shape!=(self.num_agents,1) or not np.isfinite(raw).all():raise ValueError('研究动作维度或数值错误')
+        if self.config.research_version==4:
+            from .control_v4 import decode
+            energy,bw,cpu=decode(self,raw)
+            return self.step_candidate(energy,bw,cpu)
         obs=self.encode()[0][0];x=np.tanh(raw[:,0])
         a=np.array([x[0]*self.spec.power_max[0],(x[1]+1)*self.flex.ev_station_kw/2,
             x[2]*(self.flex.dr_shift_kw if x[2]>=0 else self.flex.dr_repay_kw),(x[3]+1)*self.flex.dr_shed_kw/2,
@@ -117,6 +128,7 @@ class ResearchEnv(CyberVPPAdapter):
         truth=self.features(self.sensor_payloads())[TARGETS]
         squared=float(np.mean((public[TARGETS]-truth)**2));covered=bool(np.all(np.abs(public[TARGETS]-truth)<=public[54:63]+1e-7))
         received_candidate=np.asarray(energy).copy()
+        self.last_received_command=received_candidate.copy()
         row=self.core.row().copy();certificate=None;meta=dict(guard_feasible=False,guard_status='disabled',guard_seconds=0.)
         if self.robust:
             energy,meta,certificate=guard(energy,self.encode()[0][0],self.spec,self.flex,self.network,self.config.dt_hours,self.config.horizon)
@@ -126,6 +138,8 @@ class ResearchEnv(CyberVPPAdapter):
         info['interval_guard_candidate_kw']=guarded_candidate.tolist()
         info['issued_energy_candidate_kw']=issued_candidate.tolist()
         info['received_energy_candidate_kw']=received_candidate.tolist()
+        if self.config.research_version==4:
+            info.update(v4_action_protocol='public-dt-bounded-low-curtail-v4',v4_bounds_are_estimates=True)
         info['interval_guard_enabled']=self.robust
         info.update(timing_meta)
         if control_energy:

@@ -15,7 +15,7 @@ def run(output, dt_folder):
     out.mkdir(parents=True,exist_ok=True)
     c=Config.load('configs/research_ieee69.json')
     dt_run(c,dt_folder,out/'mpc_dt.json',seeds=(2010,2011))
-    model=json.loads((Path(dt_folder)/'residual.json').read_text())
+    model=json.loads((Path(dt_folder)/'residual.json').read_text(encoding='utf-8'))
     rows=[]
     for method in ('ordinary','pareto'):
         folder=out/method

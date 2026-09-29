@@ -22,6 +22,7 @@ def main(version=2):
         methods=['mpc','milp_oracle','ordinary','central','fixed','ols','pareto'])
     p.add_argument('--workers',type=int,default=1)
     if version==3:p.set_defaults(config='configs/v3_ieee33.json',output='runs/v3',release_version=3)
+    if version==4:p.set_defaults(config='configs/v4_ieee33.json',output='runs/v4',release_version=4)
     a=p.parse_args()
     if a.workers<1:p.error('workers必须为正数；每个worker另使用cpu-threads线程')
     root=Path(a.output);root.mkdir(parents=True,exist_ok=True)
@@ -34,7 +35,7 @@ def main(version=2):
         import contextlib,io
         with contextlib.redirect_stdout(io.StringIO()):run(child)
         child.dry_run=a.dry_run;child.resume=True;jobs.append(child)
-    plan=json.loads((Path(jobs[0].output)/'manifest.json').read_text());plan['seeds']=a.seeds
+    plan=json.loads((Path(jobs[0].output)/'manifest.json').read_text(encoding='utf-8'));plan['seeds']=a.seeds
     write(root/'manifest.json',plan)
     if a.dry_run:
         print(json.dumps(plan,ensure_ascii=False,indent=2));return
@@ -48,14 +49,17 @@ def main(version=2):
     # HiGHS/PyTorch已初始化的线程锁不可通过fork继承；spawn创建干净的求解进程。
     with ProcessPoolExecutor(max_workers=a.workers,mp_context=multiprocessing.get_context('spawn')) as pool:
         completed=list(pool.map(worker,jobs))
-    entries=[e for path in completed for e in json.loads(Path(path).read_text())['entries']]
+    entries=[e for path in completed for e in json.loads(Path(path).read_text(encoding='utf-8'))['entries']]
     write(root/'results.json',dict(manifest=plan,entries=entries,completed=True,
         all_successful=all(not e['failed'] and e['failed_or_infeasible']==0 and e.get('budget_complete',True) for e in entries)))
     report(root)
     write(root/'release.json',dict(version=f'{version}.0.0',objective_version='c3-ac-pcc-same-period-sampled-reserve-v4',
         dt_version='ridge-block-conformal-physical-dt-v2',seeds=a.seeds,workers=a.workers,
         note='按种子并行，子策略预算合计；训练完成不等于算法优势或AC鲁棒证明'))
-    if version==3:
+    if version>=3:
         from .report_v3 import report_v3
         report_v3(root)
+    if version==4:
+        from .report_v4 import report_v4
+        report_v4(root)
     print(f'v{version}训练与报告完成：'+str(root),flush=True)

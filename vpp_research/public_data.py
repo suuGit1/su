@@ -36,7 +36,7 @@ def prepare(raw_opsd,carbon_folder,output):
     if out.exists() and any(out.iterdir()):raise ValueError('输出目录非空')
     carbon=[]
     for p in sorted(Path(carbon_folder).glob('????-??-??.json')):
-        for r in json.loads(p.read_text())['data']:
+        for r in json.loads(p.read_text(encoding='utf-8'))['data']:
             carbon.append(dict(timestamp=pd.Timestamp(r['from']),end=pd.Timestamp(r['to']),actual=r['intensity']['actual']))
     c=pd.DataFrame(carbon).drop_duplicates('timestamp').set_index('timestamp').sort_index()
     if not (c.end-c.index==pd.Timedelta(minutes=30)).all():raise ValueError('非半小时碳区间')
@@ -62,7 +62,7 @@ def prepare(raw_opsd,carbon_folder,output):
     m=dict(sources=['https://data.open-power-system-data.org/time_series/2020-10-06/',BASE],region='GB',timezone='UTC',currency='GBP',price_conversion='GBP/MWh 除以 1000 得 GBP/kWh；退化、DR 和通信费用参数按 GBP 假设声明',
         horizon=24,dt_hours=1.,scales=scale,scaling_fit='2019-01 only',dropped_days=dropped,
         raw_opsd_sha256=hashlib.sha256(Path(raw_opsd).read_bytes()).hexdigest(),
-        carbon_sources=json.loads((Path(carbon_folder)/'manifest.json').read_text()),
+        carbon_sources=json.loads((Path(carbon_folder)/'manifest.json').read_text(encoding='utf-8')),
         carbon_scope='NESO 电力运行 CO2 估计；不包含设备生命周期；上小时实际值作为滞后可用性假设，非已核验历史发布版本',
         scope='英国国家曲线缩放至 IEEE33；真实曲线驱动仿真，不是同一馈线实测',splits={})
     for name,left,right in [('train','2019-01-01','2019-02-01'),('validation','2019-02-01','2019-03-01'),('test','2019-03-01','2019-04-01')]:

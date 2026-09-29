@@ -78,7 +78,7 @@ def completed_evidence(folder):
     """校验完整快照的摘要及内部计数；不存在时返回None，不补造历史快照。"""
     path=Path(folder)/'completed_evidence.json'
     if not path.exists():return None
-    receipt=json.loads(path.read_text());e=receipt['evidence']
+    receipt=json.loads(path.read_text(encoding='utf-8'));e=receipt['evidence']
     if hashlib.sha256(json.dumps(e,sort_keys=True,ensure_ascii=False).encode()).hexdigest()!=receipt['sha256']:raise ValueError('完成快照摘要错误')
     calls=e['calls'];s=e['summary']
     if s['attempted_calls']!=len(calls) or any(s[key]!=sum(c['status']==status for c in calls) for key,status in [('successful_calls','success'),('unknown_calls','pending'),('error_calls','error')]):raise ValueError('完成快照计数不一致')
@@ -96,8 +96,10 @@ def audit_training(folder):
     root=Path(folder);items=[]
     logs=set(root.rglob('attempts.jsonl'))|{p.parent/'attempts.jsonl' for p in root.rglob('interactions.sqlite')}
     for log in sorted(logs):
-        records=[json.loads(s) for s in log.read_text().splitlines() if s.strip()] if log.exists() else []
-        d=log.parent;history=list(csv.DictReader((d/'training.csv').open())) if (d/'training.csv').exists() else []
+        records=[json.loads(s) for s in log.read_text(encoding='utf-8').splitlines() if s.strip()] if log.exists() else []
+        d=log.parent;history=[]
+        if (d/'training.csv').exists():
+            with (d/'training.csv').open(encoding='utf-8') as handle:history=list(csv.DictReader(handle))
         nominal=int(history[-1]['env_steps']) if history else 0
         logged=sum(r.get('event')=='step' for r in records)
         item=dict(path=str(d),nominal_steps=nominal,logged_steps=logged,ledger_available=(d/'interactions.sqlite').exists())
@@ -114,7 +116,7 @@ def audit_training(folder):
             trace=d/'trajectory.jsonl'
             item['training_trace_matches']=None
             if trace.exists():
-                data=[json.loads(s) for s in trace.read_text().splitlines() if s.strip()]
+                data=[json.loads(s) for s in trace.read_text(encoding='utf-8').splitlines() if s.strip()]
                 item['training_trace_matches']=expected==[(r.get('attempt_id'),r.get('episode'),r.get('step')) for r in data]
             item['consistent']=item['committed_steps']==nominal and item['step_identities_match'] and item['unknown_calls']==0 and item['training_trace_matches'] is not False
             if item['transaction_payload_complete']:

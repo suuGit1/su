@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 def plot(folder):
     root=Path(folder);out=root/'figures';out.mkdir(exist_ok=True)
-    report=json.loads((root/'report.json').read_text());rows=report['rows']
+    report=json.loads((root/'report.json').read_text(encoding='utf-8'));rows=report['rows']
     methods=sorted({r['method'] for r in rows})
     fig,ax=plt.subplots(figsize=(9,4),layout='constrained')
     for i,method in enumerate(methods):
@@ -32,7 +32,7 @@ def plot(folder):
     ax.set_title('Feasible non-dominated points per method and seed')
     fig.savefig(out/'pareto.png',dpi=180);fig.savefig(out/'pareto.svg');plt.close(fig)
     if (root/'dt_validation.json').exists():
-        d=json.loads((root/'dt_validation.json').read_text())
+        d=json.loads((root/'dt_validation.json').read_text(encoding='utf-8'))
         fig,axes=plt.subplots(1,2,figsize=(9,4),layout='constrained')
         days=range(len(d['physics']['closed_loop']))
         for name in ('physics','residual'):

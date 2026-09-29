@@ -20,7 +20,7 @@ def utc(value):
 def convert(raw,output,dt_hours=.25,max_kw=7.,source='https://ev.caltech.edu/dataset',replay_actual_departures=False):
     if not math.isfinite(dt_hours) or dt_hours<=0 or not math.isclose(24/dt_hours,round(24/dt_hours)):raise ValueError('步长必须整分一天')
     if not math.isfinite(max_kw) or max_kw<=0:raise ValueError('声明的桩容量必须正且有限')
-    data=json.loads(Path(raw).read_text());items=data['_items'] if isinstance(data,dict) else data
+    data=json.loads(Path(raw).read_text(encoding='utf-8'));items=data['_items'] if isinstance(data,dict) else data
     if not isinstance(items,list) or not items:raise ValueError('EV 数据为空或非完整会话列表')
     scenarios={};events={};excluded=Counter();kept=[];h=round(24/dt_hours);seconds=dt_hours*3600
     for item in items:

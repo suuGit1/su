@@ -29,15 +29,18 @@ def learning(cfg,model,dest,method,preferences,selection_csv,test_csv,selection_
         child=replace(cfg,episodes=episodes);child._ev_bundle=cfg._ev_bundle;child._flex_record=cfg._flex_record
         folder=dest/f'member_{i}' if count>1 else dest
         algorithm='fixed' if method=='ols' else method
-        if not (folder/'latest.pt').exists():
+        if not (folder/'latest.pt').exists() or (cfg.research_version==4 and not (folder/'metadata.json').exists()):
             train(child,model,folder,method=algorithm,preference=w,reserve_mode='pcc_checked',scenario_offset=offset,
-                  resume=resume and (folder/'resume.pt').exists(),trace_path=folder/'trajectory.jsonl')
+                  resume=resume and (folder/'resume.pt').exists(),trace_path=folder/'trajectory.jsonl',validation_csv=selection_csv)
         offset+=episodes
+        selected=folder/'best_validation.pt' if cfg.research_version==4 and (folder/'best_validation.pt').exists() else folder/'latest.pt'
+        curve=json.loads((folder/'validation_curve.json').read_text(encoding='utf-8')) if (folder/'validation_curve.json').exists() else []
+        learning_selection_steps=sum(x['selection_steps'] for x in curve)
         weights=VALIDATION_WEIGHTS if method=='pareto' else [w]
-        rows=evaluate(folder/'latest.pt',weights,range(50000,50000+selection_days),csv_path=selection_csv,ev_bundle=cfg._ev_bundle,ac_safe=True,trace_dir=folder/'validation')
+        rows=evaluate(selected,weights,range(50000,50000+selection_days),csv_path=selection_csv,ev_bundle=cfg._ev_bundle,ac_safe=True,trace_dir=folder/'validation')
         validation+=rows
-        member=dict(checkpoint=str(folder/'latest.pt'),weight=w,training_steps=episodes*cfg.horizon,
-                    selection_steps=sum(r['env_steps'] for r in rows),priority=priority)
+        member=dict(checkpoint=str(selected),weight=w,training_steps=episodes*cfg.horizon,
+                    selection_steps=sum(r['env_steps'] for r in rows)+learning_selection_steps,learning_validation_steps=learning_selection_steps,priority=priority)
         if len(rows)==len(weights)*selection_days and all(feasible(r) for r in rows):
             member['validation_value']=np.mean([r['vector'] for r in rows],axis=0).tolist()
         members.append(member)

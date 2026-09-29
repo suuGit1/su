@@ -159,13 +159,13 @@ def main():
             prepare_real(c,paths,protocol,out,{'train':len(sets['train'].profiles),'validation':len(sets['validation'].profiles)})
         elif a.command=='train':
             if a.method in ('mpc','milp_oracle') or not a.dt_model:p.error('训练要求 ordinary/pareto 与真实 --dt-model')
-            model=json.loads(Path(a.dt_model).read_text())
+            model=json.loads(Path(a.dt_model).read_text(encoding='utf-8'))
             if model.get('real_input_fingerprint')!=protocol['fingerprint']:p.error('DT与真实输入协议不一致，请重新prepare')
             train(c,model,out,method=a.method,reserve_mode='pcc_checked',resume=a.resume,trace_path=out/'trajectory.jsonl')
         else:
             if a.method in ('mpc','milp_oracle'):
                 if not a.dt_model:p.error('MPC要求真实 --dt-model')
-                model=json.loads(Path(a.dt_model).read_text())
+                model=json.loads(Path(a.dt_model).read_text(encoding='utf-8'))
             else:
                 if not a.checkpoint:p.error('策略运行要求 --checkpoint')
                 state,_,_=load(a.checkpoint);model=state['dt_model']
@@ -184,12 +184,12 @@ def main():
         verify(out)
     elif a.command=='train':
         if a.method in ('mpc','milp_oracle') or not a.dt_model:p.error('训练要求 ordinary/pareto 与 --dt-model')
-        model=json.loads(Path(a.dt_model).read_text())
+        model=json.loads(Path(a.dt_model).read_text(encoding='utf-8'))
         train(c,model,out,method=a.method,reserve_mode='pcc_checked',resume=a.resume,trace_path=out/'trajectory.jsonl')
     else:
         if a.method not in ('mpc','milp_oracle') and not a.checkpoint:p.error('策略运行必须给出 --checkpoint')
         if a.method in ('mpc','milp_oracle') and not a.dt_model:p.error('MPC 闭环必须给出 --dt-model')
-        model=json.loads(Path(a.dt_model).read_text()) if a.dt_model else None
+        model=json.loads(Path(a.dt_model).read_text(encoding='utf-8')) if a.dt_model else None
         rollout(c,model,out,a.method,a.checkpoint,a.preference,a.seed,a.fault)
     print('已完成：',out.resolve())
 

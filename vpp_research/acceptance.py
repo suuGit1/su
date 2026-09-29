@@ -8,9 +8,9 @@ def verify(folder):
     root=Path(folder);checks={}
     for method,subdir in [('mpc','mpc'),('ordinary','ordinary_test'),('pareto','pareto_test')]:
         path=root/subdir
-        config=json.loads((path/'config.json').read_text())
-        summary=json.loads((path/'summary.json').read_text())
-        rows=[json.loads(line) for line in (path/'trajectory.jsonl').read_text().splitlines()]
+        config=json.loads((path/'config.json').read_text(encoding='utf-8'))
+        summary=json.loads((path/'summary.json').read_text(encoding='utf-8'))
+        rows=[json.loads(line) for line in (path/'trajectory.jsonl').read_text(encoding='utf-8').splitlines()]
         checks[method]=dict(complete=summary['completed'] and len(rows)==config['horizon'],
             public_observation=all(np.asarray(r['observation']).shape==(18,65) for r in rows),
             coordinator=all(r['coordinator'] is not None and r['coordinator']['tasks'] for r in rows),

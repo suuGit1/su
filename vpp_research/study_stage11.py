@@ -17,7 +17,7 @@ def run(config,dt_model,output):
     report=dict(protocol='stage11-functional-validation-v1',objective_version=VERSION,activations=[],policies=[],ols=None,
         warning='有限样本与小预算功能验证；不是收敛、多种子显著性或连续区间安全证明')
     if (out/'results.json').exists():
-        report=json.loads((out/'results.json').read_text())
+        report=json.loads((out/'results.json').read_text(encoding='utf-8'))
         if report['objective_version']!=VERSION:raise ValueError('恢复实验版本不一致')
     def save(): (out/'results.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
     for seed in (1700,1701,1702):
@@ -38,7 +38,7 @@ def run(config,dt_model,output):
             report['policies'].append(dict(seed=seed,method=method,training_steps=3*config.horizon,results=rows));save()
             print('completed',method,seed,flush=True)
     folder=out/'ols';path=folder/'ols.json'
-    if path.exists():ols=json.loads(path.read_text())
+    if path.exists():ols=json.loads(path.read_text(encoding='utf-8'))
     else:ols=train_ols(replace(config,seed=21,cyber_mode='joint',coordinator_mode='off'),dt_model,folder,total_episodes=4,policies=4)
     report['ols']=ols
     if ols['status']=='completed':
@@ -51,4 +51,4 @@ def run(config,dt_model,output):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--dt-model',required=True);p.add_argument('--output',required=True)
-    a=p.parse_args();run(Config.load('configs/research_smoke.json'),json.loads(Path(a.dt_model).read_text()),a.output)
+    a=p.parse_args();run(Config.load('configs/research_smoke.json'),json.loads(Path(a.dt_model).read_text(encoding='utf-8')),a.output)
