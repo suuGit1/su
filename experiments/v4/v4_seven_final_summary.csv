@@ -1,0 +1,8 @@
+seed,method,failed,selection_failed,failed_or_infeasible,training_steps,selection_steps,test_steps,actual_training_steps,budget_complete,feasible_points,hv,igd,guard_infeasible,guard_certified_steps,all_test_steps_interval_certified,reserve_unconfirmed_steps
+1,mpc,False,False,0,0,2,2,0,True,1,82633.05975399079,0.9016720974544653,0,2,True,0
+1,milp_oracle,False,False,0,0,2,2,0,True,1,82633.06094024058,0.9016721465821841,0,2,True,0
+1,ordinary,False,False,0,8,10,2,8,True,1,82650.04818678646,0.9020235226710117,0,2,True,0
+1,central,False,False,0,8,10,2,8,True,1,82167.84089014189,0.8836801837569084,0,2,True,0
+1,fixed,False,False,0,8,30,2,8,True,1,83124.18153417305,0.9121481761006759,0,2,True,0
+1,ols,False,False,0,8,40,2,8,True,1,80536.59062565786,0.8424790165224646,0,2,True,0
+1,pareto,False,False,0,8,16,2,8,True,1,82232.6626916405,0.8860314868670659,0,2,True,0

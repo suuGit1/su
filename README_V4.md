@@ -7,3 +7,5 @@ python run_v4.py --data-root data/real --methods mpc ordinary pareto --seeds 1 -
 ```
 
 普通MAPPO保留官方更新器。v4需要新输出目录；代码升级不代表已经取得统计显著的算法优势。
+
+本次功能验收的命令和范围见 [docs/V4_ACCEPTANCE.md](docs/V4_ACCEPTANCE.md)，实际计数见 `experiments/v4/verification_summary.json`。
