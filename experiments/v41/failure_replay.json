@@ -1,0 +1,95 @@
+{
+  "scope": "原版v4固定发令重放，仅验证求解修复",
+  "old_reserve_invalid": 1,
+  "new_reserve_invalid": 0,
+  "max_execution_action_difference": 0.0,
+  "last_step_diagnostic": {
+    "state_step": 23,
+    "baseline_ac_kw": 1046.2988789726069,
+    "baseline_linear_kw": 1032.1616499262218,
+    "initial_soc": 0.6149434142038048,
+    "status": "sampled_confirmed",
+    "envelope": [
+      {
+        "mode": "min_grid",
+        "presolve_retry": false,
+        "solver_status": 0,
+        "solver_optimal": true,
+        "solver_objective": 785.1943305413926,
+        "solver_bound": 785.1943305413926,
+        "solver_gap": 0.0,
+        "solver_seconds": 0.000916464000056294,
+        "solver_residual": 0.0
+      },
+      {
+        "mode": "max_grid",
+        "presolve_retry": true,
+        "solver_status": 0,
+        "solver_optimal": true,
+        "solver_objective": -1242.4795312301426,
+        "solver_bound": -1242.4795312301426,
+        "solver_gap": 0.0,
+        "solver_seconds": 0.002102593000017805,
+        "solver_residual": 0.0
+      }
+    ],
+    "requested_upper_kw": 210.31788130392079,
+    "confirmed_kw": 190.60057993167823
+  },
+  "last_step_activation": {
+    "kw": 190.60057993167823,
+    "baseline_feasible": true,
+    "sampled_checked": true,
+    "samples": [
+      {
+        "fraction": -1.0,
+        "target_kw": 855.6982990409286,
+        "actual_kw": 855.6199432152312,
+        "error_kw": -0.07835582569748567
+      },
+      {
+        "fraction": -0.5,
+        "target_kw": 950.9985890067678,
+        "actual_kw": 951.003734107303,
+        "error_kw": 0.005145100535173697
+      },
+      {
+        "fraction": 0.0,
+        "target_kw": 1046.2988789726069,
+        "actual_kw": 1046.2988789726069,
+        "error_kw": 0.0
+      },
+      {
+        "fraction": 0.5,
+        "target_kw": 1141.599168938446,
+        "actual_kw": 1141.645282246202,
+        "error_kw": 0.04611330775605893
+      },
+      {
+        "fraction": 1.0,
+        "target_kw": 1236.899458904285,
+        "actual_kw": 1236.925364374315,
+        "error_kw": 0.025905470030011202
+      }
+    ],
+    "failures": [
+      {
+        "capacity_kw": 210.31788130392079,
+        "fraction": 1.0,
+        "target_kw": 1256.6167602765277,
+        "reason": "infeasible",
+        "message": "PCC 目标未通过功率误差与 AC 约束联合验收；最后误差=None"
+      },
+      {
+        "capacity_kw": 197.17301372242574,
+        "fraction": 1.0,
+        "target_kw": 1243.4718926950327,
+        "reason": "infeasible",
+        "message": "PCC 目标未通过功率误差与 AC 约束联合验收；最后误差=None"
+      }
+    ],
+    "state_step": 23,
+    "execution_step": 23,
+    "semantics": "同一时段起点状态与曲线上的替代调度，持续一个调度步"
+  }
+}

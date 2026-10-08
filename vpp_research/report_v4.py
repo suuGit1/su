@@ -57,7 +57,7 @@ def report_v4(folder):
             ledger=Ledger(p);counts=ledger.summary();ledger.close()
         for k in budget:budget[k]+=counts[k]
     base=json.loads((root/'v3_report.json').read_text(encoding='utf-8')) if (root/'v3_report.json').exists() else {}
-    result=dict(version='4.0.0',entries=summary,learning_validation=learning,learning_validation_actual_budget=budget,
+    result=dict(version='4.1.0' if plan['config'].get('safety_revision')==1 else '4.0.0',entries=summary,learning_validation=learning,learning_validation_actual_budget=budget,
         learning_validation_audit=dict(consistent=all(a['consistent'] for a in audits),traces=audits),base_evidence_complete=base.get('evidence_complete'),
         evidence_complete=bool(base.get('evidence_complete')) and all(a['consistent'] for a in audits),
         note='严格HV规则不变；逐日结果包括明确标注的不可行结果；验证曲线不是独立测试；证据完整不代表方法优越。')

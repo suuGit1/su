@@ -27,5 +27,7 @@ def emergency_plan(core):
         if audit['ac_converged'] and audit['ac_violations']==0:
             return dict(action=action, ev_kw=allocation), dict(emergency=True, emergency_ac_attempts=attempts,
                 emergency_service_degraded=bool(score[0]), emergency_service_violations=int(score[0]),
-                emergency_hard_violations=0, emergency_policy='finite-local-candidates-v1')
-    raise DispatchInfeasible('紧急后备候选中没有通过硬约束与 AC 校核的动作；保持仿真状态并拒绝执行')
+                emergency_hard_violations=0, emergency_policy='finite-local-candidates-v1',
+                emergency_unreachable_ev_kwh=float(sum(max(0,core.remaining[s['id']]-allocation.get(s['id'],0)*dt-s['max_kw']*max(0,s['departure_step']-core.t-1)*dt) for s in core.active())),
+                emergency_unrecoverable_dr_kwh=float(max(0,core.backlog+action[2]*dt-flex.dr_repay_kw*max(0,core.config.horizon-core.t-1)*dt)))
+    raise DispatchInfeasible('紧急后备候选中没有通过硬约束与 AC 校核的动作；保持仿真状态并拒绝执行',reason='no_safe_action',details={'emergency_ac_attempts':attempts})

@@ -71,4 +71,20 @@ class V41Tests(unittest.TestCase):
         p.issued_commands=[(0,2,np.array([20.,0,0,0,0,0])),(1,3,np.array([-20.,0,0,0,0,0]))]
         y,m=arrival_observation(p,x);self.assertEqual(m['mpc_consumed_command_boundaries'],[2,3]);self.assertFalse(m['mpc_queue_information_incomplete'])
 
+    def test_true_infeasibility_is_not_turned_into_success(self):
+        import vpp_mappo.flex_optimization as module
+        e=environment()
+        with patch.object(module,'milp',return_value=SimpleNamespace(status=2,x=None,message='真实不可行')),self.assertRaises(DispatchInfeasible) as error:
+            e.core.plan(objective='max_grid')
+        self.assertEqual(error.exception.reason,'infeasible');self.assertTrue(error.exception.details['presolve_retry'])
+
+    def test_unavailable_command_uses_local_safe_fallback(self):
+        c=Config.load('configs/research_smoke.json');c.safety_revision=1;c.research_version=4;c.horizon=4;c.command_timing=True;c.downlink_bps=0
+        e=ResearchEnv(c,reserve_mode='pcc_checked');e.reset(72)
+        *_,i=e.step_candidate(np.array([100.,0,0,0,0,0]),np.ones(6),np.ones(6))
+        self.assertTrue(i['local_fallback']);self.assertTrue(i['safety_hard_verified']);self.assertEqual(i['command_fallback_reason'],'not_arrived_or_unavailable')
+        from vpp_research.timing import CommandQueue,TimingContract
+        q=CommandQueue(TimingContract(deadline_seconds=.5));q.submit(0,np.zeros(6),0,0)
+        received,expired=q.receive(1.);self.assertIsNone(received);self.assertEqual(expired,1)
+
 if __name__=='__main__':unittest.main()

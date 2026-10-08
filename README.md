@@ -1,3 +1,5 @@
+> v4.1 安全闭环修订：运行 `python run_v41.py`，参见 [运行说明](docs/V41_RUN.md)。
+
 > **v4运行版：** 请先阅读 [README_V4.md](README_V4.md)，入口为 `python run_v4.py`。普通MAPPO保留独立对照。
 
 # Digital-Twin-Driven Communication–Computation–Control Co-Design for Safe Pareto Multi-Agent Energy Management in Cyber-Physical Virtual Power Plants
