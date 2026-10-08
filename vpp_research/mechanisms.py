@@ -61,7 +61,7 @@ def run(config,dt_folder,output,seeds=tuple(range(1600,1608))):
                     mpc=ObservedMPC(c,env.spec,env.flex,2)
                     for t in range(c.horizon):
                         before=env.core.row().copy();truth=env.features(env.sensor_payloads())[TARGETS]
-                        error=obs[0,TARGETS]-truth;start=time.perf_counter();a,meta=mpc.propose(obs[0,:54]);decision=time.perf_counter()-start
+                        error=obs[0,TARGETS]-truth;start=time.perf_counter();a,meta=mpc.propose(obs[0]);decision=time.perf_counter()-start
                         obs,_,_,done,i=env.step_candidate(a,np.ones(6),np.ones(6))
                         item=dict(t=t,requested_action=a.tolist(),executed_action=[i[k] for k in ('ess_power_kw','ev_charge_kw','dr_shift_kw','dr_shed_kw','pv_curtail_kw','wind_curtail_kw')],cost=i['cost']+i['terminal_penalty'],mse=float(np.mean(error**2)),
                             covered=bool(np.all(abs(error)<=np.array(model['halfwidth'])+1e-6)),aoi=i['aoi_mean_seconds'],

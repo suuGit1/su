@@ -16,13 +16,14 @@ def worker(a):
     return str(Path(a.output)/'results.json')
 
 
-def main(version=2):
+def main(version=2,default_config=None):
     p=parser();p.description=__doc__
     p.set_defaults(config='configs/v2_ieee33.json',output='runs/v2',episodes=12,eval_days=3,
         methods=['mpc','milp_oracle','ordinary','central','fixed','ols','pareto'])
     p.add_argument('--workers',type=int,default=1)
     if version==3:p.set_defaults(config='configs/v3_ieee33.json',output='runs/v3',release_version=3)
     if version==4:p.set_defaults(config='configs/v4_ieee33.json',output='runs/v4',release_version=4)
+    if default_config:p.set_defaults(config=default_config,output='runs/v41')
     a=p.parse_args()
     if a.workers<1:p.error('workers必须为正数；每个worker另使用cpu-threads线程')
     root=Path(a.output);root.mkdir(parents=True,exist_ok=True)
@@ -53,7 +54,7 @@ def main(version=2):
     write(root/'results.json',dict(manifest=plan,entries=entries,completed=True,
         all_successful=all(not e['failed'] and e['failed_or_infeasible']==0 and e.get('budget_complete',True) for e in entries)))
     report(root)
-    write(root/'release.json',dict(version=f'{version}.0.0',objective_version='c3-ac-pcc-same-period-sampled-reserve-v4',
+    write(root/'release.json',dict(version='4.1.0' if config.safety_revision==1 else f'{version}.0.0',objective_version='c3-ac-pcc-same-period-sampled-reserve-v4',
         dt_version='ridge-block-conformal-physical-dt-v2',seeds=a.seeds,workers=a.workers,
         note='按种子并行，子策略预算合计；训练完成不等于算法优势或AC鲁棒证明'))
     if version>=3:
@@ -62,4 +63,7 @@ def main(version=2):
     if version==4:
         from .report_v4 import report_v4
         report_v4(root)
+        if config.safety_revision==1:
+            from .report_v41 import report_v41
+            report_v41(root)
     print(f'v{version}训练与报告完成：'+str(root),flush=True)

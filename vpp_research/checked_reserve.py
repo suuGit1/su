@@ -59,7 +59,7 @@ def run(config,model,output):
     for seed in range(1700,1708):
         e=ResearchEnv(config,dt_model=model);obs,_=e.reset(seed);mpc=ObservedMPC(config,e.spec,e.flex,2)
         for t in range(config.horizon):
-            a,_=mpc.propose(obs[0,:54]);obs,_,_,done,info=e.step_candidate(a,np.ones(6),np.ones(6))
+            a,_=mpc.propose(obs[0]);obs,_,_,done,info=e.step_candidate(a,np.ones(6),np.ones(6))
             if done:continue
             old=info['flexibility_kwh']/config.dt_hours;g=info['grid_power_kw'];capacity=checked_capacity(e.core,g,old)
             record=dict(seed=seed,t=t,old_kw=old,checked=capacity,activations=[])

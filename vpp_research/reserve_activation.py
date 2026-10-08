@@ -47,7 +47,7 @@ def run(config,model,output,seeds=range(1700,1708)):
     for seed in seeds:
         env=ResearchEnv(config,dt_model=model,ac_safe=False);obs,_=env.reset(seed);planner=ObservedMPC(config,env.spec,env.flex,2)
         for t in range(config.horizon):
-            old=env.core.row().copy();a,_=planner.propose(obs[0,:54]);obs,_,_,done,info=env.step_candidate(a,np.ones(6),np.ones(6))
+            old=env.core.row().copy();a,_=planner.propose(obs[0]);obs,_,_,done,info=env.step_candidate(a,np.ones(6),np.ones(6))
             if done:continue
             kw=info['flexibility_kwh']/config.dt_hours
             for direction in (-1,1):

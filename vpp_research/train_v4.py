@@ -101,7 +101,7 @@ def train_v4(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust
                         a=to_numpy(a)
                     ident=ledger.begin(attempt_id,ep,t)
                     try:no,ns,reward,done,info=env.step(a)
-                    except Exception as exc:ledger.finish(ident,'error',str(exc));raise
+                    except Exception as exc:ledger.finish(ident,'error',dict(message=str(exc),reason=getattr(exc,'reason',type(exc).__name__),details=getattr(exc,'details',{})));raise
                     record=step_record(env,obs,a,w,info,attempt_id=attempt_id,episode=ep,step=t,phase='train');ledger.finish(ident,'success',record)
                     append(out/'attempts.jsonl',dict(event='step',attempt_id=attempt_id,episode=ep,step=t))
                     if trace_path:append(trace_path,record)

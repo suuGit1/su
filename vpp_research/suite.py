@@ -93,7 +93,7 @@ def run(config,dt_folder,output,seeds=(1,2,3,4,5),episodes=12,families=None):
         planner=ObservedMPC(config,env.spec,env.flex,2);infos=[];failures=0
         try:
             for _ in range(config.horizon):
-                action,meta=planner.propose(obs[0,:54]);failures+=meta['mpc_failed']
+                action,meta=planner.propose(obs[0]);failures+=meta['mpc_failed']
                 obs,_,_,_,info=env.step_candidate(action,np.ones(6),np.ones(6));infos.append(info)
             mpc_reference.append(dict(seed=scenario,vector=np.sum([i['objective_vector'] for i in infos],axis=0).tolist(),
                 mpc_failures=failures,violations=sum(i['constraint_violations'] for i in infos),ac_violations=sum(i['ac_violations'] for i in infos)))

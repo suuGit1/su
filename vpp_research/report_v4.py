@@ -57,7 +57,7 @@ def report_v4(folder):
             ledger=Ledger(p);counts=ledger.summary();ledger.close()
         for k in budget:budget[k]+=counts[k]
     base=json.loads((root/'v3_report.json').read_text(encoding='utf-8')) if (root/'v3_report.json').exists() else {}
-    result=dict(version='4.0.0',entries=summary,learning_validation=learning,learning_validation_actual_budget=budget,
+    result=dict(version='4.1.0' if plan['config'].get('safety_revision')==1 else '4.0.0',entries=summary,learning_validation=learning,learning_validation_actual_budget=budget,
         learning_validation_audit=dict(consistent=all(a['consistent'] for a in audits),traces=audits),base_evidence_complete=base.get('evidence_complete'),
         evidence_complete=bool(base.get('evidence_complete')) and all(a['consistent'] for a in audits),
         note='严格HV规则不变；逐日结果包括明确标注的不可行结果；验证曲线不是独立测试；证据完整不代表方法优越。')
@@ -88,7 +88,7 @@ def plot(root,days,learning,summary):
         v=[r['ess_zero_execution_with_request_steps']/max(1,r['env_steps']) for r in days if r['method']==m and 'ess_zero_execution_with_request_steps' in r]
         axes[1].scatter([k]*len(v),v,s=8,alpha=.3)
     for ax in axes:ax.set_xticks(range(len(methods)),methods,rotation=45)
-    axes[0].set_ylabel('Feasible cases / planned cases');axes[1].set_ylabel('Nonzero ESS request with zero execution / steps');save(fig,'v4_feasibility_action_gap')
+    axes[0].set_ylabel('Feasible cases / planned cases');axes[1].set_ylabel('Nonzero ESS request with zero execution\nFraction of steps');axes[0].set_ylim(-.02,1.02);axes[1].set_ylim(-.02,1.02);save(fig,'v4_feasibility_action_gap')
     if learning:
         fig,axes=plt.subplots(1,2,figsize=(12,5),layout='constrained')
         for model in sorted({r['model'] for r in learning}):

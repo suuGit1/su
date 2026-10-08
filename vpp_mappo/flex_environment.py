@@ -89,7 +89,7 @@ class FlexVPPAdapter:
         rows=[self.row(t) for t in range(self.t,self.config.horizon)] if oracle else [(fixed_row or self.row()).copy() for _ in range(h)]
         return solve_flex(self.spec,self.flex,self.network,rows,self.t,self.soc[0],self.backlog,self.shifted,self.shed_used,
             sessions,self.remaining,self.config.dt_hours,self.config.terminal_soc_penalty,self.config.solver_time_limit,
-            proposal=proposal,objective=objective,objective_steps=h if oracle else min(lookahead,h),grid_target=grid_target)
+            proposal=proposal,objective=objective,objective_steps=h if oracle else min(lookahead,h),grid_target=grid_target,first_step_constraints=getattr(self,'guard_constraints',None),retry_infeasible=self.config.safety_revision==1)
 
     def _allocate(self,total):
         result={s['id']:0.0 for s in self.sessions};left=max(0,total)

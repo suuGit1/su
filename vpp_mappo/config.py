@@ -61,6 +61,7 @@ class Config:
     risk_adaptive: bool = False
     task_focus: str = 'balanced'
 
+    safety_revision: int = 0
     research_version: int = 3
     rollout_episodes: int = 1
     validation_every: int = 0
@@ -71,6 +72,7 @@ class Config:
     v4_curtail_bias: float = 2.0
 
     def validate(self):
+        if self.safety_revision not in (0,1):raise ValueError('安全修订必须为0或1')
         if self.research_version not in (3,4):raise ValueError('研究版本必须为3或4')
         for name in ('rollout_episodes','validation_days'):
             if type(getattr(self,name)) is not int or getattr(self,name)<1:raise ValueError(name+'必须为正整数')

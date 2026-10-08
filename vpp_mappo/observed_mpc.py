@@ -15,6 +15,12 @@ class ObservedMPC:
         self.network=FlexNetwork(dispatch)
 
     def propose(self,observation):
+        if self.config.safety_revision==1:
+            from vpp_research.delayed_mpc import propose
+            return propose(self,observation)
+        return self._propose54(np.asarray(observation)[:54])
+
+    def _propose54(self,observation,constraints=None):
         x=np.asarray(observation,dtype=float)
         if x.shape!=(54,) or not np.isfinite(x).all():raise ValueError('MPC 要求有限的 54 维公开观察')
         c=self.config;step=round(x[0]*c.horizon);h=c.horizon-step
@@ -33,7 +39,7 @@ class ObservedMPC:
                 float(x[1]),max(0,x[6]*max(1,self.flex.dr_backlog_kwh)),
                 max(0,x[7]*max(1,self.flex.dr_shift_budget_kwh)),max(0,x[8]*max(1,self.flex.dr_shed_budget_kwh)),
                 sessions,remaining,c.dt_hours,c.terminal_soc_penalty,c.solver_time_limit,
-                objective_steps=min(self.lookahead,h))
+                objective_steps=min(self.lookahead,h),first_step_constraints=constraints,retry_infeasible=self.config.safety_revision==1)
             a=plans[0]['action'];failed=False;reason=''
         except DispatchInfeasible as exc:
             # 不修改需求或伪造可行解；明确记录失败，提交零动作给共享本地安全执行器。

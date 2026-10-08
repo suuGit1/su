@@ -8,7 +8,7 @@ from .optimization import DispatchInfeasible
 
 def solve_flex(base, spec, network, rows, start, soc, backlog, shifted, shed_used,
                sessions, remaining, dt, terminal_weight, time_limit=30., proposal=None,
-               objective='economic', objective_steps=None, grid_target=None):
+               objective='economic', objective_steps=None, grid_target=None, first_step_constraints=None, retry_infeasible=False):
     h=len(rows); n=len(sessions); stride=15+n; total=h*stride+1+(6 if proposal is not None else 0)
     if not h or objective not in ('economic','min_grid','max_grid'): raise ValueError('规划长度或目标不合法')
     window=h if objective_steps is None else min(h,objective_steps)
@@ -60,6 +60,14 @@ def solve_flex(base, spec, network, rows, start, soc, backlog, shifted, shed_use
             c[b+3]=c[b+4]=dt*spec.shift_cost;c[b+5]=dt*spec.shed_cost
             c[b+6]=c[b+7]=dt*spec.curtail_cost
             c[b+8]=dt*row['price'];c[b+9]=-dt*row['price']*base.sell_ratio
+    if first_step_constraints is not None:
+        mat,limits,action_bounds=first_step_constraints
+        for coeff,limit in zip(mat,limits):
+            eq={}
+            for k,value in enumerate(coeff):
+                for j,v in action(0,k).items():eq[j]=eq.get(j,0)+value*v
+            con(eq,hi=limit)
+        for k,(low,high) in enumerate(action_bounds):con(action(0,k),low,high)
     if grid_target is not None:
         if not np.isfinite(grid_target):raise ValueError('备用激活目标必须有限')
         con({8:1,9:-1},float(grid_target),float(grid_target))
@@ -87,11 +95,11 @@ def solve_flex(base, spec, network, rows, start, soc, backlog, shifted, shed_use
     # L1 投影只增加无上界辅助变量，不应让原本可行的物理集合变空。
     # 对求解器报告的不可行用剩余时间关闭预处理复核，仍做相同独立残差验收。
     left=time_limit-(time.perf_counter()-began)
-    if result.status==2 and proposal is not None and left>0:
+    if result.status==2 and (proposal is not None or retry_infeasible) and left>0:
         presolve_retry=True
         result=milp(c,integrality=integ,bounds=Bounds(lb,ub),constraints=LinearConstraint(matrix,lower,upper),options={'time_limit':left,'mip_rel_gap':1e-6,'presolve':False})
     seconds=time.perf_counter()-began
-    if result.x is None or result.status not in (0,1):raise DispatchInfeasible(f'会话/DR 调度不可行或无可执行解：{result.message}')
+    if result.x is None or result.status not in (0,1):raise DispatchInfeasible(f'会话/DR 调度不可行或无可执行解：{result.message}',reason={1:'timeout',2:'infeasible',3:'unbounded',4:'solver_error'}.get(result.status,'solver_error'),details={'solver_status':int(result.status),'presolve_retry':presolve_retry,'seconds':seconds})
     x=result.x; ax=matrix@x
     residual=max(float(np.max(np.maximum(np.asarray(lower)-ax,0))),float(np.max(np.maximum(ax-np.asarray(upper),0))),float(np.max(np.maximum(lb-x,0))),float(np.max(np.maximum(x-ub,0))),float(np.max(np.abs(x[integ==1]-np.round(x[integ==1])))))
     if not np.isfinite(x).all() or residual>1e-5:raise DispatchInfeasible('求解解未通过独立残差检查')
