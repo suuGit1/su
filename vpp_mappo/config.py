@@ -61,7 +61,23 @@ class Config:
     risk_adaptive: bool = False
     task_focus: str = 'balanced'
 
+    research_version: int = 3
+    rollout_episodes: int = 1
+    validation_every: int = 0
+    validation_days: int = 2
+    target_kl: float = 0.02
+    selection_hv_reference: tuple = (-100., -200., 0.)
+    v4_action_bounds: bool = True
+    v4_curtail_bias: float = 2.0
+
     def validate(self):
+        if self.research_version not in (3,4):raise ValueError('研究版本必须为3或4')
+        for name in ('rollout_episodes','validation_days'):
+            if type(getattr(self,name)) is not int or getattr(self,name)<1:raise ValueError(name+'必须为正整数')
+        if type(self.validation_every) is not int or self.validation_every<0:raise ValueError('验证间隔必须非负')
+        if not math.isfinite(self.target_kl) or self.target_kl<=0:raise ValueError('KL阈值必须为正')
+        if len(self.selection_hv_reference)!=3 or not all(math.isfinite(x) for x in self.selection_hv_reference):raise ValueError('验证HV参考点非法')
+        if type(self.v4_action_bounds) is not bool or not math.isfinite(self.v4_curtail_bias):raise ValueError('v4动作配置非法')
         if self.task_focus not in ('balanced','economic','carbon','reserve'):
             raise ValueError('未知协调任务')
         for name in ('downlink_bps','downlink_propagation_seconds','control_cycles'):

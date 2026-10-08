@@ -43,9 +43,9 @@ def run(config,dt_folder,output,seeds=tuple(range(1600,1608))):
     path=Path(output)
     if path.exists():raise ValueError('拒绝覆盖机制实验')
     path.parent.mkdir(parents=True,exist_ok=True)
-    models={m:json.loads((Path(dt_folder)/(m+'.json')).read_text()) for m in ('hold','physics','residual')}
+    models={m:json.loads((Path(dt_folder)/(m+'.json')).read_text(encoding='utf-8')) for m in ('hold','physics','residual')}
     partial=path.with_suffix(".partial.json")
-    rows=json.loads(partial.read_text()) if partial.exists() else []
+    rows=json.loads(partial.read_text(encoding='utf-8')) if partial.exists() else []
     completed={(r["condition"],r["method"],r["seed"]) for r in rows}
     for condition,changes in SCENARIOS.items():
         for method,model in models.items():

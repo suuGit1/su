@@ -1,0 +1,248 @@
+{
+  "version": "4.0.0",
+  "entries": [
+    {
+      "method": "mpc",
+      "seed": 1,
+      "total_test_cases": 1,
+      "planned_test_cases": 1,
+      "completed_cases": 1,
+      "feasible_cases": 1,
+      "failure_counts": {
+        "run_failed": 0,
+        "violations": 0,
+        "ac_violations": 0,
+        "ac_failed": 0,
+        "reserve_invalid": 0,
+        "ev_unmet": 0,
+        "dr_backlog": 0
+      },
+      "training_steps": 0,
+      "selection_steps": 24
+    },
+    {
+      "method": "ordinary",
+      "seed": 1,
+      "total_test_cases": 1,
+      "planned_test_cases": 1,
+      "completed_cases": 1,
+      "feasible_cases": 1,
+      "failure_counts": {
+        "run_failed": 0,
+        "violations": 0,
+        "ac_violations": 0,
+        "ac_failed": 0,
+        "reserve_invalid": 0,
+        "ev_unmet": 0,
+        "dr_backlog": 0
+      },
+      "training_steps": 48,
+      "selection_steps": 120
+    },
+    {
+      "method": "pareto",
+      "seed": 1,
+      "total_test_cases": 1,
+      "planned_test_cases": 1,
+      "completed_cases": 1,
+      "feasible_cases": 0,
+      "failure_counts": {
+        "run_failed": 0,
+        "violations": 0,
+        "ac_violations": 0,
+        "ac_failed": 0,
+        "reserve_invalid": 1,
+        "ev_unmet": 0,
+        "dr_backlog": 0
+      },
+      "training_steps": 48,
+      "selection_steps": 192
+    }
+  ],
+  "learning_validation": [
+    {
+      "model": "seed_1/ordinary_1",
+      "episode": 2,
+      "env_steps": 48,
+      "hv": 298258.1867284495,
+      "feasible_days": 4,
+      "total_days": 4,
+      "selection_steps": 96
+    },
+    {
+      "model": "seed_1/pareto_1",
+      "episode": 2,
+      "env_steps": 48,
+      "hv": 517415.25422234024,
+      "feasible_days": 1,
+      "total_days": 4,
+      "selection_steps": 96
+    }
+  ],
+  "learning_validation_actual_budget": {
+    "attempted_calls": 192,
+    "successful_calls": 192,
+    "error_calls": 0,
+    "unknown_calls": 0
+  },
+  "learning_validation_audit": {
+    "consistent": true,
+    "traces": [
+      {
+        "path": "runs/v4_full_day_final/seed_1/ordinary_1/learning_validation/episode_2/0a46794ad3be_seed_50000/trajectory_complete.jsonl",
+        "consistent": true,
+        "errors": [],
+        "recomputed": {
+          "env_steps": 24,
+          "vector": [
+            -19.680382681854272,
+            -81.12378687588013,
+            31.237464867749313
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "reserve_invalid": 0,
+          "guard_certified_steps": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0
+        }
+      },
+      {
+        "path": "runs/v4_full_day_final/seed_1/ordinary_1/learning_validation/episode_2/8966c3d12f34_seed_50000/trajectory_complete.jsonl",
+        "consistent": true,
+        "errors": [],
+        "recomputed": {
+          "env_steps": 24,
+          "vector": [
+            -19.680382681854272,
+            -81.12378687588013,
+            31.237464867749313
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "reserve_invalid": 0,
+          "guard_certified_steps": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0
+        }
+      },
+      {
+        "path": "runs/v4_full_day_final/seed_1/ordinary_1/learning_validation/episode_2/9b1117bacce3_seed_50000/trajectory_complete.jsonl",
+        "consistent": true,
+        "errors": [],
+        "recomputed": {
+          "env_steps": 24,
+          "vector": [
+            -19.680382681854272,
+            -81.12378687588013,
+            31.237464867749313
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "reserve_invalid": 0,
+          "guard_certified_steps": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0
+        }
+      },
+      {
+        "path": "runs/v4_full_day_final/seed_1/ordinary_1/learning_validation/episode_2/80deeb4efd4f_seed_50000/trajectory_complete.jsonl",
+        "consistent": true,
+        "errors": [],
+        "recomputed": {
+          "env_steps": 24,
+          "vector": [
+            -19.680382681854272,
+            -81.12378687588013,
+            31.237464867749313
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "reserve_invalid": 0,
+          "guard_certified_steps": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0
+        }
+      },
+      {
+        "path": "runs/v4_full_day_final/seed_1/pareto_1/learning_validation/episode_2/0a46794ad3be_seed_50000/trajectory_complete.jsonl",
+        "consistent": true,
+        "errors": [],
+        "recomputed": {
+          "env_steps": 24,
+          "vector": [
+            -16.954726899391055,
+            -81.56781209740308,
+            52.608335135110906
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "reserve_invalid": 0,
+          "guard_certified_steps": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0
+        }
+      },
+      {
+        "path": "runs/v4_full_day_final/seed_1/pareto_1/learning_validation/episode_2/8966c3d12f34_seed_50000/trajectory_complete.jsonl",
+        "consistent": true,
+        "errors": [],
+        "recomputed": {
+          "env_steps": 24,
+          "vector": [
+            -16.951996680788312,
+            -81.55586253850825,
+            50.735082160500404
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "reserve_invalid": 1,
+          "guard_certified_steps": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0
+        }
+      },
+      {
+        "path": "runs/v4_full_day_final/seed_1/pareto_1/learning_validation/episode_2/9b1117bacce3_seed_50000/trajectory_complete.jsonl",
+        "consistent": true,
+        "errors": [],
+        "recomputed": {
+          "env_steps": 24,
+          "vector": [
+            -16.945218779844538,
+            -81.52599567421532,
+            50.415508882179466
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "reserve_invalid": 1,
+          "guard_certified_steps": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0
+        }
+      },
+      {
+        "path": "runs/v4_full_day_final/seed_1/pareto_1/learning_validation/episode_2/80deeb4efd4f_seed_50000/trajectory_complete.jsonl",
+        "consistent": true,
+        "errors": [],
+        "recomputed": {
+          "env_steps": 24,
+          "vector": [
+            -16.95149610241692,
+            -81.5537866307159,
+            50.68606008830584
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "reserve_invalid": 1,
+          "guard_certified_steps": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0
+        }
+      }
+    ]
+  },
+  "base_evidence_complete": true,
+  "evidence_complete": true,
+  "note": "严格HV规则不变；逐日结果包括明确标注的不可行结果；验证曲线不是独立测试；证据完整不代表方法优越。"
+}

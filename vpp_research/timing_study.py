@@ -35,4 +35,4 @@ def run(model,output):
 
 if __name__=='__main__':
     import argparse
-    p=argparse.ArgumentParser();p.add_argument('--model',required=True);p.add_argument('--output',required=True);a=p.parse_args();run(json.loads(Path(a.model).read_text()),a.output)
+    p=argparse.ArgumentParser();p.add_argument('--model',required=True);p.add_argument('--output',required=True);a=p.parse_args();run(json.loads(Path(a.model).read_text(encoding='utf-8')),a.output)

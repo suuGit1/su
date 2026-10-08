@@ -11,16 +11,16 @@ from .environment import ResearchEnv
 
 
 def run(folder,data_root='data/real',days=3):
-    root=Path(folder);plan=json.loads((root/'manifest.json').read_text())
+    root=Path(folder);plan=json.loads((root/'manifest.json').read_text(encoding='utf-8'))
     from dataclasses import fields
     known={f.name for f in fields(Config)}
     config=Config(**{k:v for k,v in plan['config'].items() if k in known})
     for k,v in plan['config'].items():
         if k.startswith('_'):setattr(config,k,v)
     _,paths,_,_=connect(data_root,config)
-    datasets=json.loads((root/'dt/datasets.json').read_text())
+    datasets=json.loads((root/'dt/datasets.json').read_text(encoding='utf-8'))
     models={'physics':fit(datasets['train'],datasets['validation'],method='physics'),
-            'residual':json.loads((root/'dt/residual.json').read_text())}
+            'residual':json.loads((root/'dt/residual.json').read_text(encoding='utf-8'))}
     records=collect(config,range(61000,61000+days),'physics',paths['test'])
     results={}
     for name,model in models.items():

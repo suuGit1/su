@@ -6,7 +6,7 @@ import numpy as np
 
 def audit_trace(path, expected=None):
     path=Path(path)
-    records=[json.loads(line) for line in path.read_text().splitlines() if line.strip()] if path.exists() else []
+    records=[json.loads(line) for line in path.read_text(encoding='utf-8').splitlines() if line.strip()] if path.exists() else []
     infos=[r['feedback'] for r in records]
     vector=np.sum([i['objective_vector'] for i in infos],axis=0).tolist() if infos else [0.,0.,0.]
     summary=dict(env_steps=len(records),vector=vector,
@@ -34,7 +34,7 @@ def audit_trace(path, expected=None):
 
 
 def audit_campaign(root):
-    root=Path(root);data=json.loads((root/'results.json').read_text());entries=[]
+    root=Path(root);data=json.loads((root/'results.json').read_text(encoding='utf-8'));entries=[]
     plan=data['manifest'];expected_pairs={(m,s) for m in plan['methods'] for s in plan['seeds']}
     actual_pairs=[(e['method'],e['seed']) for e in data['entries']]
     complete=bool(data.get('completed')) and len(actual_pairs)==len(expected_pairs) and set(actual_pairs)==expected_pairs

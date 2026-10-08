@@ -14,7 +14,10 @@ from .central_agent import CentralPPO
 from .pareto_agent import ParetoAgent,sample_preference,VERSION
 
 
-def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=False,scenario_offset=0,resource_mode='joint',reserve_mode='linear',resume=False,trace_path=None):
+def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=False,scenario_offset=0,resource_mode='joint',reserve_mode='linear',resume=False,trace_path=None,validation_csv=None):
+    if config.research_version==4:
+        from .train_v4 import train_v4
+        return train_v4(config,dt_model,output,method,preference,robust,scenario_offset,resource_mode,reserve_mode,resume,trace_path,validation_csv)
     config.validate()
     if config.algorithm!='mappo' or config.device!='cpu':raise ValueError('本研究驱动当前验证了 CPU MAPPO；旧 GPU/IPPO 入口继续独立保留')
     if method not in ('ordinary','fixed','pareto','central'):raise ValueError('未知学习方法')
@@ -136,10 +139,18 @@ def load(checkpoint):
     from vpp_mappo.config import Config
     state=torch.load(checkpoint,map_location='cpu',weights_only=True)
     expected={'linear':OBJECTIVE_VERSION,'ac_checked':AC_OBJECTIVE_VERSION,'pcc_checked':PCC_OBJECTIVE_VERSION}.get(state.get('reserve_mode','linear'))
-    if (state['version'],state['observation_version'],state['objective_version'])!=(VERSION,OBS_VERSION,expected):raise ValueError('研究检查点协议不匹配')
+    from .pareto_v4 import VERSION as VERSION_V4
+    from .environment import OBS_VERSION_V4
+    is_v4=state['config'].get('research_version',3)==4
+    protocol=(VERSION_V4,OBS_VERSION_V4,expected) if is_v4 else (VERSION,OBS_VERSION,expected)
+    if (state['version'],state['observation_version'],state['objective_version'])!=protocol:raise ValueError('研究检查点协议不匹配')
     c=Config(**state['config']);c._dispatch_record=state['dispatch_spec'];c._flex_record=state['flex_spec'];c._cyber_record=state['cyber_spec'];c._ev_bundle=state['ev_bundle']
     c.train_csv=None;env=ResearchEnv(c,dt_model=state['dt_model'],robust=state['robust'],resource_mode=state.get('resource_mode','joint'),vector_metrics=False,reserve_mode=state.get('reserve_mode','linear'))
-    agent=(CentralPPO if state['method']=='central' else ParetoAgent)(65,env.num_agents,c.hidden_size,c.lr) if state['method'] in ('pareto','central') else OfficialPPO(c,env)
+    if is_v4:
+        from .train_v4 import make_agent
+        agent=make_agent(c,env,state['method'])
+    else:
+        agent=(CentralPPO if state['method']=='central' else ParetoAgent)(65,env.num_agents,c.hidden_size,c.lr) if state['method'] in ('pareto','central') else OfficialPPO(c,env)
     if state['method'] in ('pareto','central'):agent.load_state_dict(state['agent']);agent.eval()
     else:agent.load(state['agent']);agent.trainer.prep_rollout()
     return state,c,agent
@@ -173,7 +184,7 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
                 target.mkdir(parents=True,exist_ok=True);trace_path=target/'trajectory.jsonl'
                 from .ledger import Ledger
                 eval_ledger=Ledger(target/'evaluation.sqlite')
-            row=dict(seed=seed,preference=w.tolist(),unseen_preference=not any(np.allclose(w,p,atol=1e-9,rtol=0) for p in state['training_preferences']),failed=False,env_steps=0)
+            row=dict(seed=seed,scenario_date=env.data.scenario_names[index] if env.data else None,preference=w.tolist(),unseen_preference=not any(np.allclose(w,p,atol=1e-9,rtol=0) for p in state['training_preferences']),failed=False,env_steps=0)
             try:
                 env.preference=w;env.reward_mode="economic" if state["method"] in ("ordinary","central") else "weighted"
                 obs,_=env.reset(seed,index)

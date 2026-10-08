@@ -10,7 +10,7 @@ from .suite import stats
 
 def run(runs,output):
     root=Path(runs);out=Path(output);out.mkdir(parents=True,exist_ok=True)
-    def read(name):return json.loads((root/name).read_text())
+    def read(name):return json.loads((root/name).read_text(encoding='utf-8'))
     entries=[]
     for group in ('campaign','ablations'):
         entries+=read(group+'/results.json')['entries']

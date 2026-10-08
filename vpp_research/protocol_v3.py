@@ -28,5 +28,11 @@ def contract(config, plan):
         real_input_fingerprint=plan['protocol']['fingerprint'],
         splits=dict(dt_days=plan['dt_days'],selection_dates=plan['selection_dates'],test_dates=plan['test_dates']),
         scope='规则式协调器；仿真C3；EV/DR范围由真实输入协议指定；训练与选择交互不宣称共同等预算')
+    if config.research_version==4:
+        from .environment import OBS_VERSION_V4
+        record.update(schema='experiment-contract-v4',observation_version=OBS_VERSION_V4,
+            action_protocol='公开DT估计界限+低弃电初始化；所有学习基线使用相同映射',
+            training_protocol='多日rollout；Pareto独立优化器+PopArt；固定选择集验证额外计费',
+            checkpoint_selection='先验证可行数，Pareto再比较HV；其余按训练效用；不读取测试结果')
     record['fingerprint']=digest(record)
     return record

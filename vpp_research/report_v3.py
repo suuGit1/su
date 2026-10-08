@@ -22,12 +22,12 @@ def report_v3(root):
         axes[j].set_xticks(range(len(methods)),methods,rotation=45);axes[j].set_ylabel(name)
     fig.suptitle('Feasible front points (not independent samples)')
     fig.savefig(root/'figures/objectives.png',dpi=160);fig.savefig(root/'figures/objectives.svg');plt.close(fig)
-    scales=json.loads((root/'manifest.json').read_text()).get('experiment_contract',{}).get('scales',[100,100,100])
+    scales=json.loads((root/'manifest.json').read_text(encoding='utf-8')).get('experiment_contract',{}).get('scales',[100,100,100])
     if list(scales)!=[100,100,100]:raise ValueError('绘图尺度与协议不一致')
     learned=any(r['method'] not in ('mpc','milp_oracle') for r in rows)
     audit_ok=traces['consistent'] and (training['consistent'] if learned else True)
     from .suite import stats
-    source=json.loads((root/'results.json').read_text())
+    source=json.loads((root/'results.json').read_text(encoding='utf-8'))
     strict={}
     for method in methods:
         if method in ('mpc','milp_oracle'):continue

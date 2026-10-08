@@ -35,7 +35,7 @@ def run(config,dt_folder,output,seeds=(1,2,3,4,5),episodes=12,families=None):
     out=Path(output)
     if out.exists() and any(out.iterdir()):raise ValueError('实验目录非空')
     out.mkdir(parents=True,exist_ok=True)
-    models={k:json.loads((Path(dt_folder)/(k+'.json')).read_text()) for k in ('hold','physics','residual')}
+    models={k:json.loads((Path(dt_folder)/(k+'.json')).read_text(encoding='utf-8')) for k in ('hold','physics','residual')}
     all_results=[];per_seed=[];checkpoints={}
     for seed in seeds:
         entries=[]

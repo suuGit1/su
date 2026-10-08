@@ -35,13 +35,13 @@ def run(config, model, output, total_episodes=12, seeds=(31,), families=FAMILIES
         budgets=budgets,seeds=list(seeds),validation_seeds=[8100,8101],test_seeds=[9100,9101],
         validation_preferences=VALIDATION_WEIGHTS,test_preferences=TEST_WEIGHTS)
     mp=out/'manifest.json'
-    if mp.exists() and json.loads(mp.read_text())!=manifest:raise ValueError('恢复协议不同，拒绝混合实验')
+    if mp.exists() and json.loads(mp.read_text(encoding='utf-8'))!=manifest:raise ValueError('恢复协议不同，拒绝混合实验')
     mp.write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
     entries=[]
     for seed in seeds:
         for family in families:
             dest=out/f'{family}_{seed}';result_path=out/f'{family}_{seed}.json'
-            if result_path.exists():entries.append(json.loads(result_path.read_text()));continue
+            if result_path.exists():entries.append(json.loads(result_path.read_text(encoding='utf-8')));continue
             budget=budgets[family];cfg=replace(config,seed=seed,cyber_mode='joint',coordinator_mode='off')
             result=dict(seed=seed,family=family,failed=False,training_steps=0,selection_steps=0,test_steps=0,
                         budget=budget,budget_matched=False,validation=[],test=[],members=[])
@@ -92,10 +92,10 @@ def run(config, model, output, total_episodes=12, seeds=(31,), families=FAMILIES
                 # 子策略内部失败时恢复已完成交互，失败回合不会伪装成零成本。
                 op=dest/'ols.json'
                 if family=='ols' and op.exists():
-                    state=json.loads(op.read_text());result['training_steps']=state['completed_training_steps'];result['selection_steps']=state['completed_selection_steps']
+                    state=json.loads(op.read_text(encoding='utf-8'));result['training_steps']=state['completed_training_steps'];result['selection_steps']=state['completed_selection_steps']
                 elif family!='ols':
                     failures=list(dest.glob('member_*/failure.json'))
-                    if failures:result['training_steps']+=sum(json.loads(p.read_text())['completed_env_steps'] for p in failures)
+                    if failures:result['training_steps']+=sum(json.loads(p.read_text(encoding='utf-8'))['completed_env_steps'] for p in failures)
             result_path.write_text(json.dumps(result,ensure_ascii=False,indent=2));entries.append(result)
             print(seed,family,'matched',result['budget_matched'],'failed',result['failed'],flush=True)
     union=[p for r in entries if not r['failed'] for p in r['validation_points']]
@@ -113,4 +113,4 @@ if __name__=='__main__':
     from vpp_mappo.config import Config
     p=argparse.ArgumentParser();p.add_argument('--config',default='configs/research_smoke.json');p.add_argument('--dt-model')
     p.add_argument('--output',required=True);p.add_argument('--total-episodes',type=int,default=12);p.add_argument('--seeds',type=int,nargs='+',default=[31]);p.add_argument('--ols-members',type=int,default=4)
-    a=p.parse_args();run(Config.load(a.config),json.loads(Path(a.dt_model).read_text()) if a.dt_model else None,a.output,a.total_episodes,a.seeds,ols_members=a.ols_members)
+    a=p.parse_args();run(Config.load(a.config),json.loads(Path(a.dt_model).read_text(encoding='utf-8')) if a.dt_model else None,a.output,a.total_episodes,a.seeds,ols_members=a.ols_members)

@@ -81,7 +81,7 @@ def run(config, model, output, total_episodes=24, policies=6, reserve_mode='pcc_
             values.append(value);visited.append(w);save('running')
         except (RuntimeError,ValueError) as exc:
             failure=folder/'failure.json'
-            if failure.exists():member['training_steps']=json.loads(failure.read_text())['completed_env_steps']
+            if failure.exists():member['training_steps']=json.loads(failure.read_text(encoding='utf-8'))['completed_env_steps']
             member['error']=str(exc);save('failed');raise
     return save('completed')
 
@@ -102,4 +102,4 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--config',default='configs/research_smoke.json');p.add_argument('--dt-model',required=True)
     p.add_argument('--output',required=True);p.add_argument('--episodes',type=int,default=24);p.add_argument('--policies',type=int,default=6)
     p.add_argument('--reserve-mode',choices=['linear','ac_checked','pcc_checked'],default='pcc_checked');a=p.parse_args()
-    run(Config.load(a.config),json.loads(Path(a.dt_model).read_text()),a.output,a.episodes,a.policies,a.reserve_mode)
+    run(Config.load(a.config),json.loads(Path(a.dt_model).read_text(encoding='utf-8')),a.output,a.episodes,a.policies,a.reserve_mode)

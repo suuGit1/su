@@ -8,7 +8,7 @@ from vpp_mappo.pareto import non_dominated,hypervolume,igd
 
 
 def report(folder):
-    folder=Path(folder);data=json.loads((folder/'results.json').read_text());plan=data['manifest']
+    folder=Path(folder);data=json.loads((folder/'results.json').read_text(encoding='utf-8'));plan=data['manifest']
     entries=data['entries'];reference=plan.get('hv_reference',[-100.,-200.,0.])
     union=[p for e in entries for p in points(e.get('validation',[]),plan.get('selection_days',1))]
     empirical=[union[i] for i in non_dominated(union)] if union else []

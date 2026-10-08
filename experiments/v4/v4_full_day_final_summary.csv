@@ -1,0 +1,4 @@
+seed,method,failed,selection_failed,failed_or_infeasible,training_steps,selection_steps,test_steps,actual_training_steps,budget_complete,feasible_points,hv,igd,guard_infeasible,guard_certified_steps,all_test_steps_interval_certified,reserve_unconfirmed_steps
+1,mpc,False,False,0,0,24,24,0,True,1,487747.73610816896,9.33074316264542,24,0,False,0
+1,ordinary,False,False,0,48,120,24,48,True,1,290708.11194914294,15.259301271328605,24,0,False,0
+1,pareto,False,False,1,48,192,24,48,True,0,0.0,,24,0,False,1
