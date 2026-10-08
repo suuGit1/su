@@ -1,0 +1,1463 @@
+{
+  "version": "4.1.0",
+  "date": "2026-10-08",
+  "functional_only": true,
+  "regression_tests": 24,
+  "full_day_source_commit": "f569adfd6b071d236117b43084430ea9d545f050",
+  "scope": "真实曲线驱动的IEEE33仿真；单种子极小预算；不支持性能优越或鲁棒安全结论",
+  "runs": {
+    "v41_full": {
+      "entries": [
+        {
+          "method": "mpc",
+          "seed": 1,
+          "total_test_cases": 1,
+          "planned_test_cases": 1,
+          "completed_cases": 1,
+          "feasible_cases": 1,
+          "failure_counts": {
+            "run_failed": 0,
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet": 0,
+            "dr_backlog": 0
+          },
+          "training_steps": 0,
+          "selection_steps": 24
+        },
+        {
+          "method": "ordinary",
+          "seed": 1,
+          "total_test_cases": 1,
+          "planned_test_cases": 1,
+          "completed_cases": 1,
+          "feasible_cases": 1,
+          "failure_counts": {
+            "run_failed": 0,
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet": 0,
+            "dr_backlog": 0
+          },
+          "training_steps": 48,
+          "selection_steps": 120
+        },
+        {
+          "method": "pareto",
+          "seed": 1,
+          "total_test_cases": 1,
+          "planned_test_cases": 1,
+          "completed_cases": 1,
+          "feasible_cases": 1,
+          "failure_counts": {
+            "run_failed": 0,
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet": 0,
+            "dr_backlog": 0
+          },
+          "training_steps": 48,
+          "selection_steps": 192
+        }
+      ],
+      "safety": [
+        {
+          "method": "mpc",
+          "seed": 1,
+          "steps": 24,
+          "missing_traces": [],
+          "guard_reasons": {
+            "robust_polytope_infeasible": 24
+          },
+          "reserve_status": {
+            "sampled_confirmed": 24
+          },
+          "safety_modes": {
+            "nominal_local": 24
+          },
+          "command_fallbacks": {
+            "not_arrived_or_unavailable": 1,
+            "none": 23
+          },
+          "solver_failures": {},
+          "presolve_retries": 0,
+          "certified_steps": 0,
+          "reserve_invalid": 0,
+          "hard_verified_steps": 24,
+          "service_degraded_steps": 0
+        },
+        {
+          "method": "ordinary",
+          "seed": 1,
+          "steps": 24,
+          "missing_traces": [],
+          "guard_reasons": {
+            "robust_polytope_infeasible": 24
+          },
+          "reserve_status": {
+            "sampled_confirmed": 24
+          },
+          "safety_modes": {
+            "nominal_local": 24
+          },
+          "command_fallbacks": {
+            "not_arrived_or_unavailable": 1,
+            "none": 23
+          },
+          "solver_failures": {},
+          "presolve_retries": 0,
+          "certified_steps": 0,
+          "reserve_invalid": 0,
+          "hard_verified_steps": 24,
+          "service_degraded_steps": 0
+        },
+        {
+          "method": "pareto",
+          "seed": 1,
+          "steps": 24,
+          "missing_traces": [],
+          "guard_reasons": {
+            "robust_polytope_infeasible": 24
+          },
+          "reserve_status": {
+            "sampled_confirmed": 24
+          },
+          "safety_modes": {
+            "nominal_local": 24
+          },
+          "command_fallbacks": {
+            "not_arrived_or_unavailable": 1,
+            "none": 23
+          },
+          "solver_failures": {},
+          "presolve_retries": 1,
+          "certified_steps": 0,
+          "reserve_invalid": 0,
+          "hard_verified_steps": 24,
+          "service_degraded_steps": 0
+        }
+      ],
+      "budget": {
+        "attempted_calls": 192,
+        "successful_calls": 192,
+        "error_calls": 0,
+        "unknown_calls": 0
+      },
+      "cost_reconciles_all": true,
+      "evidence_complete": true,
+      "manifest": {
+        "config": {
+          "algorithm": "mappo",
+          "episodes": 12,
+          "horizon": 24,
+          "dt_hours": 1.0,
+          "seed": 61,
+          "hidden_size": 64,
+          "ppo_epoch": 5,
+          "num_mini_batch": 1,
+          "lr": 0.0003,
+          "gamma": 0.99,
+          "gae_lambda": 0.95,
+          "clip_param": 0.2,
+          "entropy_coef": 0.01,
+          "reward_scale": 100.0,
+          "violation_penalty": 100.0,
+          "terminal_soc_penalty": 1000.0,
+          "safety": true,
+          "digital_twin": false,
+          "delay_steps": 0,
+          "packet_loss": 0.0,
+          "train_csv": "/tmp/v41_final/data/real/gb/profiles/train.csv",
+          "device": "cpu",
+          "threads": 1,
+          "network_model": "ieee33",
+          "dispatch_spec": "configs/dispatch_ieee33.json",
+          "solver_time_limit": 30.0,
+          "metrics_enabled": false,
+          "objective_scales": [
+            100.0,
+            100.0,
+            100.0
+          ],
+          "objective_weights": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "reserve_hours": 1.0,
+          "synthetic_carbon_g_per_kwh": null,
+          "resource_model": "sessions_v1",
+          "flex_spec": null,
+          "ev_sessions_path": null,
+          "cyber_mode": "joint",
+          "cyber_dt_mode": "physics",
+          "cyber_spec": "configs/cyber_assumptions.json",
+          "coordinator_mode": "schedule",
+          "coordinator_aoi_limit_steps": 2.0,
+          "coordinator_deadline_margin_steps": 1.0,
+          "coordinator_soc_margin": 0.05,
+          "coordinator_reserved_fraction": 0.5,
+          "interval_safety": true,
+          "command_timing": true,
+          "downlink_bps": 10000,
+          "downlink_propagation_seconds": 0.02,
+          "command_deadline_steps": 2,
+          "control_cycles": 1000000000.0,
+          "risk_adaptive": true,
+          "task_focus": "balanced",
+          "safety_revision": 1,
+          "research_version": 4,
+          "rollout_episodes": 2,
+          "validation_every": 2,
+          "validation_days": 1,
+          "target_kl": 0.02,
+          "selection_hv_reference": [
+            -100.0,
+            -200.0,
+            0.0
+          ],
+          "v4_action_bounds": true,
+          "v4_curtail_bias": 2.0,
+          "_ev_bundle": {
+            "schema_version": 1,
+            "energy_basis": "grid_kwh",
+            "source": "显式关闭EV：未取得真实完整会话",
+            "horizon": 24,
+            "dt_hours": 1.0,
+            "scenarios": {
+              "2019-01-01": [],
+              "2019-01-02": [],
+              "2019-01-03": [],
+              "2019-01-04": [],
+              "2019-01-05": [],
+              "2019-01-06": [],
+              "2019-01-07": [],
+              "2019-01-08": [],
+              "2019-01-09": [],
+              "2019-01-10": [],
+              "2019-01-11": [],
+              "2019-01-12": [],
+              "2019-01-13": [],
+              "2019-01-14": [],
+              "2019-01-15": [],
+              "2019-01-16": [],
+              "2019-01-17": [],
+              "2019-01-18": [],
+              "2019-01-19": [],
+              "2019-01-20": [],
+              "2019-01-21": [],
+              "2019-01-22": [],
+              "2019-01-23": [],
+              "2019-01-24": [],
+              "2019-01-25": [],
+              "2019-01-26": [],
+              "2019-01-27": [],
+              "2019-01-28": [],
+              "2019-01-29": [],
+              "2019-01-30": [],
+              "2019-01-31": [],
+              "2019-02-01": [],
+              "2019-02-02": [],
+              "2019-02-04": [],
+              "2019-02-05": [],
+              "2019-02-06": [],
+              "2019-02-07": [],
+              "2019-02-08": [],
+              "2019-02-09": [],
+              "2019-02-10": [],
+              "2019-02-11": [],
+              "2019-02-12": [],
+              "2019-02-13": [],
+              "2019-02-14": [],
+              "2019-02-15": [],
+              "2019-02-16": [],
+              "2019-02-17": [],
+              "2019-02-18": [],
+              "2019-02-19": [],
+              "2019-02-20": [],
+              "2019-02-21": [],
+              "2019-02-22": [],
+              "2019-02-23": [],
+              "2019-02-24": [],
+              "2019-02-25": [],
+              "2019-02-26": [],
+              "2019-02-27": [],
+              "2019-02-28": [],
+              "2019-03-01": [],
+              "2019-03-02": [],
+              "2019-03-03": [],
+              "2019-03-04": [],
+              "2019-03-05": [],
+              "2019-03-06": [],
+              "2019-03-07": [],
+              "2019-03-08": [],
+              "2019-03-09": [],
+              "2019-03-10": [],
+              "2019-03-11": [],
+              "2019-03-12": [],
+              "2019-03-13": [],
+              "2019-03-14": [],
+              "2019-03-15": [],
+              "2019-03-16": [],
+              "2019-03-17": [],
+              "2019-03-18": [],
+              "2019-03-19": [],
+              "2019-03-20": [],
+              "2019-03-21": [],
+              "2019-03-22": [],
+              "2019-03-23": [],
+              "2019-03-24": [],
+              "2019-03-25": [],
+              "2019-03-26": [],
+              "2019-03-27": [],
+              "2019-03-28": [],
+              "2019-03-29": []
+            }
+          },
+          "_flex_record": {
+            "ev_station_kw": 300.0,
+            "dr_shift_kw": 0.0,
+            "dr_repay_kw": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "dr_shift_budget_kwh": 0.0,
+            "dr_shed_kw": 0.0,
+            "dr_shed_budget_kwh": 0.0,
+            "dr_fraction": 0.2,
+            "shift_cost": 0.01,
+            "shed_cost": 0.1,
+            "curtail_cost": 0.05
+          }
+        },
+        "protocol": {
+          "schema": "real-inputs-contract-v1",
+          "profiles": {
+            "train": {
+              "sha256": "0e1500d9aaab8d620f30573b5b8975945b51bf6d8d080f928cb85c8fe01dec10",
+              "days": [
+                "2019-01-01",
+                "2019-01-02",
+                "2019-01-03",
+                "2019-01-04",
+                "2019-01-05",
+                "2019-01-06",
+                "2019-01-07",
+                "2019-01-08",
+                "2019-01-09",
+                "2019-01-10",
+                "2019-01-11",
+                "2019-01-12",
+                "2019-01-13",
+                "2019-01-14",
+                "2019-01-15",
+                "2019-01-16",
+                "2019-01-17",
+                "2019-01-18",
+                "2019-01-19",
+                "2019-01-20",
+                "2019-01-21",
+                "2019-01-22",
+                "2019-01-23",
+                "2019-01-24",
+                "2019-01-25",
+                "2019-01-26",
+                "2019-01-27",
+                "2019-01-28",
+                "2019-01-29",
+                "2019-01-30",
+                "2019-01-31"
+              ]
+            },
+            "validation": {
+              "sha256": "e6113c7467d6626713397033d965727fd13a9ea1383683072024298a0ba0ba04",
+              "days": [
+                "2019-02-01",
+                "2019-02-02",
+                "2019-02-04",
+                "2019-02-05",
+                "2019-02-06",
+                "2019-02-07",
+                "2019-02-08",
+                "2019-02-09",
+                "2019-02-10",
+                "2019-02-11",
+                "2019-02-12",
+                "2019-02-13",
+                "2019-02-14",
+                "2019-02-15",
+                "2019-02-16",
+                "2019-02-17",
+                "2019-02-18",
+                "2019-02-19",
+                "2019-02-20",
+                "2019-02-21",
+                "2019-02-22",
+                "2019-02-23",
+                "2019-02-24",
+                "2019-02-25",
+                "2019-02-26",
+                "2019-02-27",
+                "2019-02-28"
+              ]
+            },
+            "test": {
+              "sha256": "1803e98348f96f538e91ba5bd5108af359cecf481f0e8762c8bba4ec66e290ea",
+              "days": [
+                "2019-03-01",
+                "2019-03-02",
+                "2019-03-03",
+                "2019-03-04",
+                "2019-03-05",
+                "2019-03-06",
+                "2019-03-07",
+                "2019-03-08",
+                "2019-03-09",
+                "2019-03-10",
+                "2019-03-11",
+                "2019-03-12",
+                "2019-03-13",
+                "2019-03-14",
+                "2019-03-15",
+                "2019-03-16",
+                "2019-03-17",
+                "2019-03-18",
+                "2019-03-19",
+                "2019-03-20",
+                "2019-03-21",
+                "2019-03-22",
+                "2019-03-23",
+                "2019-03-24",
+                "2019-03-25",
+                "2019-03-26",
+                "2019-03-27",
+                "2019-03-28",
+                "2019-03-29"
+              ]
+            }
+          },
+          "horizon": 24,
+          "dt_hours": 1.0,
+          "ev_scope": "disabled_missing_real_sessions",
+          "ev_digest": "568aa1edbedf40aad9fc8808a0f78cfb420d5269c41dac20b19d6660dd06435f",
+          "dr": {
+            "mode": "off",
+            "reason": "没有同地区真实可控DR参数，不自动代入合成DR"
+          },
+          "flex": {
+            "ev_station_kw": 300.0,
+            "dr_shift_kw": 0.0,
+            "dr_repay_kw": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "dr_shift_budget_kwh": 0.0,
+            "dr_shed_kw": 0.0,
+            "dr_shed_budget_kwh": 0.0,
+            "dr_fraction": 0.2,
+            "shift_cost": 0.01,
+            "shed_cost": 0.1,
+            "curtail_cost": 0.05
+          },
+          "limits": [
+            "真实国家能源/碳曲线驱动仿真，非IEEE33实测",
+            "储能/线路/C3能耗与设备能力仍为研究假设"
+          ],
+          "fingerprint": "dd494eb9355330c6155ab99f98a2277546eee2238c353bb9a506991ec50e5d0c"
+        },
+        "seeds": [
+          1
+        ],
+        "episodes": 2,
+        "eval_days": 1,
+        "dt_days": {
+          "train": 2,
+          "validation": 9
+        },
+        "methods": [
+          "mpc",
+          "ordinary",
+          "pareto"
+        ],
+        "preferences": [
+          [
+            0.2,
+            0.3,
+            0.5
+          ]
+        ],
+        "selection_days": 1,
+        "selection_dates": [
+          "2019-02-11"
+        ],
+        "ols_policies": 4,
+        "hv_reference": [
+          -100.0,
+          -200.0,
+          0.0
+        ],
+        "train_steps_per_method_seed": {
+          "mpc": 0,
+          "ordinary": 48,
+          "pareto": 48
+        },
+        "eval_steps_per_method_seed": {
+          "mpc": 24,
+          "ordinary": 24,
+          "pareto": 24
+        },
+        "test_dates": [
+          "2019-03-01"
+        ],
+        "note": "训练回合可循环训练日期；eval-days为不重复测试日期；各测试偏好分别执行",
+        "experiment_contract": {
+          "schema": "experiment-contract-v4",
+          "objective_version": "c3-ac-pcc-same-period-sampled-reserve-v4",
+          "observation_version": "c3-80-public-command-queue-v4",
+          "dt_version": "ridge-block-conformal-physical-dt-v2",
+          "source_digest": "2d152a333bc66cd53bcd470425f49d430a654e6ae0e5c89a8753fdd835c7eab8",
+          "resource_hashes": {
+            "train_csv": "0e1500d9aaab8d620f30573b5b8975945b51bf6d8d080f928cb85c8fe01dec10",
+            "dispatch_spec": "25cea1d8c71693ff7677dc5524536da4779ac3f64a6161e03f5936568b0491f3",
+            "cyber_spec": "09ba488f903c304557053e57287b5e3dbc729b45bdf613b1f458c48d6ce0c649"
+          },
+          "objectives": [
+            {
+              "name": "economic",
+              "direction": "min",
+              "definition": "AC并网成本+通信计算成本+终端惩罚"
+            },
+            {
+              "name": "carbon",
+              "direction": "min",
+              "definition": "并网进口碳排放+通信计算用电碳排放；不计出口减排信用"
+            },
+            {
+              "name": "reserve",
+              "direction": "max",
+              "definition": "同一时段起点的AC核验对称PCC备用能量；有限激活点检查"
+            }
+          ],
+          "vector_signs": [
+            -1,
+            -1,
+            1
+          ],
+          "scales": [
+            100.0,
+            100.0,
+            100.0
+          ],
+          "hv_reference": [
+            -100.0,
+            -200.0,
+            0.0
+          ],
+          "information": {
+            "mpc": "公开DT观察与因果预测；固定通信计算候选",
+            "milp_oracle": "真实未来曲线与会话；非因果经济参考",
+            "ordinary": "公开DT观察；经济奖励",
+            "central": "集中公开DT观察；经济奖励",
+            "fixed": "公开DT观察；固定加权奖励",
+            "ols": "固定权重子策略；验证集选择",
+            "pareto": "公开DT观察+偏好；向量critic/GAE"
+          },
+          "shared_execution": "统一设备约束、区间安全层、现场执行器、IEEE33 AC验收及PCC备用口径",
+          "budget_rule": "学习方法共享名义训练回合上限；实际调用、成功、提交、重做、选择和测试单列；OLS无新角点允许早停",
+          "metric_rule": "仅完整可行日期组进入前沿；IGD参考为验证经验前沿而非真实前沿；未认证与物理违反分别报告",
+          "real_input_fingerprint": "dd494eb9355330c6155ab99f98a2277546eee2238c353bb9a506991ec50e5d0c",
+          "splits": {
+            "dt_days": {
+              "train": 2,
+              "validation": 9
+            },
+            "selection_dates": [
+              "2019-02-11"
+            ],
+            "test_dates": [
+              "2019-03-01"
+            ]
+          },
+          "scope": "规则式协调器；仿真C3；EV/DR范围由真实输入协议指定；训练与选择交互不宣称共同等预算",
+          "action_protocol": "公开DT估计界限+低弃电初始化；所有学习基线使用相同映射",
+          "training_protocol": "多日rollout；Pareto独立优化器+PopArt；固定选择集验证额外计费",
+          "checkpoint_selection": "先验证可行数，Pareto再比较HV；其余按训练效用；不读取测试结果",
+          "fingerprint": "a418a28d6b2673a4b88b45fe784e9507b2db9f6c73efaecc3020d187966023ed"
+        }
+      }
+    },
+    "v41_seven": {
+      "entries": [
+        {
+          "method": "mpc",
+          "seed": 1,
+          "total_test_cases": 1,
+          "planned_test_cases": 1,
+          "completed_cases": 1,
+          "feasible_cases": 1,
+          "failure_counts": {
+            "run_failed": 0,
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet": 0,
+            "dr_backlog": 0
+          },
+          "training_steps": 0,
+          "selection_steps": 2
+        },
+        {
+          "method": "milp_oracle",
+          "seed": 1,
+          "total_test_cases": 1,
+          "planned_test_cases": 1,
+          "completed_cases": 1,
+          "feasible_cases": 1,
+          "failure_counts": {
+            "run_failed": 0,
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet": 0,
+            "dr_backlog": 0
+          },
+          "training_steps": 0,
+          "selection_steps": 2
+        },
+        {
+          "method": "ordinary",
+          "seed": 1,
+          "total_test_cases": 1,
+          "planned_test_cases": 1,
+          "completed_cases": 1,
+          "feasible_cases": 1,
+          "failure_counts": {
+            "run_failed": 0,
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet": 0,
+            "dr_backlog": 0
+          },
+          "training_steps": 8,
+          "selection_steps": 10
+        },
+        {
+          "method": "central",
+          "seed": 1,
+          "total_test_cases": 1,
+          "planned_test_cases": 1,
+          "completed_cases": 1,
+          "feasible_cases": 1,
+          "failure_counts": {
+            "run_failed": 0,
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet": 0,
+            "dr_backlog": 0
+          },
+          "training_steps": 8,
+          "selection_steps": 10
+        },
+        {
+          "method": "fixed",
+          "seed": 1,
+          "total_test_cases": 1,
+          "planned_test_cases": 1,
+          "completed_cases": 1,
+          "feasible_cases": 1,
+          "failure_counts": {
+            "run_failed": 0,
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet": 0,
+            "dr_backlog": 0
+          },
+          "training_steps": 8,
+          "selection_steps": 30
+        },
+        {
+          "method": "ols",
+          "seed": 1,
+          "total_test_cases": 1,
+          "planned_test_cases": 1,
+          "completed_cases": 1,
+          "feasible_cases": 1,
+          "failure_counts": {
+            "run_failed": 0,
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet": 0,
+            "dr_backlog": 0
+          },
+          "training_steps": 8,
+          "selection_steps": 40
+        },
+        {
+          "method": "pareto",
+          "seed": 1,
+          "total_test_cases": 1,
+          "planned_test_cases": 1,
+          "completed_cases": 1,
+          "feasible_cases": 1,
+          "failure_counts": {
+            "run_failed": 0,
+            "violations": 0,
+            "ac_violations": 0,
+            "ac_failed": 0,
+            "reserve_invalid": 0,
+            "ev_unmet": 0,
+            "dr_backlog": 0
+          },
+          "training_steps": 8,
+          "selection_steps": 16
+        }
+      ],
+      "safety": [
+        {
+          "method": "mpc",
+          "seed": 1,
+          "steps": 2,
+          "missing_traces": [],
+          "guard_reasons": {
+            "certified_linear_box": 2
+          },
+          "reserve_status": {
+            "sampled_confirmed": 2
+          },
+          "safety_modes": {
+            "interval_projected": 2
+          },
+          "command_fallbacks": {
+            "not_arrived_or_unavailable": 1,
+            "none": 1
+          },
+          "solver_failures": {},
+          "presolve_retries": 0,
+          "certified_steps": 2,
+          "reserve_invalid": 0,
+          "hard_verified_steps": 2,
+          "service_degraded_steps": 0
+        },
+        {
+          "method": "milp_oracle",
+          "seed": 1,
+          "steps": 2,
+          "missing_traces": [],
+          "guard_reasons": {
+            "certified_linear_box": 2
+          },
+          "reserve_status": {
+            "sampled_confirmed": 2
+          },
+          "safety_modes": {
+            "interval_projected": 2
+          },
+          "command_fallbacks": {
+            "not_arrived_or_unavailable": 1,
+            "none": 1
+          },
+          "solver_failures": {},
+          "presolve_retries": 0,
+          "certified_steps": 2,
+          "reserve_invalid": 0,
+          "hard_verified_steps": 2,
+          "service_degraded_steps": 0
+        },
+        {
+          "method": "ordinary",
+          "seed": 1,
+          "steps": 2,
+          "missing_traces": [],
+          "guard_reasons": {
+            "certified_linear_box": 2
+          },
+          "reserve_status": {
+            "sampled_confirmed": 2
+          },
+          "safety_modes": {
+            "interval_projected": 2
+          },
+          "command_fallbacks": {
+            "not_arrived_or_unavailable": 1,
+            "none": 1
+          },
+          "solver_failures": {},
+          "presolve_retries": 0,
+          "certified_steps": 2,
+          "reserve_invalid": 0,
+          "hard_verified_steps": 2,
+          "service_degraded_steps": 0
+        },
+        {
+          "method": "central",
+          "seed": 1,
+          "steps": 2,
+          "missing_traces": [],
+          "guard_reasons": {
+            "certified_linear_box": 2
+          },
+          "reserve_status": {
+            "sampled_confirmed": 2
+          },
+          "safety_modes": {
+            "interval_projected": 2
+          },
+          "command_fallbacks": {
+            "not_arrived_or_unavailable": 1,
+            "none": 1
+          },
+          "solver_failures": {},
+          "presolve_retries": 0,
+          "certified_steps": 2,
+          "reserve_invalid": 0,
+          "hard_verified_steps": 2,
+          "service_degraded_steps": 0
+        },
+        {
+          "method": "fixed",
+          "seed": 1,
+          "steps": 2,
+          "missing_traces": [],
+          "guard_reasons": {
+            "certified_linear_box": 2
+          },
+          "reserve_status": {
+            "sampled_confirmed": 2
+          },
+          "safety_modes": {
+            "interval_projected": 2
+          },
+          "command_fallbacks": {
+            "not_arrived_or_unavailable": 1,
+            "none": 1
+          },
+          "solver_failures": {},
+          "presolve_retries": 0,
+          "certified_steps": 2,
+          "reserve_invalid": 0,
+          "hard_verified_steps": 2,
+          "service_degraded_steps": 0
+        },
+        {
+          "method": "ols",
+          "seed": 1,
+          "steps": 2,
+          "missing_traces": [],
+          "guard_reasons": {
+            "certified_linear_box": 2
+          },
+          "reserve_status": {
+            "sampled_confirmed": 2
+          },
+          "safety_modes": {
+            "interval_projected": 2
+          },
+          "command_fallbacks": {
+            "not_arrived_or_unavailable": 1,
+            "none": 1
+          },
+          "solver_failures": {},
+          "presolve_retries": 0,
+          "certified_steps": 2,
+          "reserve_invalid": 0,
+          "hard_verified_steps": 2,
+          "service_degraded_steps": 0
+        },
+        {
+          "method": "pareto",
+          "seed": 1,
+          "steps": 2,
+          "missing_traces": [],
+          "guard_reasons": {
+            "certified_linear_box": 2
+          },
+          "reserve_status": {
+            "sampled_confirmed": 2
+          },
+          "safety_modes": {
+            "interval_projected": 2
+          },
+          "command_fallbacks": {
+            "not_arrived_or_unavailable": 1,
+            "none": 1
+          },
+          "solver_failures": {},
+          "presolve_retries": 0,
+          "certified_steps": 2,
+          "reserve_invalid": 0,
+          "hard_verified_steps": 2,
+          "service_degraded_steps": 0
+        }
+      ],
+      "budget": {
+        "attempted_calls": 80,
+        "successful_calls": 80,
+        "error_calls": 0,
+        "unknown_calls": 0
+      },
+      "cost_reconciles_all": true,
+      "evidence_complete": true,
+      "manifest": {
+        "config": {
+          "algorithm": "mappo",
+          "episodes": 12,
+          "horizon": 2,
+          "dt_hours": 1.0,
+          "seed": 61,
+          "hidden_size": 64,
+          "ppo_epoch": 5,
+          "num_mini_batch": 1,
+          "lr": 0.0003,
+          "gamma": 0.99,
+          "gae_lambda": 0.95,
+          "clip_param": 0.2,
+          "entropy_coef": 0.01,
+          "reward_scale": 100.0,
+          "violation_penalty": 100.0,
+          "terminal_soc_penalty": 1000.0,
+          "safety": true,
+          "digital_twin": false,
+          "delay_steps": 0,
+          "packet_loss": 0.0,
+          "train_csv": "/tmp/v41_final/runs/v41_acceptance_data/gb/profiles/train.csv",
+          "device": "cpu",
+          "threads": 1,
+          "network_model": "ieee33",
+          "dispatch_spec": "configs/dispatch_ieee33.json",
+          "solver_time_limit": 30.0,
+          "metrics_enabled": false,
+          "objective_scales": [
+            100.0,
+            100.0,
+            100.0
+          ],
+          "objective_weights": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "reserve_hours": 1.0,
+          "synthetic_carbon_g_per_kwh": null,
+          "resource_model": "sessions_v1",
+          "flex_spec": null,
+          "ev_sessions_path": null,
+          "cyber_mode": "joint",
+          "cyber_dt_mode": "physics",
+          "cyber_spec": "configs/cyber_assumptions.json",
+          "coordinator_mode": "schedule",
+          "coordinator_aoi_limit_steps": 2.0,
+          "coordinator_deadline_margin_steps": 1.0,
+          "coordinator_soc_margin": 0.05,
+          "coordinator_reserved_fraction": 0.5,
+          "interval_safety": true,
+          "command_timing": true,
+          "downlink_bps": 10000,
+          "downlink_propagation_seconds": 0.02,
+          "command_deadline_steps": 2,
+          "control_cycles": 1000000000.0,
+          "risk_adaptive": true,
+          "task_focus": "balanced",
+          "safety_revision": 1,
+          "research_version": 4,
+          "rollout_episodes": 2,
+          "validation_every": 4,
+          "validation_days": 1,
+          "target_kl": 0.02,
+          "selection_hv_reference": [
+            -100.0,
+            -200.0,
+            0.0
+          ],
+          "v4_action_bounds": true,
+          "v4_curtail_bias": 2.0,
+          "_ev_bundle": {
+            "schema_version": 1,
+            "energy_basis": "grid_kwh",
+            "source": "显式关闭EV：未取得真实完整会话",
+            "horizon": 2,
+            "dt_hours": 1.0,
+            "scenarios": {
+              "2019-01-01": [],
+              "2019-01-02": [],
+              "2019-01-03": [],
+              "2019-01-04": [],
+              "2019-01-05": [],
+              "2019-01-06": [],
+              "2019-01-07": [],
+              "2019-01-08": [],
+              "2019-01-09": [],
+              "2019-01-10": [],
+              "2019-01-11": [],
+              "2019-01-12": [],
+              "2019-01-13": [],
+              "2019-01-14": [],
+              "2019-01-15": [],
+              "2019-01-16": [],
+              "2019-01-17": [],
+              "2019-01-18": [],
+              "2019-01-19": [],
+              "2019-01-20": [],
+              "2019-01-21": [],
+              "2019-01-22": [],
+              "2019-01-23": [],
+              "2019-01-24": [],
+              "2019-01-25": [],
+              "2019-01-26": [],
+              "2019-01-27": [],
+              "2019-01-28": [],
+              "2019-01-29": [],
+              "2019-01-30": [],
+              "2019-01-31": [],
+              "2019-02-01": [],
+              "2019-02-02": [],
+              "2019-02-04": [],
+              "2019-02-05": [],
+              "2019-02-06": [],
+              "2019-02-07": [],
+              "2019-02-08": [],
+              "2019-02-09": [],
+              "2019-02-10": [],
+              "2019-02-11": [],
+              "2019-02-12": [],
+              "2019-02-13": [],
+              "2019-02-14": [],
+              "2019-02-15": [],
+              "2019-02-16": [],
+              "2019-02-17": [],
+              "2019-02-18": [],
+              "2019-02-19": [],
+              "2019-02-20": [],
+              "2019-02-21": [],
+              "2019-02-22": [],
+              "2019-02-23": [],
+              "2019-02-24": [],
+              "2019-02-25": [],
+              "2019-02-26": [],
+              "2019-02-27": [],
+              "2019-02-28": [],
+              "2019-03-01": [],
+              "2019-03-02": [],
+              "2019-03-03": [],
+              "2019-03-04": [],
+              "2019-03-05": [],
+              "2019-03-06": [],
+              "2019-03-07": [],
+              "2019-03-08": [],
+              "2019-03-09": [],
+              "2019-03-10": [],
+              "2019-03-11": [],
+              "2019-03-12": [],
+              "2019-03-13": [],
+              "2019-03-14": [],
+              "2019-03-15": [],
+              "2019-03-16": [],
+              "2019-03-17": [],
+              "2019-03-18": [],
+              "2019-03-19": [],
+              "2019-03-20": [],
+              "2019-03-21": [],
+              "2019-03-22": [],
+              "2019-03-23": [],
+              "2019-03-24": [],
+              "2019-03-25": [],
+              "2019-03-26": [],
+              "2019-03-27": [],
+              "2019-03-28": [],
+              "2019-03-29": []
+            }
+          },
+          "_flex_record": {
+            "ev_station_kw": 300.0,
+            "dr_shift_kw": 0.0,
+            "dr_repay_kw": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "dr_shift_budget_kwh": 0.0,
+            "dr_shed_kw": 0.0,
+            "dr_shed_budget_kwh": 0.0,
+            "dr_fraction": 0.2,
+            "shift_cost": 0.01,
+            "shed_cost": 0.1,
+            "curtail_cost": 0.05
+          }
+        },
+        "protocol": {
+          "schema": "real-inputs-contract-v1",
+          "profiles": {
+            "train": {
+              "sha256": "243a75273159ad42f877a22bb3d403e2510f0368c4b7e48ba68598cd556ef8bc",
+              "days": [
+                "2019-01-01",
+                "2019-01-02",
+                "2019-01-03",
+                "2019-01-04",
+                "2019-01-05",
+                "2019-01-06",
+                "2019-01-07",
+                "2019-01-08",
+                "2019-01-09",
+                "2019-01-10",
+                "2019-01-11",
+                "2019-01-12",
+                "2019-01-13",
+                "2019-01-14",
+                "2019-01-15",
+                "2019-01-16",
+                "2019-01-17",
+                "2019-01-18",
+                "2019-01-19",
+                "2019-01-20",
+                "2019-01-21",
+                "2019-01-22",
+                "2019-01-23",
+                "2019-01-24",
+                "2019-01-25",
+                "2019-01-26",
+                "2019-01-27",
+                "2019-01-28",
+                "2019-01-29",
+                "2019-01-30",
+                "2019-01-31"
+              ]
+            },
+            "validation": {
+              "sha256": "0077ea2a19db3eb29be6b7a6877edc3f6ae402e104b96ab1fe87f54c25b58e2e",
+              "days": [
+                "2019-02-01",
+                "2019-02-02",
+                "2019-02-04",
+                "2019-02-05",
+                "2019-02-06",
+                "2019-02-07",
+                "2019-02-08",
+                "2019-02-09",
+                "2019-02-10",
+                "2019-02-11",
+                "2019-02-12",
+                "2019-02-13",
+                "2019-02-14",
+                "2019-02-15",
+                "2019-02-16",
+                "2019-02-17",
+                "2019-02-18",
+                "2019-02-19",
+                "2019-02-20",
+                "2019-02-21",
+                "2019-02-22",
+                "2019-02-23",
+                "2019-02-24",
+                "2019-02-25",
+                "2019-02-26",
+                "2019-02-27",
+                "2019-02-28"
+              ]
+            },
+            "test": {
+              "sha256": "626cd94761b6987057d6f1969d4d31c73c1ac7f33ceffb4d147317bebaff478f",
+              "days": [
+                "2019-03-01",
+                "2019-03-02",
+                "2019-03-03",
+                "2019-03-04",
+                "2019-03-05",
+                "2019-03-06",
+                "2019-03-07",
+                "2019-03-08",
+                "2019-03-09",
+                "2019-03-10",
+                "2019-03-11",
+                "2019-03-12",
+                "2019-03-13",
+                "2019-03-14",
+                "2019-03-15",
+                "2019-03-16",
+                "2019-03-17",
+                "2019-03-18",
+                "2019-03-19",
+                "2019-03-20",
+                "2019-03-21",
+                "2019-03-22",
+                "2019-03-23",
+                "2019-03-24",
+                "2019-03-25",
+                "2019-03-26",
+                "2019-03-27",
+                "2019-03-28",
+                "2019-03-29"
+              ]
+            }
+          },
+          "horizon": 2,
+          "dt_hours": 1.0,
+          "ev_scope": "disabled_missing_real_sessions",
+          "ev_digest": "3bae4e60c4c8564ba80e53b374740721a0fd46acdec489e276abd7bb2788fe71",
+          "dr": {
+            "mode": "off",
+            "reason": "没有同地区真实可控DR参数，不自动代入合成DR"
+          },
+          "flex": {
+            "ev_station_kw": 300.0,
+            "dr_shift_kw": 0.0,
+            "dr_repay_kw": 0.0,
+            "dr_backlog_kwh": 0.0,
+            "dr_shift_budget_kwh": 0.0,
+            "dr_shed_kw": 0.0,
+            "dr_shed_budget_kwh": 0.0,
+            "dr_fraction": 0.2,
+            "shift_cost": 0.01,
+            "shed_cost": 0.1,
+            "curtail_cost": 0.05
+          },
+          "limits": [
+            "真实国家能源/碳曲线驱动仿真，非IEEE33实测",
+            "储能/线路/C3能耗与设备能力仍为研究假设"
+          ],
+          "fingerprint": "bfdd69466a5f5cc8d710d899c5a3924097a6159c959441c2d68cbad13a92feeb"
+        },
+        "seeds": [
+          1
+        ],
+        "episodes": 4,
+        "eval_days": 1,
+        "dt_days": {
+          "train": 2,
+          "validation": 9
+        },
+        "methods": [
+          "mpc",
+          "milp_oracle",
+          "ordinary",
+          "central",
+          "fixed",
+          "ols",
+          "pareto"
+        ],
+        "preferences": [
+          [
+            0.2,
+            0.3,
+            0.5
+          ]
+        ],
+        "selection_days": 1,
+        "selection_dates": [
+          "2019-02-11"
+        ],
+        "ols_policies": 4,
+        "hv_reference": [
+          -100.0,
+          -200.0,
+          0.0
+        ],
+        "train_steps_per_method_seed": {
+          "mpc": 0,
+          "milp_oracle": 0,
+          "ordinary": 8,
+          "central": 8,
+          "fixed": 8,
+          "ols": 8,
+          "pareto": 8
+        },
+        "eval_steps_per_method_seed": {
+          "mpc": 2,
+          "milp_oracle": 2,
+          "ordinary": 2,
+          "central": 2,
+          "fixed": 2,
+          "ols": 2,
+          "pareto": 2
+        },
+        "test_dates": [
+          "2019-03-01"
+        ],
+        "note": "训练回合可循环训练日期；eval-days为不重复测试日期；各测试偏好分别执行",
+        "experiment_contract": {
+          "schema": "experiment-contract-v4",
+          "objective_version": "c3-ac-pcc-same-period-sampled-reserve-v4",
+          "observation_version": "c3-80-public-command-queue-v4",
+          "dt_version": "ridge-block-conformal-physical-dt-v2",
+          "source_digest": "2d152a333bc66cd53bcd470425f49d430a654e6ae0e5c89a8753fdd835c7eab8",
+          "resource_hashes": {
+            "train_csv": "243a75273159ad42f877a22bb3d403e2510f0368c4b7e48ba68598cd556ef8bc",
+            "dispatch_spec": "25cea1d8c71693ff7677dc5524536da4779ac3f64a6161e03f5936568b0491f3",
+            "cyber_spec": "09ba488f903c304557053e57287b5e3dbc729b45bdf613b1f458c48d6ce0c649"
+          },
+          "objectives": [
+            {
+              "name": "economic",
+              "direction": "min",
+              "definition": "AC并网成本+通信计算成本+终端惩罚"
+            },
+            {
+              "name": "carbon",
+              "direction": "min",
+              "definition": "并网进口碳排放+通信计算用电碳排放；不计出口减排信用"
+            },
+            {
+              "name": "reserve",
+              "direction": "max",
+              "definition": "同一时段起点的AC核验对称PCC备用能量；有限激活点检查"
+            }
+          ],
+          "vector_signs": [
+            -1,
+            -1,
+            1
+          ],
+          "scales": [
+            100.0,
+            100.0,
+            100.0
+          ],
+          "hv_reference": [
+            -100.0,
+            -200.0,
+            0.0
+          ],
+          "information": {
+            "mpc": "公开DT观察与因果预测；固定通信计算候选",
+            "milp_oracle": "真实未来曲线与会话；非因果经济参考",
+            "ordinary": "公开DT观察；经济奖励",
+            "central": "集中公开DT观察；经济奖励",
+            "fixed": "公开DT观察；固定加权奖励",
+            "ols": "固定权重子策略；验证集选择",
+            "pareto": "公开DT观察+偏好；向量critic/GAE"
+          },
+          "shared_execution": "统一设备约束、区间安全层、现场执行器、IEEE33 AC验收及PCC备用口径",
+          "budget_rule": "学习方法共享名义训练回合上限；实际调用、成功、提交、重做、选择和测试单列；OLS无新角点允许早停",
+          "metric_rule": "仅完整可行日期组进入前沿；IGD参考为验证经验前沿而非真实前沿；未认证与物理违反分别报告",
+          "real_input_fingerprint": "bfdd69466a5f5cc8d710d899c5a3924097a6159c959441c2d68cbad13a92feeb",
+          "splits": {
+            "dt_days": {
+              "train": 2,
+              "validation": 9
+            },
+            "selection_dates": [
+              "2019-02-11"
+            ],
+            "test_dates": [
+              "2019-03-01"
+            ]
+          },
+          "scope": "规则式协调器；仿真C3；EV/DR范围由真实输入协议指定；训练与选择交互不宣称共同等预算",
+          "action_protocol": "公开DT估计界限+低弃电初始化；所有学习基线使用相同映射",
+          "training_protocol": "多日rollout；Pareto独立优化器+PopArt；固定选择集验证额外计费",
+          "checkpoint_selection": "先验证可行数，Pareto再比较HV；其余按训练效用；不读取测试结果",
+          "fingerprint": "c9f716fecd722cf4de4026aaa1597e72287911654b80d2eaf3c2b38f931ad9f3"
+        }
+      }
+    }
+  },
+  "failure_replay": {
+    "scope": "原版v4固定发令重放，仅验证求解修复",
+    "old_reserve_invalid": 1,
+    "new_reserve_invalid": 0,
+    "max_execution_action_difference": 0.0,
+    "last_step_diagnostic": {
+      "state_step": 23,
+      "baseline_ac_kw": 1046.2988789726069,
+      "baseline_linear_kw": 1032.1616499262218,
+      "initial_soc": 0.6149434142038048,
+      "status": "sampled_confirmed",
+      "envelope": [
+        {
+          "mode": "min_grid",
+          "presolve_retry": false,
+          "solver_status": 0,
+          "solver_optimal": true,
+          "solver_objective": 785.1943305413926,
+          "solver_bound": 785.1943305413926,
+          "solver_gap": 0.0,
+          "solver_seconds": 0.000916464000056294,
+          "solver_residual": 0.0
+        },
+        {
+          "mode": "max_grid",
+          "presolve_retry": true,
+          "solver_status": 0,
+          "solver_optimal": true,
+          "solver_objective": -1242.4795312301426,
+          "solver_bound": -1242.4795312301426,
+          "solver_gap": 0.0,
+          "solver_seconds": 0.002102593000017805,
+          "solver_residual": 0.0
+        }
+      ],
+      "requested_upper_kw": 210.31788130392079,
+      "confirmed_kw": 190.60057993167823
+    },
+    "last_step_activation": {
+      "kw": 190.60057993167823,
+      "baseline_feasible": true,
+      "sampled_checked": true,
+      "samples": [
+        {
+          "fraction": -1.0,
+          "target_kw": 855.6982990409286,
+          "actual_kw": 855.6199432152312,
+          "error_kw": -0.07835582569748567
+        },
+        {
+          "fraction": -0.5,
+          "target_kw": 950.9985890067678,
+          "actual_kw": 951.003734107303,
+          "error_kw": 0.005145100535173697
+        },
+        {
+          "fraction": 0.0,
+          "target_kw": 1046.2988789726069,
+          "actual_kw": 1046.2988789726069,
+          "error_kw": 0.0
+        },
+        {
+          "fraction": 0.5,
+          "target_kw": 1141.599168938446,
+          "actual_kw": 1141.645282246202,
+          "error_kw": 0.04611330775605893
+        },
+        {
+          "fraction": 1.0,
+          "target_kw": 1236.899458904285,
+          "actual_kw": 1236.925364374315,
+          "error_kw": 0.025905470030011202
+        }
+      ],
+      "failures": [
+        {
+          "capacity_kw": 210.31788130392079,
+          "fraction": 1.0,
+          "target_kw": 1256.6167602765277,
+          "reason": "infeasible",
+          "message": "PCC 目标未通过功率误差与 AC 约束联合验收；最后误差=None"
+        },
+        {
+          "capacity_kw": 197.17301372242574,
+          "fraction": 1.0,
+          "target_kw": 1243.4718926950327,
+          "reason": "infeasible",
+          "message": "PCC 目标未通过功率误差与 AC 约束联合验收；最后误差=None"
+        }
+      ],
+      "state_step": 23,
+      "execution_step": 23,
+      "semantics": "同一时段起点状态与曲线上的替代调度，持续一个调度步"
+    }
+  },
+  "limitations": [
+    "三种方法真实完整日区间证书均0/24，极端顶点电压约束冲突仍存在；没有缩窄区间",
+    "MPC使用公开80维状态及自身发令历史，但仍采用固定通信计算资源；不是完全等决策空间对比",
+    "EV/DR实测及硬件时延能耗未新增",
+    "完整日2回合1种子，不能用于统计显著的性能结论"
+  ]
+}

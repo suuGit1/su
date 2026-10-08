@@ -76,7 +76,7 @@ def train(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust=Fa
             call_id=ledger.begin(attempt_id,ep,t)
             try:no,ns,reward,done,info=env.step(a)
             except Exception as exc:
-                ledger.finish(call_id,'error',str(exc));ledger.close()
+                ledger.finish(call_id,'error',dict(message=str(exc),reason=getattr(exc,'reason',type(exc).__name__),details=getattr(exc,'details',{})));ledger.close()
                 failure=dict(completed_env_steps=ep*config.horizon+env.core.t,episode=ep,step=t,scenario_seed=config.seed*10000+2000+scenario_offset+ep,
                     error=str(exc),soc=env.core.soc.tolist(),backlog=env.core.backlog,shifted=env.core.shifted,
                     shed_used=env.core.shed_used,remaining=env.core.remaining,row=env.core.row())
@@ -204,7 +204,7 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
                     ident=eval_ledger.begin('evaluation',0,step) if eval_ledger else None
                     try:obs,_,_,_,info=env.step(a)
                     except Exception as exc:
-                        if eval_ledger:eval_ledger.finish(ident,'error',str(exc))
+                        if eval_ledger:eval_ledger.finish(ident,'error',dict(message=str(exc),reason=getattr(exc,'reason',type(exc).__name__),details=getattr(exc,'details',{})))
                         raise
                     infos.append(info);row['env_steps']+=1
                     if trace_path:

@@ -88,7 +88,7 @@ def plot(root,days,learning,summary):
         v=[r['ess_zero_execution_with_request_steps']/max(1,r['env_steps']) for r in days if r['method']==m and 'ess_zero_execution_with_request_steps' in r]
         axes[1].scatter([k]*len(v),v,s=8,alpha=.3)
     for ax in axes:ax.set_xticks(range(len(methods)),methods,rotation=45)
-    axes[0].set_ylabel('Feasible cases / planned cases');axes[1].set_ylabel('Nonzero ESS request with zero execution / steps');save(fig,'v4_feasibility_action_gap')
+    axes[0].set_ylabel('Feasible cases / planned cases');axes[1].set_ylabel('Nonzero ESS request with zero execution\nFraction of steps');axes[0].set_ylim(-.02,1.02);axes[1].set_ylim(-.02,1.02);save(fig,'v4_feasibility_action_gap')
     if learning:
         fig,axes=plt.subplots(1,2,figsize=(12,5),layout='constrained')
         for model in sorted({r['model'] for r in learning}):

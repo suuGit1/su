@@ -1,0 +1,181 @@
+{
+  "version": "4.1.0",
+  "entries": [
+    {
+      "method": "mpc",
+      "seed": 1,
+      "steps": 2,
+      "missing_traces": [],
+      "guard_reasons": {
+        "certified_linear_box": 2
+      },
+      "reserve_status": {
+        "sampled_confirmed": 2
+      },
+      "safety_modes": {
+        "interval_projected": 2
+      },
+      "command_fallbacks": {
+        "not_arrived_or_unavailable": 1,
+        "none": 1
+      },
+      "solver_failures": {},
+      "presolve_retries": 0,
+      "certified_steps": 2,
+      "reserve_invalid": 0,
+      "hard_verified_steps": 2,
+      "service_degraded_steps": 0
+    },
+    {
+      "method": "milp_oracle",
+      "seed": 1,
+      "steps": 2,
+      "missing_traces": [],
+      "guard_reasons": {
+        "certified_linear_box": 2
+      },
+      "reserve_status": {
+        "sampled_confirmed": 2
+      },
+      "safety_modes": {
+        "interval_projected": 2
+      },
+      "command_fallbacks": {
+        "not_arrived_or_unavailable": 1,
+        "none": 1
+      },
+      "solver_failures": {},
+      "presolve_retries": 0,
+      "certified_steps": 2,
+      "reserve_invalid": 0,
+      "hard_verified_steps": 2,
+      "service_degraded_steps": 0
+    },
+    {
+      "method": "ordinary",
+      "seed": 1,
+      "steps": 2,
+      "missing_traces": [],
+      "guard_reasons": {
+        "certified_linear_box": 2
+      },
+      "reserve_status": {
+        "sampled_confirmed": 2
+      },
+      "safety_modes": {
+        "interval_projected": 2
+      },
+      "command_fallbacks": {
+        "not_arrived_or_unavailable": 1,
+        "none": 1
+      },
+      "solver_failures": {},
+      "presolve_retries": 0,
+      "certified_steps": 2,
+      "reserve_invalid": 0,
+      "hard_verified_steps": 2,
+      "service_degraded_steps": 0
+    },
+    {
+      "method": "central",
+      "seed": 1,
+      "steps": 2,
+      "missing_traces": [],
+      "guard_reasons": {
+        "certified_linear_box": 2
+      },
+      "reserve_status": {
+        "sampled_confirmed": 2
+      },
+      "safety_modes": {
+        "interval_projected": 2
+      },
+      "command_fallbacks": {
+        "not_arrived_or_unavailable": 1,
+        "none": 1
+      },
+      "solver_failures": {},
+      "presolve_retries": 0,
+      "certified_steps": 2,
+      "reserve_invalid": 0,
+      "hard_verified_steps": 2,
+      "service_degraded_steps": 0
+    },
+    {
+      "method": "fixed",
+      "seed": 1,
+      "steps": 2,
+      "missing_traces": [],
+      "guard_reasons": {
+        "certified_linear_box": 2
+      },
+      "reserve_status": {
+        "sampled_confirmed": 2
+      },
+      "safety_modes": {
+        "interval_projected": 2
+      },
+      "command_fallbacks": {
+        "not_arrived_or_unavailable": 1,
+        "none": 1
+      },
+      "solver_failures": {},
+      "presolve_retries": 0,
+      "certified_steps": 2,
+      "reserve_invalid": 0,
+      "hard_verified_steps": 2,
+      "service_degraded_steps": 0
+    },
+    {
+      "method": "ols",
+      "seed": 1,
+      "steps": 2,
+      "missing_traces": [],
+      "guard_reasons": {
+        "certified_linear_box": 2
+      },
+      "reserve_status": {
+        "sampled_confirmed": 2
+      },
+      "safety_modes": {
+        "interval_projected": 2
+      },
+      "command_fallbacks": {
+        "not_arrived_or_unavailable": 1,
+        "none": 1
+      },
+      "solver_failures": {},
+      "presolve_retries": 0,
+      "certified_steps": 2,
+      "reserve_invalid": 0,
+      "hard_verified_steps": 2,
+      "service_degraded_steps": 0
+    },
+    {
+      "method": "pareto",
+      "seed": 1,
+      "steps": 2,
+      "missing_traces": [],
+      "guard_reasons": {
+        "certified_linear_box": 2
+      },
+      "reserve_status": {
+        "sampled_confirmed": 2
+      },
+      "safety_modes": {
+        "interval_projected": 2
+      },
+      "command_fallbacks": {
+        "not_arrived_or_unavailable": 1,
+        "none": 1
+      },
+      "solver_failures": {},
+      "presolve_retries": 0,
+      "certified_steps": 2,
+      "reserve_invalid": 0,
+      "hard_verified_steps": 2,
+      "service_degraded_steps": 0
+    }
+  ],
+  "scope": "区间不可行不缩窄；现场无违例不等于区间认证；MPC使用公开观察和自身发令历史，通信计算仍固定"
+}

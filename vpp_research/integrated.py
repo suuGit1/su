@@ -102,7 +102,7 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
                 with context:
                     obs,_,_,done,info=env.step_candidate(energy,np.ones(6),np.ones(6)) if method in ('mpc','milp_oracle') else env.step(raw)
             except Exception as exc:
-                ledger.finish(ident,'error',str(exc));raise
+                ledger.finish(ident,'error',dict(message=str(exc),reason=getattr(exc,'reason',type(exc).__name__),details=getattr(exc,'details',{})));raise
             record=step_record(env,before,raw,w,info,phase='rollout',step=step,episode=0,attempt_id='rollout',planner=planner)
             ledger.finish(ident,'success',record)
             append(out/'trajectory.jsonl',record)
@@ -120,7 +120,7 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
             write(out/'summary.json',summary)
         summary['completed']=bool(done)
     except Exception as exc:
-        summary['error']=str(exc);summary['interaction_ledger']=ledger.summary();ledger.export();ledger.close();write(out/'summary.json',summary);raise
+        summary['error']=str(exc);summary['failure_detail']=dict(reason=getattr(exc,'reason',type(exc).__name__),details=getattr(exc,'details',{}));summary['interaction_ledger']=ledger.summary();ledger.export();ledger.close();write(out/'summary.json',summary);raise
     summary['interaction_ledger']=ledger.summary();ledger.export();ledger.close()
     write(out/'summary.json',summary)
     return summary
