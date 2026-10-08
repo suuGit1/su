@@ -84,7 +84,7 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
     try:
         for step in range(config.horizon):
             before=obs.copy();raw=None;planner={}
-            if method=='mpc':energy,planner=mpc.propose(obs[0,:54])
+            if method=='mpc':energy,planner=mpc.propose(obs[0])
             elif method=='milp_oracle':
                 plans,planner=env.core.plan(oracle=True);energy=plans[0]['action']
                 planner['information']='完美预知全日曲线与会话；仅作非因果参考'

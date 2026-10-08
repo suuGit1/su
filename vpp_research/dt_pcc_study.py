@@ -21,7 +21,7 @@ def run(config, dt_folder, output, seeds=(1910,1911,1912)):
                 env=ResearchEnv(config,dt_model=models[method],reserve_mode='pcc_checked');obs,_=env.reset(seed)
                 mpc=ObservedMPC(config,env.spec,env.flex,2);infos=[]
                 for t in range(config.horizon):
-                    action,_=mpc.propose(obs[0,:54]);obs,_,_,_,info=env.step_candidate(action,np.ones(6),np.ones(6));infos.append(info)
+                    action,_=mpc.propose(obs[0]);obs,_,_,_,info=env.step_candidate(action,np.ones(6),np.ones(6));infos.append(info)
                 record.update(cost=sum(i['objective_cost']+i['terminal_penalty'] for i in infos),
                     rmse=float(np.sqrt(np.mean([i['research_dt_mse'] for i in infos]))),
                     step_coverage=float(np.mean([i['interval_covered'] for i in infos])),

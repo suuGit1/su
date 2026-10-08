@@ -6,7 +6,8 @@ from scipy.sparse import coo_matrix
 
 
 class DispatchInfeasible(RuntimeError):
-    pass
+    def __init__(self,message,reason='infeasible',details=None):
+        super().__init__(message);self.reason=reason;self.details=details or {}
 
 
 def solve_dispatch(spec, network, rows, soc, dt, terminal_weight, time_limit=30, proposal=None, objective='economic'):

@@ -30,7 +30,7 @@ def run(folder,data_root='data/real',days=3):
             obs,_=e.reset(61000+day,day);mpc=ObservedMPC(config,e.spec,e.flex,2)
             infos=[]
             for _ in range(config.horizon):
-                a,_=mpc.propose(obs[0,:54]);obs,_,_,_,info=e.step_candidate(a,np.ones(6),np.ones(6));infos.append(info)
+                a,_=mpc.propose(obs[0]);obs,_,_,_,info=e.step_candidate(a,np.ones(6),np.ones(6));infos.append(info)
             rows.append(dict(date=e.data.scenario_names[day],ac_cost=sum(i['ac_cost']+i['terminal_penalty'] for i in infos),
                 ac_violations=sum(i['ac_violations'] for i in infos),constraints=sum(i['constraint_violations'] for i in infos),
                 rmse=float(np.sqrt(np.mean([i['research_dt_mse'] for i in infos]))),

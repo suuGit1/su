@@ -20,7 +20,7 @@ def run(model,output):
             try:
                 obs,_=e.reset(seed);planner=ObservedMPC(c,e.spec,e.flex,2)
                 for _ in range(c.horizon):
-                    start=time.perf_counter();a,_=planner.propose(obs[0,:54]);host=time.perf_counter()-start
+                    start=time.perf_counter();a,_=planner.propose(obs[0]);host=time.perf_counter()-start
                     obs,_,_,_,i=e.step_candidate(a,np.ones(6),np.ones(6))
                     row['steps'].append(dict(cost=i['cost']+i['terminal_penalty'],host_decision_seconds=host,host_safety_seconds=i['ac_safety_seconds'],
                         simulated_command_latency=i.get('command_latency_seconds'),fallback=i.get('local_fallback',False),

@@ -50,7 +50,7 @@ def checked_capacity(core, baseline_kw, upper_kw, iterations=5, fractions=(-1., 
     if fractions.ndim != 1 or not np.isfinite(fractions).all() or not {-1., 0., 1.}.issubset(set(fractions)) or np.any(abs(fractions)>1):
         raise ValueError('激活比例须位于[-1,1]且包含两个端点和零')
     # 缓存仅存在于当前状态的一次确认；复用已通过验收的目标，不跨步复用。
-    verified = {}
+    verified = {};failures=[]
     if baseline_plan is not None:
         audit=core.network.audit(core.row(),baseline_plan['action'])
         error=float(audit['ac_grid_kw']-baseline_kw) if audit['ac_converged'] else float('inf')
@@ -67,20 +67,21 @@ def checked_capacity(core, baseline_kw, upper_kw, iterations=5, fractions=(-1., 
                 records.append(dict(fraction=float(fraction), target_kw=meta['pcc_target_kw'],
                                     actual_kw=meta['pcc_actual_kw'], error_kw=meta['pcc_error_kw']))
             return records
-        except DispatchInfeasible:
+        except DispatchInfeasible as exc:
+            failures.append(dict(capacity_kw=float(q),fraction=float(fraction),target_kw=target,reason=getattr(exc,'reason','infeasible'),message=str(exc)))
             return None
     zero = check(0.)
     if zero is None:
-        return dict(kw=0., baseline_feasible=False, sampled_checked=False, samples=[])
+        return dict(kw=0., baseline_feasible=False, sampled_checked=False, samples=[],failures=failures)
     candidate = check(upper_kw)
     if candidate is not None:
-        return dict(kw=float(upper_kw), baseline_feasible=True, sampled_checked=True, samples=candidate)
+        return dict(kw=float(upper_kw), baseline_feasible=True, sampled_checked=True, samples=candidate,failures=failures)
     low, high, records = 0., float(upper_kw), zero
     for _ in range(iterations):
         mid = (low+high)/2; candidate = check(mid)
         if candidate is None: high = mid
         else: low, records = mid, candidate
-    return dict(kw=low, baseline_feasible=True, sampled_checked=True, samples=records)
+    return dict(kw=low, baseline_feasible=True, sampled_checked=True, samples=records,failures=failures)
 
 
 def activate(core, baseline_kw, reserve_kw, fraction, duration_steps=1):

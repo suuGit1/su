@@ -131,10 +131,13 @@ class ResearchEnv(CyberVPPAdapter):
         self.last_received_command=received_candidate.copy()
         row=self.core.row().copy();certificate=None;meta=dict(guard_feasible=False,guard_status='disabled',guard_seconds=0.)
         if self.robust:
-            energy,meta,certificate=guard(energy,self.encode()[0][0],self.spec,self.flex,self.network,self.config.dt_hours,self.config.horizon)
+            energy,meta,certificate=guard(energy,self.encode()[0][0],self.spec,self.flex,self.network,self.config.dt_hours,self.config.horizon,diagnostics=self.config.safety_revision==1,time_limit=self.config.solver_time_limit)
         guarded_candidate=np.asarray(energy).copy()
         reserve_core=copy.deepcopy(self.core) if self.vector_metrics and self.reserve_mode=='pcc_checked' else None
-        obs,share,rewards,done,info=super().step_candidate(energy,bw,cpu)
+        if self.config.safety_revision==1:self.core.guard_constraints=certificate.constraints if certificate else None
+        try:obs,share,rewards,done,info=super().step_candidate(energy,bw,cpu)
+        finally:
+            if self.config.safety_revision==1:self.core.guard_constraints=None
         info['interval_guard_candidate_kw']=guarded_candidate.tolist()
         info['issued_energy_candidate_kw']=issued_candidate.tolist()
         info['received_energy_candidate_kw']=received_candidate.tolist()
@@ -160,26 +163,32 @@ class ResearchEnv(CyberVPPAdapter):
             kg=carbon_kg(accounted_grid,self.config.dt_hours,factor)+cyber_kg
             reserve=0.;reserve_valid=info['constraint_violations']==0
             capacity_core=reserve_core if pcc_mode else self.core
+            diagnostic=dict(state_step=capacity_core.t,baseline_ac_kw=info.get('ac_grid_kw'),baseline_linear_kw=info['grid_power_kw'],initial_soc=float(capacity_core.soc[0]),status='physical_constraints_failed' if not reserve_valid else 'not_checked',envelope=[])
             if reserve_valid and (pcc_mode or not done):
                 values=[]
                 try:
                     for mode in ('min_grid','max_grid'):
                         plans,m=capacity_core.plan(objective=mode,fixed_row=row)
+                        diagnostic['envelope'].append(dict(mode=mode,**m))
                         if not m['solver_optimal']:raise RuntimeError('备用包络未达最优')
                         from vpp_mappo.flex_resources import grid_power
                         values.append(grid_power(row,plans[0]['action']))
                     g=info['grid_power_kw'];lo,hi=values
                     reserve=max(0,min(g-lo,hi-g))*self.config.dt_hours if lo-1e-5<=g<=hi+1e-5 else 0.
-                except (RuntimeError,ValueError):reserve_valid=False
+                except (RuntimeError,ValueError) as exc:
+                    reserve_valid=False
+                    diagnostic.update(status='envelope_unconfirmed',reason=getattr(exc,'reason','not_optimal_or_invalid'),message=str(exc),details=getattr(exc,'details',{}))
             if self.reserve_mode=='pcc_checked' and reserve_valid:
                 from .pcc_reserve import checked_capacity as pcc_capacity
                 import json
                 witness=dict(action=executed,ev_kw=json.loads(info['ev_allocation_json']))
+                diagnostic['requested_upper_kw']=reserve/self.config.dt_hours
                 confirmation=pcc_capacity(capacity_core,info['ac_grid_kw'],reserve/self.config.dt_hours,baseline_plan=witness)
                 confirmation.update(state_step=capacity_core.t,execution_step=self.core.t-1,semantics='同一时段起点状态与曲线上的替代调度，持续一个调度步')
                 reserve=confirmation['kw']*self.config.dt_hours
                 reserve_valid=confirmation['baseline_feasible']
                 info['reserve_confirmation']=confirmation
+                diagnostic.update(status='sampled_confirmed' if reserve_valid else 'baseline_unconfirmed',confirmed_kw=confirmation['kw'])
             if self.reserve_mode=='ac_checked' and reserve_valid and not done:
                 from .checked_reserve import checked_capacity
                 try:
@@ -188,6 +197,8 @@ class ResearchEnv(CyberVPPAdapter):
                     info['reserve_confirmation']=confirmation
                 except (RuntimeError,ValueError) as exc:
                     reserve=0.;reserve_valid=False;info['reserve_confirmation_error']=str(exc)
+            if self.config.safety_revision==1:
+                info.update(reserve_diagnostic=diagnostic,reserve_service_degraded=not reserve_valid,safety_interval_degraded=bool(self.robust and not info['guard_certificate_survived']),command_fallback_reason='expired' if info.get('command_expired',0) else 'not_arrived_or_unavailable' if info.get('local_fallback',False) else 'none')
             vector=np.array([-(accounted_cost+info['terminal_penalty']),-kg,reserve])/SCALES
             penalty=self.config.violation_penalty*info['constraint_violations']/self.config.reward_scale
             reward=float(vector[0] if self.reward_mode=='economic' else self.preference@vector)-penalty
