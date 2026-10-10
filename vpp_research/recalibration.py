@@ -30,6 +30,7 @@ class DelayedBlockCalibration:
 def replay(model,calibration,test,delay_blocks=1):
     if delay_blocks<1:raise ValueError('当前场景标签不能提前用于本场景')
     if {r['scenario'] for r in test}&({r['scenario'] for r in calibration}|set(model['training_scenarios'])):raise ValueError('时间划分重叠')
+    if model.get('interval_mode','constant')=='adaptive':raise ValueError('在线再校准尚不支持自适应区间；请使用独立日期重新离线校准')
     scale=np.maximum(np.asarray(model['halfwidth']),1e-6)
     def error(records):
         x=np.array([r['x'] for r in records]);y=np.array([r['y'] for r in records]);return np.abs(predict(model,x)[0]-y)
