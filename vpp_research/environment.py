@@ -6,7 +6,7 @@ from gymnasium.spaces import Box
 from vpp_mappo.cyber_environment import CyberVPPAdapter
 from vpp_mappo.flex_resources import FlexNetwork
 from vpp_mappo.objectives import carbon_kg
-from .dt import TARGETS,predict,VERSION as DT_VERSION
+from .dt import TARGETS,predict,interval_halfwidth,VERSION as DT_VERSION
 from .safety import guard
 PCC_OBJECTIVE_VERSION='c3-ac-pcc-same-period-sampled-reserve-v4'
 
@@ -75,8 +75,8 @@ class ResearchEnv(CyberVPPAdapter):
             return np.zeros((self.num_agents,self.obs_dim),np.float32),np.zeros((self.num_agents,self.obs_dim*self.num_agents),np.float32)
         obs,_=super().encode();width=np.zeros(9);ood=False
         if self.dt_model:
+            width=interval_halfwidth(self.dt_model,obs[0])
             prediction,ood=predict(self.dt_model,obs[0]);obs[:,TARGETS]=prediction
-            width=np.asarray(self.dt_model['halfwidth'])
             obs[:,13]=(obs[:,9]*5000-obs[:,11]*1000-obs[:,12]*1000)/5000
         carbon=self.dt.cache[2].get('carbon_g_per_kwh',0)/1000
         ext=np.tile(np.r_[width,float(ood),carbon],(self.num_agents,1));obs=np.c_[obs,ext].astype(np.float32)
