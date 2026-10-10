@@ -62,6 +62,6 @@
   "validation_every": 40,
   "validation_days": 2,
   "safety_revision": 1,
-  "dt_interval_mode": "constant",
+  "dt_interval_mode": "adaptive",
   "dt_scale_folds": 5
 }

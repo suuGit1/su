@@ -2,6 +2,8 @@
 
 本版保留 v4.1 安全执行、延迟感知 MPC、普通 MAPPO 和 Pareto-MAPPO；新增自适应区间为待验证研究分支，不预设优于固定区间。
 
+生产入口继续默认固定区间 residual；自适应分支须显式指定 `--config configs/v42_adaptive_ieee33.json`。该选择保留原方案，未把负结果包装为默认改进。
+
 ## 方法与接口
 
 - 训练日期内五折交叉拟合，产生样本外残差；用固定正则 100 的对数绝对误差回归拟合尺度。
@@ -13,12 +15,14 @@
 ## 配对实验
 
 ```bash
-python -m vpp_research.study_v42 --data-root data/real --calibration-days 25 --eval-days 29 --control-days 29 --seed 42000 --output runs/v42_dt
+python -m vpp_research.study_v42 --data-root data/real --calibration-days 25 --eval-days 29 --control-days 29 --seed 42000 --workers 6 --output runs/v42_dt
 ```
 
-输出包括源数据 SHA256 与日期协议、训练/校准/测试观测及离线标签、三个模型、逐日期逐步闭环结果、失败原因和配对成本统计。同一协议可断点续跑；改变协议须新目录。没有真实数据即报错。种子不代替独立日期。
+输出包括源数据 SHA256 与日期协议、训练/校准/测试观测及离线标签、三个模型、逐日期逐步闭环结果、失败原因和配对成本统计。`--workers` 控制日期任务并行数，同一协议可断点续跑；改变协议须新目录。没有真实数据即报错。种子不代替独立日期。
 
 真实输入为 GB 国家能源与碳曲线，非 IEEE33 实测；设备和通信参数仍是假设。未取得同地区真实会话及 DR 参数，因此本实验 EV/DR 显式关闭。3 月日期此前参与开发，是回顾性评估，不是全新确认性测试。配对成本统计仅针对双方完成的日期，必须同时报告失败对数；时间相关性下 t 区间只能作描述。
+
+完整结果报告可重新生成：`python -m vpp_research.report_v42 runs/v42_dt`。
 
 ## 双 MAPPO 与统一基线入口
 
@@ -26,7 +30,7 @@ python -m vpp_research.study_v42 --data-root data/real --calibration-days 25 --e
 python run_v42.py --data-root data/real --seeds 1,2,3,4,5 --episodes 120 --eval-days 29 --selection-days 2 --dt-calibration-days 25 --workers 1 --output runs/v42_full_120
 ```
 
-请先审阅 DT 比较结果再安排大预算训练；这个命令是可用入口，不表示已经完成训练。所有默认基线继续沿用统一预算和报告系统，算法名称与可用参数见 `python run_v42.py --help`。旧版配置仍可通过 `--config configs/v41_ieee33.json` 运行固定区间。
+请先审阅 DT 比较结果再安排大预算训练；这个命令是可用入口，不表示已经完成训练。所有默认基线继续沿用统一预算和报告系统，算法名称与可用参数见 `python run_v42.py --help`。默认配置为固定区间；自适应分支作为消融候选保留。不要把实验分支的接口验收当作算法优越性证据。
 
 ## 验收
 

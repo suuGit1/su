@@ -4,4 +4,4 @@ import sys
 if __name__=='__main__':
     if not sys.flags.utf8_mode:os.execv(sys.executable,[sys.executable,'-X','utf8',*sys.argv])
     from vpp_research.release_v2 import main
-    main(version=4,default_config='configs/v42_ieee33.json')
+    main(version=4,default_config='configs/v42_ieee33.json',release_tag='4.2.0',default_output='runs/v42')
