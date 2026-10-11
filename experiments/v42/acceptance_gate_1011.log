@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checks": {
+    "completed": true,
+    "all_successful": true,
+    "release_version": true,
+    "ordinary_42_unique_result": true,
+    "ordinary_42_training_ledger": true,
+    "ordinary_42_test_complete": true,
+    "pareto_42_unique_result": true,
+    "pareto_42_training_ledger": true,
+    "pareto_42_test_complete": true
+  }
+}

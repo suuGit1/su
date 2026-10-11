@@ -2,7 +2,7 @@
 
 本版保留 v4.1 安全执行、延迟感知 MPC、普通 MAPPO 和 Pareto-MAPPO；新增自适应区间为待验证研究分支，不预设优于固定区间。
 
-生产入口继续默认固定区间 residual；自适应分支须显式指定 `--config configs/v42_adaptive_ieee33.json`。该选择保留原方案，未把负结果包装为默认改进。
+主训练入口继续默认固定区间 residual；自适应分支须显式指定 `--config configs/v42_adaptive_ieee33.json`。该选择保留原方案，未把负结果包装为默认改进。
 
 ## 方法与接口
 
@@ -39,3 +39,16 @@ python -m unittest validation.test_v42 validation.test_v41 -v
 ```
 
 覆盖校准标签隔离、相同点预测、有限样本秩、日期泄漏拒绝、自适应实际宽度接口及 v4.1 安全回归。单元测试中的合成数组只验证程序性质，不作为真实实验结论。
+
+## 先做真实数据端到端验收
+
+以下命令只验收完整流程，不用来判断性能或收敛。普通 MAPPO 和 Pareto-MAPPO 各训练 2 回合；保留完整 24 小时日，不截短物理时域。
+
+```bash
+python run_v42.py --data-root data/real --seeds 42 --episodes 2 --eval-days 1 --selection-days 1 --dt-calibration-days 25 --validation-every 0 --eval-preferences "0.2,0.3,0.5" --methods ordinary pareto --workers 1 --output runs/v42_acceptance
+python scripts/verify_v42_run.py runs/v42_acceptance
+```
+
+`--validation-every 0` 关闭训练过程中的周期选模评估；训练后的独立验证和测试仍执行。正式性能实验不要直接沿用此小预算。验收脚本要求两个算法都存在、完整成功、训练账本与已提交步数一致、测试步数达到协议要求；失败时退出码非零。结果写入 `acceptance_summary.json`。
+
+运行期间不要修改训练源代码。实验协议会对实现做指纹校验，变更后拒绝混用旧结果。若修改了配置、数据或代码，请换输出目录；仅同一协议的中断恢复使用 `--resume`。

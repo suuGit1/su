@@ -1,0 +1,221 @@
+{
+  "passed": true,
+  "checks": {
+    "completed": true,
+    "all_successful": true,
+    "release_version": true,
+    "ordinary_42_unique_result": true,
+    "ordinary_42_training_ledger": true,
+    "ordinary_42_test_complete": true,
+    "pareto_42_unique_result": true,
+    "pareto_42_training_ledger": true,
+    "pareto_42_test_complete": true
+  },
+  "entries": [
+    {
+      "seed": 42,
+      "method": "ordinary",
+      "training_audit": [
+        {
+          "path": "/workspace/scratch/64667ed70b88/su-v42/runs/v42_acceptance_1011/seed_42/ordinary_42",
+          "nominal_steps": 48,
+          "logged_steps": 48,
+          "ledger_available": true,
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 48,
+          "successful_calls": 48,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 48,
+          "step_identities_match": true,
+          "transaction_payload_complete": true,
+          "training_trace_matches": true,
+          "consistent": true,
+          "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+          "live_ledger_summary": {
+            "schema": "interaction-ledger-v3",
+            "attempted_calls": 48,
+            "successful_calls": 48,
+            "error_calls": 0,
+            "unknown_calls": 0,
+            "committed_steps": 48
+          },
+          "snapshot_matches_live_ledger": true
+        }
+      ],
+      "selection_steps": 24,
+      "test_steps": 24,
+      "reserve_unconfirmed_steps": 0
+    },
+    {
+      "seed": 42,
+      "method": "pareto",
+      "training_audit": [
+        {
+          "path": "/workspace/scratch/64667ed70b88/su-v42/runs/v42_acceptance_1011/seed_42/pareto_42",
+          "nominal_steps": 48,
+          "logged_steps": 48,
+          "ledger_available": true,
+          "schema": "interaction-ledger-v3",
+          "attempted_calls": 48,
+          "successful_calls": 48,
+          "error_calls": 0,
+          "unknown_calls": 0,
+          "committed_steps": 48,
+          "step_identities_match": true,
+          "transaction_payload_complete": true,
+          "training_trace_matches": true,
+          "consistent": true,
+          "accounting_source": "完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列",
+          "live_ledger_summary": {
+            "schema": "interaction-ledger-v3",
+            "attempted_calls": 48,
+            "successful_calls": 48,
+            "error_calls": 0,
+            "unknown_calls": 0,
+            "committed_steps": 48
+          },
+          "snapshot_matches_live_ledger": true
+        }
+      ],
+      "selection_steps": 96,
+      "test_steps": 24,
+      "reserve_unconfirmed_steps": 0
+    }
+  ],
+  "result_sha256": "302b843044a31f1d70006c2f1aac40bc07521c2cd5ff02282b51ff3af136fcb6",
+  "protocol": {
+    "schema": "real-inputs-contract-v1",
+    "profiles": {
+      "train": {
+        "sha256": "0e1500d9aaab8d620f30573b5b8975945b51bf6d8d080f928cb85c8fe01dec10",
+        "days": [
+          "2019-01-01",
+          "2019-01-02",
+          "2019-01-03",
+          "2019-01-04",
+          "2019-01-05",
+          "2019-01-06",
+          "2019-01-07",
+          "2019-01-08",
+          "2019-01-09",
+          "2019-01-10",
+          "2019-01-11",
+          "2019-01-12",
+          "2019-01-13",
+          "2019-01-14",
+          "2019-01-15",
+          "2019-01-16",
+          "2019-01-17",
+          "2019-01-18",
+          "2019-01-19",
+          "2019-01-20",
+          "2019-01-21",
+          "2019-01-22",
+          "2019-01-23",
+          "2019-01-24",
+          "2019-01-25",
+          "2019-01-26",
+          "2019-01-27",
+          "2019-01-28",
+          "2019-01-29",
+          "2019-01-30",
+          "2019-01-31"
+        ]
+      },
+      "validation": {
+        "sha256": "e6113c7467d6626713397033d965727fd13a9ea1383683072024298a0ba0ba04",
+        "days": [
+          "2019-02-01",
+          "2019-02-02",
+          "2019-02-04",
+          "2019-02-05",
+          "2019-02-06",
+          "2019-02-07",
+          "2019-02-08",
+          "2019-02-09",
+          "2019-02-10",
+          "2019-02-11",
+          "2019-02-12",
+          "2019-02-13",
+          "2019-02-14",
+          "2019-02-15",
+          "2019-02-16",
+          "2019-02-17",
+          "2019-02-18",
+          "2019-02-19",
+          "2019-02-20",
+          "2019-02-21",
+          "2019-02-22",
+          "2019-02-23",
+          "2019-02-24",
+          "2019-02-25",
+          "2019-02-26",
+          "2019-02-27",
+          "2019-02-28"
+        ]
+      },
+      "test": {
+        "sha256": "1803e98348f96f538e91ba5bd5108af359cecf481f0e8762c8bba4ec66e290ea",
+        "days": [
+          "2019-03-01",
+          "2019-03-02",
+          "2019-03-03",
+          "2019-03-04",
+          "2019-03-05",
+          "2019-03-06",
+          "2019-03-07",
+          "2019-03-08",
+          "2019-03-09",
+          "2019-03-10",
+          "2019-03-11",
+          "2019-03-12",
+          "2019-03-13",
+          "2019-03-14",
+          "2019-03-15",
+          "2019-03-16",
+          "2019-03-17",
+          "2019-03-18",
+          "2019-03-19",
+          "2019-03-20",
+          "2019-03-21",
+          "2019-03-22",
+          "2019-03-23",
+          "2019-03-24",
+          "2019-03-25",
+          "2019-03-26",
+          "2019-03-27",
+          "2019-03-28",
+          "2019-03-29"
+        ]
+      }
+    },
+    "horizon": 24,
+    "dt_hours": 1.0,
+    "ev_scope": "disabled_missing_real_sessions",
+    "ev_digest": "568aa1edbedf40aad9fc8808a0f78cfb420d5269c41dac20b19d6660dd06435f",
+    "dr": {
+      "mode": "off",
+      "reason": "没有同地区真实可控DR参数，不自动代入合成DR"
+    },
+    "flex": {
+      "ev_station_kw": 300.0,
+      "dr_shift_kw": 0.0,
+      "dr_repay_kw": 0.0,
+      "dr_backlog_kwh": 0.0,
+      "dr_shift_budget_kwh": 0.0,
+      "dr_shed_kw": 0.0,
+      "dr_shed_budget_kwh": 0.0,
+      "dr_fraction": 0.2,
+      "shift_cost": 0.01,
+      "shed_cost": 0.1,
+      "curtail_cost": 0.05
+    },
+    "limits": [
+      "真实国家能源/碳曲线驱动仿真，非IEEE33实测",
+      "储能/线路/C3能耗与设备能力仍为研究假设"
+    ],
+    "fingerprint": "dd494eb9355330c6155ab99f98a2277546eee2238c353bb9a506991ec50e5d0c"
+  },
+  "scope": "运行完整性验收；不证明学习收敛、统计优越性或连续AC鲁棒安全"
+}
