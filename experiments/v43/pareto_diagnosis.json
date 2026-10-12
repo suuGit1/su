@@ -1,0 +1,187 @@
+{
+  "scope": "既有单次更新验收轨迹诊断；不能外推收敛表现",
+  "episodes": 4,
+  "updates": 1,
+  "training_preferences": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.17622822325021317,
+      0.6821973520758043,
+      0.14157442467398268
+    ],
+    [
+      0.7886601081774048,
+      0.07911765646128534,
+      0.1322222353613097
+    ],
+    [
+      0.746160962387043,
+      0.24839946752309877,
+      0.005439570089858166
+    ]
+  ],
+  "actor_same_state_preference_span": {
+    "mean": 0.003590078093111515,
+    "max": 0.014041980728507042,
+    "energy_mean": 0.003706165822222829,
+    "comm_mean": 0.003516154130920768,
+    "cpu_mean": 0.0035479143261909485,
+    "exploration_std": [
+      0.6073966026306152
+    ]
+  },
+  "reward_std": [
+    0.6593204140663147,
+    1.5801304578781128,
+    0.7220776677131653
+  ],
+  "reward_correlation": [
+    [
+      0.9999999999999998,
+      0.408453841062382,
+      0.30965745986397597
+    ],
+    [
+      0.40845384106238203,
+      1.0,
+      0.5138186621125006
+    ],
+    [
+      0.30965745986397597,
+      0.5138186621125006,
+      1.0
+    ]
+  ],
+  "training_budget": {
+    "schema": "interaction-ledger-v3",
+    "attempted_calls": 96,
+    "successful_calls": 96,
+    "error_calls": 0,
+    "unknown_calls": 0,
+    "committed_steps": 96
+  },
+  "training_value_mse": [
+    71.19112396240234,
+    1215.4071044921875,
+    96.59687042236328
+  ],
+  "first_update": {
+    "adv_std": [
+      2.9089701175689697,
+      15.452420234680176,
+      5.746817588806152
+    ],
+    "weighted_component_std": [
+      3.316315174102783,
+      10.951142311096191,
+      0.9045208096504211
+    ],
+    "per_episode": [
+      {
+        "episode": 1,
+        "scalar_adv_mean": -9.212485313415527,
+        "scalar_adv_std": 2.428347110748291,
+        "positive_fraction_after_global_center": 1.0
+      },
+      {
+        "episode": 2,
+        "scalar_adv_mean": -24.506113052368164,
+        "scalar_adv_std": 10.300827980041504,
+        "positive_fraction_after_global_center": 0.20833333333333334
+      },
+      {
+        "episode": 3,
+        "scalar_adv_mean": -3.689943313598633,
+        "scalar_adv_std": 1.3588539361953735,
+        "positive_fraction_after_global_center": 1.0
+      },
+      {
+        "episode": 4,
+        "scalar_adv_mean": -16.330163955688477,
+        "scalar_adv_std": 5.57441520690918,
+        "positive_fraction_after_global_center": 0.25
+      }
+    ],
+    "episode_gradient_cosine": [
+      [
+        1.0000001192092896,
+        0.2544003427028656,
+        0.5714099407196045,
+        0.10073615610599518
+      ],
+      [
+        0.2544003427028656,
+        1.000000238418579,
+        0.5114978551864624,
+        0.17777074873447418
+      ],
+      [
+        0.5714099407196045,
+        0.5114978551864624,
+        0.9999997615814209,
+        0.6428475975990295
+      ],
+      [
+        0.10073615610599518,
+        0.17777074873447418,
+        0.6428475975990295,
+        1.0
+      ]
+    ],
+    "gradient_scope": "不同日期和偏好同时变化；夹角不能单独证明目标冲突"
+  },
+  "test_execution": [
+    {
+      "path": "runs/v43_pilot/pareto_43/test/weight_0/25775891314b_seed_40000/trajectory_complete.jsonl",
+      "preference": [
+        0.2,
+        0.3,
+        0.5
+      ],
+      "vector": [
+        -19.269427470288626,
+        -84.30748714782914,
+        22.072316946690737
+      ],
+      "received_executed_l1_kw_sum": 3753.2413064551865,
+      "issued_abs_kw_sum": 3907.7670088551813,
+      "terminal_penalty": 400.16203868809544
+    },
+    {
+      "path": "runs/v43_pilot/pareto_43/test/weight_1/14287244f67f_seed_40000/trajectory_complete.jsonl",
+      "preference": [
+        0.6,
+        0.1,
+        0.3
+      ],
+      "vector": [
+        -19.269136395972858,
+        -84.3078728158805,
+        22.005375285364067
+      ],
+      "received_executed_l1_kw_sum": 3753.374282418081,
+      "issued_abs_kw_sum": 3908.34171946164,
+      "terminal_penalty": 400.1283085527428
+    },
+    {
+      "path": "runs/v43_pilot/pareto_43/test/weight_2/7f8ce9279b45_seed_40000/trajectory_complete.jsonl",
+      "preference": [
+        0.1,
+        0.7,
+        0.2
+      ],
+      "vector": [
+        -19.268037880483995,
+        -84.30892028948668,
+        21.80008586711455
+      ],
+      "received_executed_l1_kw_sum": 3755.109168279043,
+      "issued_abs_kw_sum": 3913.168360301038,
+      "terminal_penalty": 399.99985244900813
+    }
+  ]
+}

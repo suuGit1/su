@@ -46,6 +46,9 @@ class Config:
     cyber_dt_mode: str = 'physics'
     cyber_spec: str | None = None
 
+    coordinator_revision: str = 'legacy'
+    coordinator_active_channels: tuple = (1,1,1,1,1,1)
+    coordinator_payload_bound_bits: float = 8192.
     coordinator_mode: str = 'off'
     coordinator_aoi_limit_steps: float = 2.0
     coordinator_deadline_margin_steps: float = 1.0
@@ -74,6 +77,9 @@ class Config:
     v4_curtail_bias: float = 2.0
 
     def validate(self):
+        if self.coordinator_revision not in ('legacy','public_service'):raise ValueError('未知协调器版本')
+        if len(self.coordinator_active_channels)!=6 or any(v not in (0,1) for v in self.coordinator_active_channels) or not self.coordinator_active_channels[2]:raise ValueError('有效通道掩码非法，负荷/电价通道必须保留')
+        if not math.isfinite(self.coordinator_payload_bound_bits) or self.coordinator_payload_bound_bits<=0:raise ValueError('载荷上界必须为有限正数')
         if self.dt_interval_mode not in ('constant','adaptive') or self.dt_scale_folds<2:raise ValueError('DT 区间配置非法')
         if self.safety_revision not in (0,1):raise ValueError('安全修订必须为0或1')
         if self.research_version not in (3,4):raise ValueError('研究版本必须为3或4')

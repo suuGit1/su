@@ -47,6 +47,12 @@ class ResearchEnv(CyberVPPAdapter):
         if ac_safe or reserve_mode=="pcc_checked":
             from .ac_safety import ACCheckedFlex
             self.core=ACCheckedFlex(config,csv_path,emergency=reserve_mode=="pcc_checked")
+        if config.coordinator_revision=='public_service':
+            from vpp_mappo.coordinator_projection import PublicServiceProjection
+            if not config.coordinator_active_channels[1] and self.bundle and any(self.bundle.get('scenarios',{}).values()):raise ValueError('存在EV会话时不得停用EV遥测')
+            if not config.coordinator_active_channels[3] and self.flex.dr_shed_kw>0:raise ValueError('启用DR削减时必须保留其遥测')
+            if self.cyber_spec.packet_overhead_bits<=0:raise ValueError('公开队列计数上界要求正的报文基础长度')
+            self.coordinator=PublicServiceProjection(config,self.spec,self.flex,self.cyber_spec)
         self.network=FlexNetwork(self.spec)
         if vector_metrics:
             if self.data and any('carbon_g_per_kwh' not in p for p in self.data.profiles):raise ValueError('真实三目标实验缺少碳数据；禁止静默填补')
