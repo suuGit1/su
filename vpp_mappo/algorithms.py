@@ -19,6 +19,8 @@ class OfficialPPO:
         args.n_rollout_threads = 1
         args.use_recurrent_policy = False
         args.use_naive_recurrent_policy = False
+        args.use_policy_active_masks = True
+        args.use_value_active_masks = True
         args.use_popart = False
         args.use_valuenorm = True
         args.use_proper_time_limits = True

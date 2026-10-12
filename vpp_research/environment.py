@@ -62,6 +62,17 @@ class ResearchEnv(CyberVPPAdapter):
         self.observation_space=Box(-np.inf,np.inf,(self.obs_dim,),dtype=np.float32)
         self.share_observation_space=Box(-np.inf,np.inf,(self.obs_dim*self.num_agents,),dtype=np.float32)
         self.preference=np.array([1.,0.,0.]);self.reward_mode='economic'
+        # 根据资源配置判断永久无效动作；不使用当步真值或安全投影结果。
+        energy=np.ones(6,dtype=np.float32)
+        energy[1]=float(bool(self.bundle and any(self.bundle.get('scenarios',{}).values())))
+        energy[2]=float(self.flex.dr_shift_kw>0 or self.flex.dr_repay_kw>0)
+        energy[3]=float(self.flex.dr_shed_kw>0)
+        channels=np.asarray(config.coordinator_active_channels,dtype=np.float32)
+        self.learning_action_mask=np.r_[energy,channels,channels] if self.num_agents==18 else energy
+        if resource_mode in ('control','computation') and self.num_agents==18:self.learning_action_mask[6:12]=0
+        if resource_mode in ('control','communication') and self.num_agents==18:self.learning_action_mask[12:18]=0
+        if not config.learning_cleanup:self.learning_action_mask[:]=1
+
 
     def reset(self,scenario_seed,profile_index=0):
         from .timing import CommandQueue
@@ -89,6 +100,9 @@ class ResearchEnv(CyberVPPAdapter):
         if self.config.research_version==4:
             from .control_v4 import queue_features
             obs=np.c_[obs,np.tile(queue_features(self),(self.num_agents,1))].astype(np.float32)
+        if self.config.learning_cleanup:
+            inactive=np.flatnonzero(np.asarray(self.config.coordinator_active_channels)==0)
+            for start in (18,24,30):obs[:,start+inactive]=0
         return obs,np.repeat(obs.reshape(1,-1),self.num_agents,axis=0)
 
     def step(self,actions):

@@ -1,0 +1,21 @@
+{
+  "reason": "进程消失；两个账本均有一条结果未知调用，禁止假定成功或直接续训",
+  "cases": [
+    {
+      "case": "conditioned",
+      "statuses": {
+        "pending": 1,
+        "success": 675
+      },
+      "committed_episodes": 28
+    },
+    {
+      "case": "economic",
+      "statuses": {
+        "pending": 1,
+        "success": 628
+      },
+      "committed_episodes": 24
+    }
+  ]
+}

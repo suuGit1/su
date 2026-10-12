@@ -18,8 +18,11 @@ from .trace import append,step_record,plain
 
 
 def make_agent(config,env,method):
+    if method=='pareto' and config.pareto_revision=='conditioned_v44':
+        from .pareto_v44 import ParetoV44
+        return ParetoV44(env.obs_dim,env.num_agents,config.hidden_size,config.lr,config.target_kl,env.learning_action_mask,config.pareto_fixed_preference,config.horizon,config.critic_initial_gain,config.critic_warmup_epochs,config.critic_extra_epochs)
     if method=='pareto':return ParetoV4(env.obs_dim,env.num_agents,config.hidden_size,config.lr,config.target_kl)
-    if method=='central':return CentralPPO(env.obs_dim,env.num_agents,config.hidden_size,config.lr)
+    if method=='central':return CentralPPO(env.obs_dim,env.num_agents,config.hidden_size,config.lr,env.learning_action_mask)
     return OfficialPPO(config,env)
 
 
@@ -74,7 +77,7 @@ def train_v4(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust
         rng.bit_generator.state=saved['preference_rng'];restore_rng(saved['rng'])
     attempt_id=str(time.time_ns());started=time.perf_counter()
     def state():
-        return dict(version=VERSION,observation_version=OBS_VERSION_V4,objective_version=env.objective_version,reserve_mode=reserve_mode,
+        return dict(version=('preference-vector-mappo-conditioned-v44' if config.pareto_revision=='conditioned_v44' else VERSION),observation_version=OBS_VERSION_V4,objective_version=env.objective_version,reserve_mode=reserve_mode,
             scales=SCALES.tolist(),method=method,config=asdict(config),dt_model=dt_model,robust=env.robust,preference=pref.tolist(),
             training_preferences=weights,resource_mode=resource_mode,training_seconds=prior_seconds+time.perf_counter()-started-validation_seconds,
             n_agents=env.num_agents,dispatch_spec=env.spec.record(),flex_spec=asdict(env.flex),cyber_spec=asdict(env.cyber_spec),ev_bundle=env.bundle,
@@ -84,9 +87,16 @@ def train_v4(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust
         for begin in range(first,config.episodes,config.rollout_episodes):
             end=min(config.episodes,begin+config.rollout_episodes);length=(end-begin)*config.horizon
             roll={k:[] for k in ('obs','preferences','actions','logprobs','values','vectors','dones')}
-            if not custom:agent.args.episode_length=length;buffer=agent.buffer()
+            if not custom:
+                agent.args.episode_length=length;buffer=agent.buffer()
+                buffer.active_masks[:]=env.learning_action_mask[None,None,:,None]
             for ep in range(begin,end):
-                w=sample_preference(rng,ep) if method=='pareto' else pref.copy();weights.append(w.tolist())
+                if method=='pareto' and config.pareto_fixed_preference:w=np.asarray(config.pareto_fixed_preference,dtype=float)
+                elif method=='pareto' and config.preference_schedule=='balanced':
+                    from .pareto_v44 import balanced_preference
+                    w=balanced_preference(rng,ep)
+                else:w=sample_preference(rng,ep) if method=='pareto' else pref.copy()
+                weights.append(w.tolist())
                 env.preference=w;env.reward_mode='economic' if method in ('ordinary','central') else 'weighted'
                 # 各方法共享按种子确定的训练日期洗牌，不读取测试集。
                 n=len(env.data.profiles) if env.data else 1;index=ep+scenario_offset
@@ -112,7 +122,7 @@ def train_v4(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust
                         for key,item in zip(roll,(obs.copy(),w.copy(),a.copy(),lp.copy(),v.copy(),rv,done)):roll[key].append(item)
                     else:
                         masks=np.full((1,env.num_agents,1),0. if done else 1.,np.float32)
-                        buffer.insert(ns[None],no[None],to_numpy(ra)[None]*masks[...,None],to_numpy(rc)[None]*masks[...,None],a[None],to_numpy(lp)[None],to_numpy(v)[None],reward[None],masks)
+                        buffer.insert(ns[None],no[None],to_numpy(ra)[None]*masks[...,None],to_numpy(rc)[None]*masks[...,None],a[None],to_numpy(lp)[None],to_numpy(v)[None],reward[None],masks,active_masks=env.learning_action_mask[None,:,None])
                     obs,share=no,ns
                 history.append(dict(episode=ep+1,env_steps=(ep+1)*config.horizon,training_day=day,preference=json.dumps(w.tolist()),
                     vector=json.dumps(np.sum(vectors,axis=0).tolist()),terminal_penalty=sum(i['terminal_penalty'] for i in infos),

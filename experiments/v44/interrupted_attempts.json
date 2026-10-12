@@ -1,0 +1,86 @@
+{
+  "scope": "含原尝试的训练与评估账本；保留未知调用，不冒充全部完成",
+  "attempts": [
+    {
+      "path": "runs/v44_diagnosis/carbon/interactions.sqlite",
+      "statuses": {
+        "pending": 1,
+        "success": 144
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/conditioned/interactions.sqlite",
+      "statuses": {
+        "success": 192
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/economic/interactions.sqlite",
+      "statuses": {
+        "success": 192
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/reserve/interactions.sqlite",
+      "statuses": {
+        "pending": 1,
+        "success": 144
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/conditioned/diagnostic_evaluation/80deeb4efd4f_seed_50000/evaluation.sqlite",
+      "statuses": {
+        "success": 24
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/conditioned/diagnostic_evaluation/0a46794ad3be_seed_50000/evaluation.sqlite",
+      "statuses": {
+        "success": 24
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/conditioned/diagnostic_evaluation/9b1117bacce3_seed_50000/evaluation.sqlite",
+      "statuses": {
+        "success": 24
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/conditioned/diagnostic_evaluation/8966c3d12f34_seed_50000/evaluation.sqlite",
+      "statuses": {
+        "success": 24
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/economic/diagnostic_evaluation/80deeb4efd4f_seed_50000/evaluation.sqlite",
+      "statuses": {
+        "success": 24
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/economic/diagnostic_evaluation/0a46794ad3be_seed_50000/evaluation.sqlite",
+      "statuses": {
+        "success": 24
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/economic/diagnostic_evaluation/9b1117bacce3_seed_50000/evaluation.sqlite",
+      "statuses": {
+        "success": 24
+      }
+    },
+    {
+      "path": "runs/v44_diagnosis/economic/diagnostic_evaluation/8966c3d12f34_seed_50000/evaluation.sqlite",
+      "statuses": {
+        "success": 24
+      }
+    },
+    {
+      "path": "runs/v44_baseline_smoke/ordinary/interactions.sqlite",
+      "statuses": {
+        "pending": 1,
+        "success": 15
+      }
+    }
+  ]
+}

@@ -142,6 +142,8 @@ def load(checkpoint):
     from .pareto_v4 import VERSION as VERSION_V4
     from .environment import OBS_VERSION_V4
     is_v4=state['config'].get('research_version',3)==4
+    if is_v4 and state['config'].get('pareto_revision')=='conditioned_v44':
+        from .pareto_v44 import VERSION as VERSION_V4
     protocol=(VERSION_V4,OBS_VERSION_V4,expected) if is_v4 else (VERSION,OBS_VERSION,expected)
     if (state['version'],state['observation_version'],state['objective_version'])!=protocol:raise ValueError('研究检查点协议不匹配')
     c=Config(**state['config']);c._dispatch_record=state['dispatch_spec'];c._flex_record=state['flex_spec'];c._cyber_record=state['cyber_spec'];c._ev_bundle=state['ev_bundle']
