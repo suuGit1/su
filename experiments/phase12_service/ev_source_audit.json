@@ -1,0 +1,28 @@
+{
+  "source": "https://raw.githubusercontent.com/chrisyeh96/sustaingym/main/sustaingym/data/evcharging/acn_data/caltech/2019-05-01%202019-08-31.csv.gz",
+  "sha256": "d23a07e3b5175dca0da107610557f604fa177f71bfc696687c70a0470964047b",
+  "bytes": 110690,
+  "rows": 3527,
+  "columns": [
+    "arrival",
+    "departure",
+    "requested_energy (kWh)",
+    "delivered_energy (kWh)",
+    "station_id",
+    "session_id",
+    "estimated_departure",
+    "claimed"
+  ],
+  "online_demand_eligible": false,
+  "reason": "派生CSV没有userInputs.modifiedAt，无法证明所选申报在控制前可见",
+  "geographic_scope": "美国加州Caltech，禁止冒充英国2019年VPP实测会话",
+  "next_source": "https://ev.caltech.edu/dataset.html",
+  "required_fields": [
+    "connectionTime",
+    "disconnectTime",
+    "sessionID",
+    "userInputs.modifiedAt",
+    "userInputs.kWhRequested",
+    "userInputs.requestedDeparture"
+  ]
+}
