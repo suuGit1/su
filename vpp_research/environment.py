@@ -36,6 +36,7 @@ class ResearchEnv(CyberVPPAdapter):
         if not np.isfinite(self.control_cycles) or self.control_cycles<0:raise ValueError("控制计算周期必须有限非负")
         if config.reward_scale!=100.:raise ValueError('研究协议固定经济尺度为 100，不能改变 reward_scale')
         if not np.array_equal(config.objective_scales,SCALES):raise ValueError('研究协议三目标尺度固定为 [100,100,100]')
+        if config.exogenous_reward_centering and csv_path is None and vector_metrics:raise ValueError('外生中心化要求显式真实数据')
         self.dt_model=copy.deepcopy(dt_model);self.robust=robust;self.vector_metrics=vector_metrics
         if robust and dt_model is None:raise ValueError('区间保护要求独立校准的 DT 模型')
         if dt_model is not None:
@@ -221,7 +222,13 @@ class ResearchEnv(CyberVPPAdapter):
                 info.update(reserve_diagnostic=diagnostic,reserve_service_degraded=not reserve_valid,safety_interval_degraded=bool(self.robust and not info['guard_certificate_survived']),command_fallback_reason='expired' if info.get('command_expired',0) else 'not_arrived_or_unavailable' if info.get('local_fallback',False) else 'none')
             vector=np.array([-(accounted_cost+info['terminal_penalty']),-kg,reserve])/SCALES
             penalty=self.config.violation_penalty*info['constraint_violations']/self.config.reward_scale
-            reward=float(vector[0] if self.reward_mode=='economic' else self.preference@vector)-penalty
+            learning_vector=vector.copy();reference=np.zeros(3)
+            if self.config.exogenous_reward_centering:
+                from .reward_centering import reference_vector
+                reference=reference_vector(row,self.spec.sell_ratio,self.config.dt_hours,SCALES)
+                learning_vector-=reference
+            reward=float(learning_vector[0] if self.reward_mode=='economic' else self.preference@learning_vector)-penalty
+            info.update(learning_objective_vector=learning_vector.tolist(),exogenous_reference_vector=reference.tolist())
             info.update(objective_version=self.objective_version,objective_vector=vector.tolist(),carbon_kg=kg,
                 objective_cost=accounted_cost,objective_grid_kw=accounted_grid,
                 ac_carbon_kg=carbon_kg(info['ac_grid_kw'],self.config.dt_hours,factor)+cyber_kg if info['ac_converged'] else None,

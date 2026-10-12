@@ -17,6 +17,14 @@ from .ledger import Ledger
 from .trace import append,step_record,plain
 
 
+def training_context(config,episode,profile_count,scenario_offset=0):
+    """配对模式按八个偏好共享外生日期与噪声；普通模式保持旧排序。"""
+    index=episode+scenario_offset
+    if config.paired_preference_days:index//=8
+    day=int(np.random.default_rng(config.seed+7919*(index//profile_count+1)).permutation(profile_count)[index%profile_count])
+    return day,config.seed*10000+2000+index
+
+
 def make_agent(config,env,method):
     if method=='pareto' and config.pareto_revision=='conditioned_v44':
         from .pareto_v44 import ParetoV44
@@ -82,7 +90,7 @@ def train_v4(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust
             training_preferences=weights,resource_mode=resource_mode,training_seconds=prior_seconds+time.perf_counter()-started-validation_seconds,
             n_agents=env.num_agents,dispatch_spec=env.spec.record(),flex_spec=asdict(env.flex),cyber_spec=asdict(env.cyber_spec),ev_bundle=env.bundle,
             train_scenarios=env.data.scenario_names if env.data else [],train_fingerprints=env.data.fingerprints if env.data else [],
-            train_seeds=[config.seed*10000+2000+scenario_offset+ep for ep in range(config.episodes)],agent=agent.state_dict() if custom else agent.state())
+            train_seeds=[training_context(config,ep,len(env.data.profiles) if env.data else 1,scenario_offset)[1] for ep in range(config.episodes)],agent=agent.state_dict() if custom else agent.state())
     try:
         for begin in range(first,config.episodes,config.rollout_episodes):
             end=min(config.episodes,begin+config.rollout_episodes);length=(end-begin)*config.horizon
@@ -99,9 +107,9 @@ def train_v4(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust
                 weights.append(w.tolist())
                 env.preference=w;env.reward_mode='economic' if method in ('ordinary','central') else 'weighted'
                 # 各方法共享按种子确定的训练日期洗牌，不读取测试集。
-                n=len(env.data.profiles) if env.data else 1;index=ep+scenario_offset
-                day=int(np.random.default_rng(config.seed+7919*(index//n+1)).permutation(n)[index%n])
-                obs,share=env.reset(config.seed*10000+2000+scenario_offset+ep,day);vectors=[];infos=[]
+                n=len(env.data.profiles) if env.data else 1
+                day,scenario_seed=training_context(config,ep,n,scenario_offset)
+                obs,share=env.reset(scenario_seed,day);vectors=[];infos=[]
                 for t in range(config.horizon):
                     k=(ep-begin)*config.horizon+t
                     if custom:a,lp,v=agent.act(obs,w)
@@ -117,7 +125,8 @@ def train_v4(config,dt_model,output,method='pareto',preference=(1.,0.,0.),robust
                     if trace_path:append(trace_path,record)
                     vector=np.array(info['objective_vector']);vectors.append(vector);infos.append(info)
                     if custom:
-                        rv=np.repeat(vector[0],3) if method=='central' else vector
+                        learner_vector=np.asarray(info.get('learning_objective_vector',vector))
+                        rv=np.repeat(learner_vector[0],3) if method=='central' else learner_vector
                         rv=rv-config.violation_penalty*info['constraint_violations']/config.reward_scale
                         for key,item in zip(roll,(obs.copy(),w.copy(),a.copy(),lp.copy(),v.copy(),rv,done)):roll[key].append(item)
                     else:

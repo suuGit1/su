@@ -39,3 +39,15 @@ python run_v44.py --data-root data/real --seeds 1,2,3,4,5 --episodes 120 --eval-
 偏好响应增大不等于响应方向正确；critic拟合改善不等于控制改善；单日、单种子不能证明收敛。纯碳/纯备用偏好下，经济分量中的终端SOC罚项权重为零，因此低终端SOC可能是目标定义允许的行为。若论文要求跨日能源中性，必须把终端SOC改成所有算法共有的服务约束并重新冻结协议，同步优化对照；本版本没有悄悄做这个改变。
 
 架构修复首轮与价值修复结果分别保存，失败尝试与未知交互也保留。`architecture_source.zip`保存首轮冻结源码，以免后续价值修复使首轮无法复现。
+
+## 进一步定位后的候选配置
+
+外生基准候选已通过单种子八回合实跑：同偏好配对比较总成本下降约1.4%—2.3%、备用提高约30%—32%；碳变化很小且方向并非全部改善。保留为独立配置，不自动替换默认版本：
+
+```bash
+python scripts/run_v44_diagnosis.py --config configs/v44_centered_candidate.json --episodes 32 --seed 43 --eval-days 2 --workers 1 --output runs/v44_centered_diagnosis
+```
+
+该命令会把中心化同时用于条件策略与三个同学习器端点，才可进一步比较学习质量。完整系统也可通过`run_v44.py --config configs/v44_centered_candidate.json ...`使用同一开关。原始物理目标仍用于评估与选模，中心化critic输出只表示学习回报，不能解释成绝对物理成本预测。
+
+配对日期候选为`configs/v44_paired_candidate.json`，已完成调度逻辑测试及4回合端到端验收（96步训练、96步开发评估），多日期控制收益未验证。其每8回合只覆盖一个外生日期，不能套用普通采样的独立日期数。

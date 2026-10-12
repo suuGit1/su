@@ -6,7 +6,7 @@ from vpp_mappo.config import Config
 from vpp_research.real_inputs import connect
 from vpp_research.train_v4 import train_v4
 from vpp_research.train import load
-c,*_=connect('data/real',Config.load('configs/v44_ieee33.json'));c.episodes=1;c.seed=43
+c,*_=connect('data/real',Config.load(sys.argv[2] if len(sys.argv)>2 else 'configs/v44_ieee33.json'));c.episodes=1;c.seed=43
 with zipfile.ZipFile('experiments/v42/dt_study_evidence.zip') as z:model=json.loads(z.read('residual.json'))
 for method in ('ordinary','central'):
  folder=Path(sys.argv[1] if len(sys.argv)>1 else 'runs/v44_baseline_smoke')/method

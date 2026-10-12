@@ -37,6 +37,15 @@ class Tests(unittest.TestCase):
    return r
   self.assertEqual(m.update(rollout(),epochs=2)['critic_updates'],4)
   self.assertEqual(m.update(rollout(),epochs=2)['critic_updates'],3)
+ def test_paired_training_context(self):
+  from vpp_mappo.config import Config
+  from vpp_research.train_v4 import training_context
+  c=Config();c.seed=43;c.paired_preference_days=True
+  contexts=[training_context(c,i,31) for i in range(16)]
+  self.assertEqual(len(set(contexts[:8])),1);self.assertEqual(len(set(contexts[8:])),1)
+  self.assertNotEqual(contexts[0],contexts[8])
+  c.paired_preference_days=False
+  self.assertEqual(len({training_context(c,i,31)[1] for i in range(16)}),16)
  def test_gae_terminal_no_leak(self):
   a,_=vector_gae([[1,2,3],[100,200,300]],np.zeros((3,3)),[True,True])
   np.testing.assert_allclose(a[0],[1,2,3])

@@ -76,6 +76,8 @@ class Config:
     v4_action_bounds: bool = True
     v4_curtail_bias: float = 2.0
 
+    paired_preference_days: bool = False
+    exogenous_reward_centering: bool = False
     critic_initial_gain: float = 0.01
     critic_warmup_epochs: int = 0
     critic_extra_epochs: int = 0
@@ -85,6 +87,12 @@ class Config:
     preference_schedule: str = 'legacy'
 
     def validate(self):
+        if type(self.paired_preference_days) is not bool:raise ValueError('配对日期开关必须为布尔值')
+        if self.paired_preference_days and (self.research_version!=4 or self.preference_schedule!='balanced'):raise ValueError('配对日期要求v4分层偏好采样')
+
+        if type(self.exogenous_reward_centering) is not bool:raise ValueError('外生奖励中心化开关必须为布尔值')
+        if self.exogenous_reward_centering and self.research_version!=4:raise ValueError('奖励中心化只支持固定时域v4协议')
+
         if not math.isfinite(self.critic_initial_gain) or self.critic_initial_gain<=0:raise ValueError('critic初始化增益非法')
         for name in ('critic_warmup_epochs','critic_extra_epochs'):
             if type(getattr(self,name)) is not int or getattr(self,name)<0:raise ValueError('critic更新预算必须为非负整数')
