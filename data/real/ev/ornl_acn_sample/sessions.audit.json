@@ -1,0 +1,24 @@
+{
+  "source": "https://ornl.opendatasoft.com/api/explore/v2.1/catalog/datasets/acn-data/records?limit=100",
+  "raw_sha256": "9891a71d499d3bdec3658e9e67c85166a7d3a21d58f2148b8a99da0515dcab3e",
+  "input_count": 26,
+  "accepted": 1,
+  "excluded": {
+    "no_visible_declared_demand": 7,
+    "cross_day_or_short": 10,
+    "unknown_energy_before_update": 8
+  },
+  "assumptions": {
+    "max_kw": 7.0,
+    "departure": "申报期限用于规划；真实提前离站事件到达后才更新现场状态",
+    "availability": "到站向上取整；申报及实际离站向下取整，实际离站最早于首次控制步触发；亚步长时间为离散近似"
+  },
+  "records": [
+    {
+      "id": "61a95636ec34f19de661",
+      "declared_departure": "2020-05-11T11:08:21+00:00",
+      "actual_departure": "Mon, 11 May 2020 17:34:09 GMT",
+      "declaration_time": "2020-05-11T01:36:21+00:00"
+    }
+  ]
+}

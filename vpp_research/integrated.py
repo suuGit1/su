@@ -117,6 +117,10 @@ def rollout(config,model,out,method='mpc',checkpoint=None,preference=(.2,.3,.5),
             summary['reserve_unconfirmed_steps']+=int(not info['reserve_valid'])
             summary['ev_unmet_kwh']+=info['ev_unmet_kwh'];summary['early_departures']+=info.get('early_ev_departures',0)
             summary['terminal_dr_kwh']=info['dr_backlog_kwh']
+            summary['terminal_service_failed']=info.get('terminal_service_failed',False)
+            summary['terminal_service_shortfall_kwh']=info.get('terminal_service_shortfall_kwh',0.)
+            summary['terminal_soc']=info['ess_soc']
+            summary['objective_version']=env.objective_version
             write(out/'summary.json',summary)
         summary['completed']=bool(done)
     except Exception as exc:

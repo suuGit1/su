@@ -6,6 +6,7 @@ from .grid_environment import GridVPPAdapter
 from .dispatch import DispatchSpec
 from .flex_resources import FlexSpec, FlexNetwork, read_bundle, validate_sessions, grid_power
 from .flex_optimization import solve_flex
+from .terminal_service import band,reachable_band,shortfall_kwh
 
 CONTRACT_VERSION='sessions-dr-curtail-v1'
 
@@ -89,7 +90,7 @@ class FlexVPPAdapter:
         rows=[self.row(t) for t in range(self.t,self.config.horizon)] if oracle else [(fixed_row or self.row()).copy() for _ in range(h)]
         return solve_flex(self.spec,self.flex,self.network,rows,self.t,self.soc[0],self.backlog,self.shifted,self.shed_used,
             sessions,self.remaining,self.config.dt_hours,self.config.terminal_soc_penalty,self.config.solver_time_limit,
-            proposal=proposal,objective=objective,objective_steps=h if oracle else min(lookahead,h),grid_target=grid_target,first_step_constraints=getattr(self,'guard_constraints',None),retry_infeasible=self.config.safety_revision==1)
+            proposal=proposal,objective=objective,objective_steps=h if oracle else min(lookahead,h),grid_target=grid_target,first_step_constraints=getattr(self,'guard_constraints',None),retry_infeasible=self.config.safety_revision==1,terminal_band=band(self.config,self.spec))
 
     def _allocate(self,total):
         result={s['id']:0.0 for s in self.sessions};left=max(0,total)
@@ -112,6 +113,10 @@ class FlexVPPAdapter:
             dr_shed_budget=self.shed_used+shed*dt>f.dr_shed_budget_kwh+1e-5,
             dr_reachable=backlog>f.dr_repay_kw*dt*(self.config.horizon-self.t-1)+1e-5,
             pv_curtail=not -1e-5<=pv<=row['pv_kw']+1e-5,wind_curtail=not -1e-5<=wind<=row['wind_kw']+1e-5)
+        terminal=band(self.config,s)
+        if terminal is not None:
+            low,high=reachable_band(s,terminal,self.config.horizon-self.t-1,dt)
+            flags['terminal_reachable']=not low-1e-7<=next_soc<=high+1e-7
         for session in self.sessions:
             key=session['id'];q=allocation.get(key,0.);active=session['arrival_step']<=self.t<session['departure_step']
             after=self.remaining[key]-q*dt
@@ -120,7 +125,7 @@ class FlexVPPAdapter:
         grid=grid_power(row,a);flags['grid']=not -s.grid_export-1e-5<=grid<=s.grid_import+1e-5
         if not include_service:
             # 紧急模式只移除未来服务可达性；电量/功率/SOC/网络等物理边界仍验收。
-            flags={k:v for k,v in flags.items() if k!='dr_reachable' and not k.startswith('ev_deadline_')}
+            flags={k:v for k,v in flags.items() if k not in ('dr_reachable','terminal_reachable') and not k.startswith('ev_deadline_')}
         return int(sum(flags.values()))+self.network.linear(row,a)['linear_network_violations']
 
     def step(self,actions):
@@ -152,10 +157,12 @@ class FlexVPPAdapter:
         self.backlog+=a[2]*dt;self.shifted+=max(a[2],0)*dt;self.shed_used+=a[3]*dt
         grid=grid_power(row,a);cost=self.flex.cost(self.spec,grid,a,row['price'],dt)
         self.t+=1;done=self.t==self.config.horizon
-        terminal=self.config.terminal_soc_penalty*max(0,self.spec.target_soc[0]-self.soc[0]) if done else 0.
+        terminal=self.config.terminal_soc_penalty*max(0,self.spec.target_soc[0]-self.soc[0]) if done and self.config.terminal_soc_mode=='legacy_penalty' else 0.
+        terminal_band=band(self.config,self.spec)
+        terminal_gap=shortfall_kwh(self.soc[0],terminal_band,self.spec.capacities[0]) if done else 0.
         audit=self.network.audit(row,a)
         reward=-(cost+terminal+self.config.violation_penalty*count)/self.config.reward_scale
-        info=dict(cost=cost,reward=float(reward),constraint_violations=count,pre_shield_violations=pre,shield_l1_kw=float(abs(a-requested).sum()),
+        info=dict(terminal_service_mode=self.config.terminal_soc_mode,terminal_service_shortfall_kwh=terminal_gap,terminal_service_failed=bool(done and terminal_gap>1e-5),terminal_service_band=terminal_band,cost=cost,reward=float(reward),constraint_violations=count,pre_shield_violations=pre,shield_l1_kw=float(abs(a-requested).sum()),
             shield_solver_seconds=solver_seconds,ess_soc=float(self.soc[0]),ess_power_kw=float(a[0]),ev_charge_kw=float(a[1]),
             early_ev_departures=len(early),early_ev_unmet_kwh=float(early_unmet),
             ev_departures=len(departures)+len(early),ev_unmet_kwh=float(unmet),ev_delivered_kwh=float(a[1]*dt),

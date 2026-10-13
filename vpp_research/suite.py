@@ -14,7 +14,7 @@ REFERENCE=[-50.,-50.,0.]
 
 
 def feasible(r):
-    return not r['failed'] and r['violations']==0 and r['ac_violations']==0 and r['ac_failed']==0 and r['reserve_invalid']==0 and r['ev_unmet_kwh']<1e-5 and abs(r['dr_backlog_kwh'])<1e-5
+    return not r.get('terminal_service_failed',False) and r.get('terminal_service_shortfall_kwh',0.)<1e-5 and not r['failed'] and r['violations']==0 and r['ac_violations']==0 and r['ac_failed']==0 and r['reserve_invalid']==0 and r['ev_unmet_kwh']<1e-5 and abs(r['dr_backlog_kwh'])<1e-5
 
 
 def points(rows,expected):

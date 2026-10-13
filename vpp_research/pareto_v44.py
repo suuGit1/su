@@ -109,6 +109,23 @@ class ParetoV44(nn.Module):
         mask=self.action_mask[None,:].expand(len(obs),-1)
         def active_mean(x):return (x*mask).sum()/mask.sum()
         actor_params=[*self.actor.parameters(),self.log_std];stopped=False;actor_updates=0
+        # 仅诊断各已采样纯偏好的梯度关系，不修改更新梯度或重标目标权重。
+        gradient_metrics={f'preference_gradient_cosine_{i}_{j}':0. for i,j in ((0,1),(0,2),(1,2))};gradients={}
+        for name in ('cost','carbon','reserve'):
+            gradient_metrics['pure_gradient_norm_'+name]=0.;gradient_metrics['pure_scalar_adv_mean_'+name]=0.
+        diagnostic_lp=self.distribution(obs,w[:,None,:]).log_prob(actions).sum(-1)
+        for i,name in enumerate(('cost','carbon','reserve')):
+            selected=(w[:,i]>.999)
+            gradient_metrics['pure_steps_'+name]=int(selected.sum())
+            if selected.any():
+                loss=-(diagnostic_lp[selected]*advantage[selected]*mask[selected]).sum()/mask[selected].sum()
+                g=torch.autograd.grad(loss,actor_params,retain_graph=True,allow_unused=True)
+                flat=torch.cat([(torch.zeros_like(p) if v is None else v).reshape(-1) for p,v in zip(actor_params,g)]).detach()
+                gradients[i]=flat;gradient_metrics['pure_gradient_norm_'+name]=float(flat.norm())
+                gradient_metrics['pure_scalar_adv_mean_'+name]=float(advantage[selected].mean())
+        for i,j in ((0,1),(0,2),(1,2)):
+            if i in gradients and j in gradients:
+                gradient_metrics[f'preference_gradient_cosine_{i}_{j}']=float(torch.nn.functional.cosine_similarity(gradients[i],gradients[j],dim=0,eps=1e-12))
         for _ in range(epochs):
             d=self.distribution(obs,w[:,None,:]);lr=d.log_prob(actions).sum(-1)-old;ratio=lr.exp()
             policy=-active_mean(torch.minimum(ratio*advantage,ratio.clamp(1-clip,1+clip)*advantage))
@@ -140,5 +157,6 @@ class ParetoV44(nn.Module):
             probe=torch.eye(3);means=torch.stack([self.distribution(obs,p).mean for p in probe])
             metrics['preference_action_span']=float(active_mean((means.max(0).values-means.min(0).values).squeeze(-1)))
             metrics['active_actions']=float(self.action_mask.sum())
+        metrics.update(gradient_metrics)
         if not all(np.isfinite(v) for v in metrics.values()):raise RuntimeError('v4更新出现非有限数')
         return metrics

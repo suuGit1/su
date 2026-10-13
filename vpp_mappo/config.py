@@ -23,6 +23,8 @@ class Config:
     reward_scale: float = 100.0
     violation_penalty: float = 100.0
     terminal_soc_penalty: float = 1000.0
+    terminal_soc_mode: str = 'legacy_penalty'
+    terminal_soc_tolerance: float = 0.01
     safety: bool = True
     digital_twin: bool = False
     delay_steps: int = 0
@@ -46,6 +48,7 @@ class Config:
     cyber_dt_mode: str = 'physics'
     cyber_spec: str | None = None
 
+    coordinator_priority_slack_fraction: float = 0.0
     coordinator_revision: str = 'legacy'
     coordinator_active_channels: tuple = (1,1,1,1,1,1)
     coordinator_payload_bound_bits: float = 8192.
@@ -87,6 +90,10 @@ class Config:
     preference_schedule: str = 'legacy'
 
     def validate(self):
+        if not math.isfinite(self.coordinator_priority_slack_fraction) or not 0<=self.coordinator_priority_slack_fraction<=1:raise ValueError('协调优先级剩余额度比例必须在0至1之间')
+        if self.terminal_soc_mode not in ('legacy_penalty','shared_band'):raise ValueError('未知终端库存协议')
+        if not math.isfinite(self.terminal_soc_tolerance) or not 0<=self.terminal_soc_tolerance<=0.1:raise ValueError('终端SOC容差必须在0至0.1内')
+        if self.terminal_soc_mode=='shared_band' and (self.resource_model!='sessions_v1' or self.research_version!=4):raise ValueError('公共终端协议要求v4会话资源模型')
         if type(self.paired_preference_days) is not bool:raise ValueError('配对日期开关必须为布尔值')
         if self.paired_preference_days and (self.research_version!=4 or self.preference_schedule!='balanced'):raise ValueError('配对日期要求v4分层偏好采样')
 

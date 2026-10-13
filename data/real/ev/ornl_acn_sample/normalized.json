@@ -1,0 +1,548 @@
+[
+  {
+    "connectionTime": "Mon, 11 May 2020 01:36:21 GMT",
+    "disconnectTime": "Mon, 11 May 2020 17:34:09 GMT",
+    "sessionID": "2_39_131_30_2020-05-11 01:36:18.763379",
+    "userInputs": [
+      {
+        "WhPerMile": 250,
+        "kWhRequested": 55.0,
+        "milesRequested": 220,
+        "minutesAvailable": 572,
+        "modifiedAt": "Mon, 11 May 2020 01:36:21 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Mon, 11 May 2020 11:08:21 GMT",
+        "userID": 67
+      }
+    ]
+  },
+  {
+    "connectionTime": "Mon, 11 May 2020 20:58:06 GMT",
+    "disconnectTime": "Mon, 11 May 2020 23:06:14 GMT",
+    "sessionID": "2_39_89_25_2020-05-11 20:58:05.848503",
+    "userInputs": []
+  },
+  {
+    "connectionTime": "Sun, 17 May 2020 04:03:59 GMT",
+    "disconnectTime": "Sun, 17 May 2020 06:00:57 GMT",
+    "sessionID": "2_39_79_383_2020-05-17 04:03:58.575434",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 72,
+        "modifiedAt": "Sun, 17 May 2020 04:04:19 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Sun, 17 May 2020 05:15:59 GMT",
+        "userID": 1222
+      }
+    ]
+  },
+  {
+    "connectionTime": "Mon, 18 May 2020 21:52:34 GMT",
+    "disconnectTime": "Mon, 18 May 2020 22:52:16 GMT",
+    "sessionID": "2_39_83_386_2020-05-18 21:52:34.010715",
+    "userInputs": []
+  },
+  {
+    "connectionTime": "Tue, 19 May 2020 20:06:37 GMT",
+    "disconnectTime": "Tue, 19 May 2020 23:40:55 GMT",
+    "sessionID": "2_39_89_25_2020-05-19 20:06:36.742562",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 187,
+        "modifiedAt": "Tue, 19 May 2020 20:06:51 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Tue, 19 May 2020 23:13:37 GMT",
+        "userID": 743
+      }
+    ]
+  },
+  {
+    "connectionTime": "Tue, 19 May 2020 21:29:28 GMT",
+    "disconnectTime": "Tue, 19 May 2020 22:24:06 GMT",
+    "sessionID": "2_39_139_28_2020-05-19 21:29:27.522554",
+    "userInputs": []
+  },
+  {
+    "connectionTime": "Tue, 26 May 2020 22:37:30 GMT",
+    "disconnectTime": "Tue, 26 May 2020 22:47:29 GMT",
+    "sessionID": "2_39_139_28_2020-05-26 22:37:29.854698",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 187,
+        "modifiedAt": "Tue, 26 May 2020 22:37:36 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 27 May 2020 01:44:30 GMT",
+        "userID": 743
+      }
+    ]
+  },
+  {
+    "connectionTime": "Thu, 04 Jun 2020 15:35:19 GMT",
+    "disconnectTime": "Thu, 04 Jun 2020 19:11:48 GMT",
+    "sessionID": "2_39_129_17_2020-06-04 15:35:19.416716",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 52.0,
+        "milesRequested": 130,
+        "minutesAvailable": 228,
+        "modifiedAt": "Thu, 04 Jun 2020 15:35:35 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Thu, 04 Jun 2020 19:23:19 GMT",
+        "userID": 1316
+      }
+    ]
+  },
+  {
+    "connectionTime": "Sun, 07 Jun 2020 03:57:58 GMT",
+    "disconnectTime": "Sun, 07 Jun 2020 15:07:10 GMT",
+    "sessionID": "2_39_138_29_2020-06-07 03:57:57.631474",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 40.0,
+        "milesRequested": 100,
+        "minutesAvailable": 687,
+        "modifiedAt": "Sun, 07 Jun 2020 03:58:13 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Sun, 07 Jun 2020 15:24:58 GMT",
+        "userID": 300
+      }
+    ]
+  },
+  {
+    "connectionTime": "Mon, 08 Jun 2020 01:03:24 GMT",
+    "disconnectTime": "Mon, 08 Jun 2020 01:42:44 GMT",
+    "sessionID": "2_39_139_28_2020-06-08 01:03:23.719066",
+    "userInputs": []
+  },
+  {
+    "connectionTime": "Sat, 09 May 2020 18:13:02 GMT",
+    "disconnectTime": "Sat, 09 May 2020 18:51:31 GMT",
+    "sessionID": "2_39_95_27_2020-05-09 18:13:01.694696",
+    "userInputs": []
+  },
+  {
+    "connectionTime": "Sat, 16 May 2020 17:11:23 GMT",
+    "disconnectTime": "Sun, 17 May 2020 03:11:09 GMT",
+    "sessionID": "2_39_131_30_2020-05-16 17:11:22.543804",
+    "userInputs": [
+      {
+        "WhPerMile": 446,
+        "kWhRequested": 98.12,
+        "milesRequested": 220,
+        "minutesAvailable": 600,
+        "modifiedAt": "Sat, 16 May 2020 17:12:18 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Sun, 17 May 2020 03:11:23 GMT",
+        "userID": 489
+      },
+      {
+        "WhPerMile": 446,
+        "kWhRequested": 98.12,
+        "milesRequested": 220,
+        "minutesAvailable": 500,
+        "modifiedAt": "Sat, 16 May 2020 17:12:37 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Sun, 17 May 2020 01:31:23 GMT",
+        "userID": 489
+      }
+    ]
+  },
+  {
+    "connectionTime": "Sun, 17 May 2020 13:19:27 GMT",
+    "disconnectTime": "Sun, 17 May 2020 16:14:53 GMT",
+    "sessionID": "2_39_138_29_2020-05-17 13:19:26.959103",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 32.0,
+        "milesRequested": 80,
+        "minutesAvailable": 606,
+        "modifiedAt": "Sun, 17 May 2020 13:20:30 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Sun, 17 May 2020 23:25:27 GMT",
+        "userID": 300
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 32.0,
+        "milesRequested": 80,
+        "minutesAvailable": 606,
+        "modifiedAt": "Sun, 17 May 2020 13:20:49 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Sun, 17 May 2020 23:25:27 GMT",
+        "userID": 300
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 36.0,
+        "milesRequested": 90,
+        "minutesAvailable": 716,
+        "modifiedAt": "Sun, 17 May 2020 13:23:01 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Mon, 18 May 2020 01:15:27 GMT",
+        "userID": 300
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 36.0,
+        "milesRequested": 90,
+        "minutesAvailable": 231,
+        "modifiedAt": "Sun, 17 May 2020 16:12:09 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Sun, 17 May 2020 17:10:27 GMT",
+        "userID": 300
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 40.0,
+        "milesRequested": 100,
+        "minutesAvailable": 768,
+        "modifiedAt": "Sun, 17 May 2020 16:13:58 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Mon, 18 May 2020 02:07:27 GMT",
+        "userID": 300
+      }
+    ]
+  },
+  {
+    "connectionTime": "Mon, 01 Jun 2020 19:52:47 GMT",
+    "disconnectTime": "Mon, 01 Jun 2020 22:59:39 GMT",
+    "sessionID": "2_39_131_30_2020-06-01 19:52:31.469281",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 327,
+        "modifiedAt": "Mon, 01 Jun 2020 19:52:47 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Tue, 02 Jun 2020 01:19:47 GMT",
+        "userID": 5594
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 327,
+        "modifiedAt": "Mon, 01 Jun 2020 19:52:52 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Tue, 02 Jun 2020 01:19:47 GMT",
+        "userID": 5594
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 327,
+        "modifiedAt": "Mon, 01 Jun 2020 19:53:41 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Tue, 02 Jun 2020 01:19:47 GMT",
+        "userID": 5594
+      }
+    ]
+  },
+  {
+    "connectionTime": "Thu, 04 Jun 2020 03:10:04 GMT",
+    "disconnectTime": "Thu, 04 Jun 2020 23:17:27 GMT",
+    "sessionID": "2_39_138_29_2020-06-04 03:10:04.130797",
+    "userInputs": [
+      {
+        "WhPerMile": 250,
+        "kWhRequested": 55.0,
+        "milesRequested": 220,
+        "minutesAvailable": 553,
+        "modifiedAt": "Thu, 04 Jun 2020 03:10:24 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Thu, 04 Jun 2020 12:23:04 GMT",
+        "userID": 67
+      },
+      {
+        "WhPerMile": 250,
+        "kWhRequested": 55.0,
+        "milesRequested": 220,
+        "minutesAvailable": 554,
+        "modifiedAt": "Thu, 04 Jun 2020 03:12:27 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Thu, 04 Jun 2020 12:24:04 GMT",
+        "userID": 67
+      },
+      {
+        "WhPerMile": 250,
+        "kWhRequested": 55.0,
+        "milesRequested": 220,
+        "minutesAvailable": 559,
+        "modifiedAt": "Thu, 04 Jun 2020 03:17:36 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Thu, 04 Jun 2020 12:29:04 GMT",
+        "userID": 67
+      }
+    ]
+  },
+  {
+    "connectionTime": "Fri, 05 Jun 2020 00:59:56 GMT",
+    "disconnectTime": "Fri, 05 Jun 2020 01:23:47 GMT",
+    "sessionID": "2_39_125_21_2020-06-05 00:59:56.183545",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 16.0,
+        "milesRequested": 40,
+        "minutesAvailable": 390,
+        "modifiedAt": "Fri, 05 Jun 2020 01:00:35 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Fri, 05 Jun 2020 07:29:56 GMT",
+        "userID": 1395
+      }
+    ]
+  },
+  {
+    "connectionTime": "Mon, 08 Jun 2020 16:11:08 GMT",
+    "disconnectTime": "Mon, 08 Jun 2020 21:58:57 GMT",
+    "sessionID": "2_39_79_377_2020-06-08 16:11:08.435856",
+    "userInputs": [
+      {
+        "WhPerMile": 250,
+        "kWhRequested": 37.5,
+        "milesRequested": 150,
+        "minutesAvailable": 911,
+        "modifiedAt": "Mon, 08 Jun 2020 16:11:27 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Tue, 09 Jun 2020 07:22:08 GMT",
+        "userID": 248
+      }
+    ]
+  },
+  {
+    "connectionTime": "Sun, 10 May 2020 20:02:35 GMT",
+    "disconnectTime": "Mon, 11 May 2020 02:26:44 GMT",
+    "sessionID": "2_39_139_28_2020-05-10 20:02:34.627558",
+    "userInputs": [
+      {
+        "WhPerMile": 236,
+        "kWhRequested": 40.12,
+        "milesRequested": 170,
+        "minutesAvailable": 329,
+        "modifiedAt": "Sun, 10 May 2020 20:02:57 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Mon, 11 May 2020 01:31:35 GMT",
+        "userID": 1085
+      }
+    ]
+  },
+  {
+    "connectionTime": "Wed, 13 May 2020 17:10:08 GMT",
+    "disconnectTime": "Wed, 13 May 2020 19:21:33 GMT",
+    "sessionID": "2_39_127_19_2020-05-13 17:10:07.807386",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 44.0,
+        "milesRequested": 110,
+        "minutesAvailable": 129,
+        "modifiedAt": "Wed, 13 May 2020 17:10:25 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 13 May 2020 19:19:08 GMT",
+        "userID": 1316
+      }
+    ]
+  },
+  {
+    "connectionTime": "Wed, 20 May 2020 19:08:53 GMT",
+    "disconnectTime": "Thu, 21 May 2020 04:12:54 GMT",
+    "sessionID": "2_39_131_30_2020-05-20 19:08:37.787386",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 60,
+        "modifiedAt": "Wed, 20 May 2020 19:08:53 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 20 May 2020 20:08:53 GMT",
+        "userID": 5594
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 60,
+        "modifiedAt": "Wed, 20 May 2020 19:09:01 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 20 May 2020 20:08:53 GMT",
+        "userID": 5594
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 60,
+        "modifiedAt": "Wed, 20 May 2020 19:09:30 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 20 May 2020 20:08:53 GMT",
+        "userID": 5594
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 60,
+        "modifiedAt": "Wed, 20 May 2020 19:09:53 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 20 May 2020 20:08:53 GMT",
+        "userID": 5594
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 63,
+        "modifiedAt": "Wed, 20 May 2020 19:12:14 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 20 May 2020 20:11:53 GMT",
+        "userID": 5594
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 63,
+        "modifiedAt": "Wed, 20 May 2020 19:12:44 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 20 May 2020 20:11:53 GMT",
+        "userID": 5594
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 81,
+        "modifiedAt": "Wed, 20 May 2020 20:00:20 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 20 May 2020 20:29:53 GMT",
+        "userID": 5594
+      },
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 8.0,
+        "milesRequested": 20,
+        "minutesAvailable": 327,
+        "modifiedAt": "Wed, 20 May 2020 23:36:18 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Thu, 21 May 2020 00:35:53 GMT",
+        "userID": 5594
+      }
+    ]
+  },
+  {
+    "connectionTime": "Tue, 26 May 2020 20:06:06 GMT",
+    "disconnectTime": "Tue, 26 May 2020 22:37:10 GMT",
+    "sessionID": "2_39_139_28_2020-05-26 20:06:06.399729",
+    "userInputs": []
+  },
+  {
+    "connectionTime": "Wed, 27 May 2020 16:22:32 GMT",
+    "disconnectTime": "Wed, 27 May 2020 19:13:38 GMT",
+    "sessionID": "2_39_139_28_2020-05-27 16:22:31.700830",
+    "userInputs": [
+      {
+        "WhPerMile": 400,
+        "kWhRequested": 52.0,
+        "milesRequested": 130,
+        "minutesAvailable": 172,
+        "modifiedAt": "Wed, 27 May 2020 16:23:00 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 27 May 2020 19:14:32 GMT",
+        "userID": 1316
+      }
+    ]
+  },
+  {
+    "connectionTime": "Fri, 29 May 2020 16:50:03 GMT",
+    "disconnectTime": "Fri, 29 May 2020 17:01:40 GMT",
+    "sessionID": "2_39_123_23_2020-05-29 16:50:03.428272",
+    "userInputs": [
+      {
+        "WhPerMile": 600,
+        "kWhRequested": 12.0,
+        "milesRequested": 20,
+        "minutesAvailable": 109,
+        "modifiedAt": "Fri, 29 May 2020 16:51:16 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Fri, 29 May 2020 18:39:03 GMT",
+        "userID": 1920
+      }
+    ]
+  },
+  {
+    "connectionTime": "Wed, 03 Jun 2020 19:31:58 GMT",
+    "disconnectTime": "Thu, 04 Jun 2020 01:05:37 GMT",
+    "sessionID": "2_39_79_378_2020-06-03 19:31:58.335579",
+    "userInputs": [
+      {
+        "WhPerMile": 295,
+        "kWhRequested": 41.3,
+        "milesRequested": 140,
+        "minutesAvailable": 269,
+        "modifiedAt": "Wed, 03 Jun 2020 19:32:16 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Thu, 04 Jun 2020 00:00:58 GMT",
+        "userID": 3424
+      },
+      {
+        "WhPerMile": 295,
+        "kWhRequested": 41.3,
+        "milesRequested": 140,
+        "minutesAvailable": 350,
+        "modifiedAt": "Wed, 03 Jun 2020 23:19:01 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Thu, 04 Jun 2020 01:21:58 GMT",
+        "userID": 3424
+      }
+    ]
+  },
+  {
+    "connectionTime": "Mon, 08 Jun 2020 16:47:29 GMT",
+    "disconnectTime": "Tue, 09 Jun 2020 01:53:08 GMT",
+    "sessionID": "2_39_79_382_2020-06-08 16:47:28.606245",
+    "userInputs": [
+      {
+        "WhPerMile": 333,
+        "kWhRequested": 16.65,
+        "milesRequested": 50,
+        "minutesAvailable": 625,
+        "modifiedAt": "Mon, 08 Jun 2020 16:47:55 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Tue, 09 Jun 2020 03:12:29 GMT",
+        "userID": 1526
+      }
+    ]
+  },
+  {
+    "connectionTime": "Tue, 09 Jun 2020 16:24:21 GMT",
+    "disconnectTime": "Tue, 09 Jun 2020 20:28:01 GMT",
+    "sessionID": "2_39_79_382_2020-06-09 16:24:21.244900",
+    "userInputs": [
+      {
+        "WhPerMile": 300,
+        "kWhRequested": 15.0,
+        "milesRequested": 50,
+        "minutesAvailable": 625,
+        "modifiedAt": "Tue, 09 Jun 2020 16:28:32 GMT",
+        "paymentRequired": true,
+        "requestedDeparture": "Wed, 10 Jun 2020 02:49:21 GMT",
+        "userID": 1526
+      }
+    ]
+  }
+]

@@ -8,6 +8,7 @@ from vpp_mappo.flex_resources import FlexNetwork
 from vpp_mappo.objectives import carbon_kg
 from .dt import TARGETS,predict,interval_halfwidth,VERSION as DT_VERSION
 from .safety import guard
+from vpp_mappo.terminal_service import band
 PCC_OBJECTIVE_VERSION='c3-ac-pcc-same-period-sampled-reserve-v4'
 
 OBS_VERSION='c3-65-state-interval-carbon-v1'
@@ -29,6 +30,7 @@ class ResearchEnv(CyberVPPAdapter):
             control_cycles=config.control_cycles
         self.reserve_mode=reserve_mode
         self.objective_version={"linear":OBJECTIVE_VERSION,"ac_checked":AC_OBJECTIVE_VERSION,"pcc_checked":PCC_OBJECTIVE_VERSION}[reserve_mode]
+        if config.terminal_soc_mode=='shared_band':self.objective_version+='-terminal-band-v45'
         if resource_mode not in ("control", "communication", "computation", "joint"):
             raise ValueError("未知 C3 消融模式")
         self.resource_mode=resource_mode
@@ -152,7 +154,7 @@ class ResearchEnv(CyberVPPAdapter):
         self.last_received_command=received_candidate.copy()
         row=self.core.row().copy();certificate=None;meta=dict(guard_feasible=False,guard_status='disabled',guard_seconds=0.)
         if self.robust:
-            energy,meta,certificate=guard(energy,self.encode()[0][0],self.spec,self.flex,self.network,self.config.dt_hours,self.config.horizon,diagnostics=self.config.safety_revision==1,time_limit=self.config.solver_time_limit)
+            energy,meta,certificate=guard(energy,self.encode()[0][0],self.spec,self.flex,self.network,self.config.dt_hours,self.config.horizon,diagnostics=self.config.safety_revision==1,time_limit=self.config.solver_time_limit,terminal_band=band(self.config,self.spec))
         guarded_candidate=np.asarray(energy).copy()
         reserve_core=copy.deepcopy(self.core) if self.vector_metrics and self.reserve_mode=='pcc_checked' else None
         if self.config.safety_revision==1:self.core.guard_constraints=certificate.constraints if certificate else None

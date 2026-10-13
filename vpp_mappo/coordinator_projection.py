@@ -34,9 +34,13 @@ class PublicServiceProjection(MaskedRiskCoordinator):
                 if values.shape!=(6,) or not np.isfinite(values).all() or np.any(values<0):raise ValueError('actor资源权重须有限非负')
                 values=np.where(self.active,values,0.)
                 proportions=values/values.sum() if values.sum()>0 else self.active/self.active.sum()
+                # 默认0保持旧行为；只分配服务下限之外的余量，不撤销完成下界。
+                mix=self.config.coordinator_priority_slack_fraction
+                priority=np.asarray(record['priority'],dtype=float);priority=priority/priority.sum()
+                proportions=(1-mix)*proportions+mix*priority
                 return floor+max(0.,1-floor.sum())*proportions
             out_b=project(bw,floor_b);out_c=project(cpu,floor_c)
-        record.update(contract='public-80-service-projection-v1',projection_applied=bool(feasible),
+        record.update(priority_slack_fraction=self.config.coordinator_priority_slack_fraction,contract='public-80-service-projection-v1',projection_applied=bool(feasible),
             predicted_serial_seconds=duration if np.isfinite(duration) else None,
             service_deadline_seconds=T,bandwidth_floor=floor_b.tolist(),cpu_floor=floor_c.tolist(),
             actor_bandwidth_slack=float(max(0,1-floor_b.sum())) if feasible else None,

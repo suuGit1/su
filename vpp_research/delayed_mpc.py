@@ -5,6 +5,7 @@ from vpp_mappo.cyber import CyberSpec
 from .timing import TimingContract
 from .control_v4 import advance_soc
 from .safety import guard
+from vpp_mappo.terminal_service import band
 
 
 def timing(config):
@@ -55,7 +56,7 @@ def propose(planner,observation):
     if x is None:return np.zeros(6),dict(meta,mpc_failed=True,mpc_failure_reason=meta['mpc_unavailable_reason'])
     constraints=None
     if planner.config.interval_safety:
-        _,audit,certificate=guard(np.zeros(6),x,planner.dispatch,planner.flex,planner.network,planner.config.dt_hours,planner.config.horizon,diagnostics=True,time_limit=planner.config.solver_time_limit)
+        _,audit,certificate=guard(np.zeros(6),x,planner.dispatch,planner.flex,planner.network,planner.config.dt_hours,planner.config.horizon,diagnostics=True,time_limit=planner.config.solver_time_limit,terminal_band=band(planner.config,planner.dispatch))
         constraints=certificate.constraints
         meta.update(mpc_interval_feasible=audit['guard_feasible'],mpc_interval_reason=audit['guard_reason'])
     action,details=planner._propose54(x[:54],constraints)

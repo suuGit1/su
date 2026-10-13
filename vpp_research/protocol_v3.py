@@ -34,5 +34,9 @@ def contract(config, plan):
             action_protocol='公开DT估计界限+低弃电初始化；所有学习基线使用相同映射',
             training_protocol='多日rollout；Pareto独立优化器+PopArt；固定选择集验证额外计费',
             checkpoint_selection='先验证可行数，Pareto再比较HV；其余按训练效用；不读取测试结果')
+    if config.terminal_soc_mode=='shared_band':
+        record['objective_version']+='-terminal-band-v45'
+        record['objectives'][0]['definition']='AC并网运行成本+通信计算成本；终端库存为公共服务约束，不计旧罚项'
+        record['terminal_service']=dict(mode='shared_band',target='dispatch.target_soc[0]',tolerance=config.terminal_soc_tolerance,emergency='可降级但失败排除出可行前沿')
     record['fingerprint']=digest(record)
     return record

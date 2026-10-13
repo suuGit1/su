@@ -139,6 +139,7 @@ def load(checkpoint):
     from vpp_mappo.config import Config
     state=torch.load(checkpoint,map_location='cpu',weights_only=True)
     expected={'linear':OBJECTIVE_VERSION,'ac_checked':AC_OBJECTIVE_VERSION,'pcc_checked':PCC_OBJECTIVE_VERSION}.get(state.get('reserve_mode','linear'))
+    if state['config'].get('terminal_soc_mode')=='shared_band':expected+='-terminal-band-v45'
     from .pareto_v4 import VERSION as VERSION_V4
     from .environment import OBS_VERSION_V4
     is_v4=state['config'].get('research_version',3)==4
@@ -212,7 +213,7 @@ def evaluate(checkpoint,preferences,seeds,output=None,robust=None,stress=None,cs
                     if trace_path:
                         record=step_record(env,before,a,w,info,phase='evaluation',step=step,episode=0,attempt_id='evaluation',inference_seconds=inference_times[-1],scenario_seed=seed,scenario_date=env.data.scenario_names[index] if env.data else None)
                         eval_ledger.finish(ident,'success',record);append(trace_path,record)
-                row.update(objective_version=state['objective_version'],emergency_steps=sum(i.get('emergency',False) for i in infos),
+                row.update(terminal_service_failed=infos[-1].get('terminal_service_failed',False),terminal_service_shortfall_kwh=infos[-1].get('terminal_service_shortfall_kwh',0.),terminal_soc=infos[-1]['ess_soc'],objective_version=state['objective_version'],emergency_steps=sum(i.get('emergency',False) for i in infos),
                     emergency_service_degraded_steps=sum(i.get('emergency_service_degraded',False) for i in infos),inference_seconds=inference_times,training_seconds=state.get('training_seconds'),vector=np.sum([i['objective_vector'] for i in infos],axis=0).tolist(),
                     violations=sum(i['constraint_violations'] for i in infos),ac_violations=sum(i['ac_violations'] for i in infos),
                     ac_failed=sum(not i['ac_converged'] for i in infos),reserve_invalid=sum(not i['reserve_valid'] for i in infos),

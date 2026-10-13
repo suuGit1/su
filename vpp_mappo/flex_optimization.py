@@ -8,7 +8,7 @@ from .optimization import DispatchInfeasible
 
 def solve_flex(base, spec, network, rows, start, soc, backlog, shifted, shed_used,
                sessions, remaining, dt, terminal_weight, time_limit=30., proposal=None,
-               objective='economic', objective_steps=None, grid_target=None, first_step_constraints=None, retry_infeasible=False):
+               objective='economic', objective_steps=None, grid_target=None, first_step_constraints=None, retry_infeasible=False, terminal_band=None):
     h=len(rows); n=len(sessions); stride=15+n; total=h*stride+1+(6 if proposal is not None else 0)
     if not h or objective not in ('economic','min_grid','max_grid'): raise ValueError('规划长度或目标不合法')
     window=h if objective_steps is None else min(h,objective_steps)
@@ -78,7 +78,11 @@ def solve_flex(base, spec, network, rows, start, soc, backlog, shifted, shed_use
     con({t*stride+3:dt for t in range(h)},hi=spec.dr_shift_budget_kwh-shifted)
     con({t*stride+5:dt for t in range(h)},hi=spec.dr_shed_budget_kwh-shed_used)
     con({(h-1)*stride+11:1},0,0)
-    con({(window-1)*stride+10:1,h*stride:1},lo=base.target_soc[0]);c[h*stride]=terminal_weight
+    if terminal_band is None:
+        con({(window-1)*stride+10:1,h*stride:1},lo=base.target_soc[0]);c[h*stride]=terminal_weight
+    else:
+        # 真正日末约束；MPC窗口长度不改变公共终端时刻。
+        con({(h-1)*stride+10:1},*terminal_band)
     if proposal is not None:
         c[:]=0
         scale=[base.power_max[0],spec.ev_station_kw,max(spec.dr_shift_kw,spec.dr_repay_kw),spec.dr_shed_kw,max(rows[0]['pv_kw'],1),max(rows[0]['wind_kw'],1)]
