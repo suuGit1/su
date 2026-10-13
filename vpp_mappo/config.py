@@ -23,6 +23,7 @@ class Config:
     reward_scale: float = 100.0
     violation_penalty: float = 100.0
     terminal_soc_penalty: float = 1000.0
+    reserve_feasibility_only: bool = False
     terminal_soc_mode: str = 'legacy_penalty'
     terminal_soc_tolerance: float = 0.01
     safety: bool = True
@@ -90,6 +91,7 @@ class Config:
     preference_schedule: str = 'legacy'
 
     def validate(self):
+        if type(self.reserve_feasibility_only) is not bool:raise ValueError('备用纯可行性开关必须为布尔值')
         if not math.isfinite(self.coordinator_priority_slack_fraction) or not 0<=self.coordinator_priority_slack_fraction<=1:raise ValueError('协调优先级剩余额度比例必须在0至1之间')
         if self.terminal_soc_mode not in ('legacy_penalty','shared_band'):raise ValueError('未知终端库存协议')
         if not math.isfinite(self.terminal_soc_tolerance) or not 0<=self.terminal_soc_tolerance<=0.1:raise ValueError('终端SOC容差必须在0至0.1内')

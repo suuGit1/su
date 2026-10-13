@@ -79,3 +79,17 @@ python -m vpp_research.ev_import --input data/real/ev/acn_complete.json --output
 ```
 
 下载器保留所有分页与SHA，不记录令牌；本轮未取得令牌，未声称已下载全量。7kW是显式设备假设，需按实验站点资料修正。导入仍会排除跨日或缺乏因果申报依据的记录，完整跨日连续调度仍需进一步实现，不得称已全覆盖EV会话。
+
+## 同步工作区中的可靠记账
+
+普通本地磁盘默认继续使用SQLite事务。若工作区后台同步会替换正在打开的数据库文件，可设置`VPP_LEDGER_JOURNAL=1`，或在统一流水线中传入`--ledger-backend journal`。新模式在内存中执行相同SQL事务，将每次变更写入独立、带顺序和摘要链的事件文件，再按回合／导出时保存SQLite快照。重开时从基底和事件重放；不依赖长时间打开的工作区SQLite文件。每个账本目录仅允许一个写入者，不可把多个进程指向同一实验目录。
+
+事件目录`interactions.sqlite.events`是实验数据的一部分，务必随检查点保存。检测到未知调用、残缺事件、摘要不匹配时拒绝自动续训；该模式不会修复旧失败实验，也不会把失败预算抹掉。其摘要用于检测意外损坏，不是独立第三方签名。
+
+```bash
+python scripts/run_v45_pipeline.py --ledger-backend journal --seeds 1,2,3 --diagnosis-episodes 32 --episodes 120 --eval-days 29 --workers 1 --output runs/v45_journal_full --execute
+```
+
+流水线最终自动生成`report/report.json`、`report/mechanisms.csv`和`report/REPORT.md`，存在完成的偏好诊断时再生成`report/tradeoffs.png`。报告同时支持`diagnosis_<seed>`与`fair`标准流水线目录，以及验收用的`diagnosis`与`seven`目录。尚未完成的实验明确标记缺失。P4的外部EV例子仍仅是26条发现记录中1条可用会话的组合验收，不是全量真实EV实验。
+
+`configs/v45_fast_candidate.json`仅用于备用纯可行性求解的速度探针；当前样本没有证明加速，未提升为默认配置。此次运行中断的已知原因是SQLite写入错误，不能据此声称优化求解器已经解决了性能瓶颈。

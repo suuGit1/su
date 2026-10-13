@@ -5,9 +5,9 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from vpp_mappo.config import Config
 from vpp_research.real_inputs import connect
 from vpp_research.integrated import rollout
-p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True);a=p.parse_args();out=Path(a.output);out.mkdir(parents=True,exist_ok=True)
-c,paths,sets,source=connect('data/real',Config.load('configs/v45_ieee33.json'),dr_mode='sce-derated')
-bundle_path=Path('data/real/ev/ornl_acn_sample/sessions.json');bundle=json.loads(bundle_path.read_text());dates=sorted(bundle['scenarios'])
+p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True);p.add_argument('--data-root',default='data/real');p.add_argument('--config',default='configs/v45_ieee33.json');a=p.parse_args();out=Path(a.output);out.mkdir(parents=True,exist_ok=True)
+c,paths,sets,source=connect(a.data_root,Config.load(a.config),dr_mode='sce-derated')
+bundle_path=Path(a.data_root)/'ev/ornl_acn_sample/sessions.json';bundle=json.loads(bundle_path.read_text());dates=sorted(bundle['scenarios'])
 if len(dates)!=1:raise ValueError('当前验收协议要求已审核的单日发现样本')
 date=dates[0];energy_date='2019-02-27';csv_path=out/'composed.csv'
 with paths['validation'].open() as src,csv_path.open('w',newline='') as dst:

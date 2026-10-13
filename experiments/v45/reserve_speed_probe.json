@@ -1,0 +1,90 @@
+[
+  {
+    "episode": 10,
+    "day": 10,
+    "feasibility_only": false,
+    "target": 895.7863802333122,
+    "failed": false,
+    "error": 0.0036417081105355464,
+    "physical_violations": 0,
+    "ac_violations": 0,
+    "seconds": 0.0894019910000452
+  },
+  {
+    "episode": 10,
+    "day": 10,
+    "feasibility_only": false,
+    "target": 1095.7863802333122,
+    "failed": false,
+    "error": 0.04142284259387452,
+    "physical_violations": 0,
+    "ac_violations": 0,
+    "seconds": 0.09316877599997042
+  },
+  {
+    "episode": 10,
+    "day": 10,
+    "feasibility_only": true,
+    "target": 895.7863802333122,
+    "failed": false,
+    "error": 0.0036417081105355464,
+    "physical_violations": 0,
+    "ac_violations": 0,
+    "seconds": 0.08980042899997898
+  },
+  {
+    "episode": 10,
+    "day": 10,
+    "feasibility_only": true,
+    "target": 1095.7863802333122,
+    "failed": false,
+    "error": 0.014282966185419355,
+    "physical_violations": 0,
+    "ac_violations": 0,
+    "seconds": 0.09401593699999466
+  },
+  {
+    "episode": 15,
+    "day": 9,
+    "feasibility_only": false,
+    "target": 965.2592733936217,
+    "failed": false,
+    "error": 0.005187366502923396,
+    "physical_violations": 0,
+    "ac_violations": 0,
+    "seconds": 0.09709687899999153
+  },
+  {
+    "episode": 15,
+    "day": 9,
+    "feasibility_only": false,
+    "target": 1165.2592733936217,
+    "failed": false,
+    "error": 0.05054879343333596,
+    "physical_violations": 0,
+    "ac_violations": 0,
+    "seconds": 0.10657809799999995
+  },
+  {
+    "episode": 15,
+    "day": 9,
+    "feasibility_only": true,
+    "target": 965.2592733936217,
+    "failed": false,
+    "error": 0.005187366502923396,
+    "physical_violations": 0,
+    "ac_violations": 0,
+    "seconds": 0.1033459780001067
+  },
+  {
+    "episode": 15,
+    "day": 9,
+    "feasibility_only": true,
+    "target": 1165.2592733936217,
+    "failed": false,
+    "error": 0.03142319760627288,
+    "physical_violations": 0,
+    "ac_violations": 0,
+    "seconds": 0.134556335999946
+  }
+]

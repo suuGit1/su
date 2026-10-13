@@ -2,6 +2,8 @@
 import json,csv,sys
 from pathlib import Path
 import numpy as np
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from vpp_research.suite import feasible
 root=Path(sys.argv[1] if len(sys.argv)>1 else 'runs/v44_diagnosis')
 frozen=json.loads((root/'frozen.json').read_text());cases=[]
 for name in frozen['arguments']['cases']:
@@ -24,8 +26,8 @@ for row in conditioned['evaluation']:
   match=[r for r in c['evaluation'] if r['seed']==row['seed'] and np.allclose(r['preference'],w)]
   if len(match)!=1:raise RuntimeError('配对开发场景不完整')
   r=match[0]
-  if not r['failed'] and not r['ac_violations'] and not r['reserve_invalid']:alternatives.append((float(w@r['vector']),c['case']))
- if alternatives and not row['failed']:
+  if feasible(r):alternatives.append((float(w@r['vector']),c['case']))
+ if alternatives and feasible(row):
   best=max(alternatives);utility=float(w@row['vector']);comparisons.append(dict(preference=w.tolist(),seed=row['seed'],conditioned_utility=utility,best_endpoint_utility=best[0],best_endpoint=best[1],empirical_utility_gap=best[0]-utility))
 report=dict(scope='同实现机制诊断；单策略训练交互相等，端点家族合计预算取决于参与案例数；无选模、无确认性测试，不是收敛优越性证据',cases=cases,paired_utility=comparisons,matched_train_steps=len({c['train_steps'] for c in cases})==1,matched_training_days=all(c['training_days']==cases[0]['training_days'] for c in cases))
 out=Path(sys.argv[2] if len(sys.argv)>2 else 'experiments/v44/diagnostic_report.json');out.write_text(json.dumps(report,ensure_ascii=False,indent=2))
