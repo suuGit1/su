@@ -3,6 +3,7 @@ import argparse,json,csv,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np
+from vpp_research.suite import feasible
 
 def report(root):
     root=Path(root);out=root/'report';out.mkdir(exist_ok=True)
@@ -39,7 +40,7 @@ def report(root):
         import matplotlib.pyplot as plt
         fig,axes=plt.subplots(1,2,figsize=(10,4),constrained_layout=True)
         for case in diagnosis:
-            good=[r for r in case['evaluations'] if not r['failed'] and not r.get('terminal_service_failed',False)]
+            good=[r for r in case['evaluations'] if feasible(r)]
             points={tuple(r['preference']) for r in good};values=[np.mean([r['vector'] for r in good if tuple(r['preference'])==w],axis=0) for w in sorted(points)]
             if not values:continue
             v=np.asarray(values)*100

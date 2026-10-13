@@ -1,0 +1,7 @@
+{
+  "status": "original_temporary_artifacts_lost_after_runtime_reset",
+  "remaining_evidence": "console_logs_and_selected_previously_inspected_summaries_only",
+  "not_eligible_for_paper_statistics": true,
+  "recovery_root": "runs/v45_recovery",
+  "reason": "原始账本、逐步轨迹和模型不在持久项目目录内，环境重建后临时目录丢失；不据日志重建不存在的数值"
+}
