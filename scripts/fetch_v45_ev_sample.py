@@ -1,4 +1,9 @@
 """获取ORNL公开26条ACN发现样本，保留因果申报字段；不当作完整站点数据。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import sys,json,hashlib
 from pathlib import Path
 from urllib.request import urlopen

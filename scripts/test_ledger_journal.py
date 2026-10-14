@@ -3,7 +3,7 @@ import json,os,sqlite3,sys,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from vpp_research.ledger import Ledger
+from vpp_research.ledger import Ledger,audit_training
 
 class JournalTest(unittest.TestCase):
  def setUp(self):
@@ -32,6 +32,13 @@ class JournalTest(unittest.TestCase):
   with self.assertRaises(ValueError):l.finish(i,'success',{})
   with self.assertRaises(ValueError):l.commit_episode(0,'a',1)
   l.close();l=Ledger(self.path);self.assertEqual(l.summary()['error_calls'],1);l.close()
+ def test_stale_snapshot_cannot_hide_unknown(self):
+  l=Ledger(self.path);i=l.begin('a',0,0);l.finish(i,'success',dict(attempt_id='a',episode=0,step=0));l.commit_episode(0,'a',1);l.export()
+  (self.path.parent/'training.csv').write_text('env_steps\n1\n')
+  l.begin('new',1,0);l.close()
+  result=audit_training(self.path.parent)
+  self.assertFalse(result['consistent']);self.assertEqual(result['runs'][0]['unknown_calls'],1)
+  self.assertFalse(result['runs'][0]['snapshot_matches_live_ledger'])
  def test_legacy_migration(self):
   with patch.dict(os.environ,{'VPP_LEDGER_JOURNAL':'0'}):
    l=Ledger(self.path);i=l.begin('old',0,0);l.finish(i,'success',{});l.commit_episode(0,'old',1);l.close()

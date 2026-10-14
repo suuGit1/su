@@ -1,0 +1,19 @@
+{
+  "release": "4.5.0",
+  "date": "2026-10-14",
+  "unit_tests": {
+    "ledger": 6,
+    "pareto": 6,
+    "terminal": 5,
+    "passed": true
+  },
+  "official_mappo_files_verified": 21,
+  "archive_integrity_passed": true,
+  "seven_method_cli_dry_run_passed": true,
+  "extracted_bundle_actual_rollout": {
+    "cases": 3,
+    "steps": 72,
+    "failures": 0
+  },
+  "scope": "Linux CPU实测；Windows仅入口兼容处理，未在目标笔记本实测。依赖二进制与损坏的主机缓存不在交付包内。"
+}

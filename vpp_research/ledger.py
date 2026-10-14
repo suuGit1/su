@@ -187,13 +187,13 @@ def audit_training(folder):
             if snapshot is not None:
                 item['live_ledger_summary']={k:item[k] for k in snapshot['summary']}
                 item['snapshot_matches_live_ledger']=all(item[k]==v for k,v in snapshot['summary'].items())
-                item.update(snapshot['summary'])
+                item['completed_snapshot_summary']=snapshot['summary']
                 good=[c for c in snapshot['calls'] if c['status']=='success']
                 item['transaction_payload_complete']=all(isinstance(c['detail'],dict) and
                     (c['detail'].get('attempt_id'),c['detail'].get('episode'),c['detail'].get('step'))==(c['attempt'],c['episode'],c['step']) and
                     ('feedback' in c['detail'] if trace.exists() else True) for c in good)
-                item['consistent']=item['committed_steps']==nominal and item['unknown_calls']==0 and item['transaction_payload_complete']
-                item['accounting_source']='完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列'
+                item['consistent']=item['snapshot_matches_live_ledger'] and item['committed_steps']==nominal and item['unknown_calls']==0 and item['transaction_payload_complete']
+                item['accounting_source']='当前事务账本；完成快照必须与当前账本计数一致，旧快照不得覆盖新增或未知调用'
         else:item['consistent']=False
         items.append(item)
     return dict(schema='training-audit-v3',runs=items,consistent=bool(items) and all(x['consistent'] for x in items),

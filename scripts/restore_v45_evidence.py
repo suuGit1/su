@@ -1,4 +1,9 @@
 """校验并合并分卷证据包；不覆盖内容不同的已有文件。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import argparse,hashlib,json,os
 from pathlib import Path
 

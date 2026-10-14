@@ -1,4 +1,9 @@
 """真实EV发现样本与SCE参数接入验收；显式跨地域组合，不冒充同站点实测。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import argparse,copy,csv,json,sys,zipfile,hashlib
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))

@@ -1,0 +1,143 @@
+{
+  "schema": "training-audit-v3",
+  "runs": [
+    {
+      "path": "runs/v45_journal/diagnosis/carbon",
+      "nominal_steps": 768,
+      "logged_steps": 768,
+      "ledger_available": true,
+      "schema": "interaction-ledger-v3",
+      "attempted_calls": 768,
+      "successful_calls": 768,
+      "error_calls": 0,
+      "unknown_calls": 0,
+      "committed_steps": 768,
+      "step_identities_match": true,
+      "transaction_payload_complete": true,
+      "training_trace_matches": null,
+      "consistent": true,
+      "accounting_source": "当前事务账本；完成快照必须与当前账本计数一致，旧快照不得覆盖新增或未知调用",
+      "live_ledger_summary": {
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 768,
+        "successful_calls": 768,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 768
+      },
+      "snapshot_matches_live_ledger": true,
+      "completed_snapshot_summary": {
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 768,
+        "successful_calls": 768,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 768
+      }
+    },
+    {
+      "path": "runs/v45_journal/diagnosis/conditioned",
+      "nominal_steps": 768,
+      "logged_steps": 766,
+      "ledger_available": true,
+      "schema": "interaction-ledger-v3",
+      "attempted_calls": 768,
+      "successful_calls": 768,
+      "error_calls": 0,
+      "unknown_calls": 0,
+      "committed_steps": 768,
+      "step_identities_match": false,
+      "transaction_payload_complete": true,
+      "training_trace_matches": null,
+      "consistent": true,
+      "accounting_source": "当前事务账本；完成快照必须与当前账本计数一致，旧快照不得覆盖新增或未知调用",
+      "live_ledger_summary": {
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 768,
+        "successful_calls": 768,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 768
+      },
+      "snapshot_matches_live_ledger": true,
+      "completed_snapshot_summary": {
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 768,
+        "successful_calls": 768,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 768
+      }
+    },
+    {
+      "path": "runs/v45_journal/diagnosis/economic",
+      "nominal_steps": 768,
+      "logged_steps": 767,
+      "ledger_available": true,
+      "schema": "interaction-ledger-v3",
+      "attempted_calls": 768,
+      "successful_calls": 768,
+      "error_calls": 0,
+      "unknown_calls": 0,
+      "committed_steps": 768,
+      "step_identities_match": false,
+      "transaction_payload_complete": true,
+      "training_trace_matches": null,
+      "consistent": true,
+      "accounting_source": "当前事务账本；完成快照必须与当前账本计数一致，旧快照不得覆盖新增或未知调用",
+      "live_ledger_summary": {
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 768,
+        "successful_calls": 768,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 768
+      },
+      "snapshot_matches_live_ledger": true,
+      "completed_snapshot_summary": {
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 768,
+        "successful_calls": 768,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 768
+      }
+    },
+    {
+      "path": "runs/v45_journal/diagnosis/reserve",
+      "nominal_steps": 768,
+      "logged_steps": 768,
+      "ledger_available": true,
+      "schema": "interaction-ledger-v3",
+      "attempted_calls": 768,
+      "successful_calls": 768,
+      "error_calls": 0,
+      "unknown_calls": 0,
+      "committed_steps": 768,
+      "step_identities_match": true,
+      "transaction_payload_complete": true,
+      "training_trace_matches": null,
+      "consistent": true,
+      "accounting_source": "当前事务账本；完成快照必须与当前账本计数一致，旧快照不得覆盖新增或未知调用",
+      "live_ledger_summary": {
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 768,
+        "successful_calls": 768,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 768
+      },
+      "snapshot_matches_live_ledger": true,
+      "completed_snapshot_summary": {
+        "schema": "interaction-ledger-v3",
+        "attempted_calls": 768,
+        "successful_calls": 768,
+        "error_calls": 0,
+        "unknown_calls": 0,
+        "committed_steps": 768
+      }
+    }
+  ],
+  "consistent": true,
+  "note": "旧日志不能证明完整实际交互；未知调用不自动视为成功；重做回合计入successful_calls"
+}

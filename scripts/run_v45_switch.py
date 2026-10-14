@@ -1,4 +1,9 @@
 """固定检查点的日内偏好切换；环境任务轨迹相同，仅改变actor所见偏好。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import argparse
 import hashlib
 import json

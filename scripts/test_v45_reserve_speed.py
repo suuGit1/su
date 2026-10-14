@@ -1,4 +1,9 @@
 """在真实训练日期相同PCC目标下比较经济求解和纯可行性；只核验可执行性。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import sys,time,json,copy
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))

@@ -1,4 +1,9 @@
 """相同学习器的三端点与条件策略诊断；只读训练集和独立二月开发日期。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import argparse,copy,csv,hashlib,json,sys,zipfile
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor

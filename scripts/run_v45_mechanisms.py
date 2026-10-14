@@ -1,4 +1,9 @@
 """冻结开发日期上的机制/失效网格；支持MPC及冻结策略，全部失败保留。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import argparse,copy,csv,hashlib,json,sys,time,zipfile
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor

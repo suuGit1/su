@@ -1,4 +1,9 @@
 """将完成、失败、未运行分开汇总；开发图不冒充确认性结果。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import argparse,json,csv,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
@@ -21,7 +26,9 @@ def report(root):
         for case in json.loads(diagnostic.read_text()):
             evaluations=case['results'];folder=diagnostic.parent/case['case'];history=list(csv.DictReader((folder/'training.csv').open()))
             last=history[-1]
-            diagnosis.append(dict(case=case['case'],training_seed=frozen['arguments']['seed'],source=str(diagnostic),training=case['training'],evaluation_steps=sum(r['env_steps'] for r in evaluations),evaluation_failures=sum(r['failed'] for r in evaluations),terminal_failures=sum(r.get('terminal_service_failed',False) for r in evaluations),
+            unique_updates={r['update_env_steps']:r for r in history}
+            gradients=[dict(env_steps=int(n),**{k:float(v) for k,v in r.items() if 'gradient' in k or 'pure_steps' in k or 'adv_std' in k}) for n,r in unique_updates.items()]
+            diagnosis.append(dict(case=case['case'],training_seed=frozen['arguments']['seed'],source=str(diagnostic),training=case['training'],gradient_updates=gradients,evaluation_steps=sum(r['env_steps'] for r in evaluations),evaluation_failures=sum(r['failed'] for r in evaluations),terminal_failures=sum(r.get('terminal_service_failed',False) for r in evaluations),
                 requested_preferences=[r['preference'] for r in evaluations],evaluations=evaluations,gradient_last_batch={k:float(v) for k,v in last.items() if 'gradient' in k or 'pure_steps' in k},
                 note='梯度余弦仅在对应两个pure_steps均大于0时有定义；0占位不是正交证据'))
         versions={r['objective_version'] for c in diagnosis for r in c['evaluations'] if not r['failed']}

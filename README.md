@@ -1,3 +1,11 @@
+# DT–C3–Pareto VPP v4.5
+
+本分支的研究入口是 `run_v45.py`。安装、真实数据、七基线训练与报告说明见 [README_V45.md](README_V45.md)。
+
+下文保留上游通用VPP平台介绍；其版本和生产功能说明不代表本研究实验已验证的结论。
+
+---
+
 > v4.1 安全闭环修订：运行 `python run_v41.py`，参见 [运行说明](docs/V41_RUN.md)。
 
 > **v4运行版：** 请先阅读 [README_V4.md](README_V4.md)，入口为 `python run_v4.py`。普通MAPPO保留独立对照。

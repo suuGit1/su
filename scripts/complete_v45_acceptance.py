@@ -1,4 +1,9 @@
 """汇总开发验收；结果直接写入项目目录，每个完整阶段立即生成独立归档。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import argparse,json,subprocess,sys,time,zipfile
 from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('--root',default='runs/v45_recovery');p.add_argument('--workers',type=int,default=2);a=p.parse_args();root=Path(a.root);root.mkdir(parents=True,exist_ok=True)

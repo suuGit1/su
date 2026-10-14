@@ -1,4 +1,9 @@
 """P0–P4统一命令计划及顺序执行；预算开放配置，运行失败即停止并保留现场。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import argparse,json,subprocess,sys,os,hashlib
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]

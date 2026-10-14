@@ -1,0 +1,50 @@
+[
+  {
+    "group": "diagnosis",
+    "source_archive": "experiments/v45/journal_source.zip",
+    "files": 95,
+    "mismatches": []
+  },
+  {
+    "group": "c3",
+    "source_archive": "experiments/v45/journal_source.zip",
+    "files": 95,
+    "mismatches": []
+  },
+  {
+    "group": "switch",
+    "source_archive": "experiments/v45/journal_source.zip",
+    "files": 95,
+    "mismatches": []
+  },
+  {
+    "group": "safety",
+    "source_archive": "experiments/v45/recovery_source.zip",
+    "files": 95,
+    "mismatches": []
+  },
+  {
+    "group": "dt",
+    "source_archive": "experiments/v45/recovery_source.zip",
+    "files": 95,
+    "mismatches": []
+  },
+  {
+    "group": "network",
+    "source_archive": "experiments/v45/recovery_source.zip",
+    "files": 95,
+    "mismatches": []
+  },
+  {
+    "group": "coordinator",
+    "source_archive": "experiments/v45/recovery_source.zip",
+    "files": 95,
+    "mismatches": []
+  },
+  {
+    "group": "coordinator_repaired",
+    "source_archive": "experiments/v45/recovery_source.zip",
+    "files": 95,
+    "mismatches": []
+  }
+]

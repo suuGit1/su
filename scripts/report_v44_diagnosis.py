@@ -1,4 +1,9 @@
 """汇总同学习器端点诊断；分别呈现控制代价、终端储能和偏好效用。"""
+import os as _os, sys as _sys
+if __name__ == '__main__' and not _sys.flags.utf8_mode:
+    _os.environ['PYTHONUTF8']='1'
+    _os.execv(_sys.executable,[_sys.executable,'-X','utf8',*_sys.argv])
+
 import json,csv,sys
 from pathlib import Path
 import numpy as np

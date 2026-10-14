@@ -1,0 +1,25 @@
+..../workspace/scratch/64667ed70b88/runtime_grid/pandapower/pf/create_jacobian_tdpf.py:31: SyntaxWarning: invalid escape sequence '\T'
+  Thermal resistance of the conductors R_{\Theta}
+/workspace/scratch/64667ed70b88/runtime_grid/pandapower/pf/create_jacobian_tdpf.py:105: SyntaxWarning: invalid escape sequence '\T'
+  Thermal resistance of the conductors R_{\Theta}
+/workspace/scratch/64667ed70b88/runtime_grid/pandapower/pf/create_jacobian_tdpf.py:134: SyntaxWarning: invalid escape sequence '\T'
+  Thermal resistance of the conductors R_{\Theta}
+/workspace/scratch/64667ed70b88/runtime_grid/pandapower/pf/create_jacobian_tdpf.py:376: SyntaxWarning: invalid escape sequence '\ '
+  \ (R)x(N-1)       (R)x(M)         (R)x(R)      /
+/workspace/scratch/64667ed70b88/runtime_grid/pandapower/pf/create_jacobian_tdpf.py:482: SyntaxWarning: invalid escape sequence '\ '
+  \ (R)x(N-1)       (R)x(M)         (R)x(R)      /
+/workspace/scratch/64667ed70b88/runtime_grid/pandapower/pf/create_jacobian_tdpf.py:546: SyntaxWarning: invalid escape sequence '\ '
+  \ (R)x(N-1)       (R)x(M)         (R)x(R)      /
+/workspace/scratch/64667ed70b88/runtime_grid/pandapower/pf/create_jacobian_tdpf.py:614: SyntaxWarning: invalid escape sequence '\ '
+  \ (R)x(N-1)       (R)x(M)         (R)x(R)      /
+/workspace/scratch/64667ed70b88/runtime_grid/pandapower/pf/create_jacobian_tdpf.py:676: SyntaxWarning: invalid escape sequence '\ '
+  \ (R)x(N-1)       (R)x(M)         (R)x(R)      /
+/workspace/scratch/64667ed70b88/runtime_grid/pandapower/pf/create_jacobian_tdpf.py:737: SyntaxWarning: invalid escape sequence '\ '
+  \ (R)x(N-1)       (R)x(M)         (R)x(R)      /
+/workspace/scratch/64667ed70b88/runtime_grid/pandapower/grid_equivalents/rei_generation.py:264: SyntaxWarning: invalid escape sequence '\d'
+  vm_pu = v[key+"_vm_total"][v.ext_bus == int(re.findall('\d+', busstr)[0])].values.real
+..
+----------------------------------------------------------------------
+Ran 6 tests in 6.318s
+
+OK
