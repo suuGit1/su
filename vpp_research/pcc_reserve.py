@@ -23,7 +23,8 @@ def target_plan(core, target_kw, tolerance_kw=TOLERANCE_KW, max_iterations=12):
                 core.network.spec = replace(original, voltage_min=original.voltage_min+margin,
                                             voltage_max=original.voltage_max-margin)
                 core.network.smax = smax * (1-5*margin)
-                plans, meta = core.plan(grid_target=linear_target)
+                # 并网等式已固定min_grid目标值；纯可行性不再优化无关的全日电费。
+                plans, meta = core.plan(grid_target=linear_target,objective='min_grid' if core.config.reserve_feasibility_only else 'economic')
             except DispatchInfeasible:
                 break
             finally:

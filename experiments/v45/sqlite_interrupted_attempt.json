@@ -1,0 +1,34 @@
+{
+  "status": "interrupted_sqlite_write_failure",
+  "not_used_for_comparative_statistics": true,
+  "replacement": "runs/v45_journal/diagnosis",
+  "runs": [
+    {
+      "case": "reserve",
+      "counts": {
+        "pending": 1,
+        "success": 378
+      }
+    },
+    {
+      "case": "carbon",
+      "counts": {
+        "success": 768
+      }
+    },
+    {
+      "case": "economic",
+      "counts": {
+        "pending": 1,
+        "success": 666
+      }
+    },
+    {
+      "case": "conditioned",
+      "counts": {
+        "pending": 1,
+        "success": 240
+      }
+    }
+  ]
+}

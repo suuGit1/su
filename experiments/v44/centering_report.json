@@ -1,0 +1,468 @@
+{
+  "scope": "同实现机制诊断；单策略训练交互相等，端点家族合计预算取决于参与案例数；无选模、无确认性测试，不是收敛优越性证据",
+  "cases": [
+    {
+      "case": "conditioned",
+      "train_steps": 192,
+      "train_unknown": 0,
+      "train_errors": 0,
+      "episodes": 8,
+      "updates": 2,
+      "training_days": [
+        18,
+        5,
+        0,
+        1,
+        25,
+        2,
+        22,
+        6
+      ],
+      "preference_action_span": 0.0031964106019586325,
+      "value_explained_variance": {
+        "cost": 0.6904354095458984,
+        "carbon": 0.8991202712059021,
+        "reserve": 0.779532790184021
+      },
+      "evaluation": [
+        {
+          "seed": 50000,
+          "scenario_date": "2019-02-27",
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 24,
+          "objective_version": "c3-ac-pcc-same-period-sampled-reserve-v4",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0009181559998978628,
+            0.0009139799999502429,
+            0.0009339099997305311,
+            0.0013393589997576782,
+            0.0010211249996245897,
+            0.0012576780000017607,
+            0.0010431720002088696,
+            0.0011870439998347138,
+            0.0024481179998474545,
+            0.001540627000395034,
+            0.0009391080002387753,
+            0.0009491219998380984,
+            0.0009358130000691744,
+            0.0012309700000514567,
+            0.0008920690002014453,
+            0.0011724930000127642,
+            0.0009866679997685424,
+            0.0008921389999159146,
+            0.001104021000173816,
+            0.0007723220001025766,
+            0.0009308260000580049,
+            0.001356104000024061,
+            0.0009833739995883661,
+            0.0011398349997762125
+          ],
+          "training_seconds": 107.89343990599991,
+          "vector": [
+            -15.708334197497827,
+            -70.5235873056742,
+            30.796533344162054
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.9609945949996472,
+          "ac_safety_attempts": 24,
+          "interval_covered_steps": 24,
+          "estimation_rmse": 0.044090716332026395,
+          "safety_interventions": 2,
+          "guard_infeasible": 3,
+          "guard_certified_steps": 21,
+          "mean_aoi": 17400.0,
+          "interaction_ledger": {
+            "schema": "interaction-ledger-v3",
+            "attempted_calls": 24,
+            "successful_calls": 24,
+            "error_calls": 0,
+            "unknown_calls": 0,
+            "committed_steps": 0
+          },
+          "trace_path": "/tmp/v44_centered_run/conditioned/diagnostic_evaluation/0a46794ad3be_seed_50000/trajectory_complete.jsonl"
+        },
+        {
+          "seed": 50000,
+          "scenario_date": "2019-02-27",
+          "preference": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 24,
+          "objective_version": "c3-ac-pcc-same-period-sampled-reserve-v4",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.00104569499990248,
+            0.0012033689999952912,
+            0.0009227440000358911,
+            0.0009352619999845047,
+            0.0008605829998487025,
+            0.0008996999999908439,
+            0.000980229000106192,
+            0.0011159300001963857,
+            0.0009413909997419978,
+            0.0009093839998968178,
+            0.0010088410003845638,
+            0.0009456080001655209,
+            0.0009372759996040259,
+            0.001515209999979561,
+            0.000992527000107657,
+            0.0008950530000220169,
+            0.0010379239997746481,
+            0.002723844999763969,
+            0.0009241560001100879,
+            0.0009188379999613971,
+            0.0009569939998073096,
+            0.0010767509998004243,
+            0.0012967970001227513,
+            0.001238420999925438
+          ],
+          "training_seconds": 107.89343990599991,
+          "vector": [
+            -15.949766155682756,
+            -70.48806849021904,
+            29.62301932155648
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 0.9873226449999493,
+          "ac_safety_attempts": 24,
+          "interval_covered_steps": 24,
+          "estimation_rmse": 0.0440890081250096,
+          "safety_interventions": 2,
+          "guard_infeasible": 3,
+          "guard_certified_steps": 21,
+          "mean_aoi": 17400.0,
+          "interaction_ledger": {
+            "schema": "interaction-ledger-v3",
+            "attempted_calls": 24,
+            "successful_calls": 24,
+            "error_calls": 0,
+            "unknown_calls": 0,
+            "committed_steps": 0
+          },
+          "trace_path": "/tmp/v44_centered_run/conditioned/diagnostic_evaluation/8966c3d12f34_seed_50000/trajectory_complete.jsonl"
+        },
+        {
+          "seed": 50000,
+          "scenario_date": "2019-02-27",
+          "preference": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 24,
+          "objective_version": "c3-ac-pcc-same-period-sampled-reserve-v4",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0014339090002977173,
+            0.000945367999975133,
+            0.0021783299998787697,
+            0.001146795000295242,
+            0.0010907119999501447,
+            0.0011196170003131556,
+            0.0010791449999487668,
+            0.001090602000203944,
+            0.0009559830000398506,
+            0.0009490130000813224,
+            0.0010291309999956866,
+            0.0011314420003145642,
+            0.0008876629999576835,
+            0.0010198680001849425,
+            0.0009115470002143411,
+            0.0010339579998799309,
+            0.0009918760001710325,
+            0.000964936999935162,
+            0.0010182050000366871,
+            0.0010430819997964136,
+            0.0013308479997249378,
+            0.001093746000151441,
+            0.0009816409997256414,
+            0.001086114999907295
+          ],
+          "training_seconds": 107.89343990599991,
+          "vector": [
+            -15.73953718678262,
+            -70.51917356043671,
+            30.641687104483537
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 1.0303826039985324,
+          "ac_safety_attempts": 24,
+          "interval_covered_steps": 24,
+          "estimation_rmse": 0.04408878947329538,
+          "safety_interventions": 2,
+          "guard_infeasible": 3,
+          "guard_certified_steps": 21,
+          "mean_aoi": 17400.0,
+          "interaction_ledger": {
+            "schema": "interaction-ledger-v3",
+            "attempted_calls": 24,
+            "successful_calls": 24,
+            "error_calls": 0,
+            "unknown_calls": 0,
+            "committed_steps": 0
+          },
+          "trace_path": "/tmp/v44_centered_run/conditioned/diagnostic_evaluation/9b1117bacce3_seed_50000/trajectory_complete.jsonl"
+        },
+        {
+          "seed": 50000,
+          "scenario_date": "2019-02-27",
+          "preference": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "unseen_preference": false,
+          "failed": false,
+          "env_steps": 24,
+          "objective_version": "c3-ac-pcc-same-period-sampled-reserve-v4",
+          "emergency_steps": 0,
+          "emergency_service_degraded_steps": 0,
+          "inference_seconds": [
+            0.0010634519999257463,
+            0.0009388270000272314,
+            0.0010085610001624445,
+            0.0008899950003069534,
+            0.0010802970000440837,
+            0.0009337599999525992,
+            0.001170160000128817,
+            0.0010311940000065078,
+            0.0010005179997278901,
+            0.001146184000390349,
+            0.0010073590001411503,
+            0.0010614689999783877,
+            0.0009995870000238938,
+            0.000941861999763205,
+            0.0010965409996970266,
+            0.0011445219997767708,
+            0.0009036459996423218,
+            0.001116600999921502,
+            0.001119104000281368,
+            0.0009258589998353273,
+            0.0010221299999102484,
+            0.0009722569998302788,
+            0.0010081300001729687,
+            0.001069201000063913
+          ],
+          "training_seconds": 107.89343990599991,
+          "vector": [
+            -15.78806665580785,
+            -70.5119708629509,
+            30.385495562340306
+          ],
+          "violations": 0,
+          "ac_violations": 0,
+          "ac_failed": 0,
+          "reserve_invalid": 0,
+          "ev_unmet_kwh": 0.0,
+          "dr_backlog_kwh": 0.0,
+          "ac_safety_seconds": 1.02503114999854,
+          "ac_safety_attempts": 24,
+          "interval_covered_steps": 24,
+          "estimation_rmse": 0.04408967892086068,
+          "safety_interventions": 2,
+          "guard_infeasible": 3,
+          "guard_certified_steps": 21,
+          "mean_aoi": 17400.0,
+          "interaction_ledger": {
+            "schema": "interaction-ledger-v3",
+            "attempted_calls": 24,
+            "successful_calls": 24,
+            "error_calls": 0,
+            "unknown_calls": 0,
+            "committed_steps": 0
+          },
+          "trace_path": "/tmp/v44_centered_run/conditioned/diagnostic_evaluation/80deeb4efd4f_seed_50000/trajectory_complete.jsonl"
+        }
+      ],
+      "physical_breakdown": [
+        {
+          "preference": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "cost": 1242.1129242058735,
+          "terminal_penalty": 328.720495543909,
+          "terminal_soc": 0.22127950445609101,
+          "carbon_kg": 7052.35873056742,
+          "reserve_kwh": 3079.653334416206,
+          "inactive_age_max": 0.0,
+          "inactive_ev_candidate_max": 0.0,
+          "energy_correction_by_channel": [
+            250.60889637024428,
+            0.0,
+            0.0,
+            0.0,
+            29.603455794312005,
+            13.17761171471807
+          ],
+          "last_two_steps": [
+            {
+              "step": 22,
+              "issued_ess": -5.74752118226077,
+              "received_ess": -5.776870648579223,
+              "executed_ess": -5.776870648579223,
+              "soc": 0.21035921420979556
+            },
+            {
+              "step": 23,
+              "issued_ess": -5.756150903391516,
+              "received_ess": -5.74752118226077,
+              "executed_ess": -5.74752118226077,
+              "soc": 0.22127950445609101
+            }
+          ]
+        },
+        {
+          "preference": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "cost": 1241.8916299685022,
+          "terminal_penalty": 336.9150356122826,
+          "terminal_soc": 0.21308496438771743,
+          "carbon_kg": 7051.197086295089,
+          "reserve_kwh": 3038.5495562340307,
+          "inactive_age_max": 0.0,
+          "inactive_ev_candidate_max": 0.0,
+          "energy_correction_by_channel": [
+            249.38619269238052,
+            0.0,
+            0.0,
+            0.0,
+            29.64620767429581,
+            13.217394380511273
+          ],
+          "last_two_steps": [
+            {
+              "step": 22,
+              "issued_ess": -5.510369366646224,
+              "received_ess": -5.5337425360617924,
+              "executed_ess": -5.5337425360617924,
+              "soc": 0.2026152625910896
+            },
+            {
+              "step": 23,
+              "issued_ess": -5.521433678006234,
+              "received_ess": -5.510369366646224,
+              "executed_ess": -5.510369366646224,
+              "soc": 0.21308496438771743
+            }
+          ]
+        },
+        {
+          "preference": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "cost": 1241.4346207633625,
+          "terminal_penalty": 353.5419948049132,
+          "terminal_soc": 0.19645800519508683,
+          "carbon_kg": 7048.806849021904,
+          "reserve_kwh": 2962.3019321556467,
+          "inactive_age_max": 0.0,
+          "inactive_ev_candidate_max": 0.0,
+          "energy_correction_by_channel": [
+            247.25959512597737,
+            0.0,
+            0.0,
+            0.0,
+            29.726154058273085,
+            13.300264222980331
+          ],
+          "last_two_steps": [
+            {
+              "step": 22,
+              "issued_ess": -5.030325047049705,
+              "received_ess": -5.042935622154944,
+              "executed_ess": -5.042935622154944,
+              "soc": 0.1869003876056924
+            },
+            {
+              "step": 23,
+              "issued_ess": -5.0496663408706155,
+              "received_ess": -5.030325047049705,
+              "executed_ess": -5.030325047049705,
+              "soc": 0.19645800519508683
+            }
+          ]
+        },
+        {
+          "preference": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "cost": 1242.0300142940175,
+          "terminal_penalty": 331.9237043842447,
+          "terminal_soc": 0.21807629561575534,
+          "carbon_kg": 7051.917356043671,
+          "reserve_kwh": 3064.1687104483535,
+          "inactive_age_max": 0.0,
+          "inactive_ev_candidate_max": 0.0,
+          "energy_correction_by_channel": [
+            250.00320485443856,
+            0.0,
+            0.0,
+            0.0,
+            29.62221968123047,
+            13.192399174830483
+          ],
+          "last_two_steps": [
+            {
+              "step": 22,
+              "issued_ess": -5.659565850840184,
+              "received_ess": -5.686501654875677,
+              "executed_ess": -5.686501654875677,
+              "soc": 0.207323120499159
+            },
+            {
+              "step": 23,
+              "issued_ess": -5.665668469121897,
+              "received_ess": -5.659565850840184,
+              "executed_ess": -5.659565850840184,
+              "soc": 0.21807629561575534
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "paired_utility": [],
+  "matched_train_steps": true,
+  "matched_training_days": true
+}

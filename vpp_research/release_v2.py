@@ -55,7 +55,7 @@ def main(version=2,default_config=None,release_tag=None,default_output=None):
     write(root/'results.json',dict(manifest=plan,entries=entries,completed=True,
         all_successful=all(not e['failed'] and e['failed_or_infeasible']==0 and e.get('budget_complete',True) for e in entries)))
     report(root)
-    write(root/'release.json',dict(version=release_tag or ('4.1.0' if config.safety_revision==1 else f'{version}.0.0'),dt_interval_mode=config.dt_interval_mode,objective_version='c3-ac-pcc-same-period-sampled-reserve-v4',
+    write(root/'release.json',dict(version=release_tag or ('4.1.0' if config.safety_revision==1 else f'{version}.0.0'),dt_interval_mode=config.dt_interval_mode,objective_version='c3-ac-pcc-same-period-sampled-reserve-v4'+('-terminal-band-v45' if config.terminal_soc_mode=='shared_band' else ''),
         dt_version='ridge-block-conformal-physical-dt-v2',seeds=a.seeds,workers=a.workers,
         note='按种子并行，子策略预算合计；训练完成不等于算法优势或AC鲁棒证明'))
     if version>=3:

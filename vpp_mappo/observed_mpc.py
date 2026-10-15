@@ -3,6 +3,7 @@ import time
 import numpy as np
 from .flex_resources import FlexNetwork
 from .flex_optimization import solve_flex
+from .terminal_service import band
 from .optimization import DispatchInfeasible
 
 CONTRACT_VERSION='public-observation-aggregate-mpc-v1'
@@ -39,7 +40,7 @@ class ObservedMPC:
                 float(x[1]),max(0,x[6]*max(1,self.flex.dr_backlog_kwh)),
                 max(0,x[7]*max(1,self.flex.dr_shift_budget_kwh)),max(0,x[8]*max(1,self.flex.dr_shed_budget_kwh)),
                 sessions,remaining,c.dt_hours,c.terminal_soc_penalty,c.solver_time_limit,
-                objective_steps=min(self.lookahead,h),first_step_constraints=constraints,retry_infeasible=self.config.safety_revision==1)
+                objective_steps=min(self.lookahead,h),first_step_constraints=constraints,retry_infeasible=self.config.safety_revision==1,terminal_band=band(c,self.dispatch))
             a=plans[0]['action'];failed=False;reason=''
         except DispatchInfeasible as exc:
             # 不修改需求或伪造可行解；明确记录失败，提交零动作给共享本地安全执行器。

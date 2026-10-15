@@ -1,0 +1,11 @@
+{
+  "source": "https://ornl.opendatasoft.com/api/explore/v2.1/catalog/datasets/acn-data/records?limit=100",
+  "source_sha256": "ffd41832118f9c5d5b28b4cf51ebb27c1a485da1c28849e4402be9a22bd8ae28",
+  "input_count": 26,
+  "accepted": 1,
+  "sample_only": true,
+  "complete_site_dataset": false,
+  "scope": "ORNL仅采集26条用于数据发现，不能证明完整EV需求或长期效果；美国2020年会话，不与GB2019年默认为同地区同日",
+  "assumed_max_kw": 7.0,
+  "causal_import_audit": "sessions.audit.json"
+}

@@ -12,8 +12,13 @@ def emergency_plan(core):
     discharge = min(spec.power_max[0], max(0,core.soc[0]-spec.soc_min[0])*spec.capacities[0]*spec.efficiency/dt)
     charge = min(spec.power_max[0], max(0,spec.soc_max[0]-core.soc[0])*spec.capacities[0]/(spec.efficiency*dt))
     shed = min(flex.dr_shed_kw, max(0,flex.dr_shed_budget_kwh-core.shed_used)/dt, flex.dr_fraction*row['load_kw'])
+    from vpp_mappo.terminal_service import band,reachable_band,power_bounds,shortfall_kwh
+    terminal=band(core.config,spec);powers=[0.,discharge,-charge]
+    if terminal is not None:
+        low,high=power_bounds(spec,core.soc[0],core.soc[0],reachable_band(spec,terminal,core.config.horizon-core.t-1,dt),dt)
+        if low<=high:powers.extend([low,high,float(np.clip(0.,low,high))])
     candidates = []
-    for e, ev, shift, dr, curtail in itertools.product((0., discharge, -charge), (ev_max, 0.), (-repay, 0.), (0., shed), (0., .5, 1.)):
+    for e, ev, shift, dr, curtail in itertools.product(tuple(powers), (ev_max, 0.), (-repay, 0.), (0., shed), (0., .5, 1.)):
         a = np.array([e, ev, shift, dr, curtail*row['pv_kw'], curtail*row['wind_kw']])
         allocation = core._allocate(ev)
         if core.check(row, a, allocation, include_service=False): continue
@@ -27,6 +32,7 @@ def emergency_plan(core):
         if audit['ac_converged'] and audit['ac_violations']==0:
             return dict(action=action, ev_kw=allocation), dict(emergency=True, emergency_ac_attempts=attempts,
                 emergency_service_degraded=bool(score[0]), emergency_service_violations=int(score[0]),
+                emergency_terminal_inventory_gap_kwh=shortfall_kwh(spec.next_soc(core.soc,[action[0],0],dt)[0],reachable_band(spec,terminal,core.config.horizon-core.t-1,dt) if terminal is not None else None,spec.capacities[0]),
                 emergency_hard_violations=0, emergency_policy='finite-local-candidates-v1',
                 emergency_unreachable_ev_kwh=float(sum(max(0,core.remaining[s['id']]-allocation.get(s['id'],0)*dt-s['max_kw']*max(0,s['departure_step']-core.t-1)*dt) for s in core.active())),
                 emergency_unrecoverable_dr_kwh=float(max(0,core.backlog+action[2]*dt-flex.dr_repay_kw*max(0,core.config.horizon-core.t-1)*dt)))

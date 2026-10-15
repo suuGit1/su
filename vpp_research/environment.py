@@ -8,6 +8,7 @@ from vpp_mappo.flex_resources import FlexNetwork
 from vpp_mappo.objectives import carbon_kg
 from .dt import TARGETS,predict,interval_halfwidth,VERSION as DT_VERSION
 from .safety import guard
+from vpp_mappo.terminal_service import band
 PCC_OBJECTIVE_VERSION='c3-ac-pcc-same-period-sampled-reserve-v4'
 
 OBS_VERSION='c3-65-state-interval-carbon-v1'
@@ -29,6 +30,7 @@ class ResearchEnv(CyberVPPAdapter):
             control_cycles=config.control_cycles
         self.reserve_mode=reserve_mode
         self.objective_version={"linear":OBJECTIVE_VERSION,"ac_checked":AC_OBJECTIVE_VERSION,"pcc_checked":PCC_OBJECTIVE_VERSION}[reserve_mode]
+        if config.terminal_soc_mode=='shared_band':self.objective_version+='-terminal-band-v45'
         if resource_mode not in ("control", "communication", "computation", "joint"):
             raise ValueError("未知 C3 消融模式")
         self.resource_mode=resource_mode
@@ -36,6 +38,7 @@ class ResearchEnv(CyberVPPAdapter):
         if not np.isfinite(self.control_cycles) or self.control_cycles<0:raise ValueError("控制计算周期必须有限非负")
         if config.reward_scale!=100.:raise ValueError('研究协议固定经济尺度为 100，不能改变 reward_scale')
         if not np.array_equal(config.objective_scales,SCALES):raise ValueError('研究协议三目标尺度固定为 [100,100,100]')
+        if config.exogenous_reward_centering and csv_path is None and vector_metrics:raise ValueError('外生中心化要求显式真实数据')
         self.dt_model=copy.deepcopy(dt_model);self.robust=robust;self.vector_metrics=vector_metrics
         if robust and dt_model is None:raise ValueError('区间保护要求独立校准的 DT 模型')
         if dt_model is not None:
@@ -47,6 +50,12 @@ class ResearchEnv(CyberVPPAdapter):
         if ac_safe or reserve_mode=="pcc_checked":
             from .ac_safety import ACCheckedFlex
             self.core=ACCheckedFlex(config,csv_path,emergency=reserve_mode=="pcc_checked")
+        if config.coordinator_revision=='public_service':
+            from vpp_mappo.coordinator_projection import PublicServiceProjection
+            if not config.coordinator_active_channels[1] and self.bundle and any(self.bundle.get('scenarios',{}).values()):raise ValueError('存在EV会话时不得停用EV遥测')
+            if not config.coordinator_active_channels[3] and self.flex.dr_shed_kw>0:raise ValueError('启用DR削减时必须保留其遥测')
+            if self.cyber_spec.packet_overhead_bits<=0:raise ValueError('公开队列计数上界要求正的报文基础长度')
+            self.coordinator=PublicServiceProjection(config,self.spec,self.flex,self.cyber_spec)
         self.network=FlexNetwork(self.spec)
         if vector_metrics:
             if self.data and any('carbon_g_per_kwh' not in p for p in self.data.profiles):raise ValueError('真实三目标实验缺少碳数据；禁止静默填补')
@@ -56,6 +65,17 @@ class ResearchEnv(CyberVPPAdapter):
         self.observation_space=Box(-np.inf,np.inf,(self.obs_dim,),dtype=np.float32)
         self.share_observation_space=Box(-np.inf,np.inf,(self.obs_dim*self.num_agents,),dtype=np.float32)
         self.preference=np.array([1.,0.,0.]);self.reward_mode='economic'
+        # 根据资源配置判断永久无效动作；不使用当步真值或安全投影结果。
+        energy=np.ones(6,dtype=np.float32)
+        energy[1]=float(bool(self.bundle and any(self.bundle.get('scenarios',{}).values())))
+        energy[2]=float(self.flex.dr_shift_kw>0 or self.flex.dr_repay_kw>0)
+        energy[3]=float(self.flex.dr_shed_kw>0)
+        channels=np.asarray(config.coordinator_active_channels,dtype=np.float32)
+        self.learning_action_mask=np.r_[energy,channels,channels] if self.num_agents==18 else energy
+        if resource_mode in ('control','computation') and self.num_agents==18:self.learning_action_mask[6:12]=0
+        if resource_mode in ('control','communication') and self.num_agents==18:self.learning_action_mask[12:18]=0
+        if not config.learning_cleanup:self.learning_action_mask[:]=1
+
 
     def reset(self,scenario_seed,profile_index=0):
         from .timing import CommandQueue
@@ -83,6 +103,9 @@ class ResearchEnv(CyberVPPAdapter):
         if self.config.research_version==4:
             from .control_v4 import queue_features
             obs=np.c_[obs,np.tile(queue_features(self),(self.num_agents,1))].astype(np.float32)
+        if self.config.learning_cleanup:
+            inactive=np.flatnonzero(np.asarray(self.config.coordinator_active_channels)==0)
+            for start in (18,24,30):obs[:,start+inactive]=0
         return obs,np.repeat(obs.reshape(1,-1),self.num_agents,axis=0)
 
     def step(self,actions):
@@ -131,7 +154,7 @@ class ResearchEnv(CyberVPPAdapter):
         self.last_received_command=received_candidate.copy()
         row=self.core.row().copy();certificate=None;meta=dict(guard_feasible=False,guard_status='disabled',guard_seconds=0.)
         if self.robust:
-            energy,meta,certificate=guard(energy,self.encode()[0][0],self.spec,self.flex,self.network,self.config.dt_hours,self.config.horizon,diagnostics=self.config.safety_revision==1,time_limit=self.config.solver_time_limit)
+            energy,meta,certificate=guard(energy,self.encode()[0][0],self.spec,self.flex,self.network,self.config.dt_hours,self.config.horizon,diagnostics=self.config.safety_revision==1,time_limit=self.config.solver_time_limit,terminal_band=band(self.config,self.spec))
         guarded_candidate=np.asarray(energy).copy()
         reserve_core=copy.deepcopy(self.core) if self.vector_metrics and self.reserve_mode=='pcc_checked' else None
         if self.config.safety_revision==1:self.core.guard_constraints=certificate.constraints if certificate else None
@@ -201,7 +224,13 @@ class ResearchEnv(CyberVPPAdapter):
                 info.update(reserve_diagnostic=diagnostic,reserve_service_degraded=not reserve_valid,safety_interval_degraded=bool(self.robust and not info['guard_certificate_survived']),command_fallback_reason='expired' if info.get('command_expired',0) else 'not_arrived_or_unavailable' if info.get('local_fallback',False) else 'none')
             vector=np.array([-(accounted_cost+info['terminal_penalty']),-kg,reserve])/SCALES
             penalty=self.config.violation_penalty*info['constraint_violations']/self.config.reward_scale
-            reward=float(vector[0] if self.reward_mode=='economic' else self.preference@vector)-penalty
+            learning_vector=vector.copy();reference=np.zeros(3)
+            if self.config.exogenous_reward_centering:
+                from .reward_centering import reference_vector
+                reference=reference_vector(row,self.spec.sell_ratio,self.config.dt_hours,SCALES)
+                learning_vector-=reference
+            reward=float(learning_vector[0] if self.reward_mode=='economic' else self.preference@learning_vector)-penalty
+            info.update(learning_objective_vector=learning_vector.tolist(),exogenous_reference_vector=reference.tolist())
             info.update(objective_version=self.objective_version,objective_vector=vector.tolist(),carbon_kg=kg,
                 objective_cost=accounted_cost,objective_grid_kw=accounted_grid,
                 ac_carbon_kg=carbon_kg(info['ac_grid_kw'],self.config.dt_hours,factor)+cyber_kg if info['ac_converged'] else None,

@@ -23,6 +23,9 @@ class Config:
     reward_scale: float = 100.0
     violation_penalty: float = 100.0
     terminal_soc_penalty: float = 1000.0
+    reserve_feasibility_only: bool = False
+    terminal_soc_mode: str = 'legacy_penalty'
+    terminal_soc_tolerance: float = 0.01
     safety: bool = True
     digital_twin: bool = False
     delay_steps: int = 0
@@ -46,6 +49,10 @@ class Config:
     cyber_dt_mode: str = 'physics'
     cyber_spec: str | None = None
 
+    coordinator_priority_slack_fraction: float = 0.0
+    coordinator_revision: str = 'legacy'
+    coordinator_active_channels: tuple = (1,1,1,1,1,1)
+    coordinator_payload_bound_bits: float = 8192.
     coordinator_mode: str = 'off'
     coordinator_aoi_limit_steps: float = 2.0
     coordinator_deadline_margin_steps: float = 1.0
@@ -73,7 +80,44 @@ class Config:
     v4_action_bounds: bool = True
     v4_curtail_bias: float = 2.0
 
+    paired_preference_days: bool = False
+    exogenous_reward_centering: bool = False
+    critic_initial_gain: float = 0.01
+    critic_warmup_epochs: int = 0
+    critic_extra_epochs: int = 0
+    pareto_revision: str = 'legacy'
+    learning_cleanup: bool = False
+    pareto_fixed_preference: tuple = ()
+    preference_schedule: str = 'legacy'
+
     def validate(self):
+        if type(self.reserve_feasibility_only) is not bool:raise ValueError('备用纯可行性开关必须为布尔值')
+        if not math.isfinite(self.coordinator_priority_slack_fraction) or not 0<=self.coordinator_priority_slack_fraction<=1:raise ValueError('协调优先级剩余额度比例必须在0至1之间')
+        if self.terminal_soc_mode not in ('legacy_penalty','shared_band'):raise ValueError('未知终端库存协议')
+        if not math.isfinite(self.terminal_soc_tolerance) or not 0<=self.terminal_soc_tolerance<=0.1:raise ValueError('终端SOC容差必须在0至0.1内')
+        if self.terminal_soc_mode=='shared_band' and (self.resource_model!='sessions_v1' or self.research_version!=4):raise ValueError('公共终端协议要求v4会话资源模型')
+        if type(self.paired_preference_days) is not bool:raise ValueError('配对日期开关必须为布尔值')
+        if self.paired_preference_days and (self.research_version!=4 or self.preference_schedule!='balanced'):raise ValueError('配对日期要求v4分层偏好采样')
+
+        if type(self.exogenous_reward_centering) is not bool:raise ValueError('外生奖励中心化开关必须为布尔值')
+        if self.exogenous_reward_centering and self.research_version!=4:raise ValueError('奖励中心化只支持固定时域v4协议')
+
+        if not math.isfinite(self.critic_initial_gain) or self.critic_initial_gain<=0:raise ValueError('critic初始化增益非法')
+        for name in ('critic_warmup_epochs','critic_extra_epochs'):
+            if type(getattr(self,name)) is not int or getattr(self,name)<0:raise ValueError('critic更新预算必须为非负整数')
+
+        if self.pareto_revision not in ('legacy','conditioned_v44'):raise ValueError('未知Pareto学习版本')
+        if self.preference_schedule not in ('legacy','balanced'):raise ValueError('未知偏好采样协议')
+        if type(self.learning_cleanup) is not bool:raise ValueError('学习清理开关必须为布尔值')
+        if self.pareto_fixed_preference:
+            p=self.pareto_fixed_preference
+            if len(p)!=3 or not all(math.isfinite(v) and v>=0 for v in p) or not math.isclose(sum(p),1):raise ValueError('固定诊断偏好非法')
+            if self.pareto_revision!='conditioned_v44':raise ValueError('固定诊断偏好要求v44学习器')
+        if self.learning_cleanup and (self.research_version!=4 or self.coordinator_revision!='public_service'):raise ValueError('学习清理要求v4与公开服务协调器')
+
+        if self.coordinator_revision not in ('legacy','public_service'):raise ValueError('未知协调器版本')
+        if len(self.coordinator_active_channels)!=6 or any(v not in (0,1) for v in self.coordinator_active_channels) or not self.coordinator_active_channels[2]:raise ValueError('有效通道掩码非法，负荷/电价通道必须保留')
+        if not math.isfinite(self.coordinator_payload_bound_bits) or self.coordinator_payload_bound_bits<=0:raise ValueError('载荷上界必须为有限正数')
         if self.dt_interval_mode not in ('constant','adaptive') or self.dt_scale_folds<2:raise ValueError('DT 区间配置非法')
         if self.safety_revision not in (0,1):raise ValueError('安全修订必须为0或1')
         if self.research_version not in (3,4):raise ValueError('研究版本必须为3或4')

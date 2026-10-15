@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "energy_basis": "grid_kwh",
+  "source": "https://ornl.opendatasoft.com/api/explore/v2.1/catalog/datasets/acn-data/records?limit=100",
+  "horizon": 24,
+  "dt_hours": 1.0,
+  "scenarios": {
+    "2020-05-11": [
+      {
+        "id": "61a95636ec34f19de661",
+        "arrival_step": 2,
+        "departure_step": 11,
+        "energy_kwh": 55.0,
+        "max_kw": 7.0
+      }
+    ]
+  },
+  "actual_departure_events": {}
+}

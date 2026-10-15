@@ -1,0 +1,25 @@
+{
+  "output": "seven_acceptance_evidence.zip",
+  "size": 17469167,
+  "sha256": "b511002355ece020155ff58cda98c5374c7b688d7cae95128ef40587053c9b6f",
+  "parts": [
+    {
+      "path": "seven_acceptance_evidence.zip.part001",
+      "size": 6291456,
+      "sha256": "cbecc62dd16d7919b02b270a6172607d532c822ed7b4f235b647d72a0cad8d87",
+      "base64_size": 8388608
+    },
+    {
+      "path": "seven_acceptance_evidence.zip.part002",
+      "size": 6291456,
+      "sha256": "69aff2f5e57bb0d5bba1344b64aeb8fd907b8fcf804b1e0cee531cc227bbaac4",
+      "base64_size": 8388608
+    },
+    {
+      "path": "seven_acceptance_evidence.zip.part003",
+      "size": 4886255,
+      "sha256": "a9991f62b6f2657edbebf43794d5d10a023b054abbf321cb595d526f09289a01",
+      "base64_size": 6515008
+    }
+  ]
+}

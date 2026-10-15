@@ -1,0 +1,514 @@
+[
+  {
+    "case": "conditioned",
+    "seed": 50000,
+    "preference": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "cost": 1250.0661199902806,
+    "carbon_kg": 7092.437617242742,
+    "reserve_kwh": 3757.3222816427824,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 21
+  },
+  {
+    "case": "conditioned",
+    "seed": 50001,
+    "preference": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "cost": 1434.8613577498768,
+    "carbon_kg": 8450.612053878915,
+    "reserve_kwh": 2887.3280342059347,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 15
+  },
+  {
+    "case": "conditioned",
+    "seed": 50000,
+    "preference": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "cost": 1250.0640290482854,
+    "carbon_kg": 7092.417727503309,
+    "reserve_kwh": 3763.0834357008475,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 21
+  },
+  {
+    "case": "conditioned",
+    "seed": 50001,
+    "preference": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "cost": 1434.9072505252668,
+    "carbon_kg": 8450.848619691893,
+    "reserve_kwh": 2919.356510304614,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 15
+  },
+  {
+    "case": "conditioned",
+    "seed": 50000,
+    "preference": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cost": 1249.8121756069079,
+    "carbon_kg": 7091.498104843129,
+    "reserve_kwh": 3805.760497403042,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 21
+  },
+  {
+    "case": "conditioned",
+    "seed": 50001,
+    "preference": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cost": 1435.0939547027242,
+    "carbon_kg": 8452.077679056369,
+    "reserve_kwh": 3099.3356982691917,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 15
+  },
+  {
+    "case": "conditioned",
+    "seed": 50000,
+    "preference": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "cost": 1249.9612497770008,
+    "carbon_kg": 7092.041181022955,
+    "reserve_kwh": 3776.6165909177835,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 21
+  },
+  {
+    "case": "conditioned",
+    "seed": 50001,
+    "preference": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "cost": 1434.9946871793122,
+    "carbon_kg": 8451.379247146351,
+    "reserve_kwh": 2994.474378718475,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 15
+  },
+  {
+    "case": "economic",
+    "seed": 50000,
+    "preference": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "cost": 1249.453971461289,
+    "carbon_kg": 7087.784373127859,
+    "reserve_kwh": 3068.777122274115,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 22
+  },
+  {
+    "case": "economic",
+    "seed": 50001,
+    "preference": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "cost": 1440.5255348400383,
+    "carbon_kg": 8448.005068815994,
+    "reserve_kwh": 2795.921067712073,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 16
+  },
+  {
+    "case": "economic",
+    "seed": 50000,
+    "preference": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "cost": 1249.453971461289,
+    "carbon_kg": 7087.784373127859,
+    "reserve_kwh": 3068.777122274115,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 22
+  },
+  {
+    "case": "economic",
+    "seed": 50001,
+    "preference": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "cost": 1440.5255348400383,
+    "carbon_kg": 8448.005068815994,
+    "reserve_kwh": 2795.921067712073,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 16
+  },
+  {
+    "case": "economic",
+    "seed": 50000,
+    "preference": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cost": 1249.453971461289,
+    "carbon_kg": 7087.784373127859,
+    "reserve_kwh": 3068.777122274115,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 22
+  },
+  {
+    "case": "economic",
+    "seed": 50001,
+    "preference": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cost": 1440.5255348400383,
+    "carbon_kg": 8448.005068815994,
+    "reserve_kwh": 2795.921067712073,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 16
+  },
+  {
+    "case": "economic",
+    "seed": 50000,
+    "preference": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "cost": 1249.453971461289,
+    "carbon_kg": 7087.784373127859,
+    "reserve_kwh": 3068.777122274115,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 22
+  },
+  {
+    "case": "economic",
+    "seed": 50001,
+    "preference": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "cost": 1440.5255348400383,
+    "carbon_kg": 8448.005068815994,
+    "reserve_kwh": 2795.921067712073,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 16
+  },
+  {
+    "case": "carbon",
+    "seed": 50000,
+    "preference": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "cost": 1250.8657949284996,
+    "carbon_kg": 7101.405938098994,
+    "reserve_kwh": 2724.892048056949,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 18
+  },
+  {
+    "case": "carbon",
+    "seed": 50001,
+    "preference": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "cost": 1429.0461720374917,
+    "carbon_kg": 8441.851112411074,
+    "reserve_kwh": 2050.131601814386,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 12
+  },
+  {
+    "case": "carbon",
+    "seed": 50000,
+    "preference": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "cost": 1250.8657949284996,
+    "carbon_kg": 7101.405938098994,
+    "reserve_kwh": 2724.892048056949,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 18
+  },
+  {
+    "case": "carbon",
+    "seed": 50001,
+    "preference": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "cost": 1429.0461720374917,
+    "carbon_kg": 8441.851112411074,
+    "reserve_kwh": 2050.131601814386,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 12
+  },
+  {
+    "case": "carbon",
+    "seed": 50000,
+    "preference": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cost": 1250.8657949284996,
+    "carbon_kg": 7101.405938098994,
+    "reserve_kwh": 2724.892048056949,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 18
+  },
+  {
+    "case": "carbon",
+    "seed": 50001,
+    "preference": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cost": 1429.0461720374917,
+    "carbon_kg": 8441.851112411074,
+    "reserve_kwh": 2050.131601814386,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 12
+  },
+  {
+    "case": "carbon",
+    "seed": 50000,
+    "preference": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "cost": 1250.8657949284996,
+    "carbon_kg": 7101.405938098994,
+    "reserve_kwh": 2724.892048056949,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 18
+  },
+  {
+    "case": "carbon",
+    "seed": 50001,
+    "preference": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "cost": 1429.0461720374917,
+    "carbon_kg": 8441.851112411074,
+    "reserve_kwh": 2050.131601814386,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 12
+  },
+  {
+    "case": "reserve",
+    "seed": 50000,
+    "preference": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "cost": 1251.0276526442904,
+    "carbon_kg": 7091.558221299849,
+    "reserve_kwh": 3399.207945988553,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 22
+  },
+  {
+    "case": "reserve",
+    "seed": 50001,
+    "preference": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "cost": 1438.1946946259593,
+    "carbon_kg": 8456.987943306516,
+    "reserve_kwh": 3043.137083649026,
+    "terminal_soc": 0.56,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 16
+  },
+  {
+    "case": "reserve",
+    "seed": 50000,
+    "preference": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "cost": 1251.0276526442904,
+    "carbon_kg": 7091.558221299849,
+    "reserve_kwh": 3399.207945988553,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 22
+  },
+  {
+    "case": "reserve",
+    "seed": 50001,
+    "preference": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "cost": 1438.1946946259593,
+    "carbon_kg": 8456.987943306516,
+    "reserve_kwh": 3043.137083649026,
+    "terminal_soc": 0.56,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 16
+  },
+  {
+    "case": "reserve",
+    "seed": 50000,
+    "preference": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cost": 1251.0276526442904,
+    "carbon_kg": 7091.558221299849,
+    "reserve_kwh": 3399.207945988553,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 22
+  },
+  {
+    "case": "reserve",
+    "seed": 50001,
+    "preference": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cost": 1438.1946946259593,
+    "carbon_kg": 8456.987943306516,
+    "reserve_kwh": 3043.137083649026,
+    "terminal_soc": 0.56,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 16
+  },
+  {
+    "case": "reserve",
+    "seed": 50000,
+    "preference": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "cost": 1251.0276526442904,
+    "carbon_kg": 7091.558221299849,
+    "reserve_kwh": 3399.207945988553,
+    "terminal_soc": 0.54,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 22
+  },
+  {
+    "case": "reserve",
+    "seed": 50001,
+    "preference": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "cost": 1438.1946946259593,
+    "carbon_kg": 8456.987943306516,
+    "reserve_kwh": 3043.137083649026,
+    "terminal_soc": 0.56,
+    "failed": false,
+    "ac_violations": 0,
+    "certified_steps": 16
+  }
+]

@@ -5,7 +5,7 @@ import numpy as np
 from scipy.optimize import linprog
 
 
-def guard(action,observation,dispatch,flex,network,dt,horizon,diagnostics=False,time_limit=30.):
+def guard(action,observation,dispatch,flex,network,dt,horizon,diagnostics=False,time_limit=30.,terminal_band=None):
     began=time.perf_counter();x=np.asarray(observation);a=np.asarray(action);w=x[54:63]
     center=np.array([x[9]*5000,x[11]*1000,x[12]*1000]);width=np.array([w[5]*5000,w[7]*1000,w[8]*1000])
     lows=np.maximum(0,center-width);highs=np.maximum(0,center+width)
@@ -35,6 +35,10 @@ def guard(action,observation,dispatch,flex,network,dt,horizon,diagnostics=False,
              (flex.dr_shift_budget_kwh-(x[7]+w[3])*max(1,flex.dr_shift_budget_kwh))/dt,flex.dr_repay_kw*steps-b_high/dt)),
             (0,min(flex.dr_shed_kw,(flex.dr_shed_budget_kwh-(x[8]+w[4])*max(1,flex.dr_shed_budget_kwh))/dt)),
             (0,lows[1]),(0,lows[2])]
+    if terminal_band is not None:
+        from vpp_mappo.terminal_service import reachable_band,power_bounds
+        terminal_bounds=power_bounds(dispatch,low_soc,high_soc,reachable_band(dispatch,terminal_band,steps,dt),dt)
+        bounds[0]=(max(bounds[0][0],terminal_bounds[0]),min(bounds[0][1],terminal_bounds[1]))
     add([0,0,0,1,0,0],flex.dr_fraction*lows[0]);add([0,0,1,1,0,0],flex.dr_fraction*lows[0])
     m=np.asarray(matrix);u=np.asarray(upper)
     status='inconsistent_interval';result=None

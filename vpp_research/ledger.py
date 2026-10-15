@@ -10,33 +10,90 @@ class Ledger:
     def __init__(self, path):
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.db = sqlite3.connect(self.path)
+        self.events = self.path.with_suffix(self.path.suffix + '.events')
+        self.journal = self.events.exists() or os.environ.get('VPP_LEDGER_JOURNAL') == '1'
+        self.seq = 0
+        self.chain = ''
+        self.db = sqlite3.connect(':memory:' if self.journal else self.path)
         self.db.execute('PRAGMA synchronous=FULL')
         self.db.execute('CREATE TABLE IF NOT EXISTS calls (id INTEGER PRIMARY KEY, attempt TEXT, episode INTEGER, step INTEGER, status TEXT, detail TEXT)')
         self.db.execute('CREATE TABLE IF NOT EXISTS commits (episode INTEGER PRIMARY KEY, attempt TEXT, steps INTEGER)')
         self.db.commit()
+        if self.journal:
+            self.events.mkdir(exist_ok=True)
+            base = self.events / 'base.sqlite'
+            if not base.exists():
+                if any(self.events.glob('*.json')):
+                    raise ValueError('日志基底丢失，禁止重建账本')
+                if self.path.exists():
+                    with sqlite3.connect(self.path) as previous:previous.backup(self.db)
+                self._snapshot(base)
+            else:
+                with sqlite3.connect(base) as previous:previous.backup(self.db)
+            self.chain = hashlib.sha256(base.read_bytes()).hexdigest()
+            for path in sorted(self.events.glob('[0-9]*.json')):
+                event=json.loads(path.read_text(encoding='utf-8'))
+                digest=event.pop('sha256')
+                if (event['sequence'] != self.seq + 1 or event['previous'] != self.chain
+                        or digest != self._digest(event) or path.name != f"{event['sequence']:012d}.json"):
+                    raise ValueError('账本事件顺序或摘要损坏')
+                with self.db:self.db.execute(event['sql'],event['params'])
+                self.seq=event['sequence'];self.chain=digest
+            self._snapshot(self.path)
+
+    @staticmethod
+    def _digest(event):
+        return hashlib.sha256(json.dumps(event,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+
+    def _snapshot(self, path):
+        # 只短暂打开新文件，关闭后替换；工作区同步不会更换活动数据库的 inode。
+        import tempfile
+        fd,name=tempfile.mkstemp(prefix=path.name+'.',suffix='.tmp',dir=path.parent)
+        os.close(fd)
+        try:
+            target=sqlite3.connect(name)
+            try:self.db.backup(target)
+            finally:target.close()
+            with open(name,'rb') as f:os.fsync(f.fileno())
+            os.replace(name,path)
+        finally:
+            if os.path.exists(name):os.unlink(name)
+
+    def _write(self, sql, params):
+        # 每个账本仅允许一个写入者；训练器已经为各任务创建独立目录。
+        with self.db:
+            cur=self.db.execute(sql,params)
+            if self.journal:
+                event=dict(sequence=self.seq+1,previous=self.chain,sql=sql,params=list(params))
+                digest=self._digest(event);event['sha256']=digest
+                destination=self.events/f'{self.seq+1:012d}.json'
+                # 排他创建可检测重复写入者；残缺事件在重开时拒绝恢复。
+                with destination.open('x',encoding='utf-8') as f:
+                    f.write(json.dumps(event,ensure_ascii=False));f.flush();os.fsync(f.fileno())
+                self.seq+=1;self.chain=digest
+        return cur
 
     def begin(self, attempt, episode, step):
-        with self.db:
-            cur = self.db.execute('INSERT INTO calls(attempt,episode,step,status) VALUES(?,?,?,?)', (attempt,episode,step,'pending'))
+        cur = self._write('INSERT INTO calls(attempt,episode,step,status) VALUES(?,?,?,?)', (attempt,episode,step,'pending'))
         return cur.lastrowid
 
     def finish(self, ident, status, detail=None):
         from .trace import plain
         if status not in ('success','error'):raise ValueError('交互结束状态非法')
-        with self.db:
-            cur=self.db.execute('UPDATE calls SET status=?,detail=? WHERE id=? AND status=?',
-                                (status,json.dumps(detail,ensure_ascii=False,default=plain),ident,'pending'))
-            if cur.rowcount!=1:raise ValueError('交互不存在或已经结束')
+        row=self.db.execute('SELECT status FROM calls WHERE id=?',(ident,)).fetchone()
+        if row != ('pending',):raise ValueError('交互不存在或已经结束')
+        self._write('UPDATE calls SET status=?,detail=? WHERE id=? AND status=?',
+                    (status,json.dumps(detail,ensure_ascii=False,default=plain),ident,'pending'))
 
     def commit_episode(self, episode, attempt, horizon):
         steps=[r[0] for r in self.db.execute('SELECT step FROM calls WHERE attempt=? AND episode=? AND status=? ORDER BY id', (attempt,episode,'success'))]
         if steps!=list(range(horizon)):raise ValueError('PPO回合交互不完整，禁止提交')
-        with self.db:self.db.execute('INSERT OR REPLACE INTO commits VALUES(?,?,?)',(episode,attempt,horizon))
+        self._write('INSERT OR REPLACE INTO commits VALUES(?,?,?)',(episode,attempt,horizon))
+        if self.journal:self._snapshot(self.path)
 
     def reconcile(self, episode_attempts, horizon):
         if self.summary()['unknown_calls']:raise ValueError('账本存在结果不明的环境调用；保留目录供审计，禁止自动续训')
-        with self.db:self.db.execute('DELETE FROM commits WHERE episode>=?',(len(episode_attempts),))
+        self._write('DELETE FROM commits WHERE episode>=?',(len(episode_attempts),))
         for ep,attempt in enumerate(episode_attempts):self.commit_episode(ep,attempt,horizon)
 
     def summary(self):
@@ -52,10 +109,13 @@ class Ledger:
         commits=[dict(episode=r[0],attempt=r[1],steps=r[2]) for r in self.db.execute('SELECT * FROM commits ORDER BY episode')]
         return dict(schema='completed-evidence-v3',calls=calls,commits=commits,summary=self.summary())
 
-    def close(self):self.db.close()
+    def close(self):
+        if self.journal:self._snapshot(self.path)
+        self.db.close()
 
     def export(self):
         """只导出事务内真实保存的记录；不能为历史空载荷补造轨迹。"""
+        if self.journal:self._snapshot(self.path)
         records=[json.loads(r[0]) for r in self.db.execute('SELECT detail FROM calls WHERE status=? ORDER BY id',('success',))]
         if any(not isinstance(r,dict) or not {'attempt_id','episode','step'}<=r.keys() for r in records):
             raise ValueError('历史账本未保存完整载荷，不能重建轨迹')
@@ -127,13 +187,13 @@ def audit_training(folder):
             if snapshot is not None:
                 item['live_ledger_summary']={k:item[k] for k in snapshot['summary']}
                 item['snapshot_matches_live_ledger']=all(item[k]==v for k,v in snapshot['summary'].items())
-                item.update(snapshot['summary'])
+                item['completed_snapshot_summary']=snapshot['summary']
                 good=[c for c in snapshot['calls'] if c['status']=='success']
                 item['transaction_payload_complete']=all(isinstance(c['detail'],dict) and
                     (c['detail'].get('attempt_id'),c['detail'].get('episode'),c['detail'].get('step'))==(c['attempt'],c['episode'],c['step']) and
                     ('feedback' in c['detail'] if trace.exists() else True) for c in good)
-                item['consistent']=item['committed_steps']==nominal and item['unknown_calls']==0 and item['transaction_payload_complete']
-                item['accounting_source']='完整事务载荷的完成快照；内部回合与计数已校验，其他副本差异单列'
+                item['consistent']=item['snapshot_matches_live_ledger'] and item['committed_steps']==nominal and item['unknown_calls']==0 and item['transaction_payload_complete']
+                item['accounting_source']='当前事务账本；完成快照必须与当前账本计数一致，旧快照不得覆盖新增或未知调用'
         else:item['consistent']=False
         items.append(item)
     return dict(schema='training-audit-v3',runs=items,consistent=bool(items) and all(x['consistent'] for x in items),

@@ -1,0 +1,25 @@
+官方文件校验通过：21 个文件，提交 de66d7a4b23fac2513f56f96f73b3f5cb96695ac
+代码包完整性校验通过： 652 个文件；确认集只校验字节摘要、不用于指标计算
+{
+  "version": "4.5.0",
+  "python": "3.12.14",
+  "dependencies": {
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "pandas": "2.2.3",
+    "pandapower": "2.14.11",
+    "torch": "2.5.1+cpu",
+    "gymnasium": "0.29.1",
+    "pettingzoo": "1.24.3",
+    "matplotlib": "3.10.8",
+    "openpyxl": "3.1.5"
+  },
+  "days": {
+    "train": 31,
+    "validation": 27,
+    "test": 29
+  },
+  "ev": "disabled_missing_real_sessions",
+  "dr": "off",
+  "network": "ieee33"
+}

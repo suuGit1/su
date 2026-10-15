@@ -1,0 +1,114 @@
+{
+  "catalog": {
+    "schema": "vpp-real-data-v1",
+    "default_profiles": "gb/profiles",
+    "datasets": [
+      {
+        "name": "GB OPSD",
+        "status": "available",
+        "uses": [
+          "load",
+          "pv",
+          "wind",
+          "price"
+        ],
+        "raw": "raw/opsd/time_series_60min.csv.gz",
+        "source": "https://data.open-power-system-data.org/time_series/2020-10-06/",
+        "limits": "已重新下载并校验完整固定版本；默认选取GB 2019年1–3月，国家曲线缩放不是馈线实测",
+        "raw_sha256": "6a7f2bc571314cbf9c321cc03437691cd4be95c3a6f075e60ff99e8035c704c8",
+        "raw_bytes": 130339665
+      },
+      {
+        "name": "GB NESO carbon",
+        "status": "available",
+        "raw": "raw/neso",
+        "source": "https://api.carbonintensity.org.uk/intensity/date/",
+        "limits": "运行CO2估计；上小时核算值作为滞后观察代理"
+      },
+      {
+        "name": "SCE A.4 DR",
+        "status": "available",
+        "processed": "dr/sce/events.json",
+        "raw": "dr/sce/source.xlsx",
+        "limits": "美国加州2022年事后响应，不与英国2019年日期合并，仅显式跨来源降额情景"
+      },
+      {
+        "name": "EV complete sessions",
+        "status": "missing",
+        "limits": "没有可用真实完整会话，默认关闭EV；禁止生成合成会话补缺"
+      },
+      {
+        "name": "DE OPSD archive",
+        "status": "archive_not_default",
+        "processed": "archive/de",
+        "limits": "旧能源曲线处理结果；不作为同地区真实碳三目标训练入口"
+      },
+      {
+        "name": "hardware",
+        "status": "missing",
+        "limits": "通信、计算、储能和网络工程参数仍属仿真假设"
+      }
+    ]
+  },
+  "ev_sample": {
+    "source": "https://ornl.opendatasoft.com/api/explore/v2.1/catalog/datasets/acn-data/records?limit=100",
+    "source_sha256": "ffd41832118f9c5d5b28b4cf51ebb27c1a485da1c28849e4402be9a22bd8ae28",
+    "input_count": 26,
+    "accepted": 1,
+    "sample_only": true,
+    "complete_site_dataset": false,
+    "scope": "ORNL仅采集26条用于数据发现，不能证明完整EV需求或长期效果；美国2020年会话，不与GB2019年默认为同地区同日",
+    "assumed_max_kw": 7.0,
+    "causal_import_audit": "sessions.audit.json"
+  },
+  "hardware": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "clock": {
+      "name": "perf_counter",
+      "resolution_seconds": 1e-09,
+      "monotonic": true
+    },
+    "energy_measurement_available": false,
+    "energy_counters": [],
+    "provenance": "当前执行主机；不是目标边缘设备，也没有测量物理通信链路",
+    "limitation": "若有计数器，系统级能量仍需扣除空闲基线及并发任务；无计数器则能耗不可实测，禁止以CPU时间替代能量"
+  },
+  "blockers": [
+    "完整真实EV会话样本不足，不能据发现样本证明长期需求满足",
+    "GB真实DR参数缺失；SCE仅显式跨地区敏感性",
+    "边缘设备物理通信/能耗尚未实测"
+  ],
+  "provenance": {
+    "ev/ornl_acn_sample/sessions.json": {
+      "bytes": 439,
+      "sha256": "3c5ee09403303d296f84dcdcaa29ea40b6e9f54c8948c9f6da4ffd67ed4c58c4"
+    },
+    "ev/ornl_acn_sample/source.json": {
+      "bytes": 20241,
+      "sha256": "ffd41832118f9c5d5b28b4cf51ebb27c1a485da1c28849e4402be9a22bd8ae28"
+    },
+    "ev/ornl_acn_sample/manifest.json": {
+      "bytes": 522,
+      "sha256": "b8d150bad38bcb20621532080a64fba257eb0db464dc0fb4e52308c95e5027a6"
+    },
+    "ev/ornl_acn_sample/sessions.audit.json": {
+      "bytes": 894,
+      "sha256": "2b5be2374687b6cd24de504698f4eca39d8019b12eaf001dacc6cfe1223232a7"
+    },
+    "ev/ornl_acn_sample/normalized.json": {
+      "bytes": 16701,
+      "sha256": "9891a71d499d3bdec3658e9e67c85166a7d3a21d58f2148b8a99da0515dcab3e"
+    },
+    "dr/sce/events.json": {
+      "bytes": 25154,
+      "sha256": "accfcfa88b125bc0e57a2df094498de7c067d383b45a073407edecd3c84da081"
+    },
+    "dr/sce/source.xlsx": {
+      "bytes": 93754,
+      "sha256": "0e8071c708280796c05dabbd4cbe909918c07abd4ee3e37eb9fefed472d8c49f"
+    }
+  },
+  "clarification": "catalog中的EV缺失是完整会话实验缺失；新增发现样本单列，未冒称完整数据"
+}

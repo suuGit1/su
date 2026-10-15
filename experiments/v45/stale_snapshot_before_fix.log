@@ -1,0 +1,14 @@
+.....F
+======================================================================
+FAIL: test_stale_snapshot_cannot_hide_unknown (__main__.JournalTest.test_stale_snapshot_cannot_hide_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/64667ed70b88/su-v42/scripts/test_ledger_journal.py", line 40, in test_stale_snapshot_cannot_hide_unknown
+    self.assertFalse(result['consistent']);self.assertEqual(result['runs'][0]['unknown_calls'],1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.069s
+
+FAILED (failures=1)

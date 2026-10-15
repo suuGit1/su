@@ -53,4 +53,9 @@ def decode(env,raw):
     cpu=np.maximum(0,np.logaddexp(0,raw[12:18,0])-floor) if env.num_agents==18 else np.ones(6)
     if env.resource_mode in ('control','computation'):bw=np.ones(6)
     if env.resource_mode in ('control','communication'):cpu=np.ones(6)
+    if env.config.learning_cleanup:
+        energy*=env.learning_action_mask[:6]
+        if env.num_agents==18:
+            bw*=np.asarray(env.config.coordinator_active_channels)
+            cpu*=np.asarray(env.config.coordinator_active_channels)
     return energy,bw,cpu

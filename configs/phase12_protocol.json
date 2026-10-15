@@ -1,0 +1,111 @@
+{
+  "schema": "dt-c3-phase12-v1",
+  "base_commit": "79af0773b29b4a46b33cd22ac8edbd9f4c59beb2",
+  "scope": "GB真实国家曲线驱动IEEE33；ESS/PV/WT主实证；EV/DR关闭；规则协调器；共享公开DT观察",
+  "data": {
+    "train": "2019-01",
+    "calibration": "2019-02前25个完整日",
+    "selection": "2019-02剩余2日",
+    "development": "2019-03完整29日，曾用于开发",
+    "sealed_confirmation": "2019-04至2019-06，第一二阶段禁止策略评估"
+  },
+  "objective": {
+    "version": "c3-ac-pcc-same-period-sampled-reserve-v4",
+    "signs": [
+      -1,
+      -1,
+      1
+    ],
+    "scales": [
+      100,
+      100,
+      100
+    ],
+    "economic": "AC并网成本+设备/通信计算成本+终端惩罚",
+    "carbon": "进口电量运行CO2+通信计算用电CO2；不记出口减排信用",
+    "reserve": "同一时段起点AC有限激活点核验的对称PCC备用能量；未确认不得视为有效"
+  },
+  "baseline_rules": {
+    "required": [
+      "ordinary",
+      "fixed",
+      "ols",
+      "mpc"
+    ],
+    "additional": [
+      "central"
+    ],
+    "oracle_separate": "milp_oracle：真实未来信息，仅作理想信息参考",
+    "budgets": "训练、选模、子策略、重试和测试分别计数；不宣称只有训练回合相同就总体预算相同",
+    "selection": "不得按测试输赢删除基线；开发集调参与确认集评价分开"
+  },
+  "hypotheses": {
+    "F_G": "固定控制器下分离中心预测和区间几何对估计、覆盖、认证及三目标的影响",
+    "E_H": "在同等带宽CPU容量下，改变公开信息驱动的分配能改变AoI和调度结果",
+    "coordinator": "任务/风险协调改变分配，并在某些受限条件下改善或损害结果",
+    "L_M": "执行器的已接受动作满足声明的点态检查；无可行动作时明确停止，不能伪造安全成功"
+  },
+  "dt_factorial_days": "全部29个开发日",
+  "mechanism_day_indices": [
+    0,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28
+  ],
+  "cyber_seeds": [
+    431,
+    977,
+    2027
+  ],
+  "resource_settings": {
+    "nominal": {},
+    "uplink": {
+      "bandwidth_bps": 2000
+    },
+    "compute": {
+      "cpu_cycles_per_second": 2000000
+    },
+    "combined": {
+      "bandwidth_bps": 2000,
+      "cpu_cycles_per_second": 2000000,
+      "packet_loss": 0.3
+    }
+  },
+  "resource_variants": [
+    "uniform",
+    "active_equal",
+    "communication_age",
+    "computation_age",
+    "joint_age",
+    "joint_schedule",
+    "joint_risk"
+  ],
+  "risk_tasks": [
+    "balanced",
+    "economic",
+    "carbon",
+    "reserve"
+  ],
+  "faults": [
+    "no_interval",
+    "downlink_loss",
+    "load_drift",
+    "solver_timeout",
+    "resource_shortage",
+    "ac_rejection"
+  ],
+  "statistics": "配对日期为主要单位；多网络种子先按日期聚合；均报告失败和部分轨迹，不用成功子集冒充总体收益",
+  "phase2_scope": "同一因果MPC作为能源控制器，公开AoI/队列启发式做资源分配；不是已学C3或Pareto性能证明",
+  "gate": "证据覆盖与收益成立分开；核心收益不成立时记录反例并修订假设，不自动进入第三阶段宣称优势",
+  "active_telemetry_channels": [
+    0,
+    2,
+    4,
+    5
+  ],
+  "active_channel_note": "DR控制关闭，但通道2仍承载负荷、电价和碳观察，必须保留"
+}

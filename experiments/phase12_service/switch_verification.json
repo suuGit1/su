@@ -1,0 +1,25 @@
+{
+  "ordinary": {
+    "cases": 3,
+    "steps": 72,
+    "post_switch_action_l1": 0.0,
+    "utilities": {
+      "switch": -30.0818129845595,
+      "fixed_initial": -30.0818129845595,
+      "fixed_balanced": -30.0818129845595
+    },
+    "ac_violations": 0
+  },
+  "pareto": {
+    "cases": 3,
+    "steps": 72,
+    "post_switch_action_l1": 0.5825271420180798,
+    "utilities": {
+      "switch": -29.680374208027875,
+      "fixed_initial": -29.648881368267997,
+      "fixed_balanced": -29.594902083299473
+    },
+    "ac_violations": 0
+  },
+  "interpretation": "2回合训练检查点的一日接口检查，不证明偏好学习收敛或切换优于固定策略"
+}

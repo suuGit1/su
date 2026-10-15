@@ -1,0 +1,2 @@
+# v4.5 研究入口依赖；建议 Python 3.11。
+-r requirements-research-lock.txt

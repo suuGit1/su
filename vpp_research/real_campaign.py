@@ -133,7 +133,7 @@ def run(a):
                                     r=rollout(cfg,model,target,method=method,preference=w,seed=40000+day,csv_path=csv_path,ev_bundle=c._ev_bundle,profile_index=day)
                                 rows.append(dict(trace_path=str(target/'trajectory_complete.jsonl'),scenario_date=sets['test'].scenario_names[day] if phase=='test' else selection_dates[day],preference=w,failed=not r['completed'],env_steps=r['steps'],
                                     vector=[-r['cost']/cfg.objective_scales[0],-r['carbon_kg']/cfg.objective_scales[1],r['reserve_kwh']/cfg.objective_scales[2]],
-                                    violations=r['constraint_violations'],ac_violations=r['ac_violations'],ac_failed=0,
+                                    terminal_service_failed=r.get('terminal_service_failed',False),terminal_service_shortfall_kwh=r.get('terminal_service_shortfall_kwh',0.),objective_version=r.get('objective_version'),violations=r['constraint_violations'],ac_violations=r['ac_violations'],ac_failed=0,
                                     reserve_invalid=r['reserve_unconfirmed_steps'],ev_unmet_kwh=r['ev_unmet_kwh'],dr_backlog_kwh=r['terminal_dr_kwh'],
                                     guard_infeasible=r['guard_infeasible'],guard_certified_steps=r['guard_certified_steps']))
                         return rows
