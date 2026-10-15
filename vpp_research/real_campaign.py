@@ -31,7 +31,7 @@ def prepare_real(c,paths,protocol,dt,counts):
     else:
         # 标签仅用于离线DT拟合；在线actor和MPC仍只读取受限公开观察。
         data={k:collect(c,range(30000,30000+n),'physics',paths[k]) for k,n in counts.items()}
-        model=fit(data['train'],data['validation'],method='residual')
+        model=fit(data['train'],data['validation'],method='residual',interval_mode=c.dt_interval_mode,scale_folds=c.dt_scale_folds)
         model['real_input_fingerprint']=protocol['fingerprint']
         write(dt/'contract.json',dict(fingerprint=key));write(dt/'datasets.json',data);save(model,dt/'residual.json')
         print('真实数据DT训练与校准完成',flush=True)

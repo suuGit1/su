@@ -1,0 +1,11 @@
+{
+  "energy_source_scope": "GB national profiles, not measured IEEE33 or plant sessions",
+  "record_hashes": {
+    "train_records.json": "d6d956e1033047176a98be34a1580094dc41b1b60ae562808fcc16c9bed264de",
+    "validation_records.json": "1a23539a7bc21c6752612e27d86549670a7f703af40ce0c4765d62190a6216d5",
+    "test_records.json": "8d9c6444a0dc01415313aac97e9159a2cb3b47278261c2acc06b2bf233f1560e"
+  },
+  "initial_implementation_commit": "a4e652249da0dfbb58369a93e4e4e30f8b4d6360",
+  "point_and_interval_code_sha256": "df0b6d7bdffeede3b504aab4e63a99b84d308b32b56ecd0a4a1b1c9623e6b0ad",
+  "interruption_note": "Sequential control was stopped after two completed cases and resumed with six workers; completed cases retained, incomplete case rerun. No model parameters were tuned on March results."
+}

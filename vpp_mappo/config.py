@@ -61,6 +61,8 @@ class Config:
     risk_adaptive: bool = False
     task_focus: str = 'balanced'
 
+    dt_interval_mode: str = 'constant'
+    dt_scale_folds: int = 5
     safety_revision: int = 0
     research_version: int = 3
     rollout_episodes: int = 1
@@ -72,6 +74,7 @@ class Config:
     v4_curtail_bias: float = 2.0
 
     def validate(self):
+        if self.dt_interval_mode not in ('constant','adaptive') or self.dt_scale_folds<2:raise ValueError('DT 区间配置非法')
         if self.safety_revision not in (0,1):raise ValueError('安全修订必须为0或1')
         if self.research_version not in (3,4):raise ValueError('研究版本必须为3或4')
         for name in ('rollout_episodes','validation_days'):

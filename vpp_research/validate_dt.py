@@ -33,7 +33,7 @@ def control(config,model,seeds,robust=False,csv_path=None):
         for _ in range(config.horizon):
             truth=e.features(e.sensor_payloads())[TARGETS]
             error.append(float(np.mean((obs[0,TARGETS]-truth)**2)))
-            coverage.append(bool(np.all(np.abs(obs[0,TARGETS]-truth)<=np.array(model['halfwidth'])+1e-6)))
+            coverage.append(bool(np.all(np.abs(obs[0,TARGETS]-truth)<=obs[0,54:63]+1e-6)))
             a,m=planner.propose(obs[0]);obs,_,_,_,i=e.step_candidate(a,np.ones(6),np.ones(6))
             cost+=i['cost']+i['terminal_penalty'];violations+=i['constraint_violations'];interventions+=i['shield_l1_kw']>1e-5;failures+=m['mpc_failed']
         rows.append(dict(seed=seed,objective=cost,violations=violations,safety_interventions=int(interventions),mpc_failures=failures,

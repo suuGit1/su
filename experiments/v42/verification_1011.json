@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-11",
+  "passed": true,
+  "methods": [
+    "ordinary",
+    "pareto"
+  ],
+  "seed": 42,
+  "episodes_per_method": 2,
+  "horizon": 24,
+  "dt_train_days": 31,
+  "dt_calibration_days": 25,
+  "selection_days": 1,
+  "eval_days": 1,
+  "eval_preferences": [
+    [
+      0.2,
+      0.3,
+      0.5
+    ]
+  ],
+  "training_steps_per_method": 48,
+  "selection_steps": {
+    "ordinary": 24,
+    "pareto": 96
+  },
+  "test_steps_per_method": 24,
+  "dt_interval_mode": "constant",
+  "device": "cpu",
+  "validation_every": 0,
+  "source_digest": "3a3a27ca0328121b8ecce0e7536c70c6ef2b96097d38e76ab4c4c473f8f4c4df",
+  "archive_sha256": "4c82260987142c7c0acaf4fa1a6c5c87ffa667f9810109447c788bd6b7ab948f",
+  "archive_scope": "配置、DT记录与模型、报告、逐步轨迹和完成账本快照；不包含PyTorch权重或SQLite副本",
+  "limits": [
+    "功能验收，不代表收敛或算法优势",
+    "先前临时验收结果不可恢复，没有计入本轮通过记录",
+    "完整29天三模型MPC研究另见dt_study_evidence.zip"
+  ]
+}
